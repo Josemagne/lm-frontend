@@ -70,6 +70,10 @@ const config = {
         ],
       },
       {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
         test: /\.less$/i,
         use: ["style-loader", "css-loader", "less-loader"],
       },

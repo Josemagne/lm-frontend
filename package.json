@@ -31,7 +31,9 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",
-    "rsuite": "^5.5.2"
+    "rsuite": "^5.5.2",
+    "sass": "^1.49.7",
+    "sass-loader": "^12.4.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.11",
