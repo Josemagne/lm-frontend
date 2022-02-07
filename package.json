@@ -1,0 +1,27 @@
+{
+  "name": "librimem-frontend",
+  "version": "0.0.1",
+  "description": "App that facilitates the reading of books",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Josemagne/librimem-frontend.git"
+  },
+  "keywords": [
+    "books",
+    "reading"
+  ],
+  "author": "Josemagne",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Josemagne/librimem-frontend/issues"
+  },
+  "homepage": "https://gitlab.com/Josemagne/librimem-frontend#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
