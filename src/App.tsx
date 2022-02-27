@@ -1,12 +1,12 @@
 import React from "react";
-import SummaryTaker from "./components/SummaryTaker/SummaryTaker";
+import ChapterModifier from "./pages/Books/ChapterModifier/ChapterModifier";
 
 type Props = {};
 
 const App = (props: Props) => {
   return (
     <div className="app">
-      <SummaryTaker />
+      <ChapterModifier />
     </div>
   );
 };

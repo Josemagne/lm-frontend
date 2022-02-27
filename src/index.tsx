@@ -3,6 +3,7 @@ import React from "react";
 import "rsuite/styles/index.less";
 // bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./sass/app.scss";
 import ReactDOM from "react-dom";
 import App from "./App";
 
