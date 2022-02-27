@@ -1,4 +1,5 @@
-export declare interface LM_Chapter {
+import LM_Summary from './summary';
+export default interface LM_Chapter {
     /**
      * The title of the chapter
      */
@@ -11,4 +12,5 @@ export declare interface LM_Chapter {
      * Importance is a number from 1 to 100 where 1 indicate that it is not important and 100 that it is of outmost importance
      */
     importance: number;
+    summary: LM_Summary;
 }

@@ -1,0 +1,42 @@
+.lm-chaptermodifier {
+  display: grid;
+  grid-template-areas:
+    "lm-chapterheader"
+    "lm-chapterbody"
+    "lm-chapterfooter";
+  grid-template-rows: 3;
+}
+
+.lm-chapterheader {
+  grid-area: lm-chapterheader;
+  display: grid;
+  grid-template-areas:
+    "lm-chaptertitle lm-chapterstate"
+    "lm-chapteradder lm-chapteradder";
+}
+
+.lm-chapterbody {
+  grid-area: lm-chapterbody;
+  display: grid;
+  grid-template-areas: "lm-summarymodifier";
+}
+
+@media screen and (min-width: 576px) {
+}
+
+@media screen and (min-width: 676px) {
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 876px) {
+}
+
+@media screen and (min-width: 992px) {
+}
+@media screen and (min-width: 1200px) {
+}
+
+@media screen and (min-width: 1920px) {
+}

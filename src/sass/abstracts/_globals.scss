@@ -20,3 +20,10 @@ body {
 }
 
 // ANCHOR lm-page
+.lm-page {
+  width: 100%;
+  // Take the whole height
+  height: 100vh;
+  margin: 1rem;
+  box-shadow: 3px solid black;
+}
