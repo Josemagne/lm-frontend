@@ -2,7 +2,7 @@ import ChapterModifier from "./pages/Books/ChapterModifier/ChapterModifier";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
 import Navbar from "./components/Navbar/Navbar";
-import BooksModifier from "./pages/Books/BooksModifier/BooksModifier";
+import BookModifier from "./pages/Books/BookModifier/BookModifier";
 
 type Props = {};
 
@@ -13,7 +13,7 @@ const App = (props: Props) => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<BooksViewer />} />
-          <Route path="/booksmodifier" element={<BooksModifier />} />
+          <Route path="/bookmodifier" element={<BookModifier />} />
         </Routes>
       </BrowserRouter>
     </div>

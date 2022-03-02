@@ -77,11 +77,18 @@ const config = {
         test: /\.less$/i,
         use: ["style-loader", "css-loader", "less-loader"],
       },
+      // {
+      //   test: /\.svg$/,
+      //   loader: "url-loader",
+      // },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jp(e*)g|svg|gif)$/,
         use: [
           {
             loader: "file-loader",
+            options: {
+              name: "images/[hash]-[name].[ext]",
+            },
           },
         ],
       },
@@ -113,6 +120,7 @@ if (isProduction) {
     hot: true,
     host: "localhost",
     port: 8066,
+    historyApiFallback: true,
   };
 }
 

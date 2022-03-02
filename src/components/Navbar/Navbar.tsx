@@ -1,5 +1,6 @@
 import {} from "react";
 import { Navbar as LMNavbar, Nav, Dropdown } from "rsuite";
+import Library from "./assets/icons/library.svg";
 
 type Props = {};
 
@@ -7,12 +8,14 @@ const Navbar = (props: Props) => {
   return (
     <div>
       <LMNavbar>
-        <LMNavbar.Brand>Main</LMNavbar.Brand>
+        <LMNavbar.Brand>
+          <img src={<Library />} />
+        </LMNavbar.Brand>
         <Nav>
           <Nav.Item href="/">Books</Nav.Item>
-          <Dropdown>
+          <Dropdown title="Books">
             <Nav.Item href="/">Viewer</Nav.Item>
-            <Dropdown.Item>Modifier</Dropdown.Item>
+            <Nav.Item href="/bookmodifier">Modifier</Nav.Item>
           </Dropdown>
           <Nav.Item>Coordinator</Nav.Item>
           <Nav.Item>FlashCards</Nav.Item>

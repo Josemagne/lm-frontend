@@ -14,6 +14,7 @@ export declare interface LM_Book {
      * The prename of the author
      */
     author_prename: string;
+    book_title: string;
     /**
      * Number of pages
      */
