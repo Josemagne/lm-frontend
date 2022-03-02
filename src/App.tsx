@@ -14,6 +14,7 @@ const App = (props: Props) => {
         <Routes>
           <Route path="/" element={<BooksViewer />} />
           <Route path="/bookmodifier" element={<BookModifier />} />
+          <Route path="/booksviewer" element={<BooksViewer />} />
         </Routes>
       </BrowserRouter>
     </div>
