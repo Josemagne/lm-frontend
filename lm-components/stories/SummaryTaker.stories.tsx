@@ -13,8 +13,10 @@ export default meta;
 
 const Template: Story<Props> = (args) => <SummaryTaker {...args} />;
 
-export const Default = () => <SummaryTaker></SummaryTaker>;
+export const Default = Template.bind({});
 
 export const Secondary = Template.bind({});
-
-Secondary.args = {};
+// NOTE Pass arguments to the secondary
+Secondary.args = {
+  color: 'danger',
+};
