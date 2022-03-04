@@ -4278,6 +4278,11 @@ loader-utils@^2.0.0:
     emojis-list "^3.0.0"
     json5 "^2.1.2"
 
+localpersistence@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/localpersistence/-/localpersistence-1.2.8.tgz#e310a2c8890467fb06191703eda1449eb2abbe79"
+  integrity sha512-kCVt2d+jLUb1Nbl5eGFgLp39OmFt1A5ceb4nrT+s2c0tK99dm55ySfDHXLJRunFS2cBbdlOckhqSV7nu1Q2rNg==
+
 locate-path@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/locate-path/-/locate-path-5.0.0.tgz"
@@ -4466,6 +4471,11 @@ nanoid@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.2.0.tgz#62667522da6673971cca916a6d3eff3f415ff80c"
   integrity sha512-fmsZYa9lpn69Ad5eDn7FMcnnSR+8R34W9qJEijxYhTbfOWzr22n1QxCMzXLK+ODyW2973V3Fux959iQoUxzUIA==
+
+nanoid@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.1.tgz#6347a18cac88af88f58af0b3594b723d5e99bb35"
+  integrity sha512-n6Vs/3KGyxPQd6uO0eH4Bv0ojGSUvuLlIHtC3Y0kEO23YRge8H9x1GCzLn28YX0H66pMkxuaeESFq4tKISKwdw==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -4998,7 +5008,7 @@ react-router-dom@^6.2.2:
     history "^5.2.0"
     react-router "6.2.2"
 
-react-router@6.2.2, react-router@^6.2.2:
+react-router@6.2.2, react-router@^7.2.2:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.2.2.tgz#495e683a0c04461eeb3d705fe445d6cf42f0c249"
   integrity sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ==

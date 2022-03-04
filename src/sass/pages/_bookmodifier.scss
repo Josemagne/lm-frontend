@@ -1,0 +1,21 @@
+.lm-bookmodifier {
+  display: grid;
+  grid-template-columns: 12;
+  grid-template-areas:
+    "lm-bookimage"
+    "lm-booktitle"
+    "lm-bookpages"
+    "lm-adder";
+
+  .lm-bookimage {
+    grid-area: lm-bookimage;
+  }
+
+  .lm-booktitle {
+    grid-area: lm-booktitle;
+  }
+
+  .lm-bookpages {
+    grid-area: lm-bookpages;
+  }
+}
