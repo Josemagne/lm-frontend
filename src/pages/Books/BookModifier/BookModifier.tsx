@@ -6,7 +6,7 @@ import Adder from "../../../components/helpers/Adder/Adder";
 import BookImage from "./SubComponents/BookImage/BookImage";
 import { useLiveQuery } from "dexie-react-hooks";
 import booksDB from "../../../storage/indexedDB/books";
-import { addBook } from "../../../types/helpers/book/Book";
+import Book from "../../../utils/Book";
 
 type Props = {};
 
@@ -16,15 +16,14 @@ type Props = {};
 const BookModifier = (props: Props) => {
   /* STORAGE */
 
-  /* Methods */
-  // TODO Move to helper functions
-
   /* STATE */
 
   /* EVENTS */
 
   // When the Adder is clicked then we add the book to indexedDB
-  window.addEventListener("adderClicked", () => {});
+  window.addEventListener("adderClicked", () => {
+    // Book.addBook();
+  });
 
   return (
     <div className="lm-page lm-booksmodifier">

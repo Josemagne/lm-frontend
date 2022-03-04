@@ -10,12 +10,13 @@ export default class Book {
 
     }
 
-    public static addBook = async (book: Omit<LM_Book, "book_id">): Promise<boolean> => {
+    public static addBook = async (book: any): Promise<boolean> => {
         let result: boolean = false;
 
         // Create a unique id
-        const book_id = nanoid();
+        book.book_id = nanoid();
 
+        // Add it to indexedDB
         books.books.add(book);
 
         return result;
