@@ -27,6 +27,6 @@ export declare interface LM_Book {
      * A number between 1 and 100 that indicates how far we have gotten with the book.
      */
     progress: number;
-    chapter: LM_Chapter[];
+    chapters: LM_Chapter[] | null;
     summary: string;
 }

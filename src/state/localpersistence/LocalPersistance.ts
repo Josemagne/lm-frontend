@@ -6,7 +6,10 @@ class LocalPersistence {
     }
 
 
-    public static metaData() {
+    /**
+     * Gets the metadata object from localStorage
+     */
+    public static getMetaData() {
 
     }
 

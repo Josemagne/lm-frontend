@@ -7,6 +7,7 @@ import BookImage from "./SubComponents/BookImage/BookImage";
 import { useLiveQuery } from "dexie-react-hooks";
 import booksDB from "../../../storage/indexedDB/books";
 import Book from "../../../utils/Book";
+import { formik } from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 
@@ -27,7 +28,7 @@ const BookModifier = (props: Props) => {
 
   return (
     <div className="lm-page lm-booksmodifier">
-      <Form.Group>
+      <Form.Group onSubmit={() => formik.handleSubmit()}>
         <BookImage bookImage="" />
 
         <BookTitle />

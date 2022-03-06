@@ -1,11 +1,17 @@
-import React from "react";
+import { formik } from "../../../../../state/redux/features/bookSlice";
 
 type Props = {};
 
 const BookPages = (props: Props) => {
   return (
     <div className="lm-bookpages">
-      <input type="number" className="lm-bookpages__input" onChange={} />
+      <input
+        type="number"
+        className="lm-bookpages__input"
+        // NOTE formik needs the name in order to appropriately change formik.values
+        name="pages"
+        onChange={(e) => formik.handleChange(e)}
+      />
     </div>
   );
 };
