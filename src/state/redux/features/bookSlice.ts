@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { LM_Book } from "../../../types/Book/book";
 import Book from "../../../utils/Book";
 import LocalPersistence from '../../localpersistence/LocalPersistance';
+import Server from '../../../services/Server';
 
 const initialValues: LM_Book = {
     author_name: "",
@@ -18,7 +19,12 @@ const initialValues: LM_Book = {
 
 export const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => Book.addBook(values)
+    onSubmit: (values) => {
+        // Persists locally
+        Book.addBook(values);
+        // Persist on backend
+        Server.addBook(values);
+    }
 });
 
 interface BookState {
