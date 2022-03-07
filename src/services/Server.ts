@@ -23,6 +23,6 @@ export default class Server {
     }
 
     public static addBook = async (book: Book) => {
-    this.api.post("/books")
+        Server.api.post("/books", book)
     }
 }

@@ -1,10 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useFormik } from "formik";
 import { LM_Book } from "../../../types/Book/book";
-import Book from "../../../utils/Book";
-import LocalPersistence from '../../localpersistence/LocalPersistance';
-import Server from '../../../services/Server';
-import * as yup from "yup";
 
 const initialValues: LM_Book = {
     author_name: "",
@@ -17,26 +12,6 @@ const initialValues: LM_Book = {
     summary: "",
     chapters: null,
 };
-
-/**
- * Contains the form data and how it is changed
- */
-export const formik = useFormik({
-    initialValues: initialValues,
-    /**
-     * Persists the data locally and on the backend
-     * @param values LM_Book
-     */
-    onSubmit: (values) => {
-        // Persists locally
-        Book.addBook(values);
-        // Persist on backend
-        Server.addBook(values);
-    },
-    validationSchema: yup.object({
-        author_name: yup.string().max(30, "Must be 30 characters or less").required("required")
-    })
-});
 
 interface BookState {
     /**

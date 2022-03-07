@@ -1,6 +1,7 @@
 import books from '../storage/indexedDB/books';
 import { LM_Book } from '../types/Book/book';
 import { nanoid } from 'nanoid';
+import { useLiveQuery } from 'dexie-react-hooks';
 
 /**
  * Class for book
@@ -31,6 +32,11 @@ export default class Book {
 
     }
 
+    /**
+     * Gets a specific book from indexedDB
+     * @param bookId book_id from book
+     * @returns LM_Book object
+     */
     public static getBook = async (bookId: string): Promise<LM_Book | undefined> => {
         let result: LM_Book | undefined;
 
@@ -41,11 +47,22 @@ export default class Book {
         return result;
     }
 
+    /**
+     * 
+     * @returns All the books from indexedDB
+     */
+    public static getBooks = async (): Promise<LM_Book[] | undefined> => {
+        let result: LM_Book[] | undefined;
+
+        result = useLiveQuery(() => books.books.toArray());
+
+        return result;
+    }
+
     public static updateBook = async (bookId: string, book: LM_Book): Promise<boolean> => {
         let result: boolean = false;
 
         return result;
-
     }
 
     public static removeBook = async (bookId: string): Promise<boolean> => {

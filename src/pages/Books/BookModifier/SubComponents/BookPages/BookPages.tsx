@@ -1,8 +1,6 @@
-import { formik } from "../../../../../state/redux/features/bookSlice";
-
 type Props = {};
 
-const BookPages = (props: Props) => {
+const BookPages = ({}: Props) => {
   return (
     <div className="lm-bookpages">
       <input
@@ -10,10 +8,6 @@ const BookPages = (props: Props) => {
         className="lm-bookpages__input"
         // NOTE formik needs the name in order to appropriately change formik.values
         name="pages"
-        value={formik.values.pages}
-        onChange={(e) => {
-          formik.handleChange(e);
-        }}
       />
     </div>
   );

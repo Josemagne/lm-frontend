@@ -1,18 +1,18 @@
-import { useState } from "react";
-
-import localpersistence from "localpersistence/lssv";
-
 type Props = {
   /**
    * The content of the button
    */
   text: string;
+  /**
+   * Handles click event
+   */
+  clickHandler?: any;
 };
 
 /**
  * The button that definitely adds the data
  */
-const Adder = ({ text }: Props) => {
+const Adder = ({ text, clickHandler }: Props) => {
   /* STORAGE */
 
   /* STATE */
@@ -20,24 +20,15 @@ const Adder = ({ text }: Props) => {
   /* METHODS */
 
   /* EVENTS */
-  /**
-   * Event that fires when the Adder is clicked
-   */
-  const adderClicked = new CustomEvent("adderClicked");
 
   return (
-    <div>
-      <button
-        // The button triggers a submit in the form
-        type="submit"
-        className="lm-adder"
-        onClick={() => {
-          window.dispatchEvent(adderClicked);
-        }}
-      >
-        {text}
-      </button>
-    </div>
+    <button
+      // The button triggers a submit in the form
+      type="submit"
+      className="lm-adder"
+    >
+      {text}
+    </button>
   );
 };
 
