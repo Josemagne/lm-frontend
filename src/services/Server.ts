@@ -1,5 +1,7 @@
 import axios, { AxiosInstance } from "axios";
+import "dotenv/config";
 import Book from "../utils/Book";
+
 
 const env = process.env.NODE_ENV;
 
@@ -7,22 +9,21 @@ const env = process.env.NODE_ENV;
 
 // TODO Rename the class
 export default class Server {
-    static api: AxiosInstance;
 
-    constructor() {
-        Server.api = axios.create({ baseURL: env === "development" ? "localhost" : `http://${process.env.BACKEND_IP_PRODUCTION}` });
-    }
     /**
      * Gets book from server
      */
     public static getBook = async (book_id: string) => {
-        this.api.get(`/book/${book_id}`).then(() => {
+        const api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+        api.get(`/books/${book_id}`).then(() => {
             console.log("got the book!")
         })
 
     }
 
     public static addBook = async (book: Book) => {
-        Server.api.post("/books", book)
+        const api = axios.create({ baseURL: env === "development" ? `localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+
+        api.post("/books", book)
     }
 }

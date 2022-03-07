@@ -37,51 +37,55 @@ const BookModifier = (props: Props) => {
     rate: 3,
   };
 
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: (values) => {
+      // TODO  Add to state
+
+      // Persists locally
+      Book.addBook(values);
+      // Persist on backend
+      Server.addBook(values);
+    },
+    // validationSchema: () => {
+    //   yup.object({
+    //     author: yup
+    //       .string()
+    //       .max(30, "Must be 30 characters or less")
+    //       .required("required"),
+    //     pages: yup
+    //       .number()
+    //       .max(5000, "There cannot be more than 5000 pages.")
+    //       .required("required"),
+    //   });
+    // },
+  });
+
   /* METHODS */
 
   /* EVENTS */
 
   return (
     <div className="lm-page lm-bookmodifier">
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          // TODO  Add to state
+      <form onSubmit={formik.handleSubmit}>
+        <BookImage bookImage="" />
+        {console.log(formik.values)}
 
-          // Persists locally
-          Book.addBook(values);
-          // Persist on backend
-          Server.addBook(values);
-        }}
-        validationSchema={yup.object({
-          author_name: yup
-            .string()
-            .max(30, "Must be 30 characters or less")
-            .required("required"),
-        })}
-        // validationSchema={(values: any) => formik.validateForm(values)}
-      >
-        {(formik) => (
-          <div>
-            <BookImage bookImage="" />
+        <BookTitle values={formik.getFieldProps("title")} />
 
-            <BookTitle values={formik.getFieldProps("title")} />
+        <BookPages values={formik.getFieldProps("pages")} />
 
-            <BookPages values={formik.getFieldProps("pages")} />
-
-            {/* <BookState
+        {/* <BookState
               values={formik.getFieldProps("read")}
               setFieldValue={formik.setFieldValue}
             /> */}
 
-            <BookProgress values={formik.getFieldProps("progress")} />
+        <BookProgress values={formik.getFieldProps("progress")} />
 
-            <BookAuthor values={formik.getFieldProps("author")} />
+        <BookAuthor values={formik.getFieldProps("author")} />
 
-            <Adder text={"+"} clickHandler={formik.handleSubmit} />
-          </div>
-        )}
-      </Formik>
+        <Adder text={"+"} />
+      </form>
     </div>
   );
 };
