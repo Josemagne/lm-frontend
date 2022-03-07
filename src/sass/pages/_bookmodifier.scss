@@ -1,18 +1,53 @@
 .lm-bookmodifier {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
-    "lm-bookimage lm-bookimage lm-book"
-    "lm-booktitle lm-booktile lm-bookpages";
+    "image image progress"
+    "image image pages"
+    "author title title";
+
+  .lm-bookimage {
+    grid-area: image;
+  }
+
+  .lm-bookprogress {
+    grid-area: progress;
+  }
+
+  .lm-bookauthor {
+    grid-area: author;
+  }
 
   .lm-booktitle {
-    grid-area: lm-booktitle;
+    grid-area: title;
   }
 
   .lm-bookpages {
-    grid-area: lm-bookpages;
+    grid-area: pages;
+  }
+}
+
+// ANCHOR .lm-bookstate
+.lm-bookstate {
+  display: grid;
+  grid-template-areas: "left right";
+  background-color: white;
+  border: black 3px solid;
+  height: 3rem;
+  .lm-bookstate__left {
+    background-color: black;
+    grid-area: left;
   }
 
-  @media (max-width: 900px) {
-    max-width: 66%;
+  .lm__bookstate__right {
+    background-color: black;
+    grid-area: right;
+  }
+
+  .lm-bookstate__span {
+    .lm-bookstate__checkbox {
+      // Make invisible
+      opacity: 0;
+    }
   }
 }

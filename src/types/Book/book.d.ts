@@ -24,4 +24,8 @@ export declare interface LM_Book {
     progress: number;
     chapters: LM_Chapter[] | null;
     summary: string;
+    /**
+     * Number between 1 and 5 for stars.
+     */
+    rate: number;
 }

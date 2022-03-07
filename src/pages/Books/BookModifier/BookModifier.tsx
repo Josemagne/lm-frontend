@@ -11,6 +11,7 @@ import { useFormik, FormikProps, Formik, Form } from "formik";
 import BookProgress from "./SubComponents/BookProgress/BookProgress";
 import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import { string } from "yup/lib/locale";
+import BookState from "./SubComponents/BookState/BookState";
 
 type Props = {};
 
@@ -30,19 +31,11 @@ const BookModifier = (props: Props) => {
     book_title: "",
     pages: 3,
     progress: 0,
-    read: false,
+    read: true,
     summary: "",
     chapters: null,
+    rate: 3,
   };
-
-  const formik: FormikProps<LM_Book> = useFormik({
-    initialValues: initialValues,
-    /**
-     * Persists the data locally and on the backend
-     * @param values LM_Book
-     */
-    onSubmit: (values) => {},
-  });
 
   /* METHODS */
 
@@ -53,7 +46,7 @@ const BookModifier = (props: Props) => {
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
-          // Add to state
+          // TODO  Add to state
 
           // Persists locally
           Book.addBook(values);
@@ -69,19 +62,24 @@ const BookModifier = (props: Props) => {
         // validationSchema={(values: any) => formik.validateForm(values)}
       >
         {(formik) => (
-          <Form onSubmit={formik.handleSubmit}>
+          <div>
             <BookImage bookImage="" />
 
             <BookTitle values={formik.getFieldProps("title")} />
 
             <BookPages values={formik.getFieldProps("pages")} />
 
+            {/* <BookState
+              values={formik.getFieldProps("read")}
+              setFieldValue={formik.setFieldValue}
+            /> */}
+
             <BookProgress values={formik.getFieldProps("progress")} />
 
             <BookAuthor values={formik.getFieldProps("author")} />
 
             <Adder text={"+"} clickHandler={formik.handleSubmit} />
-          </Form>
+          </div>
         )}
       </Formik>
     </div>

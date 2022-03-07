@@ -26,6 +26,9 @@ const Adder = ({ text, clickHandler }: Props) => {
       // The button triggers a submit in the form
       type="submit"
       className="lm-adder"
+      onClick={() => {
+        clickHandler();
+      }}
     >
       {text}
     </button>
