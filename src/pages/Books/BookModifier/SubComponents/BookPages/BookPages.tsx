@@ -10,7 +10,10 @@ const BookPages = (props: Props) => {
         className="lm-bookpages__input"
         // NOTE formik needs the name in order to appropriately change formik.values
         name="pages"
-        onChange={(e) => formik.handleChange(e)}
+        value={formik.values.pages}
+        onChange={(e) => {
+          formik.handleChange(e);
+        }}
       />
     </div>
   );

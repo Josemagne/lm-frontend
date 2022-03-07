@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import { Form } from "rsuite";
 import BookTitle from "./SubComponents/BookTitle/BookTitle";
 import BookPages from "./SubComponents/BookPages/BookPages";
@@ -19,16 +19,18 @@ const BookModifier = (props: Props) => {
 
   /* STATE */
 
-  /* EVENTS */
+  /* METHODS */
 
-  // When the Adder is clicked then we add the book to indexedDB
-  window.addEventListener("adderClicked", () => {
-    // Book.addBook();
-  });
+  /* EVENTS */
 
   return (
     <div className="lm-page lm-booksmodifier">
-      <Form.Group onSubmit={() => formik.handleSubmit()}>
+      <Form.Group
+        onSubmit={(e: FormEvent) => {
+          e.preventDefault();
+          formik.handleSubmit();
+        }}
+      >
         <BookImage bookImage="" />
 
         <BookTitle />

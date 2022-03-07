@@ -10,6 +10,11 @@ export default class Book {
 
     }
 
+    /**
+     * Adds book to indexedDB
+     * @param book Book object
+     * @returns Promise<boolean>
+     */
     public static addBook = async (book: any): Promise<boolean> => {
         let result: boolean = false;
 
@@ -17,17 +22,23 @@ export default class Book {
         book.book_id = nanoid();
 
         // Add it to indexedDB
-        books.books.add(book);
+        books.books.add(book).then((res) => {
+            // If the result was successful
+            if (res) result = true;
+        })
 
         return result;
 
     }
 
-    public static getBook = async (bookId: string): Promise<boolean> => {
-        let result: boolean = false;
+    public static getBook = async (bookId: string): Promise<LM_Book | undefined> => {
+        let result: LM_Book | undefined;
+
+        books.books.get(bookId).then((res) => {
+            result = res;
+        });
 
         return result;
-
     }
 
     public static updateBook = async (bookId: string, book: LM_Book): Promise<boolean> => {

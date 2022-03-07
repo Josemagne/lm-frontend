@@ -12,22 +12,29 @@ type Props = {
 /**
  * The button that definitely adds the data
  */
-const Adder = ({ text}: Props) => {
-/* STATE */
+const Adder = ({ text }: Props) => {
+  /* STORAGE */
+
+  /* STATE */
 
   /* METHODS */
 
-
-
   /* EVENTS */
-
+  /**
+   * Event that fires when the Adder is clicked
+   */
   const adderClicked = new CustomEvent("adderClicked");
-
 
   return (
     <div>
-          <button className="lm-adder" onClick={() => { window.dispatchEvent(adderClicked) }
-          }>
+      <button
+        // The button triggers a submit in the form
+        type="submit"
+        className="lm-adder"
+        onClick={() => {
+          window.dispatchEvent(adderClicked);
+        }}
+      >
         {text}
       </button>
     </div>
