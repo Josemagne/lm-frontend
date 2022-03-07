@@ -9,7 +9,9 @@ type Props = {};
 const App = (props: Props) => {
   return (
     <div className="app">
-      <Navbar />
+      <header>
+        <Navbar />
+      </header>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<BooksViewer />} />

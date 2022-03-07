@@ -1,6 +1,8 @@
-type Props = {};
+type Props = {
+  values: any;
+};
 
-const BookPages = ({}: Props) => {
+const BookPages = ({ values }: Props) => {
   return (
     <div className="lm-bookpages">
       <input
@@ -8,6 +10,7 @@ const BookPages = ({}: Props) => {
         className="lm-bookpages__input"
         // NOTE formik needs the name in order to appropriately change formik.values
         name="pages"
+        {...values}
       />
     </div>
   );

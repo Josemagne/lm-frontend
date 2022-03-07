@@ -8,6 +8,9 @@ import * as yup from "yup";
 import Server from "../../../services/Server";
 import { LM_Book } from "../../../types/Book/book";
 import { useFormik, FormikProps, Formik, Form } from "formik";
+import BookProgress from "./SubComponents/BookProgress/BookProgress";
+import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
+import { string } from "yup/lib/locale";
 
 type Props = {};
 
@@ -22,11 +25,10 @@ const BookModifier = (props: Props) => {
    * Initial values for formik
    */
   const initialValues: LM_Book = {
-    author_name: "",
-    author_prename: "",
+    author: "",
     book_id: "",
     book_title: "",
-    pages: 0,
+    pages: 3,
     progress: 0,
     read: false,
     summary: "",
@@ -47,7 +49,7 @@ const BookModifier = (props: Props) => {
   /* EVENTS */
 
   return (
-    <div className="lm-page lm-booksmodifier">
+    <div className="lm-page lm-bookmodifier">
       <Formik
         initialValues={initialValues}
         onSubmit={(values) => {
@@ -66,18 +68,21 @@ const BookModifier = (props: Props) => {
         })}
         // validationSchema={(values: any) => formik.validateForm(values)}
       >
-        <Form onSubmit={formik.handleSubmit}>
-          <BookImage bookImage="" />
+        {(formik) => (
+          <Form onSubmit={formik.handleSubmit}>
+            <BookImage bookImage="" />
 
-          <BookTitle />
+            <BookTitle values={formik.getFieldProps("title")} />
 
-          {/* TODO pages */}
-          <BookPages />
+            <BookPages values={formik.getFieldProps("pages")} />
 
-          {/* TODO author */}
-          {/* TODO state */}
-          <Adder text={"+"} clickHandler={formik.handleSubmit} />
-        </Form>
+            <BookProgress values={formik.getFieldProps("progress")} />
+
+            <BookAuthor values={formik.getFieldProps("author")} />
+
+            <Adder text={"+"} clickHandler={formik.handleSubmit} />
+          </Form>
+        )}
       </Formik>
     </div>
   );

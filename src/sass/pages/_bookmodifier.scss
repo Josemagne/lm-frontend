@@ -1,15 +1,8 @@
 .lm-bookmodifier {
   display: grid;
-  grid-template-columns: 12;
   grid-template-areas:
-    "lm-bookimage"
-    "lm-booktitle"
-    "lm-bookpages"
-    "lm-adder";
-
-  .lm-bookimage {
-    grid-area: lm-bookimage;
-  }
+    "lm-bookimage lm-bookimage lm-book"
+    "lm-booktitle lm-booktile lm-bookpages";
 
   .lm-booktitle {
     grid-area: lm-booktitle;
@@ -17,5 +10,9 @@
 
   .lm-bookpages {
     grid-area: lm-bookpages;
+  }
+
+  @media (max-width: 900px) {
+    max-width: 66%;
   }
 }

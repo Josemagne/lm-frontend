@@ -1,23 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LM_Book } from "../../../types/Book/book";
 
-const initialValues: LM_Book = {
-    author_name: "",
-    author_prename: "",
-    book_id: "",
-    book_title: "",
-    pages: 0,
-    progress: 0,
-    read: false,
-    summary: "",
-    chapters: null,
-};
-
 interface BookState {
-    /**
-     * The book for BookModifier
-     */
-    book: typeof initialValues;
     /**
      * The books that we have in indexedDB (BookViewer)
      */
@@ -25,10 +9,6 @@ interface BookState {
 }
 
 const initialState: BookState = {
-    /**
-     * The book for BookModifier
-     */
-    book: initialValues,
     /**
      * The books for BookViewer
      */
@@ -40,13 +20,16 @@ const booksSlice = createSlice({
     initialState,
     // Here we create the reducer for booksSlice
     reducers: {
-        addToBooks: () => {
-
+        /**
+         * Adds a LM_§Book object to the store
+         */
+        addToBooks: (state, action: PayloadAction<LM_Book>) => {
+            state.books.push(action.payload)
         }
     }
 })
 
-export const { } = booksSlice.actions;
+export const { addToBooks } = booksSlice.actions;
 
 
 export default booksSlice.reducer;

@@ -6,14 +6,9 @@ export declare interface LM_Book {
      */
     book_id: string;
     /**
-     * The name of the author
-     * If the author name is not known then we use "unknown"
+     * Full name of the author
      */
-    author_name: string;
-    /**
-     * The prename of the author
-     */
-    author_prename: string;
+    author: string;
     book_title: string;
     /**
      * Number of pages
