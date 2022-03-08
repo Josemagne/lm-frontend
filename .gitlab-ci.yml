@@ -1,0 +1,29 @@
+stages:
+  - build
+  - test
+  - deploy_netlify
+  - deploy_production
+
+variables:
+  name: Barakat
+
+build:
+  stage: build
+  image: alpine
+  variables:
+    name: Orlando
+  script:
+    - echo "Building librimem"
+    - npm run build
+  artifacts:
+    paths:
+      - dist
+
+test:
+  stage: test
+  image: alpine
+  script:
+    - echo "Testing librimem"
+
+deploy_netlify:
+  stage: deploy_netlify
