@@ -2985,15 +2985,10 @@ dotenv-defaults@^2.0.2:
 
 dotenv-webpack@^7.1.0:
   version "7.1.0"
-  resolved "https://registry.npmjs.org/dotenv-webpack/-/dotenv-webpack-7.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/dotenv-webpack/-/dotenv-webpack-7.1.0.tgz#211fefac6bf500bf3bb66b286e1b12a23a2a70c0"
   integrity sha512-+aUOe+nqgLerA/n611oyC15fY79BIkGm2fOxJAcHDonMZ7AtDpnzv/Oe591eHAenIE0t6w03UyxDnLs/YUxx5Q==
   dependencies:
     dotenv-defaults "^2.0.2"
-
-dotenv@^16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
-  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
 
 dotenv@^8.2.0:
   version "8.6.0"
@@ -5390,7 +5385,7 @@ react-router-dom@^6.2.2:
     history "^5.2.0"
     react-router "6.2.2"
 
-react-router@6.2.2, react-router@^7.2.2:
+react-router@6.2.2, react-router@^6.2.2:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.2.2.tgz#495e683a0c04461eeb3d705fe445d6cf42f0c249"
   integrity sha512-/MbxyLzd7Q7amp4gDOGaYvXwhEojkJD5BtExkuKmj39VEE0m3l/zipf6h2WIB2jyAO0lI6NGETh4RDcktRm4AQ==

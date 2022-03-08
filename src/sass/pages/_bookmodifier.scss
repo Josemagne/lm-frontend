@@ -1,29 +1,35 @@
 .lm-bookmodifier {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-    "image image progress"
-    "image image pages"
-    "author title title";
+  form {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      "author author title title title title"
+      "pages pages pages pages adder adder";
 
-  .lm-bookimage {
-    grid-area: image;
-  }
+    .lm-bookimage {
+      grid-area: image;
+    }
 
-  .lm-bookprogress {
-    grid-area: progress;
-  }
+    .lm-bookprogress {
+      grid-area: progress;
+    }
 
-  .lm-bookauthor {
-    grid-area: author;
-  }
+    .lm-bookauthor {
+      grid-area: author;
+    }
 
-  .lm-booktitle {
-    grid-area: title;
-  }
+    .lm-booktitle {
+      grid-area: title;
+    }
 
-  .lm-bookpages {
-    grid-area: pages;
+    .lm-bookpages {
+      grid-area: pages;
+      width: 4ch;
+    }
+
+    .lm-adder {
+      grid-area: adder;
+    }
   }
 }
 

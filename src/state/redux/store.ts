@@ -11,7 +11,7 @@ export const store: Store = configureStore({
 /**
  * State of our app
  */
-export type RooteState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 
 /**
  * Type of the dispatch

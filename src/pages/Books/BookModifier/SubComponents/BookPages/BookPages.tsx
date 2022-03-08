@@ -1,7 +1,11 @@
+import { useState } from "react";
 type Props = {
   values: any;
 };
 
+/**
+ * Holds the number of pages for a book
+ */
 const BookPages = ({ values }: Props) => {
   return (
     <div className="lm-bookpages">

@@ -3,7 +3,7 @@ import { LM_Book } from "../../../types/Book/book";
 
 interface BookState {
     /**
-     * The books that we have in indexedDB (BookViewer)
+     * The books that we have in indexedDB (BookViewer) or/and backend
      */
     books: LM_Book[];
 }

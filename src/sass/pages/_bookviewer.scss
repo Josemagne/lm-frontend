@@ -1,0 +1,9 @@
+.lm-bookviewer {
+  display: grid;
+  grid-template-areas:
+    "image author title"
+    "image pages category";
+
+  .lm-authorviewer {
+  }
+}

@@ -68,7 +68,7 @@ const BookModifier = (props: Props) => {
   return (
     <div className="lm-page lm-bookmodifier">
       <form onSubmit={formik.handleSubmit}>
-        <BookImage bookImage="" />
+        {/* <BookImage bookImage="" /> */}
         {console.log(formik.values)}
 
         <BookTitle values={formik.getFieldProps("title")} />
@@ -80,7 +80,7 @@ const BookModifier = (props: Props) => {
               setFieldValue={formik.setFieldValue}
             /> */}
 
-        <BookProgress values={formik.getFieldProps("progress")} />
+        {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
 
         <BookAuthor values={formik.getFieldProps("author")} />
 
