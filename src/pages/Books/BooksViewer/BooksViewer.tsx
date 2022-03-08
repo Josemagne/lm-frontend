@@ -11,11 +11,15 @@ import { useLiveQuery } from "dexie-react-hooks";
 import mybooks from "../../../storage/indexedDB/books";
 import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
+import BookModal from "./SubComponents/BookModal/BookModal";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
+  // Holds the books
   const [books, setBooks] = useState<LM_Book[]>([]);
+  // The selected book that should be viewed
+  const [selectedBook, setSelectedBook] = useState<string>();
 
   // NOTE Gets books and puts them in books: LM_Book[]
   useLiveQuery(() => {
@@ -34,6 +38,8 @@ const BooksViewer = (props: Props) => {
         ? books.map((book) => {
             return (
               <BookContainer
+                book_id={book.book_id}
+                setSelectedBook={setSelectedBook}
                 children={
                   <Fragment>
                     <AuthorViewer author_fullname={book.author} />
@@ -47,6 +53,12 @@ const BooksViewer = (props: Props) => {
             );
           })
         : "no books here"}
+      {selectedBook ? (
+        <BookModal
+          setSelectedBook={setSelectedBook}
+          selectedBook={selectedBook}
+        />
+      ) : null}
     </div>
   );
 };

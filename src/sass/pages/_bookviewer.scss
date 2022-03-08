@@ -3,8 +3,20 @@
 
   .lm-bookcontainer {
     border: 2px solid black;
+    padding: 1rem;
+    margin: 1rem;
     display: grid;
-    grid-template-areas: "image author title";
+    grid-template-areas:
+      "image author title"
+      "image progress pages";
+
+    &:nth-child(2n) {
+      background-color: rgb(155, 221, 155);
+    }
+    &:hover {
+      cursor: pointer;
+      border: 2px solid red;
+    }
     .lm-authorviewer {
       grid-area: author;
     }
@@ -13,6 +25,12 @@
     }
     .lm-imageviewer {
       grid-area: image;
+    }
+    .lm-progressviewer {
+      grid-area: progress;
+    }
+    .lm-pagesviewer {
+      grid-area: pages;
     }
   }
 }

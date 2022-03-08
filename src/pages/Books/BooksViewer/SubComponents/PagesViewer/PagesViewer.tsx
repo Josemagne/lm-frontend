@@ -3,7 +3,7 @@ type Props = {
 };
 
 const PagesViewer = ({ pages }: Props) => {
-  return <div className="lm-pagesviewer">{pages}</div>;
+  return <div className="lm-pagesviewer">pages: {pages}</div>;
 };
 
 export default PagesViewer;

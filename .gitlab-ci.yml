@@ -9,7 +9,7 @@ variables:
 
 build:
   stage: build
-  image: alpine
+  image: node:17
   variables:
     name: Orlando
   script:
@@ -24,9 +24,13 @@ build:
 
 test:
   stage: test
-  image: alpine
+  image: node:17
   script:
     - echo "Testing librimem"
+    # Run react-scripts tests
+    - npm run test-react
+    # Run unit tests with jest
+    # - npm run test
 
 deploy_netlify:
   stage: deploy_netlify
