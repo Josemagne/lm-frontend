@@ -1,9 +1,18 @@
-.lm-bookviewer {
+.lm-booksviewer {
   display: grid;
-  grid-template-areas:
-    "image author title"
-    "image pages category";
 
-  .lm-authorviewer {
+  .lm-bookcontainer {
+    border: 2px solid black;
+    display: grid;
+    grid-template-areas: "image author title";
+    .lm-authorviewer {
+      grid-area: author;
+    }
+    .lm-titleviewer {
+      grid-area: title;
+    }
+    .lm-imageviewer {
+      grid-area: image;
+    }
   }
 }

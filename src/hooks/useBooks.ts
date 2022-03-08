@@ -25,33 +25,37 @@ const useBooks = ({ type }: Props): Return => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        /* GET BOOKS FROM THE BACKEND */
-        // TODO Write!
-        if (type === "backend") {
+        const fn = async () => {
+
+            /* GET BOOKS FROM THE BACKEND */
+            // TODO Write!
+            if (type === "backend") {
+
+            }
+
+            /* GET BOOKS FROM FRONTEND */
+            else if (type === "frontend") {
+                await Book.getBooks().then((books) => {
+                    console.log("here")
+                    console.log("in func ", books)
+                    // If we got books from indexedDB
+                    if (books) {
+                        setData((prev) => {
+                            if (!prev) return;
+                            return [...prev, ...books]
+                        });
+                        setIsPending(false)
+                        return;
+                    }
+                }).catch((err) => {
+                    console.log("Could not get the books from indexedDB")
+                    setError(err);
+                    setIsPending(false);
+                })
+            }
 
         }
-
-        /* GET BOOKS FROM FRONTEND */
-        else if (type === "frontend") {
-            Book.getBooks().then((books) => {
-                console.log("here")
-                console.log("in func ", books)
-                // If we got books from indexedDB
-                if (books) {
-                    setData((prev) => {
-                        if (!prev) return;
-                        return [...prev, ...books]
-                    });
-                    setIsPending(false)
-                    return;
-                }
-            }).catch((err) => {
-                console.log("Could not get the books from indexedDB")
-                setError(err);
-                setIsPending(false);
-            })
-        }
-
+        fn();
     }, [])
 
     return { data, error, isPending };

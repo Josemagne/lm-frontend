@@ -1,5 +1,5 @@
 .lm-bookmodifier {
-  form {
+  & > form {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
@@ -24,7 +24,7 @@
 
     .lm-bookpages {
       grid-area: pages;
-      width: 4ch;
+      max-width: 4ch;
     }
 
     .lm-adder {

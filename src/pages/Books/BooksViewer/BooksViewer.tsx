@@ -6,43 +6,44 @@ import AuthorViewer from "./SubComponents/AuthorViewer/AuthorViewer";
 import PagesViewer from "./SubComponents/PagesViewer/PagesViewer";
 import ProgressViewer from "./SubComponents/ProgressViewer/ProgressViewer";
 import TitleViewer from "./SubComponents/TitleViewer/TitleViewer";
-import Book from "../../../utils/Book";
 import useBooks from "../../../hooks/useBooks";
+import { useLiveQuery } from "dexie-react-hooks";
+import mybooks from "../../../storage/indexedDB/books";
+import BookContainer from "./SubComponents/BookContainer/BookContainer";
+import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
   const [books, setBooks] = useState<LM_Book[]>([]);
 
-  // const _books = useSelector((state: RootState) => state.book.books);
-  // setBooks(_books);
+  // NOTE Gets books and puts them in books: LM_Book[]
+  useLiveQuery(() => {
+    return mybooks.books.toArray().then((res) => {
+      setBooks((prev) => {
+        return [...prev, ...res];
+      });
+    });
+  });
 
-  // Book.getBooks().then((res) => {
-  //   if (!res) return;
-  //   setBooks((prev) => {
-  //     return [...prev, ...res];
-  //   });
-  // });
-  const { data, error, isPending } = useBooks({ type: "frontend" });
+  useEffect(() => {}, []);
 
-  console.log(data);
-  console.log("err: ", error);
-
-  useEffect(() => {
-    // getBooks();
-    console.log(books);
-  }, []);
   return (
     <div className="lm-page lm-booksviewer">
       {books.length > 0
         ? books.map((book) => {
             return (
-              <Fragment>
-                <AuthorViewer author_fullname={book.author} />
-                <TitleViewer title={book.book_title} />
-                <ProgressViewer progress={book.progress} />
-                <PagesViewer pages={book.pages} />
-              </Fragment>
+              <BookContainer
+                children={
+                  <Fragment>
+                    <AuthorViewer author_fullname={book.author} />
+                    <TitleViewer title={book.book_title} />
+                    <ProgressViewer progress={book.progress} />
+                    <PagesViewer pages={book.pages} />
+                    <ImageViewer />
+                  </Fragment>
+                }
+              />
             );
           })
         : "no books here"}

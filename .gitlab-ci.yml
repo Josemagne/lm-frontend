@@ -14,10 +14,13 @@ build:
     name: Orlando
   script:
     - echo "Building librimem"
+    - npm install
     - npm run build
   artifacts:
     paths:
       - dist
+      # Our dependencies wont change that often
+      - node_modules
 
 test:
   stage: test
@@ -27,3 +30,7 @@ test:
 
 deploy_netlify:
   stage: deploy_netlify
+  script:
+    - echo "Deploying to netlify"
+    - npm run deploy-netlify
+    - echo "Deployed to netlify"
