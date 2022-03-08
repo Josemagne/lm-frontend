@@ -11,12 +11,15 @@ import { useLiveQuery } from "dexie-react-hooks";
 import mybooks from "../../../storage/indexedDB/books";
 import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
+import Book from "../../../utils/Book";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
+  /* STATE */
   const [books, setBooks] = useState<LM_Book[]>([]);
 
+  /* METHODS */
   // NOTE Gets books and puts them in books: LM_Book[]
   useLiveQuery(() => {
     return mybooks.books.toArray().then((res) => {
