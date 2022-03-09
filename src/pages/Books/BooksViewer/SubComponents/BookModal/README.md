@@ -1,3 +1,3 @@
 # BookModal
 
-Shows the data of a book in a modal.
+Shows the metadata of a book in a modal.

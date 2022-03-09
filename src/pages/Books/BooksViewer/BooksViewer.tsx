@@ -13,11 +13,15 @@ import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 import Book from "../../../utils/Book";
 
+import BookModal from "./SubComponents/BookModal/BookModal";
+
 type Props = {};
 
 const BooksViewer = (props: Props) => {
   /* STATE */
   const [books, setBooks] = useState<LM_Book[]>([]);
+  // The selected book that should be viewed
+  const [selectedBook, setSelectedBook] = useState<string>();
 
   /* METHODS */
   // NOTE Gets books and puts them in books: LM_Book[]
@@ -37,6 +41,8 @@ const BooksViewer = (props: Props) => {
         ? books.map((book) => {
             return (
               <BookContainer
+                book_id={book.book_id}
+                setSelectedBook={setSelectedBook}
                 children={
                   <Fragment>
                     <AuthorViewer author_fullname={book.author} />
@@ -50,6 +56,12 @@ const BooksViewer = (props: Props) => {
             );
           })
         : "no books here"}
+      {selectedBook ? (
+        <BookModal
+          setSelectedBook={setSelectedBook}
+          selectedBook={selectedBook}
+        />
+      ) : null}
     </div>
   );
 };
