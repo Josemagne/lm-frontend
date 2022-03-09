@@ -9,7 +9,7 @@ const Navbar = (props: Props) => {
     <div>
       <LMNavbar>
         <LMNavbar.Brand>
-          <img src={<Library />} />
+          <p>i</p>
         </LMNavbar.Brand>
         <Nav>
           <Nav.Item href="/">Books</Nav.Item>

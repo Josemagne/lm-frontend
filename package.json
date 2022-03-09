@@ -8,7 +8,7 @@
     "test-react": "npx react-scripts test",
     "dev": "npx cross-env NODE_ENV=development webpack-dev-server",
     "build": "rm -rf dist && npx cross-env NODE_ENV=production webpack",
-    "deploy-netlify": "npx netlify --dir=dist --prod"
+    "deploy-netlify": "npx netlify --auth $NETLIFY_AUTH_TOKEN --build --dir dist --prod"
   },
   "repository": {
     "type": "git",

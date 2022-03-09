@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { store, RootState } from "../../../state/redux/store";
 import { useLiveQuery } from "dexie-react-hooks";
 import books from "../../../storage/indexedDB/books";
-import { useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { LM_Book } from "../../../types/Book/book";
 import ChapterModifier from "../ChapterModifier/ChapterModifier";
 import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer";
@@ -13,20 +13,18 @@ const ChaptersViewer = ({}: Props) => {
   const [book, setBook] = useState<LM_Book>();
   const bookID = useSelector((state: RootState) => state.book.selectedBook);
   //   Get the book from indexedDB
-  if (bookID) {
-    const _book = useLiveQuery(() => books.books.get(bookID));
-    setBook(_book);
-  }
+  const _book = useLiveQuery(() => books.books.get(bookID));
+  setBook(_book);
+
+  useEffect(() => {}, []);
   return (
     <div className="lm-chaptersviewer">
-      {book && book.chapters ? (
-        book.chapters.map((chapter) => {
+      {book.chapters.map((chapter) => {
+        <Fragment>
           <ChapterContainer chapter={chapter} />;
-        })
-      ) : (
-        <p>No chapters yet.</p>
-      )}
-      <ChapterAdder bookID={book?.book_id} />
+          <ChapterAdder bookID={book.book_id} />
+        </Fragment>;
+      })}
     </div>
   );
 };

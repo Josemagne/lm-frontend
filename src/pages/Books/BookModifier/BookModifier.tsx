@@ -12,6 +12,8 @@ import BookProgress from "./SubComponents/BookProgress/BookProgress";
 import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import { string } from "yup/lib/locale";
 import BookState from "./SubComponents/BookState/BookState";
+import { useDispatch } from "react-redux";
+import { addToBooks } from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 
@@ -22,6 +24,7 @@ const BookModifier = (props: Props) => {
   /* STORAGE */
 
   /* STATE */
+  const dispatch = useDispatch();
   /**
    * Initial values for formik
    */
@@ -41,7 +44,7 @@ const BookModifier = (props: Props) => {
     initialValues: initialValues,
     onSubmit: (values) => {
       // TODO  Add to state
-
+      dispatch(() => addToBooks(values));
       // Persists locally
       Book.addBook(values);
       // Persist on backend

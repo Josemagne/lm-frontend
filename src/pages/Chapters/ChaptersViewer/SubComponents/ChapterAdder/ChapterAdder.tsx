@@ -6,24 +6,37 @@ import Book from "../../../../../utils/Book";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
+import { useFormik } from "formik";
+import { nanoid } from "nanoid";
 
 type Props = {
   bookID: string;
 };
 
 const ChapterAdder = ({}: Props) => {
+  /* STATE */
   const [book, setBook] = useState<LM_Book>();
   const [chapter, setChapter] = useState<LM_Chapter>();
 
-  const _book = useSelector((state: RootState) => state.books.selectedBook);
-
-  if (_book) setBook(_book);
-
-  const addChapter = () => {
-    if (book && chapter) {
-      Book.addChapter(book, chapter);
-    }
+  const initialValues: LM_Chapter = {
+    title: "",
+    importance: 50,
+    read: false,
+    summary: { summary_id: nanoid() },
+    toRead: false,
   };
+
+  const formik = useFormik({
+    initialValues: initialValues,
+    onSubmit: () => {
+      if (book && chapter) {
+        Book.addChapter(book, chapter);
+      }
+    },
+  });
+
+  const _book = useSelector((state: RootState) => state.books.selectedBook);
+  if (_book) setBook(_book);
 
   return (
     <div className="lm-chapteradder">
@@ -31,6 +44,7 @@ const ChapterAdder = ({}: Props) => {
         controlId="title"
         label="Title"
         className="lm-chapteradder__title"
+        {...formik.getFieldProps("title")}
       >
         <Form.Control type="text" placeholder="Title" />
       </FloatingLabel>
@@ -39,7 +53,7 @@ const ChapterAdder = ({}: Props) => {
       {/* importance */}
       {/* read */}
       {/* Summary */}
-      <Adder clickHandler={addChapter} text="+" />
+      <Adder clickHandler={formik.handleSubmit} text="+" />
     </div>
   );
 };
