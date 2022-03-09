@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
 import Navbar from "./components/Navbar/Navbar";
 import BookModifier from "./pages/Books/BookModifier/BookModifier";
+import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 
 type Props = {};
 
@@ -17,6 +18,7 @@ const App = (props: Props) => {
           <Route path="/" element={<BooksViewer />} />
           <Route path="/bookmodifier" element={<BookModifier />} />
           <Route path="/booksviewer" element={<BooksViewer />} />
+          <Route path="/chaptersviewer" element={<ChaptersViewer />} />
         </Routes>
       </BrowserRouter>
     </div>

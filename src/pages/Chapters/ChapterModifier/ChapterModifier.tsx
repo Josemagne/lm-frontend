@@ -1,8 +1,8 @@
 import React from "react";
-import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import ChapterTitle from "./SubComponents/ChapterHeader/ChapterTitle/ChapterTitle";
 import ChapterState from "./SubComponents/ChapterHeader/ChapterState/ChapterState";
 import SummaryModifier from "./SubComponents/ChapterBody/SummaryModifier/SummaryModifier";
+import Adder from "../../../components/helpers/Adder/Adder";
 
 type Props = {};
 
@@ -13,7 +13,7 @@ const ChapterModifier = (props: Props) => {
       <div className="lm-chapterheader">
         <ChapterTitle />
         <ChapterState />
-        <ChapterAdder />
+        <Adder text={"+"} />
       </div>
       <div className="lm-chapterheader">
         <SummaryModifier />

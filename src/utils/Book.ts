@@ -2,6 +2,7 @@ import books from '../storage/indexedDB/books';
 import { LM_Book } from '../types/Book/book';
 import { nanoid } from 'nanoid';
 import { useLiveQuery } from 'dexie-react-hooks';
+import LM_Chapter from '../types/Book/chapter';
 
 /**
  * Class for book
@@ -70,5 +71,17 @@ export default class Book {
 
         return result;
     }
+
+    // TODO Move to Chapter.ts
+    // ANCHOR Chapter
+    /**
+     * Adds chapter to indexedDB
+     */
+    public static addChapter = async (book: LM_Book, chapter: LM_Chapter) => {
+        // Add chapter to book
+        book.chapters?.push(chapter);
+        books.books.put(book, book.book_id);
+    }
+
 
 }

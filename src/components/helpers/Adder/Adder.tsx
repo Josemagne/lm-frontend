@@ -3,12 +3,13 @@ type Props = {
    * The content of the button
    */
   text: string;
+  clickHandler?: () => void;
 };
 
 /**
  * The button that definitely adds the data
  */
-const Adder = ({ text }: Props) => {
+const Adder = ({ text, clickHandler }: Props) => {
   /* STORAGE */
 
   /* STATE */
@@ -20,7 +21,11 @@ const Adder = ({ text }: Props) => {
   return (
     <button
       // The button triggers a submit in the form
-      type="submit"
+      onClick={() => {
+        if (clickHandler) {
+          clickHandler();
+        }
+      }}
       className="lm-adder"
     >
       {text}

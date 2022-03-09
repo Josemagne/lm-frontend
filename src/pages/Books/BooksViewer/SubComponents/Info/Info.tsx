@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addSelectedBook } from "../../../../../state/redux/features/bookSlice";
-import { LM_Book } from "../../../../../types/Book/book";
 
 type Props = {
   book_id: string;

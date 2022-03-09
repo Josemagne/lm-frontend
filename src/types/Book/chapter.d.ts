@@ -12,5 +12,9 @@ export default interface LM_Chapter {
      * Importance is a number from 1 to 100 where 1 indicate that it is not important and 100 that it is of outmost importance
      */
     importance: number;
+    /**
+     * Indicates if the chapter is read.
+     */
+    read: boolean;
     summary: LM_Summary;
 }

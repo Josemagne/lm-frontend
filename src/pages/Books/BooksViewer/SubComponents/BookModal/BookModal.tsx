@@ -1,4 +1,4 @@
-import { useEffect, Dispatch, Fragment, useState, SetStateAction } from "react";
+import { Fragment, useState } from "react";
 import { LM_Book } from "../../../../../types/Book/book";
 import { Modal } from "rsuite";
 import { useLiveQuery } from "dexie-react-hooks";
@@ -7,12 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
 import { removeSelectedBook } from "../../../../../state/redux/features/bookSlice";
 
-type Props = {
-  selectedBook: string;
-  setSelectedBook: Dispatch<SetStateAction<string | undefined>>;
-};
+type Props = {};
 
-const BookModal = ({ selectedBook, setSelectedBook }: Props) => {
+const BookModal = ({}: Props) => {
   // That book that is will be displayed
   const [book, setBook] = useState<LM_Book>();
   const [open, setOpen] = useState<boolean>(false);
@@ -28,22 +25,15 @@ const BookModal = ({ selectedBook, setSelectedBook }: Props) => {
         if (!res) return;
         setBook(res);
         setOpen(true);
-        console.log("Got book data from indexedDB");
       });
     });
   }
 
   const handleClose = () => {
-    setOpen(false);
-    setSelectedBook(undefined);
     // Remove it from redux
     dispatch(() => dispatch(removeSelectedBook("")));
-    console.log("Closed Modal");
+    setOpen(false);
   };
-
-  useEffect(() => {
-    console.log("Opened Modal");
-  }, []);
 
   return (
     <Modal

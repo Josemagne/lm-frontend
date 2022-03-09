@@ -1,17 +1,14 @@
 import { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../state/redux/store";
+import { useDispatch } from "react-redux";
 import { LM_Book } from "../../../types/Book/book";
 import AuthorViewer from "./SubComponents/AuthorViewer/AuthorViewer";
 import PagesViewer from "./SubComponents/PagesViewer/PagesViewer";
 import ProgressViewer from "./SubComponents/ProgressViewer/ProgressViewer";
 import TitleViewer from "./SubComponents/TitleViewer/TitleViewer";
-import useBooks from "../../../hooks/useBooks";
 import { useLiveQuery } from "dexie-react-hooks";
 import mybooks from "../../../storage/indexedDB/books";
 import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
-import Book from "../../../utils/Book";
 
 import BookModal from "./SubComponents/BookModal/BookModal";
 
@@ -33,6 +30,8 @@ const BooksViewer = (props: Props) => {
     });
   });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {}, []);
 
   return (
@@ -42,7 +41,6 @@ const BooksViewer = (props: Props) => {
             return (
               <BookContainer
                 book_id={book.book_id}
-                setSelectedBook={setSelectedBook}
                 children={
                   <Fragment>
                     <AuthorViewer author_fullname={book.author} />
@@ -56,12 +54,7 @@ const BooksViewer = (props: Props) => {
             );
           })
         : "no books here"}
-      {selectedBook ? (
-        <BookModal
-          setSelectedBook={setSelectedBook}
-          selectedBook={selectedBook}
-        />
-      ) : null}
+      {selectedBook ? <BookModal /> : null}
     </div>
   );
 };
