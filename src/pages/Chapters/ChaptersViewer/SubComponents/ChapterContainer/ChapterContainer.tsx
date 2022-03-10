@@ -3,6 +3,7 @@ import LM_Chapter from "../../../../../types/Book/chapter";
 type Props = {
   chapter: LM_Chapter;
 };
+
 /**
  * Contains the metadata about the chapter
  */

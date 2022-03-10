@@ -1,5 +1,4 @@
 import { Dispatch, useState } from "react";
-import { Link } from "react-router-dom";
 import { addSelectedBook } from "../../../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../../../types/Book/book";
 import Info from "../Info/Info";
@@ -14,14 +13,13 @@ const BookContainer = ({ children, book_id: bookId }: Props) => {
   const [book_id, SetBook_id] = useState<string>(bookId);
   const dispatch = useDispatch();
   return (
-    <Link
+    <div
       onClick={() => dispatch(addSelectedBook(book_id))}
-      to={"/chaptersviewer"}
       className="lm-bookcontainer"
     >
       {children}
       <Info book_id={book_id} />
-    </Link>
+    </div>
   );
 };
 

@@ -79,7 +79,7 @@ export default class Book {
      */
     public static addChapter = async (book: LM_Book, chapter: LM_Chapter) => {
         // Add chapter to book
-        book.chapters?.push(chapter);
+        book.chapters.push(chapter);
         books.books.put(book, book.book_id);
     }
 

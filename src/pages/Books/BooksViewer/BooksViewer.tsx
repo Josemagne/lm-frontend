@@ -11,6 +11,8 @@ import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 
 import BookModal from "./SubComponents/BookModal/BookModal";
+import { Panel } from "rsuite";
+import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
 
 type Props = {};
 
@@ -42,13 +44,19 @@ const BooksViewer = (props: Props) => {
               <BookContainer
                 book_id={book.book_id}
                 children={
-                  <Fragment>
-                    <AuthorViewer author_fullname={book.author} />
-                    <TitleViewer title={book.book_title} />
-                    <ProgressViewer progress={book.progress} />
-                    <PagesViewer pages={book.pages} />
-                    <ImageViewer />
-                  </Fragment>
+                  <Panel
+                    header={
+                      <Fragment>
+                        <AuthorViewer author_fullname={book.author} />
+                        <TitleViewer title={book.book_title} />
+                        <ProgressViewer progress={book.progress} />
+                        <PagesViewer pages={book.pages} />
+                        <ImageViewer />
+                      </Fragment>
+                    }
+                  >
+                    {openChapter ? <ChapterModifier /> : null}
+                  </Panel>
                 }
               />
             );

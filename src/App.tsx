@@ -1,4 +1,4 @@
-import ChapterModifier from "./pages/Books/ChapterModifier/ChapterModifier";
+// import ChapterModifier from "./pages/Books/ChapterModifier/ChapterModifier";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
 import Navbar from "./components/Navbar/Navbar";
@@ -18,7 +18,7 @@ const App = (props: Props) => {
           <Route path="/" element={<BooksViewer />} />
           <Route path="/bookmodifier" element={<BookModifier />} />
           <Route path="/booksviewer" element={<BooksViewer />} />
-          <Route path="/chaptersviewer" element={<ChaptersViewer />} />
+          {/* <Route path="/chaptersviewer" element={<ChaptersViewer />} /> */}
         </Routes>
       </BrowserRouter>
     </div>

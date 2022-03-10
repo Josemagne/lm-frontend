@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import Adder from "../../../../../components/helpers/Adder/Adder";
 import { LM_Book } from "../../../../../types/Book/book";
@@ -8,15 +8,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
 import { useFormik } from "formik";
 import { nanoid } from "nanoid";
+import { useLiveQuery } from "dexie-react-hooks";
+import books from "../../../../../storage/indexedDB/books";
 
-type Props = {
-  bookID: string;
-};
+type Props = {};
 
 const ChapterAdder = ({}: Props) => {
   /* STATE */
   const [book, setBook] = useState<LM_Book>();
-  const [chapter, setChapter] = useState<LM_Chapter>();
 
   const initialValues: LM_Chapter = {
     title: "",
@@ -28,15 +27,32 @@ const ChapterAdder = ({}: Props) => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: () => {
-      if (book && chapter) {
-        Book.addChapter(book, chapter);
+    onSubmit: (values) => {
+      if (book && values) {
+        // Add locally
+        Book.addChapter(book, values);
       }
     },
   });
 
-  const _book = useSelector((state: RootState) => state.books.selectedBook);
-  if (_book) setBook(_book);
+  const bookID = useSelector((state: RootState) => state.books.selectedBook);
+
+  const mybook = useSelector(
+    (state: RootState) => state.books.selectedBookObject
+  );
+
+  setBook(mybook);
+
+  // useLiveQuery(() => {
+  //   books.books.get(bookID).then((res) => {
+  //     if (!res) return;
+  //     setBook(res);
+  //   });
+  // });
+
+  useEffect(() => {
+    console.log("Initialised ChapterAdder local component");
+  }, [book]);
 
   return (
     <div className="lm-chapteradder">

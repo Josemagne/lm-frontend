@@ -10,12 +10,12 @@ import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
-  const [book, setBook] = useState<LM_Book>();
-  const bookID = useSelector((state: RootState) => state.book.selectedBook);
+  const [book, setBook] = useState<LM_Book | undefined>(undefined);
+  const bookID = useSelector((state: RootState) => state.books.selectedBook);
   console.log(bookID);
 
   //   Get the book from indexedDB
-  const _book = useLiveQuery(() => {
+  useLiveQuery(() => {
     return books.books.get(bookID).then((res) => {
       setBook(res);
       console.log(book);
@@ -23,28 +23,30 @@ const ChaptersViewer = ({}: Props) => {
     });
   });
 
-  if (!_book) {
+  // useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("1");
+  }, [book]);
+
+  if (!book) {
     return (
       <Fragment>
         <p>No Chapters yet</p>
-        <ChapterAdder bookID={bookID} />
+    {/* <ChapterAdder /> */}
       </Fragment>
     );
+  } else {
+    return (
+      <div className="lm-chaptersviewer">
+        {book.chapters.map((chapter) => {
+          <Fragment>
+            <ChapterContainer chapter={chapter} />;
+            <ChapterAdder />
+          </Fragment>;
+        })}
+      </div>
+    );
   }
-
-  console.log(book);
-
-  // useEffect(() => {}, []);
-  // return (
-  //   <div className="lm-chaptersviewer">
-  //     {_book.chapters.map((chapter) => {
-  //       <Fragment>
-  //         <ChapterContainer chapter={chapter} />;
-  //         <ChapterAdder bookID={_book.book_id} />
-  //       </Fragment>;
-  //     })}
-  //   </div>
-  // );
 };
 
 export default ChaptersViewer;
