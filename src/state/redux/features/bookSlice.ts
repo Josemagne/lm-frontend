@@ -20,7 +20,6 @@ const initialState: BookState = {
      */
     books: [],
     selectedBook: null,
-    selectedBookObject: null
 }
 
 const booksSlice = createSlice({
@@ -38,9 +37,6 @@ const booksSlice = createSlice({
         // selectedBook
         addSelectedBook: (state, action: PayloadAction<string>) => {
             state.selectedBook = action.payload;
-            books.books.get(action.payload).then((book) => {
-                if (book) state.selectedBookObject = book;
-            })
             return state;
         },
         removeSelectedBook: (state, action) => {

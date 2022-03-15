@@ -36,7 +36,7 @@ const BookModifier = (props: Props) => {
     progress: 0,
     read: true,
     summary: "",
-    chapters: null,
+    chapters: [],
     rate: 3,
   };
 
@@ -87,7 +87,7 @@ const BookModifier = (props: Props) => {
 
         <BookAuthor values={formik.getFieldProps("author")} />
 
-        <Adder text={"+"} />
+        <Adder text={"+"} type="submit" />
       </form>
     </div>
   );

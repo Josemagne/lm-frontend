@@ -11,13 +11,16 @@ import { nanoid } from "nanoid";
 import { useLiveQuery } from "dexie-react-hooks";
 import books from "../../../../../storage/indexedDB/books";
 
-type Props = {};
+type Props = {
+  book_id: string;
+};
 
-const ChapterAdder = ({}: Props) => {
+const ChapterAdder = ({ book_id }: Props) => {
   /* STATE */
-  const [book, setBook] = useState<LM_Book>();
+  const [book, setBook] = useState<LM_Book | undefined>();
 
   const initialValues: LM_Chapter = {
+    chapter_id: nanoid(),
     title: "",
     importance: 50,
     read: false,
@@ -25,34 +28,32 @@ const ChapterAdder = ({}: Props) => {
     toRead: false,
   };
 
+  useLiveQuery(() => {
+    // let bookID = window.location.href.split("/").pop();
+    if (!book_id) return;
+    books.books.get(bookID).then((res) => {
+      if (!res) return;
+      // _book = res;
+      setBook(res);
+      // console.log("_book", _book);
+    });
+  });
+
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: (values) => {
-      if (book && values) {
-        // Add locally
-        Book.addChapter(book, values);
-      }
+      // Add locally
+      if (!book) return;
+      Book.addChapter(book, values);
+      console.log("Added chapter to book");
     },
+    validate: () => {},
   });
 
-  const bookID = useSelector((state: RootState) => state.books.selectedBook);
-
-  const mybook = useSelector(
-    (state: RootState) => state.books.selectedBookObject
-  );
-
-  setBook(mybook);
-
-  // useLiveQuery(() => {
-  //   books.books.get(bookID).then((res) => {
-  //     if (!res) return;
-  //     setBook(res);
-  //   });
-  // });
-
   useEffect(() => {
-    console.log("Initialised ChapterAdder local component");
-  }, [book]);
+    // Cleanup function
+    return () => {};
+  }, []);
 
   return (
     <div className="lm-chapteradder">
@@ -60,16 +61,28 @@ const ChapterAdder = ({}: Props) => {
         controlId="title"
         label="Title"
         className="lm-chapteradder__title"
-        {...formik.getFieldProps("title")}
       >
-        <Form.Control type="text" placeholder="Title" />
+        <Form.Control
+          type="text"
+          placeholder="Title"
+          {...formik.getFieldProps("title")}
+          onChange={formik.handleChange}
+        />
       </FloatingLabel>
       {/* TODO Below */}
       {/* roRead */}
       {/* importance */}
       {/* read */}
       {/* Summary */}
-      <Adder clickHandler={formik.handleSubmit} text="+" />
+      <button
+        type="button"
+        onClick={() => {
+          formik.handleSubmit();
+        }}
+      >
+        add
+      </button>
+      {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}
     </div>
   );
 };

@@ -78,10 +78,22 @@ export default class Book {
      * Adds chapter to indexedDB
      */
     public static addChapter = async (book: LM_Book, chapter: LM_Chapter) => {
+        console.log("book: ", book)
+        console.log("chapter: ", chapter)
+
         // Add chapter to book
         book.chapters.push(chapter);
+
         books.books.put(book, book.book_id);
     }
 
+    public static getChapters = async (book_id: string): Promise<LM_Chapter[] | null> => {
+        let result: null | LM_Chapter[] = null;
+        await books.books.get(book_id).then((book) => {
+            if (book)
+                result = book?.chapters;
+        })
+        return result;
+    }
 
 }

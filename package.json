@@ -8,6 +8,7 @@
     "test-react": "npx react-scripts test",
     "dev": "npx cross-env NODE_ENV=development webpack-dev-server",
     "build": "rm -rf dist && npx cross-env NODE_ENV=production webpack",
+    "buil-ts": "npx tsc",
     "deploy-netlify": "npx netlify deploy --auth $NETLIFY_AUTH_TOKEN --build --dir dist --prod --site librimem"
   },
   "repository": {

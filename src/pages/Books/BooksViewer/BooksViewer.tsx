@@ -21,6 +21,8 @@ const BooksViewer = (props: Props) => {
   const [books, setBooks] = useState<LM_Book[]>([]);
   // The selected book that should be viewed
   const [selectedBook, setSelectedBook] = useState<string>();
+  // ID of the chapter that was opened
+  const [openChapter, setOpenChapter] = useState<string>();
 
   /* METHODS */
   // NOTE Gets books and puts them in books: LM_Book[]
@@ -34,7 +36,7 @@ const BooksViewer = (props: Props) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [selectedBook]);
 
   return (
     <div className="lm-page lm-booksviewer">

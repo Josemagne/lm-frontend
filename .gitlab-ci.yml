@@ -12,15 +12,19 @@ build:
   image: node:17
   variables:
     name: Orlando
+  environment:
+    NODE_ENV: productionn
   script:
     - echo "Building librimem"
     - npm install
-    - npm run build
+    - npm run build-ts
   artifacts:
     paths:
-      - dist
-      # Our dependencies wont change that often
-      - node_modules
+      - build
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths: node_modules
+    policy: pull-push
 
 test:
   stage: test
@@ -31,6 +35,8 @@ test:
     - npm run test-react
     # Run unit tests with jest
     # - npm run test
+  dependencies:
+    - build
 
 deploy_netlify:
   stage: deploy_netlify

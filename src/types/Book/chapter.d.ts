@@ -1,5 +1,6 @@
 import LM_Summary from './summary';
 export default interface LM_Chapter {
+    chapter_id: string;
     /**
      * The title of the chapter
      */

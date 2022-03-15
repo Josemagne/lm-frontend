@@ -4,12 +4,13 @@ type Props = {
    */
   text: string;
   clickHandler?: () => void;
+  type: "button" | "submit" | "reset";
 };
 
 /**
  * The button that definitely adds the data
  */
-const Adder = ({ text, clickHandler }: Props) => {
+const Adder = ({ text, clickHandler, type }: Props) => {
   /* STORAGE */
 
   /* STATE */
@@ -20,6 +21,7 @@ const Adder = ({ text, clickHandler }: Props) => {
 
   return (
     <button
+      type={type}
       // The button triggers a submit in the form
       onClick={() => {
         if (clickHandler) {
