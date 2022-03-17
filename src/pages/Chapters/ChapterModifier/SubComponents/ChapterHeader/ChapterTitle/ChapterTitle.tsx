@@ -3,13 +3,14 @@ import { FloatingLabel, Form } from "react-bootstrap";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../../state/redux/store";
+import useAppSelector from "../../../../../../hooks/useAppSelector";
 
 type Props = {};
 
 const ChapterTitle = (props: Props) => {
   const [title, setTitle] = useState<string>();
 
-  const _title = useSelector((state: RootState) => state.books.selectedBook);
+  const _title = useAppSelector((state) => state);
   if (_title) {
     setTitle(_title);
   }

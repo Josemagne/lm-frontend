@@ -10,8 +10,7 @@ interface BookState {
     /**
      * String of the selected book that we will show in the modal. If none is selected then the value is null.
      */
-    selectedBook: string | null;
-    selectedBookObject: LM_Book | null;
+    selectedBook: LM_Book | null;
 }
 
 const initialState: BookState = {
@@ -34,20 +33,13 @@ const booksSlice = createSlice({
             state.books.push(action.payload)
             return state;
         },
-        // selectedBook
-        addSelectedBook: (state, action: PayloadAction<string>) => {
-            state.selectedBook = action.payload;
-            return state;
-        },
-        removeSelectedBook: (state, action) => {
-            state.selectedBook = null;
-            state.selectedBookObject = null;
-            return state;
+        changeBook: (state, action: PayloadAction<LM_Book>) => {
+
         }
     }
 })
 
-export const { addToBooks, addSelectedBook, removeSelectedBook } = booksSlice.actions;
+export const { addToBooks } = booksSlice.actions;
 
 
 export default booksSlice.reducer;

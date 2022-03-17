@@ -31,7 +31,7 @@ const ChapterAdder = ({ book_id }: Props) => {
   useLiveQuery(() => {
     // let bookID = window.location.href.split("/").pop();
     if (!book_id) return;
-    books.books.get(bookID).then((res) => {
+    books.books.get(book_id).then((res) => {
       if (!res) return;
       // _book = res;
       setBook(res);

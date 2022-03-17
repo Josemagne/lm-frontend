@@ -36,7 +36,7 @@ const BooksViewer = (props: Props) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [selectedBook]);
+  // useEffect(() => {}, [selectedBook]);
 
   return (
     <div className="lm-page lm-booksviewer">
@@ -45,6 +45,7 @@ const BooksViewer = (props: Props) => {
             return (
               <BookContainer
                 book_id={book.book_id}
+                key={book.book_id}
                 children={
                   <Panel
                     header={
