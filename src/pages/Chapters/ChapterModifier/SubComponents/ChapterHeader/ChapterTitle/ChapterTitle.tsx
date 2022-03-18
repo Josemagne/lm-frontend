@@ -10,16 +10,9 @@ type Props = {};
 const ChapterTitle = (props: Props) => {
   const [title, setTitle] = useState<string>();
 
-<<<<<<< HEAD
   // Get title from redux
 
   useEffect(() => {}, []);
-=======
-  const _title = useAppSelector((state) => state);
-  if (_title) {
-    setTitle(_title);
-  }
->>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
 
   return (
     <div className="lm-chaptertitle">

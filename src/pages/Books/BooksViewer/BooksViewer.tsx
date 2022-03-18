@@ -15,14 +15,13 @@ import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
 import Book from "../../../utils/Book";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
-import { getBooks as _getBooks } from "../../../state/redux/redux-thunk/actions";
+import { loadBooks } from "../../../state/redux/redux-thunk/actions";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
   // TODO Implement redux-thunk
-  const dispatch = useDispatch();
-  dispatch(_getBooks());
+  // loadBooks(useAppDispatch());
   /* STATE */
   const [books, setBooks] = useState<LM_Book[]>([]);
   // The selected book that should be viewed
@@ -38,14 +37,10 @@ const BooksViewer = (props: Props) => {
     setBooks(result);
   };
 
-<<<<<<< HEAD
   // only runs at the mounting
   useEffect(() => {
     if (books.length < 1) getBooks();
   }, []);
-=======
-  // useEffect(() => {}, [selectedBook]);
->>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
 
   return (
     <div className="lm-page lm-booksviewer">

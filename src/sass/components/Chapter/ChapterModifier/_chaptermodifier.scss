@@ -9,15 +9,36 @@
   .lm-chapterheader {
     grid-area: lm-chapterheader;
     display: grid;
-    grid-template-areas:
-      "lm-chaptertitle lm-chapterstate"
-      "lm-chapteradder lm-chapteradder";
+    grid-template-areas: "lm-chaptertitle lm-chaptertitle lm-chapterstate";
+
+    .lm-chaptertitle {
+      width: 100%;
+    }
+
+    .lm-chapterstate {
+      width: 100%;
+    }
   }
 
   .lm-chapterbody {
     grid-area: lm-chapterbody;
     display: grid;
     grid-template-areas: "lm-summarymodifier";
+    .lm-summarymodifier {
+      grid-area: lm-summarymodifier;
+      border: 1px solid black;
+    }
+  }
+
+  .lm-chapterfooter {
+    grid-area: lm-chapterfooter;
+  }
+
+  .lm-adder {
+    position: fixed;
+    // TODO Correct the position of the button
+    bottom: 30%;
+    right: 10%;
   }
 }
 

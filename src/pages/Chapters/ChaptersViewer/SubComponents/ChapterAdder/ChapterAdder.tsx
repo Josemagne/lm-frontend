@@ -30,20 +30,10 @@ const ChapterAdder = ({ book_id }: Props) => {
 
   const getBook = async () => {
     if (!book_id) return;
-<<<<<<< HEAD
     let result = await Book.getBook(book_id);
     if (!result) return;
     setBook(result);
   };
-=======
-    books.books.get(book_id).then((res) => {
-      if (!res) return;
-      // _book = res;
-      setBook(res);
-      // console.log("_book", _book);
-    });
-  });
->>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
 
   const formik = useFormik({
     initialValues: initialValues,

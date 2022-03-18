@@ -11,7 +11,7 @@ interface BookState {
     books: {
         loading: boolean;
         data: LM_Book[];
-        error: string;
+        error: any;
     },
     /**
      * book that we treat at the moment. If none is selected then the value is null.
@@ -34,30 +34,61 @@ const initialState: BookState = {
 const booksSlice = createSlice({
     name: "booksSlice",
     initialState,
-    // Here we create the reducer for booksSlice
+    // Here we let the action creators meet the reducer to resolve the new state
     reducers: {
-
-    },
-    extraReducers: {
-        [getBooks.pending]: (state, action) => {
+        /**
+         * Action creator that is called when we initiate the request to the backend
+         */
+        getBooksRequest: (state) => {
             state.books.loading = true;
+            return state;
         },
-        "books/getBooks/fulfilled": (state, { payload }) => {
+        /**
+         * Action creator that is called when we got the books from the backend
+         */
+        getBooksFulfilled: (state, action) => {
             state.books.loading = false;
+            state.books.data = action.payload;
+            return state;
         },
-        "books/getBooks/rejected": (state) => {
+
+        getBooksRejected: (state, action) => {
             state.books.loading = false;
+            state.books.error = action.payload;
+        },
+
+        changeBook: (state, action) => {
+            let index = 0;
+            const book = state.books.data.find((book, i) => {
+                book.book_id === action.payload.book_id
+                index = i;
+                return book;
+            })
+            // Remove outdated book
+            state.books.data.splice(index, 1);
+            if (!book) return;
+            state.books.data.push(book);
+            return state;
         }
 
-    }
+    },
+    // extraReducers: (builder) => {
+    //     builder.addCase(getBooks.pending, (state, action) => {
+    //         state.books.loading = true;
+    //     }),
+    //         builder.addCase(getBooks.fulfilled, (state, action) => {
+    //             state.books.data = action.payload;
+    //             state.books.loading = false;
+    //         }),
+    //         builder.addCase(getBooks.rejected, (state, action) => {
+    //             state.books.loading = false;
+    //             state.books.error = action.payload
+    //         })
+
+
+    // }
 })
 
-<<<<<<< HEAD
-export const { } = booksSlice.actions;
-
-=======
-export const { addToBooks } = booksSlice.actions;
->>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
-
+export const { getBooksFulfilled, getBooksRejected, getBooksRequest } = booksSlice.actions;
 
 export default booksSlice.reducer;

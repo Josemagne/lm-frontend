@@ -22,9 +22,10 @@ const ChapterModifier = (props: Props) => {
         <ChapterState />
         <Adder type="button" text={"+"} />
       </div>
-      <div className="lm-chapterheader">
+      <div className="lm-chapterbody">
         <SummaryModifier />
       </div>
+      <div className="lm-chapterfooter"></div>
     </div>
   );
 };
