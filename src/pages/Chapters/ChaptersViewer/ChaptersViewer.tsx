@@ -14,6 +14,7 @@ const ChaptersViewer = ({}: Props) => {
   const [chapters, setChapters] = useState<LM_Chapter[] | []>([]);
   const bookID = window.location.href.split("/").pop();
 
+<<<<<<< HEAD
   // If we do not get the book id then we do not render the page
   // NOTE Without a book there is no chapter!
   if (!bookID) return;
@@ -40,10 +41,27 @@ const ChaptersViewer = ({}: Props) => {
       getBook();
     }
   }, []);
+=======
+  // If we can't get the id then we return nothing
+  if (!bookID) return;
+
+  // Get books on first try
+  if (chapters.length < 1) {
+    books.books.get(bookID).then((res) => {
+      if (!res) return;
+      setChapters((prev) => {
+        return [...res.chapters];
+      });
+    });
+  }
+>>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
+
+  useEffect(() => {}, []);
 
   return (
     <div className="lm-chaptersviewer">
       <p>{bookID}</p>
+<<<<<<< HEAD
       {chapters && chapters.length > 0 ? (
         chapters.map((ch) => {
           return (
@@ -60,6 +78,13 @@ const ChaptersViewer = ({}: Props) => {
           <ChapterAdder book_id={bookID} />
         </div>
       )}
+=======
+      {chapters.map((ch) => {
+        return (
+          <ChapterContainer key={ch.chapter_id} book_id={bookID} chapter={ch} />
+        );
+      })}
+>>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
     </div>
   );
 };

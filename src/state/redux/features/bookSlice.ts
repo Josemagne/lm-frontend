@@ -52,8 +52,12 @@ const booksSlice = createSlice({
     }
 })
 
+<<<<<<< HEAD
 export const { } = booksSlice.actions;
 
+=======
+export const { addToBooks } = booksSlice.actions;
+>>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
 
 
 export default booksSlice.reducer;

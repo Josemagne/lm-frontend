@@ -38,10 +38,14 @@ const BooksViewer = (props: Props) => {
     setBooks(result);
   };
 
+<<<<<<< HEAD
   // only runs at the mounting
   useEffect(() => {
     if (books.length < 1) getBooks();
   }, []);
+=======
+  // useEffect(() => {}, [selectedBook]);
+>>>>>>> f5caf40e7bc0ab99c76d30677981b68fcde5847f
 
   return (
     <div className="lm-page lm-booksviewer">
