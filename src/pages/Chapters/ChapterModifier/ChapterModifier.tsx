@@ -23,6 +23,9 @@ const ChapterModifier = (props: Props) => {
         <Adder type="button" text={"+"} />
       </div>
       <div className="lm-chapterbody">
+        {/* TODO Key word taker */}
+        {/* TODO Flash cards */}
+        {/* TODO AddPicture */}
         <SummaryModifier />
       </div>
       <div className="lm-chapterfooter"></div>

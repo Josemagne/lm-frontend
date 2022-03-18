@@ -52,31 +52,34 @@ const ChapterAdder = ({ book_id }: Props) => {
 
   return (
     <div className="lm-chapteradder">
-      <FloatingLabel
-        controlId="title"
-        label="Title"
-        className="lm-chapteradder__title"
-      >
-        <Form.Control
-          type="text"
-          placeholder="Title"
-          {...formik.getFieldProps("title")}
-          onChange={formik.handleChange}
-        />
-      </FloatingLabel>
-      {/* TODO Below */}
-      {/* roRead */}
-      {/* importance */}
-      {/* read */}
-      {/* Summary */}
-      <button
-        type="button"
-        onClick={() => {
-          formik.handleSubmit();
-        }}
-      >
-        add
-      </button>
+      <div>
+        <FloatingLabel
+          controlId="title"
+          label="Title"
+          className="lm-chapteradder__title"
+        >
+          <Form.Control
+            type="text"
+            placeholder="Title"
+            {...formik.getFieldProps("title")}
+            onChange={formik.handleChange}
+          />
+        </FloatingLabel>
+        {/* TODO Below */}
+        {/* roRead */}
+        {/* importance */}
+        {/* read */}
+        {/* Summary */}
+        <button
+          type="button"
+          onClick={() => {
+            formik.handleSubmit();
+          }}
+          className="lm-chapteradder__button"
+        >
+          add
+        </button>
+      </div>
       {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}
     </div>
   );

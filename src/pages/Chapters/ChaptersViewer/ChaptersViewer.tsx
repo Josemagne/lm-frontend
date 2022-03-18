@@ -45,23 +45,24 @@ const ChaptersViewer = ({}: Props) => {
 
   return (
     <div className="lm-chaptersviewer">
-      <p>{bookID}</p>
-      {chapters && chapters.length > 0 ? (
-        chapters.map((ch) => {
-          return (
-            <ChapterContainer
-              key={ch.chapter_id}
-              book_id={bookID}
-              chapter={ch}
-            />
-          );
-        })
-      ) : (
-        <div>
-          <p>No chapters yet...</p>
-          <ChapterAdder book_id={bookID} />
-        </div>
-      )}
+      <ChapterAdder book_id={bookID} />
+      <div className="lm-chapters">
+        {chapters && chapters.length > 0 ? (
+          chapters.map((ch) => {
+            return (
+              <ChapterContainer
+                key={ch.chapter_id}
+                book_id={bookID}
+                chapter={ch}
+              />
+            );
+          })
+        ) : (
+          <div>
+            <p>No chapters yet...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
