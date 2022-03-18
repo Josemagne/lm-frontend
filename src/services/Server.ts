@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import { LM_Book } from "../types/Book/book";
-import Book from "../utils/Book";
+import { nanoid } from 'nanoid';
 
 
 const env = process.env.NODE_ENV;
@@ -41,9 +41,15 @@ export default class Server {
         return books.data;
     }
 
-    public static addBook = async (book: Book) => {
-        const api = axios.create({ baseURL: env === "development" ? `localhost: ${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+    public static addBook = async (book: LM_Book) => {
+        const api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+        console.log("Send data about book to backend")
+
+        book.book_id = nanoid();
+
+        if (book.pages === null) book.pages = 0;
 
         api.post("/books", book)
+        console.log("Sent this book data to backend: ", book)
     }
 }

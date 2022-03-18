@@ -7,14 +7,14 @@ type Props = {
 
 const BookTitle = ({ values }: Props) => {
   return (
-    <div className="lm-booktitle" {...values}>
+    <div className="lm-booktitle">
       <Form className="lm-booktitle__form">
         <FloatingLabel
           controlId="book_title"
           label="Book Title"
           className="lm-booktitle__title"
         >
-          <Form.Control type="text" placeholder="Book Title" />
+          <Form.Control type="text" placeholder="Book Title" {...values} />
         </FloatingLabel>
       </Form>
     </div>

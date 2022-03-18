@@ -24,7 +24,9 @@
 
     .lm-bookpages {
       grid-area: lm-bookpages;
-      max-width: 4ch;
+      input {
+        max-width: 10ch;
+      }
     }
 
     .lm-adder {

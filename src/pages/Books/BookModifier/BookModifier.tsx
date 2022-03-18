@@ -33,7 +33,7 @@ const BookModifier = (props: Props) => {
     author: "",
     book_id: "",
     book_title: "",
-    pages: 3,
+    pages: null,
     progress: 0,
     read: true,
     summary: "",
@@ -45,6 +45,8 @@ const BookModifier = (props: Props) => {
     initialValues: initialValues,
     onSubmit: (values) => {
       // TODO  Add to state
+      // Remove values from form
+      formik.resetForm();
       // useAppDispatch(addBook(values));
       // Persists locally
       Book.addBook(values);

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FloatingLabel, Form } from "react-bootstrap";
 type Props = {
   values: any;
 };
@@ -9,13 +10,11 @@ type Props = {
 const BookPages = ({ values }: Props) => {
   return (
     <div className="lm-bookpages">
-      <input
-        type="number"
-        className="lm-bookpages__input"
-        // NOTE formik needs the name in order to appropriately change formik.values
-        name="pages"
-        {...values}
-      />
+      <Form>
+        <FloatingLabel controlId="pages" label="Pages">
+          <Form.Control type="number" placeholder="Pages" {...values} />
+        </FloatingLabel>
+      </Form>
     </div>
   );
 };
