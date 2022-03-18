@@ -28,16 +28,12 @@ const ChapterAdder = ({ book_id }: Props) => {
     toRead: false,
   };
 
-  useLiveQuery(() => {
-    // let bookID = window.location.href.split("/").pop();
+  const getBook = async () => {
     if (!book_id) return;
-    books.books.get(bookID).then((res) => {
-      if (!res) return;
-      // _book = res;
-      setBook(res);
-      // console.log("_book", _book);
-    });
-  });
+    let result = await Book.getBook(book_id);
+    if (!result) return;
+    setBook(result);
+  };
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -51,8 +47,7 @@ const ChapterAdder = ({ book_id }: Props) => {
   });
 
   useEffect(() => {
-    // Cleanup function
-    return () => {};
+    getBook();
   }, []);
 
   return (

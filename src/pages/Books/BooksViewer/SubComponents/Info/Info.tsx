@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addSelectedBook } from "../../../../../state/redux/features/bookSlice";
+import { changeBook } from "../../../../../state/redux/features/bookSlice";
 
 type Props = {
   book_id: string;
@@ -8,12 +8,14 @@ type Props = {
 const Info = ({ book_id }: Props) => {
   const dispatch = useDispatch();
 
-  const handleClick = () => {
-    dispatch(() => dispatch(addSelectedBook(book_id)));
-  };
+  // TODO Implement async redux (for indexedDB)
+  // const handleClick = () => {
+  //   dispatch(() => dispatch(changeBook(book_id)));
+  // };
 
   return (
-    <div className="lm-bookinfo" onClick={handleClick}>
+    // TODO Add click handler for redux
+    <div className="lm-bookinfo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"

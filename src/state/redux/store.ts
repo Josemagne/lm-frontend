@@ -1,7 +1,9 @@
-import { configureStore, Store } from "@reduxjs/toolkit";
+import { configureStore, Store, applyMiddleware } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
 import bookReducer from "./features/bookSlice";
 
 export const store: Store = configureStore({
+    middleware: [thunk],
     // Here we unite our reducers
     reducer: {
         book: bookReducer

@@ -41,7 +41,7 @@ export default class Book {
     public static getBook = async (bookId: string): Promise<LM_Book | undefined> => {
         let result: LM_Book | undefined;
 
-        books.books.get(bookId).then((res) => {
+        await books.books.get(bookId).then((res) => {
             result = res;
         });
 
@@ -55,7 +55,7 @@ export default class Book {
     public static getBooks = async (): Promise<LM_Book[] | undefined> => {
         let result: LM_Book[] | undefined;
 
-        result = useLiveQuery(() => books.books.toArray());
+        result = await books.books.toArray();
 
         return result;
     }

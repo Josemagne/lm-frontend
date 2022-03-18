@@ -1,12 +1,17 @@
+import { useState } from "react";
 import ChapterTitle from "./SubComponents/ChapterHeader/ChapterTitle/ChapterTitle";
 import ChapterState from "./SubComponents/ChapterHeader/ChapterState/ChapterState";
 import SummaryModifier from "./SubComponents/ChapterBody/SummaryModifier/SummaryModifier";
 import Adder from "../../../components/helpers/Adder/Adder";
 import { useEffect } from "react";
+import LM_Chapter from "../../../types/Book/chapter";
 
 type Props = {};
 
 const ChapterModifier = (props: Props) => {
+  const [chapter, setChapter] = useState<LM_Chapter>();
+  const bookID = window.location.href.split("/").pop();
+
   useEffect(() => {}, []);
 
   return (

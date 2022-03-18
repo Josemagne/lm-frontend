@@ -1,25 +1,34 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import books from "../../../storage/indexedDB/books";
 import { LM_Book } from "../../../types/Book/book";
+import Book from "../../../utils/Book";
+import { getBooks } from '../redux-thunk/actions';
 
 interface BookState {
     /**
      * The books that we have in indexedDB (BookViewer) or/and backend
      */
-    books: LM_Book[];
+    books: {
+        loading: boolean;
+        data: LM_Book[];
+        error: string;
+    },
     /**
-     * String of the selected book that we will show in the modal. If none is selected then the value is null.
+     * book that we treat at the moment. If none is selected then the value is null.
      */
-    selectedBook: string | null;
-    selectedBookObject: LM_Book | null;
+    selectedBook: LM_Book | undefined;
 }
 
 const initialState: BookState = {
     /**
      * The books for BookViewer
      */
-    books: [],
-    selectedBook: null,
+    books: {
+        data: [],
+        loading: false,
+        error: ''
+    },
+    selectedBook: undefined,
 }
 
 const booksSlice = createSlice({
@@ -27,27 +36,24 @@ const booksSlice = createSlice({
     initialState,
     // Here we create the reducer for booksSlice
     reducers: {
-        /**
-         * Adds a LM_§Book object to the store
-         */
-        addToBooks: (state, action: PayloadAction<LM_Book>) => {
-            state.books.push(action.payload)
-            return state;
+
+    },
+    extraReducers: {
+        [getBooks.pending]: (state, action) => {
+            state.books.loading = true;
         },
-        // selectedBook
-        addSelectedBook: (state, action: PayloadAction<string>) => {
-            state.selectedBook = action.payload;
-            return state;
+        "books/getBooks/fulfilled": (state, { payload }) => {
+            state.books.loading = false;
         },
-        removeSelectedBook: (state, action) => {
-            state.selectedBook = null;
-            state.selectedBookObject = null;
-            return state;
+        "books/getBooks/rejected": (state) => {
+            state.books.loading = false;
         }
+
     }
 })
 
-export const { addToBooks, addSelectedBook, removeSelectedBook } = booksSlice.actions;
+export const { } = booksSlice.actions;
+
 
 
 export default booksSlice.reducer;

@@ -5,7 +5,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import books from "../../../../../storage/indexedDB/books";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
-import { removeSelectedBook } from "../../../../../state/redux/features/bookSlice";
+import {} from "../../../../../state/redux/features/bookSlice";
 
 type Props = {};
 

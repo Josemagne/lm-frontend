@@ -9,14 +9,20 @@ import { useLiveQuery } from "dexie-react-hooks";
 import mybooks from "../../../storage/indexedDB/books";
 import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
-
 import BookModal from "./SubComponents/BookModal/BookModal";
 import { Panel } from "rsuite";
 import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
+import Book from "../../../utils/Book";
+import useAppSelector from "../../../hooks/useAppSelector";
+import useAppDispatch from "../../../hooks/useAppDispatch";
+import { getBooks as _getBooks } from "../../../state/redux/redux-thunk/actions";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
+  // TODO Implement redux-thunk
+  const dispatch = useDispatch();
+  dispatch(_getBooks());
   /* STATE */
   const [books, setBooks] = useState<LM_Book[]>([]);
   // The selected book that should be viewed
@@ -25,18 +31,17 @@ const BooksViewer = (props: Props) => {
   const [openChapter, setOpenChapter] = useState<string>();
 
   /* METHODS */
-  // NOTE Gets books and puts them in books: LM_Book[]
-  useLiveQuery(() => {
-    return mybooks.books.toArray().then((res) => {
-      setBooks((prev) => {
-        return [...prev, ...res];
-      });
-    });
-  });
 
-  const dispatch = useDispatch();
+  const getBooks = async () => {
+    let result = await Book.getBooks();
+    if (!result) return;
+    setBooks(result);
+  };
 
-  useEffect(() => {}, [selectedBook]);
+  // only runs at the mounting
+  useEffect(() => {
+    if (books.length < 1) getBooks();
+  }, []);
 
   return (
     <div className="lm-page lm-booksviewer">
@@ -45,6 +50,7 @@ const BooksViewer = (props: Props) => {
             return (
               <BookContainer
                 book_id={book.book_id}
+                key={book.book_id}
                 children={
                   <Panel
                     header={

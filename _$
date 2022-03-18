@@ -4,6 +4,7 @@ stages:
   - deploy_netlify
   - deploy_production
 
+
 variables:
   name: Barakat
 
@@ -12,20 +13,15 @@ build:
   image: node:17
   variables:
     name: Orlando
-  environment:
-    NODE_ENV: productionn
   script:
     - echo "Building librimem"
-    - npm install
-    - npm run build-ts
+    - npm ci
+    - npm run build
+  cache:
+    paths: node_modules/
   artifacts:
     paths:
-      - build
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - node_modules
-    policy: pull-push
+      - dist
 
 test:
   stage: test
@@ -36,8 +32,9 @@ test:
     - npm run test-react
     # Run unit tests with jest
     # - npm run test
-  dependencies:
-    - build
+  needs:
+    - job: build
+      artifacts: true
 
 deploy_netlify:
   stage: deploy_netlify

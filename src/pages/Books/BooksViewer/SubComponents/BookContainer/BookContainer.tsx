@@ -1,5 +1,5 @@
 import { Dispatch, useState } from "react";
-import { addSelectedBook } from "../../../../../state/redux/features/bookSlice";
+import {} from "../../../../../state/redux/features/bookSlice";
 import { useNavigate } from "react-router";
 import { LM_Book } from "../../../../../types/Book/book";
 import Info from "../Info/Info";
@@ -22,8 +22,9 @@ const BookContainer = ({ children, book_id: bookId }: Props) => {
   return (
     <div
       onClick={() => {
-        dispatch(addSelectedBook(book_id));
-        navigate(`chaptersviewer/${book_id}`);
+        navigate(`chaptersviewer/${book_id}`, {
+          replace: true,
+        });
       }}
       className="lm-bookcontainer"
     >

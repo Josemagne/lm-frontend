@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useNavigate } from "react-router";
@@ -20,13 +21,15 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
    * Navigates the user to ChapterModifier
    */
   const handleClick = () => {
-    navigate(`chaptermodifier/${book_id}/${chapter.chapter_id}`);
+    navigate(`/chaptermodifier/${book_id}/${chapter.chapter_id}`, {
+      replace: true,
+    });
   };
 
   return (
     <div className="lm-chaptercontainer" onClick={handleClick}>
       <p>{chapter.title}</p>
-      {/* <p>{ chapter.}</p> */}
+      <p>{chapter.chapter_id}</p>
     </div>
   );
 };

@@ -13,7 +13,7 @@ import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import { string } from "yup/lib/locale";
 import BookState from "./SubComponents/BookState/BookState";
 import { useDispatch } from "react-redux";
-import { addToBooks } from "../../../state/redux/features/bookSlice";
+import {} from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 

@@ -11,65 +11,55 @@ import LM_Chapter from "../../../types/Book/chapter";
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
-  const [chapters, setChapters] = useState<LM_Chapter[] | undefined>(undefined);
-  const [book, setBook] = useState<LM_Book | undefined>(undefined);
+  const [chapters, setChapters] = useState<LM_Chapter[] | []>([]);
+  const bookID = window.location.href.split("/").pop();
 
-  let _book: LM_Book | undefined = undefined;
-  //   Get the book from indexedDB
+  // If we do not get the book id then we do not render the page
+  // NOTE Without a book there is no chapter!
+  if (!bookID) return;
+  const getBook = async () => {
+    let book: LM_Book | undefined = await books.books
+      .get(bookID)
+      .then((res) => res);
+    if (!book) return;
+    setChapters(book.chapters);
+  };
 
-  const res = useLiveQuery(() => {
-    let bookID = window.location.href.split("/").pop();
-    if (!bookID) return;
-    return books.books.get(bookID).then((res) => {
-      console.log("res:", res);
-      if (!res) return;
-      setChapters(res.chapters);
-      setBook(res);
-      _book = res;
-      return res;
-      // setBook(res);
-    });
-  });
+  // Get books on first try
+  // if (chapters.length < 1) {
+  //   books.books.get(bookID).then((res) => {
+  //     if (!res) return;
+  //     setChapters((prev) => {
+  //       return [...res.chapters];
+  //     });
+  //   });
+  // }
 
   useEffect(() => {
-    console.log("chpaters: ", chapters);
-  }, [chapters, book]);
-
-  useEffect(() => {
-    if (_book) setBook(_book);
-    if (res) setBook(res);
+    if (chapters.length < 1) {
+      getBook();
+    }
   }, []);
-  // useEffect(() => {
-  //   console.log("book: ", _book);
-  // }, [_book]);
-
-  if (chapters && book) {
-    return (
-      <div className="lm-chaptersviewer">
-        {chapters.map((chapter) => {
-          <ChapterContainer chapter={chapter} book_id={book.book_id} />;
-        })}
-      </div>
-    );
-  }
 
   return (
     <div className="lm-chaptersviewer">
-      {/* {_book ? (
-        <div className="lm-chaptersviewer lm-page">
-          {_book.chapters.map((chapter) => {
-            <ChapterContainer chapter={chapter} book_id={_book.book_id} />;
-          })}
-          <ChapterAdder />
+      <p>{bookID}</p>
+      {chapters && chapters.length > 0 ? (
+        chapters.map((ch) => {
+          return (
+            <ChapterContainer
+              key={ch.chapter_id}
+              book_id={bookID}
+              chapter={ch}
+            />
+          );
+        })
+      ) : (
+        <div>
+          <p>No chapters yet...</p>
+          <ChapterAdder book_id={bookID} />
         </div>
-      ) : null} */}
-
-      {!chapters ? (
-        <Fragment>
-          <p>No Chapters yet</p>
-          {book ? <ChapterAdder book_id={book?.book_id} /> : null}
-        </Fragment>
-      ) : null}
+      )}
     </div>
   );
 };
