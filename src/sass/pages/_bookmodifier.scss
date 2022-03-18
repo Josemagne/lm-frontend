@@ -3,32 +3,34 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
-      "author author title title title title"
-      "pages pages pages pages adder adder";
+      "lm-bookauthor lm-bookauthor lm-booktitle lm-booktitle lm-booktitle lm-booktitle"
+      "lm-bookpages lm-bookpages lm-bookpages lm-bookpages lm-bookpages lm-bookpages";
 
     .lm-bookimage {
       grid-area: image;
     }
 
     .lm-bookprogress {
-      grid-area: progress;
+      grid-area: lm-bookprogress;
     }
 
     .lm-bookauthor {
-      grid-area: author;
+      grid-area: lm-bookauthor;
     }
 
     .lm-booktitle {
-      grid-area: title;
+      grid-area: lm-booktitle;
     }
 
     .lm-bookpages {
-      grid-area: pages;
+      grid-area: lm-bookpages;
       max-width: 4ch;
     }
 
     .lm-adder {
-      grid-area: adder;
+      position: fixed;
+      right: 10%;
+      bottom: 10%;
     }
   }
 }

@@ -12,8 +12,7 @@ build:
   image: node:17
   variables:
     name: Orlando
-  environment:
-    NODE_ENV: productionn
+    NODE_ENV: production
   script:
     - echo "Building librimem"
     - npm install

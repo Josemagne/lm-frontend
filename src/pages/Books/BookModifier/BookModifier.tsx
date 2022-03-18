@@ -13,7 +13,8 @@ import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import { string } from "yup/lib/locale";
 import BookState from "./SubComponents/BookState/BookState";
 import { useDispatch } from "react-redux";
-import {} from "../../../state/redux/features/bookSlice";
+import { addBook } from "../../../state/redux/features/bookSlice";
+import useAppDispatch from "../../../hooks/useAppDispatch";
 
 type Props = {};
 
@@ -44,7 +45,7 @@ const BookModifier = (props: Props) => {
     initialValues: initialValues,
     onSubmit: (values) => {
       // TODO  Add to state
-      dispatch(() => addToBooks(values));
+      // useAppDispatch(addBook(values));
       // Persists locally
       Book.addBook(values);
       // Persist on backend

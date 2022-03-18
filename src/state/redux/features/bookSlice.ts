@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import books from "../../../storage/indexedDB/books";
 import { LM_Book } from "../../../types/Book/book";
 import Book from "../../../utils/Book";
-import { getBooks } from '../redux-thunk/actions';
 
 interface BookState {
     /**
@@ -55,8 +54,8 @@ const booksSlice = createSlice({
         getBooksRejected: (state, action) => {
             state.books.loading = false;
             state.books.error = action.payload;
+            return state;
         },
-
         changeBook: (state, action) => {
             let index = 0;
             const book = state.books.data.find((book, i) => {
@@ -68,6 +67,10 @@ const booksSlice = createSlice({
             state.books.data.splice(index, 1);
             if (!book) return;
             state.books.data.push(book);
+            return state;
+        },
+        addBook: (state, action) => {
+            state.books.data.push(action.payload);
             return state;
         }
 
@@ -89,6 +92,6 @@ const booksSlice = createSlice({
     // }
 })
 
-export const { getBooksFulfilled, getBooksRejected, getBooksRequest } = booksSlice.actions;
+export const { getBooksFulfilled, getBooksRejected, getBooksRequest, addBook } = booksSlice.actions;
 
 export default booksSlice.reducer;
