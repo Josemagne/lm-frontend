@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import Adder from "../../../../../components/helpers/Adder/Adder";
 import { LM_Book } from "../../../../../types/Book/book";
@@ -8,16 +8,33 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
 import { useFormik } from "formik";
 import { nanoid } from "nanoid";
-import { useLiveQuery } from "dexie-react-hooks";
-import books from "../../../../../storage/indexedDB/books";
+import { Editable, Slate, withReact } from "slate-react";
+import { createEditor, Node } from "slate";
 
 type Props = {
   book_id: string;
 };
 
+const initialValue: Node[] = [
+  {
+    children: [
+      {
+        type: "paragraph",
+        children: [
+          {
+            text: "Title",
+          },
+        ],
+      },
+    ],
+  },
+];
+
 const ChapterAdder = ({ book_id }: Props) => {
   /* STATE */
   const [book, setBook] = useState<LM_Book | undefined>();
+  const [chapterValue, setChapterValue] = useState<Node[]>(initialValue);
+  const [subChapterValue, setSubChapterValue] = useState<Node[]>(initialValue);
 
   const initialValues: LM_Chapter = {
     chapter_id: nanoid(),
@@ -50,8 +67,17 @@ const ChapterAdder = ({ book_id }: Props) => {
     getBook();
   }, []);
 
+  const editor = useMemo(() => withReact(createEditor()), []);
+
   return (
     <div className="lm-chapteradder">
+      <Slate
+        editor={editor}
+        value={chapterValue}
+        onChange={(v) => setChapterValue(v)}
+      >
+        <Editable />
+      </Slate>
       <div>
         <FloatingLabel
           controlId="title"
@@ -66,6 +92,17 @@ const ChapterAdder = ({ book_id }: Props) => {
           />
         </FloatingLabel>
         {/* TODO Below */}
+        {/* Subchapter */}
+        <div className="lm-chapteradder_subchapter">
+          <Slate
+            editor={editor}
+            value={chapterValue}
+            onChange={(v) => setChapterValue(v)}
+          >
+            <Editable />
+          </Slate>
+        </div>
+
         {/* roRead */}
         {/* importance */}
         {/* read */}

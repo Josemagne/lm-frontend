@@ -13,8 +13,8 @@ import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import { string } from "yup/lib/locale";
 import BookState from "./SubComponents/BookState/BookState";
 import { useDispatch } from "react-redux";
-import { addBook } from "../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../hooks/useAppDispatch";
+import { nanoid } from "nanoid";
 
 type Props = {};
 
@@ -31,9 +31,9 @@ const BookModifier = (props: Props) => {
    */
   const initialValues: LM_Book = {
     author: "",
-    book_id: "",
+    book_id: nanoid(),
     book_title: "",
-    pages: null,
+    pages: 0,
     progress: 0,
     read: true,
     summary: "",

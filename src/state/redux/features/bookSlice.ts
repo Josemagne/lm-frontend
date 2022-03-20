@@ -1,97 +1,67 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import books from "../../../storage/indexedDB/books";
-import { LM_Book } from "../../../types/Book/book";
-import Book from "../../../utils/Book";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { LM_Book } from "../../../types/Book/book"
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import Server from '../../../services/Server';
+import axios from 'axios';
 
-interface BookState {
-    /**
-     * The books that we have in indexedDB (BookViewer) or/and backend
-     */
+interface InitialState {
     books: {
-        loading: boolean;
         data: LM_Book[];
+        loading: boolean;
         error: any;
-    },
-    /**
-     * book that we treat at the moment. If none is selected then the value is null.
-     */
-    selectedBook: LM_Book | undefined;
+    }
 }
 
-const initialState: BookState = {
-    /**
-     * The books for BookViewer
-     */
+const initialState: InitialState = {
     books: {
         data: [],
         loading: false,
-        error: ''
-    },
-    selectedBook: undefined,
+        error: null
+    }
+
 }
 
-const booksSlice = createSlice({
-    name: "booksSlice",
-    initialState,
-    // Here we let the action creators meet the reducer to resolve the new state
+
+export const fetchBooks = createAsyncThunk("books/fetchBooks", async (): Promise<LM_Book[] | any> => {
+    let error: any = null;
+    // const data = await Server.getBooks();
+    const { data } = await axios.get("http://localhost:4000/books");
+    if (error) return error;
+    return data;
+});
+
+export const bookSlice = createSlice({
+    name: "books",
+    initialState: initialState,
     reducers: {
-        /**
-         * Action creator that is called when we initiate the request to the backend
-         */
-        getBooksRequest: (state) => {
-            state.books.loading = true;
-            return state;
-        },
-        /**
-         * Action creator that is called when we got the books from the backend
-         */
-        getBooksFulfilled: (state, action) => {
-            state.books.loading = false;
-            state.books.data = action.payload;
-            return state;
-        },
+        addBook: (state, action: PayloadAction<LM_Book>) => {
 
-        getBooksRejected: (state, action) => {
-            state.books.loading = false;
-            state.books.error = action.payload;
-            return state;
         },
-        changeBook: (state, action) => {
-            let index = 0;
-            const book = state.books.data.find((book, i) => {
-                book.book_id === action.payload.book_id
-                index = i;
-                return book;
-            })
-            // Remove outdated book
-            state.books.data.splice(index, 1);
-            if (!book) return;
-            state.books.data.push(book);
-            return state;
+        removeBook: (state, action: PayloadAction<string>) => {
+
         },
-        addBook: (state, action) => {
-            state.books.data.push(action.payload);
-            return state;
+        updateBook: (state, action: PayloadAction<LM_Book>) => {
+
         }
-
     },
-    // extraReducers: (builder) => {
-    //     builder.addCase(getBooks.pending, (state, action) => {
-    //         state.books.loading = true;
-    //     }),
-    //         builder.addCase(getBooks.fulfilled, (state, action) => {
-    //             state.books.data = action.payload;
-    //             state.books.loading = false;
-    //         }),
-    //         builder.addCase(getBooks.rejected, (state, action) => {
-    //             state.books.loading = false;
-    //             state.books.error = action.payload
-    //         })
+    extraReducers: (builder) => {
+        builder.addCase(fetchBooks.pending, (state, action) => {
+            state.books.loading = true;
+        }),
+            builder.addCase(fetchBooks.fulfilled, (state, action) => {
+                state.books.loading = false;
+                console.log("books: ", action.payload)
+                state.books.data.push(...action.payload)
+                // if there are no books yet
+            }),
+            builder.addCase(fetchBooks.rejected, (state, action) => {
+                state.books.loading = false;
+                state.books.error = action.payload;
+            })
 
-
-    // }
+    }
 })
 
-export const { getBooksFulfilled, getBooksRejected, getBooksRequest, addBook } = booksSlice.actions;
+export const { addBook, removeBook, updateBook } = bookSlice.actions;
 
-export default booksSlice.reducer;
+export default bookSlice.reducer; 

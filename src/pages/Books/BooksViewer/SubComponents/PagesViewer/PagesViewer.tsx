@@ -1,5 +1,5 @@
 type Props = {
-  pages: number;
+  pages: number | null;
 };
 
 const PagesViewer = ({ pages }: Props) => {

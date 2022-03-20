@@ -13,7 +13,7 @@ export declare interface LM_Book {
     /**
      * Number of pages
      */
-    pages: number | null;
+    pages: number;
     /**
      * Decides if the book is finished
      */

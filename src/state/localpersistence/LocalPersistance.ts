@@ -9,7 +9,6 @@ class LocalPersistence {
     public static defaultMetadata: LM_Metadata = {
         amountOfBooks: 0,
         favoriteBooks: [],
-        isLoggedIn: false,
         user: { email: "", name: "" }
     }
 

@@ -1,17 +1,16 @@
 .lm-chapteradder {
   grid-area: lm-chapteradder;
-}
-
-.lm-chapteradder__button {
-  width: 2rem;
-  height: 2rem;
-  padding: 1rem;
-  margin: 1rem;
-  border-radius: 50% !important;
-  background-color: blue;
-  color: white;
-  font-weight: bolder;
-  font-size: 2rem;
+  .lm-chapteradder__button {
+    width: 2rem;
+    height: 2rem;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 50% !important;
+    background-color: blue;
+    color: white;
+    font-weight: bolder;
+    font-size: 2rem;
+  }
 }
 
 @media screen and (min-width: 576px) {

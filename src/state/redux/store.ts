@@ -1,23 +1,12 @@
-import { configureStore, Store, applyMiddleware } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
 import bookReducer from "./features/bookSlice";
 
-export const store: Store = configureStore({
-    middleware: [thunk],
-    // Here we unite our reducers
+export const store = configureStore({
     reducer: {
-        book: bookReducer
+        books: bookReducer,
     }
 })
 
-/**
- * State of our app
- */
+
 export type RootState = ReturnType<typeof store.getState>;
-
-/**
- * Type of the dispatch
- */
 export type AppDispatch = typeof store.dispatch;
-
-

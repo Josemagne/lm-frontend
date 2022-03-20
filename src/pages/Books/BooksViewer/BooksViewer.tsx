@@ -5,8 +5,6 @@ import AuthorViewer from "./SubComponents/AuthorViewer/AuthorViewer";
 import PagesViewer from "./SubComponents/PagesViewer/PagesViewer";
 import ProgressViewer from "./SubComponents/ProgressViewer/ProgressViewer";
 import TitleViewer from "./SubComponents/TitleViewer/TitleViewer";
-import { useLiveQuery } from "dexie-react-hooks";
-import mybooks from "../../../storage/indexedDB/books";
 import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 import BookModal from "./SubComponents/BookModal/BookModal";
@@ -15,13 +13,12 @@ import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
 import Book from "../../../utils/Book";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
-import { loadBooks } from "../../../state/redux/redux-thunk/actions";
+import { fetchBooks } from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
   // TODO Implement redux-thunk
-  // loadBooks(useAppDispatch());
   /* STATE */
   const [books, setBooks] = useState<LM_Book[]>([]);
   // The selected book that should be viewed
@@ -30,6 +27,11 @@ const BooksViewer = (props: Props) => {
   const [openChapter, setOpenChapter] = useState<string>();
 
   /* METHODS */
+  const dispatch = useAppDispatch();
+
+  // Get the loading status
+  const loading = useAppSelector((state) => state.books.books.loading);
+  const _books = useAppSelector((state) => state.books.books.data);
 
   const getBooks = async () => {
     let result = await Book.getBooks();
@@ -39,11 +41,17 @@ const BooksViewer = (props: Props) => {
 
   // only runs at the mounting
   useEffect(() => {
+    dispatch(fetchBooks());
+    console.log("Called fetchBooks()");
     if (books.length < 1) getBooks();
   }, []);
 
   return (
     <div className="lm-page lm-booksviewer">
+      {loading ? <p>Loading...</p> : null}
+      {_books ? <p>We got the books</p> : <p>We did not get the book</p>}
+      <p>{_books.length > 0 ? _books[0].book_id : null}</p>
+
       {books.length > 0
         ? books.map((book) => {
             return (

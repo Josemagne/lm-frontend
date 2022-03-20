@@ -8,6 +8,7 @@ import ChapterModifier from "../ChapterModifier/ChapterModifier";
 import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer";
 import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
+
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
@@ -24,16 +25,6 @@ const ChaptersViewer = ({}: Props) => {
     if (!book) return;
     setChapters(book.chapters);
   };
-
-  // Get books on first try
-  // if (chapters.length < 1) {
-  //   books.books.get(bookID).then((res) => {
-  //     if (!res) return;
-  //     setChapters((prev) => {
-  //       return [...res.chapters];
-  //     });
-  //   });
-  // }
 
   useEffect(() => {
     if (chapters.length < 1) {

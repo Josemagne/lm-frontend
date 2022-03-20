@@ -1,14 +1,10 @@
 import { LM_User } from "./user";
 
-export default interface LM_Metadata {
+export declare interface LM_Metadata {
     /**
      * Amount of books that are stored
      */
     amountOfBooks: number;
-    /**
-     * Indicates if the user is logged in
-     */
-    isLoggedIn: boolean;
     /**
      * Contains the book_id strings of the added books
      */

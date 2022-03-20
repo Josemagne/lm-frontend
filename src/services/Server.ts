@@ -45,8 +45,6 @@ export default class Server {
         const api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
         console.log("Send data about book to backend")
 
-        book.book_id = nanoid();
-
         if (book.pages === null) book.pages = 0;
 
         api.post("/books", book)
