@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { LM_Book } from "../../../../../types/Book/book";
 import Info from "../Info/Info";
 import { useDispatch } from "react-redux";
+import Delete from "../Delete/Delete";
 
 type Props = {
   children: any;
@@ -29,6 +30,7 @@ const BookContainer = ({ children, book_id: bookId }: Props) => {
       className="lm-bookcontainer"
     >
       {children}
+      <Delete book_id={book_id} />
       <Info book_id={book_id} />
     </div>
   );

@@ -1,0 +1,16 @@
+.lm-delete {
+  background-color: rgb(226, 77, 77);
+  padding: 1rem;
+  width: 1ch;
+  height: 1ch;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lm-delete:hover {
+  background-color: rgb(128, 124, 124);
+  color: white;
+  font-weight: bolder;
+}

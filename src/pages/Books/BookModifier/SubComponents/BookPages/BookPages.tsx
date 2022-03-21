@@ -13,7 +13,12 @@ const BookPages = ({ values }: Props) => {
     <div className="lm-bookpages">
       <Form>
         <FloatingLabel controlId="pages" label="Pages">
-          <Form.Control type="number" placeholder="Pages" {...values} />
+          <Form.Control
+            type="number"
+            placeholder="Pages"
+            name="pages"
+            {...values}
+          />
         </FloatingLabel>
       </Form>
     </div>

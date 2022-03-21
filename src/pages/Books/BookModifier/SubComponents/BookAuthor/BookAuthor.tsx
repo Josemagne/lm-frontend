@@ -9,7 +9,12 @@ const BookAuthor = ({ values }: Props) => {
     <div className="lm-bookauthor">
       <Form>
         <FloatingLabel controlId="author_name" label="Author">
-          <Form.Control type="text" placeholder="Author" {...values} />
+          <Form.Control
+            type="text"
+            placeholder="Author"
+            name="author"
+            {...values}
+          />
         </FloatingLabel>
       </Form>
     </div>

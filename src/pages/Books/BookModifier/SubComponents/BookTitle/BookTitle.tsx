@@ -14,7 +14,12 @@ const BookTitle = ({ values }: Props) => {
           label="Book Title"
           className="lm-booktitle__title"
         >
-          <Form.Control type="text" placeholder="Book Title" {...values} />
+          <Form.Control
+            type="text"
+            placeholder="Book Title"
+            name="book_title"
+            {...values}
+          />
         </FloatingLabel>
       </Form>
     </div>

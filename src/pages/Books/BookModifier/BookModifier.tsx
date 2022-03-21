@@ -43,7 +43,7 @@ const BookModifier = (props: Props) => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       // TODO  Add to state
       // Remove values from form
       formik.resetForm();
@@ -52,6 +52,8 @@ const BookModifier = (props: Props) => {
       Book.addBook(values);
       // Persist on backend
       Server.addBook(values);
+      // NOTE Resets the values of the form
+      resetForm();
     },
     // validationSchema: () => {
     //   yup.object({
