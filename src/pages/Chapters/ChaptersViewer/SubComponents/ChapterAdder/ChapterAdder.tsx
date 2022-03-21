@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import Adder from "../../../../../components/helpers/Adder/Adder";
 import { LM_Book } from "../../../../../types/Book/book";
-import Book from "../../../../../utils/Book";
+import Book from "../../../../../storage/indexedDB/Book";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";

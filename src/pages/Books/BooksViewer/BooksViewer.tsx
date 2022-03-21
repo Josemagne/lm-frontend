@@ -10,10 +10,13 @@ import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 import BookModal from "./SubComponents/BookModal/BookModal";
 import { Panel } from "rsuite";
 import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
-import Book from "../../../utils/Book";
+import Book from "../../../storage/indexedDB/Book";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
-import { fetchBooks } from "../../../state/redux/features/bookSlice";
+import {
+  fetchBooksBackend,
+  fetchBooksFrontend,
+} from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 
@@ -33,27 +36,39 @@ const BooksViewer = (props: Props) => {
   const loading = useAppSelector((state) => state.books.books.loading);
   const _books = useAppSelector((state) => state.books.books.data);
 
-  const getBooks = async () => {
-    let result = await Book.getBooks();
-    if (!result) return;
-    setBooks(result);
-  };
+  // const getBooks = async () => {
+  //   let result = await Book.getBooks();
+  //   if (!result) return;
+  //   setBooks(result);
+  // };
 
   // only runs at the mounting
   useEffect(() => {
-    dispatch(fetchBooks());
+    dispatch(fetchBooksBackend());
+    dispatch(fetchBooksFrontend());
     console.log("Called fetchBooks()");
-    if (books.length < 1) getBooks();
+    // if (books.length < 1) getBooks();
   }, []);
+
+  useEffect(() => {}, [_books]);
 
   return (
     <div className="lm-page lm-booksviewer">
       {loading ? <p>Loading...</p> : null}
-      {_books ? <p>We got the books</p> : <p>We did not get the book</p>}
+      {_books ? (
+        <p>
+          We got the books: {_books.length}{" "}
+          {_books.map((b) => {
+            return <p>{b.book_id}</p>;
+          })}
+        </p>
+      ) : (
+        <p>We did not get the book</p>
+      )}
       <p>{_books.length > 0 ? _books[0].book_id : null}</p>
 
-      {books.length > 0
-        ? books.map((book) => {
+      {_books.length > 0
+        ? _books.map((book) => {
             return (
               <BookContainer
                 book_id={book.book_id}

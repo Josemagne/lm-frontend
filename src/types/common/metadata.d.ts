@@ -2,13 +2,25 @@ import { LM_User } from "./user";
 
 export declare interface LM_Metadata {
     /**
-     * Amount of books that are stored
+     * Books that are in the server
      */
-    amountOfBooks: number;
-    /**
-     * Contains the book_id strings of the added books
-     */
-    books: string[];
+    serverBooks: {
+        amount: number;
+        /**
+         * the book_id strings for the book on the server
+         */
+        books: string[];
+    };
+    frontendBooks: {
+        /**
+         * Amount of books in the frontend
+         */
+        amount: number;
+        /**
+         * book_id strings for the books that are in the frontend
+         */
+        books: string[];
+    };
     /**
      * book_id strings of the books that are not saved in the backend
      */

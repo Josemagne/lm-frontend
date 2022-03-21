@@ -1,8 +1,8 @@
-import books from '../storage/indexedDB/books';
-import { LM_Book } from '../types/Book/book';
+import books from './books';
+import { LM_Book } from '../../types/Book/book';
 import { nanoid } from 'nanoid';
 import { useLiveQuery } from 'dexie-react-hooks';
-import LM_Chapter from '../types/Book/chapter';
+import LM_Chapter from '../../types/Book/chapter';
 
 /**
  * Class for book
@@ -68,6 +68,10 @@ export default class Book {
 
     public static removeBook = async (bookId: string): Promise<boolean> => {
         let result: boolean = false;
+
+        await books.books.delete(bookId).then(() => {
+            result = true;
+        })
 
         return result;
     }

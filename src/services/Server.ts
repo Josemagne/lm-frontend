@@ -14,7 +14,7 @@ export default class Server {
      * Gets book from server
      */
     public static getBook = async (book_id: string): Promise<any> => {
-        const api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+        let api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
         let book = await api.get(`/books/${book_id}`).then((book) => {
             console.log("got the book!")
             return book;
@@ -41,6 +41,9 @@ export default class Server {
         return books.data;
     }
 
+
+
+
     public static addBook = async (book: LM_Book) => {
         const api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
         console.log("Send data about book to backend")
@@ -50,4 +53,19 @@ export default class Server {
         api.post("/books", book)
         console.log("Sent this book data to backend: ", book)
     }
+
+
+    public static removeBook = async (book_id: string): Promise<boolean> => {
+        let result = false;
+        let api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+
+        api.delete(`/books/${book_id}`).then(() => {
+            result = true;
+        }).catch((err) => {
+        })
+        console.log("Deleted book in the backend")
+
+        return result;
+    }
+
 }

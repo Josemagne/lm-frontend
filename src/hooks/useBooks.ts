@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { LM_Book } from "../types/Book/book";
-import Book from "../utils/Book";
+import Book from "../storage/indexedDB/Book";
 
 interface Props {
     /**

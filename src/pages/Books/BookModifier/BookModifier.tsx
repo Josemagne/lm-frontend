@@ -3,7 +3,7 @@ import BookTitle from "./SubComponents/BookTitle/BookTitle";
 import BookPages from "./SubComponents/BookPages/BookPages";
 import Adder from "../../../components/helpers/Adder/Adder";
 import BookImage from "./SubComponents/BookImage/BookImage";
-import Book from "../../../utils/Book";
+import Book from "../../../storage/indexedDB/Book";
 import * as yup from "yup";
 import Server from "../../../services/Server";
 import { LM_Book } from "../../../types/Book/book";
@@ -15,6 +15,7 @@ import BookState from "./SubComponents/BookState/BookState";
 import { useDispatch } from "react-redux";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
+import Metadata from "../../../utils/Metadata";
 
 type Props = {};
 
@@ -47,6 +48,7 @@ const BookModifier = (props: Props) => {
       // TODO  Add to state
       // Remove values from form
       formik.resetForm();
+      Metadata.addFrontendBook(values.book_id);
       // useAppDispatch(addBook(values));
       // Persists locally
       Book.addBook(values);
@@ -79,7 +81,7 @@ const BookModifier = (props: Props) => {
         {/* <BookImage bookImage="" /> */}
         {console.log(formik.values)}
 
-        <BookTitle values={formik.getFieldProps("title")} />
+        <BookTitle values={formik.getFieldProps("book_title")} />
 
         <BookPages values={formik.getFieldProps("pages")} />
 

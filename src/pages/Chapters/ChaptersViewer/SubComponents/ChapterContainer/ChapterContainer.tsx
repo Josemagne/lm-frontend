@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import { useLiveQuery } from "dexie-react-hooks";
 import { useNavigate } from "react-router";
-import Book from "../../../../../utils/Book";
+import Book from "../../../../../storage/indexedDB/Book";
 
 type Props = {
   chapter: LM_Chapter;
