@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import BookTitle from "./SubComponents/BookTitle/BookTitle";
 import BookPages from "./SubComponents/BookPages/BookPages";
 import Adder from "../../../components/helpers/Adder/Adder";
@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
 import Metadata from "../../../utils/Metadata";
+import useAppSelector from "../../../hooks/useAppSelector";
 
 type Props = {};
 
@@ -26,21 +27,35 @@ const BookModifier = (props: Props) => {
   /* STORAGE */
 
   /* STATE */
-  const dispatch = useDispatch();
-  /**
-   * Initial values for formik
-   */
-  const initialValues: LM_Book = {
-    author: "",
-    book_id: nanoid(),
-    book_title: "",
-    pages: 0,
-    progress: 0,
-    read: true,
-    summary: "",
-    chapters: [],
-    rate: 3,
+  const dispatch = useAppDispatch();
+  const [book, setBook] = useState<LM_Book>();
+
+  // If the url contains a book_id then we handle this particular book
+  const book_id = useAppSelector((state) => state.books.selectedBook.book_id);
+
+  const getBook = async () => {
+    if (!book_id) return;
+    const _book = await Book.getBook(book_id);
+    if (!_book) return;
+    setBook(_book);
   };
+
+  if (book) {
+    /**
+     * Initial values for formik
+     */
+    const initialValues: LM_Book = {
+      author: book?.author || "",
+      book_id: book?.book_id || nanoid(),
+      book_title: book?.book_title || "",
+      pages: book.pages || 0,
+      progress: book?.progress || 0,
+      read: book.read || true,
+      summary: book?.summary || "",
+      chapters: book?.chapters || [],
+      rate: book.rate || 3,
+    };
+  }
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -74,6 +89,10 @@ const BookModifier = (props: Props) => {
   /* METHODS */
 
   /* EVENTS */
+
+  useEffect(() => {
+    getBook();
+  }, []);
 
   return (
     <div className="lm-page lm-bookmodifier">

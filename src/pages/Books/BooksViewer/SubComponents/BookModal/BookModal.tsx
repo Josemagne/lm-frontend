@@ -1,11 +1,14 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { LM_Book } from "../../../../../types/Book/book";
-import { Modal } from "rsuite";
+import { Button, Modal } from "rsuite";
 import { useLiveQuery } from "dexie-react-hooks";
 import books from "../../../../../storage/indexedDB/books";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
-import {} from "../../../../../state/redux/features/bookSlice";
+import { removeSelectedBook } from "../../../../../state/redux/features/bookSlice";
+import useAppDispatch from "../../../../../hooks/useAppDispatch";
+import useAppSelector from "../../../../../hooks/useAppSelector";
+import { useNavigate } from "react-router";
 
 type Props = {};
 
@@ -14,20 +17,22 @@ const BookModal = ({}: Props) => {
   const [book, setBook] = useState<LM_Book>();
   const [open, setOpen] = useState<boolean>(false);
 
-  const bookID = useSelector((state: RootState) => state.book.selectedBook);
+  const dispatch = useAppDispatch();
 
-  const dispatch = useDispatch();
+  const book_id = useAppSelector(
+    (state: RootState) => state.books.selectedBook.book_id
+  );
 
   // Get the book data if we got the id from redux
-  if (bookID) {
-    useLiveQuery(() => {
-      books.books.get(bookID).then((res) => {
-        if (!res) return;
-        setBook(res);
-        setOpen(true);
-      });
+  if (book_id) {
+    books.books.get(book_id).then((res) => {
+      if (!res) return;
+      setBook(res);
+      setOpen(true);
     });
   }
+
+  const navigate = useNavigate();
 
   const handleClose = () => {
     // Remove it from redux
@@ -35,12 +40,18 @@ const BookModal = ({}: Props) => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    // NOTE Clean up function
+    return () => {};
+  }, [open]);
+
   return (
     <Modal
       className="lm-bookmodal"
       overflow={true}
       open={open}
       onClose={handleClose}
+      full={true}
     >
       {book ? (
         <Fragment>
@@ -49,6 +60,15 @@ const BookModal = ({}: Props) => {
           </Modal.Header>
           <Modal.Body>
             <p>pages: {book.pages}</p>
+            <div onClick={() => navigate(`flashcards/${book_id}`)}>
+              <Button>Go to flashcards</Button>
+            </div>
+            <div onClick={() => navigate(`chaptersviewer/${book_id}`)}>
+              <Button>Go to chapters</Button>
+            </div>
+            <div onClick={() => navigate(`bookmodifer/${book_id}`)}>
+              <Button>Modify bookdata</Button>
+            </div>
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
           {/* Author */}

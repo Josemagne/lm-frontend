@@ -18,7 +18,7 @@ const Navbar = (props: Props) => {
             <Nav.Item href="/bookmodifier">Modifier</Nav.Item>
           </Dropdown>
           <Nav.Item>Coordinator</Nav.Item>
-          <Nav.Item>FlashCards</Nav.Item>
+          <Nav.Item href="/flashcards">FlashCards</Nav.Item>
         </Nav>
       </LMNavbar>
     </div>

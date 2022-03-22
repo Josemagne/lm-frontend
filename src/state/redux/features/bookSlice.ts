@@ -14,6 +14,12 @@ interface InitialState {
         ids: string[],
         loading: boolean;
         error: any;
+    },
+    /**
+     * Id of the particular book that is being focused upon
+     */
+    selectedBook: {
+        book_id: string | null;
     }
 }
 
@@ -23,11 +29,16 @@ const initialState: InitialState = {
         ids: [],
         loading: false,
         error: null
+    },
+    selectedBook: {
+        book_id: null
     }
 
 }
 
-
+/**
+ * Fetches books from backend with redux thunk
+ */
 export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", async (): Promise<LM_Book[] | any> => {
     let error: any = null;
     // const data = await Server.getBooks();
@@ -36,6 +47,9 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
     return data;
 });
 
+/**
+ * Fetches books from frontend with redux thunk
+ */
 export const fetchBooksFrontend = createAsyncThunk("books/fetchBooksFrontend", async (): Promise<LM_Book[] | any> => {
     let error: any = null;
     let result = await Book.getBooks().then((res) => res).catch((err) => {
@@ -60,11 +74,36 @@ export const bookSlice = createSlice({
             })
         },
         updateBook: (state, action: PayloadAction<LM_Book>) => {
+            const id = action.payload.book_id;
 
+            let arrayIndex = 0;
+            state.books.data.find((book, index) => {
+                if (book.book_id === id) {
+                    arrayIndex = index;
+                    return 1;
+                }
+            });
+
+            if (!arrayIndex) return;
+            // Change the old book with the new book
+            state.books.data[arrayIndex] = action.payload;
+        },
+        /* ANCHOR selectedBook */
+        addSelectedBook: (state, action: PayloadAction<string>) => {
+            state.selectedBook.book_id = action.payload;
+        },
+        removeSelectedBook: (state, action) => {
+            state.selectedBook.book_id = null;
+        },
+        updateSelectedBook: (state, action: PayloadAction<LM_Book>) => {
+
+            state.selectedBook.book_id = null;
         }
+
     },
     extraReducers: (builder) => {
         /* ANCHOR BACKEND */
+        // TODO Check metadata.notAsyncBooks if we should fetch books
         builder.addCase(fetchBooksBackend.pending, (state, action) => {
             state.books.loading = true;
         }),
@@ -104,6 +143,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, addSelectedBook, removeSelectedBook, updateSelectedBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

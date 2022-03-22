@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMemo } from "react";
 import { withReact, Slate, Editable } from "slate-react";
-import { createEditor, Node } from "slate";
+import { createEditor, Node, Editor } from "slate";
 
 type Props = {
   /**
@@ -56,6 +56,7 @@ const TextContainer = (props: Props) => {
     },
   ]);
   const editor = useMemo(() => withReact(createEditor()), []);
+  console.log(Node.isNode({ text: "kjlasjdf" }));
   return (
     <div className="lm-textcontainer">
       <Slate editor={editor} value={value} onChange={(v) => setValue(v)}>

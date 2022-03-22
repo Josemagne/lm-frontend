@@ -1,5 +1,4 @@
 import { Fragment, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { LM_Book } from "../../../types/Book/book";
 import AuthorViewer from "./SubComponents/AuthorViewer/AuthorViewer";
 import PagesViewer from "./SubComponents/PagesViewer/PagesViewer";
@@ -10,7 +9,6 @@ import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 import BookModal from "./SubComponents/BookModal/BookModal";
 import { Panel } from "rsuite";
 import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
-import Book from "../../../storage/indexedDB/Book";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import {
@@ -35,6 +33,9 @@ const BooksViewer = (props: Props) => {
   // Get the loading status
   const loading = useAppSelector((state) => state.books.books.loading);
   const _books = useAppSelector((state) => state.books.books.data);
+  const _selectedBook = useAppSelector(
+    (state) => state.books.selectedBook.book_id
+  );
 
   // const getBooks = async () => {
   //   let result = await Book.getBooks();
@@ -49,6 +50,10 @@ const BooksViewer = (props: Props) => {
     console.log("Called fetchBooks()");
     // if (books.length < 1) getBooks();
   }, []);
+
+  useEffect(() => {
+    console.log(_selectedBook);
+  }, [_selectedBook]);
 
   useEffect(() => {}, [_books]);
 
@@ -92,7 +97,7 @@ const BooksViewer = (props: Props) => {
             );
           })
         : "no books here"}
-      {selectedBook ? <BookModal /> : null}
+      {_selectedBook ? <BookModal /> : null}
     </div>
   );
 };
