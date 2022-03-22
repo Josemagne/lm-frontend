@@ -1,2 +1,33 @@
 .lm-flashcards {
+  .lm-questionside {
+    max-width: 50vw;
+    min-width: 50vw;
+  }
+  .lm-answerside {
+    max-width: 50vw;
+    min-width: 50vw;
+  }
+
+  .flashcard__entity {
+  }
+  @media screen and (min-width: 768px) {
+    display: grid;
+    grid-template-areas: "lm-questionside lm-answerside";
+    .lm-questionside {
+      grid-area: lm-questionside;
+      max-width: 50vw;
+    }
+
+    .lm-answerside {
+      grid-area: lm-answerside;
+      max-width: 50vw;
+    }
+
+    //   NOTE question or answer
+    .flashcard__entity {
+      padding: 1rem;
+      margin: 1rem;
+      border: 1px solid black;
+    }
+  }
 }

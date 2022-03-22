@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { createEditor, Descendant } from "slate";
 import { Editable, withReact, Slate } from "slate-react";
+import TextContainer from "../../../../../../components/TextContainer/TextContainer";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 
 type Props = {};
@@ -8,24 +9,22 @@ type Props = {};
 const SummaryModifier = (props: Props) => {
   const initialValue: Descendant[] = [
     {
-      type: "paragraph",
       children: [{ text: "Type in here your summary." }],
     },
   ];
   const [value, setValue] = useState<Descendant[]>(initialValue);
+  // @ts-ignore
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const changeHandler = () => {};
 
   const submitHandler = () => {
-    useAppDispatch(changeS);
+    useAppDispatch();
   };
 
   return (
     <div className="lm-summarymodifier">
-      <Slate editor={editor} value={value} onChange={changeHandler}>
-        <Editable readOnly={false} />
-      </Slate>
+      <TextContainer content={[{ text: "summary" }]} />
     </div>
   );
 };

@@ -11,21 +11,17 @@ import { Panel } from "rsuite";
 import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
+import Metadata from "../../../utils/Metadata";
 import {
   fetchBooksBackend,
   fetchBooksFrontend,
 } from "../../../state/redux/features/bookSlice";
+import { LM_Metadata } from "../../../types/common/metadata";
 
 type Props = {};
 
 const BooksViewer = (props: Props) => {
-  // TODO Implement redux-thunk
   /* STATE */
-  const [books, setBooks] = useState<LM_Book[]>([]);
-  // The selected book that should be viewed
-  const [selectedBook, setSelectedBook] = useState<string>();
-  // ID of the chapter that was opened
-  const [openChapter, setOpenChapter] = useState<string>();
 
   /* METHODS */
   const dispatch = useAppDispatch();
@@ -43,9 +39,23 @@ const BooksViewer = (props: Props) => {
   //   setBooks(result);
   // };
 
+  /**
+   * Checks if there are no books in the frontend and only then requests the backend
+   */
+  const noFrontendBooks = async (): Promise<boolean> => {
+    let result: boolean = false;
+    await Metadata.getMetadata().then((m) => {
+      if (!m) return;
+      if (m?.frontendBooks.books.length < 1) result = true;
+    });
+    return result;
+  };
+
   // only runs at the mounting
   useEffect(() => {
+    // @ts-ignore
     dispatch(fetchBooksBackend());
+    // @ts-ignore
     dispatch(fetchBooksFrontend());
     console.log("Called fetchBooks()");
     // if (books.length < 1) getBooks();
@@ -60,43 +70,33 @@ const BooksViewer = (props: Props) => {
   return (
     <div className="lm-page lm-booksviewer">
       {loading ? <p>Loading...</p> : null}
-      {_books ? (
-        <p>
-          We got the books: {_books.length}{" "}
-          {_books.map((b) => {
-            return <p>{b.book_id}</p>;
-          })}
-        </p>
-      ) : (
-        <p>We did not get the book</p>
-      )}
       <p>{_books.length > 0 ? _books[0].book_id : null}</p>
 
-      {_books.length > 0
-        ? _books.map((book) => {
-            return (
-              <BookContainer
-                book_id={book.book_id}
-                key={book.book_id}
-                children={
-                  <Panel
-                    header={
-                      <Fragment>
-                        <AuthorViewer author_fullname={book.author} />
-                        <TitleViewer title={book.book_title} />
-                        <ProgressViewer progress={book.progress} />
-                        <PagesViewer pages={book.pages} />
-                        <ImageViewer />
-                      </Fragment>
-                    }
-                  >
-                    {openChapter ? <ChapterModifier /> : null}
-                  </Panel>
-                }
-              />
-            );
-          })
-        : "no books here"}
+      {_books.length > 0 ? (
+        (_books as LM_Book[]).map((book) => {
+          return (
+            <BookContainer
+              book_id={book.book_id}
+              key={book.book_id}
+              children={
+                <Panel
+                  header={
+                    <Fragment>
+                      <AuthorViewer author_fullname={book.author} />
+                      <TitleViewer title={book.book_title} />
+                      <ProgressViewer progress={book.progress} />
+                      <PagesViewer pages={book.pages} />
+                      <ImageViewer />
+                    </Fragment>
+                  }
+                ></Panel>
+              }
+            />
+          );
+        })
+      ) : (
+        <p>no books here</p>
+      )}
       {_selectedBook ? <BookModal /> : null}
     </div>
   );

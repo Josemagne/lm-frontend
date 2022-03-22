@@ -5,7 +5,10 @@ import { useLiveQuery } from "dexie-react-hooks";
 import books from "../../../../../storage/indexedDB/books";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
-import { removeSelectedBook } from "../../../../../state/redux/features/bookSlice";
+import {
+  changeSelectedBook,
+  removeSelectedBook,
+} from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../../hooks/useAppSelector";
 import { useNavigate } from "react-router";
@@ -36,13 +39,13 @@ const BookModal = ({}: Props) => {
 
   const handleClose = () => {
     // Remove it from redux
-    dispatch(() => dispatch(removeSelectedBook("")));
+    // dispatch(() => dispatch(removeSelectedBook("")));
+    dispatch(removeSelectedBook(""));
     setOpen(false);
   };
 
   useEffect(() => {
     // NOTE Clean up function
-    return () => {};
   }, [open]);
 
   return (
@@ -60,13 +63,34 @@ const BookModal = ({}: Props) => {
           </Modal.Header>
           <Modal.Body>
             <p>pages: {book.pages}</p>
-            <div onClick={() => navigate(`flashcards/${book_id}`)}>
+            <div
+              onClick={() => {
+                if (!book_id) return;
+                dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+                handleClose();
+                navigate(`flashcards/${book_id}`);
+              }}
+            >
               <Button>Go to flashcards</Button>
             </div>
-            <div onClick={() => navigate(`chaptersviewer/${book_id}`)}>
+            <div
+              onClick={() => {
+                if (!book_id) return;
+                dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+                handleClose();
+                navigate(`chaptersviewer/${book_id}`);
+              }}
+            >
               <Button>Go to chapters</Button>
             </div>
-            <div onClick={() => navigate(`bookmodifer/${book_id}`)}>
+            <div
+              onClick={() => {
+                if (!book_id) return;
+                dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+                handleClose();
+                navigate(`bookmodifer/${book_id}`);
+              }}
+            >
               <Button>Modify bookdata</Button>
             </div>
           </Modal.Body>

@@ -9,17 +9,16 @@ import { RootState } from "../../../../../state/redux/store";
 import { useFormik } from "formik";
 import { nanoid } from "nanoid";
 import { Editable, Slate, withReact } from "slate-react";
-import { createEditor, Node } from "slate";
+import { createEditor, Descendant, Node } from "slate";
 
 type Props = {
   book_id: string;
 };
 
-const initialValue: Node[] = [
+const initialValue: Descendant[] = [
   {
     children: [
       {
-        type: "paragraph",
         children: [
           {
             text: "Title",
@@ -67,6 +66,7 @@ const ChapterAdder = ({ book_id }: Props) => {
     getBook();
   }, []);
 
+  // @ts-ignore
   const editor = useMemo(() => withReact(createEditor()), []);
 
   return (

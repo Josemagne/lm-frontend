@@ -2,6 +2,7 @@ node_modules/
 dist/
 cypress/
 lm-components/
+build/
 
 # Local Netlify folder
 .netlify

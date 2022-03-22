@@ -20,6 +20,7 @@ interface InitialState {
      */
     selectedBook: {
         book_id: string | null;
+        book: LM_Book | null;
     }
 }
 
@@ -31,7 +32,8 @@ const initialState: InitialState = {
         error: null
     },
     selectedBook: {
-        book_id: null
+        book_id: null,
+        book: null
     }
 
 }
@@ -58,6 +60,15 @@ export const fetchBooksFrontend = createAsyncThunk("books/fetchBooksFrontend", a
     if (error) return error;
     return result;
 })
+
+// export const addSelectedBook = createAsyncThunk("books/addSelectedBook", async (book_id: string): Promise<LM_Book | any> => {
+//     let error: any = null;
+//     let book = await Book.getBook(book_id).then((res) => res).catch((err) => { error = err });
+//     if (error) return error;
+
+//     if (!book) return;
+//     return book;
+// })
 
 export const bookSlice = createSlice({
     name: "books",
@@ -89,14 +100,13 @@ export const bookSlice = createSlice({
             state.books.data[arrayIndex] = action.payload;
         },
         /* ANCHOR selectedBook */
-        addSelectedBook: (state, action: PayloadAction<string>) => {
-            state.selectedBook.book_id = action.payload;
+        changeSelectedBook: (state, action: PayloadAction<{ book_id: string, book: LM_Book | null }>) => {
+            state.selectedBook.book_id = action.payload.book_id;
+            if (!action.payload.book) return;
+            state.selectedBook.book = action.payload.book;
+
         },
         removeSelectedBook: (state, action) => {
-            state.selectedBook.book_id = null;
-        },
-        updateSelectedBook: (state, action: PayloadAction<LM_Book>) => {
-
             state.selectedBook.book_id = null;
         }
 
@@ -143,6 +153,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, addSelectedBook, removeSelectedBook, updateSelectedBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

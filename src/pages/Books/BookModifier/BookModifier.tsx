@@ -11,7 +11,6 @@ import { useFormik, FormikProps, Formik, Form } from "formik";
 import BookProgress from "./SubComponents/BookProgress/BookProgress";
 import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import { string } from "yup/lib/locale";
-import BookState from "./SubComponents/BookState/BookState";
 import { useDispatch } from "react-redux";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
@@ -32,6 +31,7 @@ const BookModifier = (props: Props) => {
 
   // If the url contains a book_id then we handle this particular book
   const book_id = useAppSelector((state) => state.books.selectedBook.book_id);
+  const _book = useAppSelector((state) => state.books.selectedBook.book);
 
   const getBook = async () => {
     if (!book_id) return;
@@ -40,22 +40,20 @@ const BookModifier = (props: Props) => {
     setBook(_book);
   };
 
-  if (book) {
-    /**
-     * Initial values for formik
-     */
-    const initialValues: LM_Book = {
-      author: book?.author || "",
-      book_id: book?.book_id || nanoid(),
-      book_title: book?.book_title || "",
-      pages: book.pages || 0,
-      progress: book?.progress || 0,
-      read: book.read || true,
-      summary: book?.summary || "",
-      chapters: book?.chapters || [],
-      rate: book.rate || 3,
-    };
-  }
+  /**
+   * Initial values for formik
+   */
+  const initialValues: LM_Book = {
+    author: book?.author || "",
+    book_id: book?.book_id || nanoid(),
+    book_title: book?.book_title || "",
+    pages: book?.pages || 0,
+    progress: book?.progress || 0,
+    read: book?.read || true,
+    summary: book?.summary || "",
+    chapters: book?.chapters || [],
+    rate: book?.rate || 3,
+  };
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -94,27 +92,61 @@ const BookModifier = (props: Props) => {
     getBook();
   }, []);
 
+  // Rerender if the book changed
+  useEffect(() => {
+    console.log("book: ", book);
+    console.log("book_id", book_id);
+    console.log("_book", _book);
+  }, [book]);
+
   return (
-    <div className="lm-page lm-bookmodifier">
-      <form onSubmit={formik.handleSubmit}>
-        {/* <BookImage bookImage="" /> */}
-        {console.log(formik.values)}
+    <div>
+      {book ? (
+        <div className="lm-page lm-bookmodifier">
+          <form onSubmit={formik.handleSubmit}>
+            {/* <BookImage bookImage="" /> */}
+            {console.log(formik.values)}
 
-        <BookTitle values={formik.getFieldProps("book_title")} />
+            <BookTitle values={formik.getFieldProps("book_title")} />
 
-        <BookPages values={formik.getFieldProps("pages")} />
+            <BookPages values={formik.getFieldProps("pages")} />
 
-        {/* <BookState
+            {/* <BookState
               values={formik.getFieldProps("read")}
               setFieldValue={formik.setFieldValue}
             /> */}
 
-        {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
+            {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
 
-        <BookAuthor values={formik.getFieldProps("author")} />
+            <BookAuthor values={formik.getFieldProps("author")} />
 
-        <Adder text={"+"} type="submit" />
-      </form>
+            <Adder text={"+"} type="submit" />
+          </form>
+        </div>
+      ) : null}
+      {!book_id ? (
+        <div className="lm-page lm-bookmodifier">
+          <form onSubmit={formik.handleSubmit}>
+            {/* <BookImage bookImage="" /> */}
+            {console.log(formik.values)}
+
+            <BookTitle values={formik.getFieldProps("book_title")} />
+
+            <BookPages values={formik.getFieldProps("pages")} />
+
+            {/* <BookState
+              values={formik.getFieldProps("read")}
+              setFieldValue={formik.setFieldValue}
+            /> */}
+
+            {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
+
+            <BookAuthor values={formik.getFieldProps("author")} />
+
+            <Adder text={"+"} type="submit" />
+          </form>
+        </div>
+      ) : null}
     </div>
   );
 };

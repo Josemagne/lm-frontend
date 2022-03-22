@@ -17,15 +17,18 @@ const App = (props: Props) => {
       </header>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<BooksViewer />} />
-          <Route path="/bookmodifier" element={<BookModifier />} />
+          <Route path="/bookmodifier" element={<BookModifier />}>
+            <Route path=":bookID" element={<BookModifier />} />
+          </Route>
           <Route path="/booksviewer" element={<BooksViewer />} />
+          {/* @ts-ignore */}
           <Route path="/chaptersviewer/:bookID" element={<ChaptersViewer />} />
           <Route
             path="/chaptermodifier/:bookID/:chapterID"
             element={<ChapterModifier />}
           />
           <Route path="/flashcards" element={<FlashCards />} />
+          <Route path="/" element={<BooksViewer />} />
         </Routes>
       </BrowserRouter>
     </div>

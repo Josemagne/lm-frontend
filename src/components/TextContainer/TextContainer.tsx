@@ -1,64 +1,41 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useMemo } from "react";
-import { withReact, Slate, Editable } from "slate-react";
-import { createEditor, Node, Editor } from "slate";
+import { withReact, Slate, Editable, RenderElementProps } from "slate-react";
+import { createEditor, Node, Editor, Descendant, Transforms } from "slate";
+import { LM_Paragraph } from "../../types/slate/paragrahp";
 
 type Props = {
   /**
    * Values from formik
    */
-  values: any;
+  values?: any;
+  content: Descendant[];
 };
 
 const TextContainer = (props: Props) => {
-  const [value, setValue] = useState<Node[]>([
+  const [value, setValue] = useState<Descendant[]>([
     {
-      type: "paragraph",
-      children: [
-        {
-          text: "Text with a link ",
-        },
-        {
-          type: "link",
-          url: "https://kitemaker.co",
-          children: [
-            {
-              text: "https://kitemaker.co",
-            },
-          ],
-        },
-        {
-          text: " here",
-        },
-      ],
-    },
-    {
-      type: "paragraph",
-      children: [
-        {
-          text: "Text with ",
-        },
-        {
-          text: "bold",
-          bold: true,
-        },
-        {
-          text: " and ",
-        },
-        {
-          text: "italic",
-          italic: true,
-        },
-        {
-          text: " here",
-        },
-      ],
+      children: [{ text: "type here the question" }],
     },
   ]);
+  // TODO Create a renderElement
+  // const renderElement = useCallback(
+  //   ({ attributes, children, element }: RenderElementProps) => {
+  //     switch (element.type) {
+  //       case "text":
+  //         return <p>{element.text}</p>;
+  //         break;
+  //     }
+  //   },
+  //   []
+  // );
+
+  // @ts-ignore
   const editor = useMemo(() => withReact(createEditor()), []);
   console.log(Node.isNode({ text: "kjlasjdf" }));
   return (
     <div className="lm-textcontainer">
+      {/* @ts-ignore */}
       <Slate editor={editor} value={value} onChange={(v) => setValue(v)}>
         <Editable />
       </Slate>

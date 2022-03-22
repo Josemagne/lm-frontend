@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { addSelectedBook } from "../../../../../state/redux/features/bookSlice";
+import { changeSelectedBook } from "../../../../../state/redux/features/bookSlice";
 import { useNavigate } from "react-router";
 import { LM_Book } from "../../../../../types/Book/book";
-import Info from "../Info/Info";
 import { useDispatch } from "react-redux";
 import Delete from "../Delete/Delete";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
@@ -21,7 +20,7 @@ const BookContainer = ({ children, book_id: bookId }: Props) => {
 
   // We lead the user to /bookmodifier/{book_id}
   const handleClick = () => {
-    dispatch(addSelectedBook(book_id));
+    dispatch(changeSelectedBook({ book_id: book_id, book: null }));
     // navigate(`chaptersviewer/${book_id}`);
   };
 
@@ -38,7 +37,6 @@ const BookContainer = ({ children, book_id: bookId }: Props) => {
     >
       {children}
       <Delete book_id={book_id} />
-      <Info book_id={book_id} />
     </div>
   );
 };

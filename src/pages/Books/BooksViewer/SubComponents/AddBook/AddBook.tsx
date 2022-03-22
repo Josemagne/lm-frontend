@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 type Props = {};
 
 const AddBook = (props: Props) => {
+  // @ts-ignore
   const editor = useMemo(() => withReact(createEditor()), []);
 
   const formik = useFormik({

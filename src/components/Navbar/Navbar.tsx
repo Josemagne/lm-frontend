@@ -7,7 +7,7 @@ type Props = {};
 const Navbar = (props: Props) => {
   return (
     <div>
-      <LMNavbar>
+      <LMNavbar className="lm-navbar">
         <LMNavbar.Brand>
           <p>i</p>
         </LMNavbar.Brand>
