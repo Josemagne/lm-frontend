@@ -1,15 +1,8 @@
-import { Fragment, useState, useEffect, useMemo } from "react";
-import { LM_Book } from "../../../types/Book/book";
-import ChapterModifier from "../ChapterModifier/ChapterModifier";
+import { useState, useEffect } from "react";
 import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer";
 import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
-import useAppSelector from "../../../../build/hooks/useAppSelector";
-import useAppDispatch from "../../../../build/hooks/useAppDispatch";
-import {
-  fetchBooksBackend,
-  fetchBooksFrontend,
-} from "../../../state/redux/features/bookSlice";
+import useAppSelector from "../../../hooks/useAppSelector";
 
 // ANCHOR tinymce
 
@@ -19,7 +12,6 @@ const ChaptersViewer = ({}: Props) => {
   const [chapters, setChapters] = useState<LM_Chapter[] | []>([]);
   const bookID = window.location.href.split("/").pop();
   if (!bookID) return;
-  const dispatch = useAppDispatch();
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
   console.log("book:", book);

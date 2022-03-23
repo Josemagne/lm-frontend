@@ -1,42 +1,19 @@
 import { useState, useEffect, useMemo } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
-import Adder from "../../../../../components/helpers/Adder/Adder";
 import { LM_Book } from "../../../../../types/Book/book";
 import Book from "../../../../../storage/indexedDB/Book";
 import LM_Chapter from "../../../../../types/Book/chapter";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../../state/redux/store";
 import { useFormik } from "formik";
 import { nanoid } from "nanoid";
-import { Editable, Slate, withReact } from "slate-react";
-import { createEditor, Descendant, Node } from "slate";
-import TextContainer from "../../../../../components/TextContainer/TextContainer";
-import useAppSelector from "../../../../../../build/hooks/useAppSelector";
-import SummaryModifier from "../../../ChapterModifier/SubComponents/ChapterBody/SummaryModifier/SummaryModifier";
+import useAppSelector from "../../../../../hooks/useAppSelector";
 
 type Props = {
   book_id: string;
 };
 
-const initialValue: Descendant[] = [
-  {
-    children: [
-      {
-        children: [
-          {
-            text: "Title",
-          },
-        ],
-      },
-    ],
-  },
-];
-
 const ChapterAdder = ({ book_id }: Props) => {
   /* STATE */
   const [book, setBook] = useState<LM_Book | undefined>();
-  const [chapterValue, setChapterValue] = useState<Node[]>(initialValue);
-  const [subChapterValue, setSubChapterValue] = useState<Node[]>(initialValue);
   const [numberOfSubchapters, setNumberOfSubchapters] = useState<number>(0);
 
   const _book = useAppSelector((state) => state.books.selectedBook.book);
@@ -46,7 +23,7 @@ const ChapterAdder = ({ book_id }: Props) => {
     title: "",
     importance: 50,
     read: false,
-    summary: [{ children: [{ text: "summary" }] }],
+    summary: "",
     toRead: false,
     subchapters: [],
   };
@@ -78,16 +55,6 @@ const ChapterAdder = ({ book_id }: Props) => {
   }, []);
 
   console.log(formik.values);
-
-  function textClickHandler(
-    setState: React.Dispatch<React.SetStateAction<Descendant[]>>
-  ) {
-    setState([
-      {
-        children: [{ text: "" }],
-      },
-    ]);
-  }
 
   useEffect(() => {}, [numberOfSubchapters]);
 

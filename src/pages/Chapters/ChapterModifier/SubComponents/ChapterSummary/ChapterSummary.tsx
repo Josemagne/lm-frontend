@@ -6,7 +6,10 @@ type Props = {};
 const ChapterSummary = (props: Props) => {
   return (
     <div className="lm-chaptermodifier__summary">
-      <TextContainer content={[{ text: "chpatersummary" }]} />
+      <TextContainer
+        name="chaptersummary"
+        content={[{ text: "chpatersummary" }]}
+      />
     </div>
   );
 };
