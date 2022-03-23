@@ -1,0 +1,8 @@
+.lm-navbar {
+  //   position: fixed;
+  bottom: 0;
+
+  @media screen and (min-width: 578px) {
+    position: static;
+  }
+}

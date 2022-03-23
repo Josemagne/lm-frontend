@@ -1,36 +1,32 @@
-import { useSelector } from "react-redux";
-import { store, RootState } from "../../../state/redux/store";
-import { useLiveQuery } from "dexie-react-hooks";
-import books from "../../../storage/indexedDB/books";
 import { Fragment, useState, useEffect, useMemo } from "react";
 import { LM_Book } from "../../../types/Book/book";
 import ChapterModifier from "../ChapterModifier/ChapterModifier";
 import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer";
 import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
+import useAppSelector from "../../../../build/hooks/useAppSelector";
+import useAppDispatch from "../../../../build/hooks/useAppDispatch";
+import {
+  fetchBooksBackend,
+  fetchBooksFrontend,
+} from "../../../state/redux/features/bookSlice";
+
+// ANCHOR tinymce
 
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
   const [chapters, setChapters] = useState<LM_Chapter[] | []>([]);
   const bookID = window.location.href.split("/").pop();
-
-  // If we do not get the book id then we do not render the page
-  // NOTE Without a book there is no chapter!
   if (!bookID) return;
-  const getBook = async () => {
-    let book: LM_Book | undefined = await books.books
-      .get(bookID)
-      .then((res) => res);
-    if (!book) return;
-    setChapters(book.chapters);
-  };
+  const dispatch = useAppDispatch();
+
+  const book = useAppSelector((state) => state.books.selectedBook.book);
+  console.log("book:", book);
 
   useEffect(() => {
-    if (chapters.length < 1) {
-      getBook();
-    }
-  }, []);
+    console.log("chapters: ", book.chapters);
+  }, [book]);
 
   useEffect(() => {}, []);
 
@@ -38,8 +34,8 @@ const ChaptersViewer = ({}: Props) => {
     <div className="lm-chaptersviewer">
       <ChapterAdder book_id={bookID} />
       <div className="lm-chapters">
-        {chapters && chapters.length > 0 ? (
-          chapters.map((ch) => {
+        {book.chapters.length > 0 ? (
+          book.chapters.map((ch: LM_Chapter) => {
             return (
               <ChapterContainer
                 key={ch.chapter_id}

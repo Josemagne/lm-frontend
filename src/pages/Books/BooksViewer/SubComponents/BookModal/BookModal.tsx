@@ -1,9 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { LM_Book } from "../../../../../types/Book/book";
 import { Button, Modal } from "rsuite";
-import { useLiveQuery } from "dexie-react-hooks";
 import books from "../../../../../storage/indexedDB/books";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../../state/redux/store";
 import {
   changeSelectedBook,

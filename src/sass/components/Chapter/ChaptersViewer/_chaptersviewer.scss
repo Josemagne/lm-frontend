@@ -4,15 +4,7 @@
     "lm-chapters";
 
   .lm-chapteradder {
-    grid-template-areas: "lm-chapteradder__title lm-chapteradder__button";
     grid-area: lm-chapteradder;
-    .lm-chapteradder__title {
-      grid-area: lm-chapteradder__title;
-    }
-
-    .lm-chapteradder__button {
-      grid-area: lm-chapteradder__button;
-    }
   }
 
   .lm-chapters {

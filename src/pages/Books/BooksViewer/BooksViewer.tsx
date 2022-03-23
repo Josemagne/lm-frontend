@@ -70,8 +70,6 @@ const BooksViewer = (props: Props) => {
   return (
     <div className="lm-page lm-booksviewer">
       {loading ? <p>Loading...</p> : null}
-      <p>{_books.length > 0 ? _books[0].book_id : null}</p>
-
       {_books.length > 0 ? (
         (_books as LM_Book[]).map((book) => {
           return (

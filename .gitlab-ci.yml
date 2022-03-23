@@ -15,7 +15,9 @@ build:
     NODE_ENV: production
   script:
     - echo "Building librimem"
-    - npm install
+    - npm install yarn
+    - yarn
+    - yarn add typescript
     - npm run build-ts
   artifacts:
     paths:

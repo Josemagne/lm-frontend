@@ -7,8 +7,8 @@
     margin: 1rem;
     display: grid;
     grid-template-areas:
-      "image author title info"
-      "image progress pages info";
+      "image author title delete"
+      "image progress pages pages";
 
     &:nth-child(2n) {
       background-color: rgb(155, 221, 155);
@@ -32,8 +32,11 @@
     .lm-pagesviewer {
       grid-area: pages;
     }
-    .lm-bookinfo {
-      grid-area: info;
+    .lm-delete {
+      grid-area: delete;
+      display: flex;
+      justify-self: flex-end;
+      right: 0;
     }
   }
 }

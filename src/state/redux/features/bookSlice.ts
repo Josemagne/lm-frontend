@@ -5,7 +5,7 @@ import Server from '../../../services/Server';
 import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
 
-interface InitialState {
+interface LM_InitialState {
     books: {
         data: LM_Book[];
         /**
@@ -24,7 +24,7 @@ interface InitialState {
     }
 }
 
-const initialState: InitialState = {
+const initialState: LM_InitialState = {
     books: {
         data: [],
         ids: [],
@@ -35,7 +35,6 @@ const initialState: InitialState = {
         book_id: null,
         book: null
     }
-
 }
 
 /**

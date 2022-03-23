@@ -1,4 +1,5 @@
 import LM_Summary from './summary';
+import { Descendant } from 'slate';
 export default interface LM_Chapter {
     chapter_id: string;
     /**
@@ -17,5 +18,10 @@ export default interface LM_Chapter {
      * Indicates if the chapter is read.
      */
     read: boolean;
-    summary: LM_Summary;
+    summary: string;
+    subchapters: LM_Subchapter[];
+}
+
+export interface LM_Subchapter extends LM_Chapter {
+    isSubchapter: boolean;
 }

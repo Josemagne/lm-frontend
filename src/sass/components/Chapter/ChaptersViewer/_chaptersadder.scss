@@ -1,0 +1,32 @@
+.lm-chapteradder {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "subchapters";
+
+  // NOTE Main chapters
+  .lm-chapteradder__title {
+    grid-area: title;
+  }
+
+  .lm-chapteradder__subchapters {
+    grid-area: subchapters;
+    display: grid;
+
+    .lm-chapteradder__subchapter {
+      display: flex;
+      .plussign button {
+        padding: 1rem;
+        background-color: rgb(66, 66, 179);
+        color: white;
+      }
+
+      .lm-chapteradder__subchapter__input {
+      }
+    }
+  }
+  .lm-textcontainer {
+    padding: 1rem;
+    border: 1px solid black;
+  }
+}
