@@ -6,7 +6,14 @@ type Props = {};
 const Question = (props: Props) => {
   return (
     <div className="lm-question flashcard__entity">
-      <TextContainer name="question" content={[{ text: "question" }]} />
+      <TextContainer
+        name="question"
+        content={[
+          {
+            children: [{ text: "question" }],
+          },
+        ]}
+      />
     </div>
   );
 };

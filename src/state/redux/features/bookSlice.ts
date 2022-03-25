@@ -4,6 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Server from '../../../services/Server';
 import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
+import LM_Chapter from '../../../types/Book/chapter';
 
 interface LM_InitialState {
     books: {
@@ -22,6 +23,11 @@ interface LM_InitialState {
         book_id: string | null;
         book: LM_Book | null;
     }
+
+    selectedChapter: {
+        chapter: null | LM_Chapter;
+        chapter_id: null | string;
+    }
 }
 
 const initialState: LM_InitialState = {
@@ -34,7 +40,12 @@ const initialState: LM_InitialState = {
     selectedBook: {
         book_id: null,
         book: null
+    },
+    selectedChapter: {
+        chapter: null,
+        chapter_id: null
     }
+
 }
 
 /**
@@ -107,7 +118,22 @@ export const bookSlice = createSlice({
         },
         removeSelectedBook: (state, action) => {
             state.selectedBook.book_id = null;
+            state.selectedBook.book = null;
+        },
+
+        // ANCHOR selectedChapter
+        changeSelectedChapter: (state, action: PayloadAction<{ chapter_id: string, chapter: LM_Chapter | null }>) => {
+            if (!action.payload.chapter) return;
+            state.selectedBook.book?.chapters.push(action.payload.chapter)
+            state.selectedChapter.chapter = action.payload.chapter;
+            state.selectedChapter.chapter_id = action.payload.chapter_id;
+        },
+
+        removeSelectedChapter: (state, action) => {
+            state.selectedChapter.chapter = null;
+            state.selectedChapter.chapter_id = null;
         }
+
 
     },
     extraReducers: (builder) => {
@@ -152,6 +178,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter } = bookSlice.actions;
 
 export default bookSlice.reducer; 

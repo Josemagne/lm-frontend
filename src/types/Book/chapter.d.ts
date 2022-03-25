@@ -7,9 +7,17 @@ export default interface LM_Chapter {
      */
     title: string;
     /**
+     * book_id of the book
+     */
+    book_id: string;
+    /**
      * Decides if the chapter should be read
      */
     toRead: boolean;
+    /**
+     * Decides if the chapter has been read
+     */
+    read: boolean;
     /**
      * Importance is a number from 1 to 100 where 1 indicate that it is not important and 100 that it is of outmost importance
      */
@@ -19,7 +27,32 @@ export default interface LM_Chapter {
      */
     read: boolean;
     summary: string;
-    subchapters: LM_Subchapter[];
+    /**
+     * chapter_ids of the subchapters
+     */
+    subchapters: string[];
+    started: Date | null;
+    ended: Date | null;
+    /**
+     * Decides if the chapter is a subchapter
+     */
+    isSubchapter: boolean;
+    /**
+     * The index of the chapter
+     * E.g. 1.1.1
+     */
+    index: string;
+    /**
+     * The degree of the chapter
+     * E.g. 1 --> x.1
+     * E.g. 2 --> x.1.1
+     */
+    degree: number | null;
+    /**
+     * ID of the parent chapter
+     */
+    parentChapter: string | null;
+
 }
 
 export interface LM_Subchapter extends LM_Chapter {

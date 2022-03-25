@@ -9,28 +9,24 @@ import Server from "../../../../../services/Server";
 
 type Props = {
   children: any;
+  book: LM_Book;
   book_id: string;
 };
 
-const BookContainer = ({ children, book_id: bookId }: Props) => {
+const BookContainer = ({ children, book_id: bookId, book }: Props) => {
   const [book_id, SetBook_id] = useState<string>(bookId);
-  const [book, setBook] = useState<LM_Book>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   // We lead the user to /bookmodifier/{book_id}
   const handleClick = () => {
-    dispatch(changeSelectedBook({ book_id: book_id, book: null }));
-    // navigate(`chaptersviewer/${book_id}`);
+    dispatch(changeSelectedBook({ book_id: book_id, book: book }));
   };
 
   useEffect(() => {});
   return (
     <div
       onClick={() => {
-        // navigate(`chaptersviewer/${book_id}`, {
-        //   replace: true,
-        // });
         handleClick();
       }}
       className="lm-bookcontainer"

@@ -3,6 +3,11 @@ import { Toggle } from "rsuite";
 
 type Props = {};
 
+/**
+ * Handles whether the chapter is shown as read or not
+ * @param props
+ * @returns
+ */
 const ChapterState = (props: Props) => {
   /*******************************/
   /************* STATE ***********/

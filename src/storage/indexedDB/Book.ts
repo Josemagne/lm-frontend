@@ -81,14 +81,16 @@ export default class Book {
     /**
      * Adds chapter to indexedDB
      */
-    public static addChapter = async (book: LM_Book, chapter: LM_Chapter) => {
-        console.log("book: ", book)
-        console.log("chapter: ", chapter)
+    public static addChapter = async (bookID: string, chapter: LM_Chapter): Promise<any> => {
 
-        // Add chapter to book
-        book.chapters.push(chapter);
+        await books.books.get(bookID).then(async (book) => {
+            if (!book) return;
+            book.chapters.push(chapter);
+            await books.books.put(book, bookID);
+        })
 
-        books.books.put(book, book.book_id);
+        return bookID;
+
     }
 
     public static getChapters = async (book_id: string): Promise<LM_Chapter[] | null> => {
@@ -98,6 +100,22 @@ export default class Book {
                 result = book?.chapters;
         })
         return result;
+    }
+
+    public static removeChapter = async (chapter_id: string, book_id: string): Promise<any> => {
+        const book = await this.getBook(book_id)
+        /**
+         * Index of the chapter in book.chapters[] that we are going to delete
+         */
+        let index = 0;
+        if (!book) return;
+        book.chapters.find((ch, i) => {
+            if (ch.chapter_id === chapter_id) index = i;
+        })
+        book.chapters.slice(index, 1);
+
+        // Update book
+        this.updateBook(book.book_id, book);
     }
 
 }

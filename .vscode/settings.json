@@ -1,4 +1,5 @@
 {
   "jest.jestCommandLine": "npx jest",
-  "editor.fontWeight": "normal"
+  "editor.fontWeight": "normal",
+  "editor.fontSize": 14
 }

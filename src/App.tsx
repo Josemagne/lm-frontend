@@ -1,10 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
 import Navbar from "./components/Navbar/Navbar";
 import BookModifier from "./pages/Books/BookModifier/BookModifier";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
 import FlashCards from "./pages/FlashCards/FlashCards";
+import ErrorPage from "./pages/Error";
 
 type Props = {};
 
@@ -14,7 +15,8 @@ const App = (props: Props) => {
       <header>
         <Navbar />
       </header>
-      <BrowserRouter>
+      {/* TODO Should we use BrowserRouter? */}
+      <HashRouter>
         <Routes>
           <Route path="/bookmodifier" element={<BookModifier />} />
           <Route path="/bookmodifier/:bookID" element={<BookModifier />} />
@@ -27,8 +29,9 @@ const App = (props: Props) => {
           />
           <Route path="/flashcards" element={<FlashCards />} />
           <Route path="/" element={<BooksViewer />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 };

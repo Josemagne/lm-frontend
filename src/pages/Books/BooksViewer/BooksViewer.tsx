@@ -74,6 +74,7 @@ const BooksViewer = (props: Props) => {
         (_books as LM_Book[]).map((book) => {
           return (
             <BookContainer
+              book={book}
               book_id={book.book_id}
               key={book.book_id}
               children={

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import TextContainer from "../../../../components/TextContainer/TextContainer";
 
 type Props = {};
@@ -6,7 +6,10 @@ type Props = {};
 const Answer = (props: Props) => {
   return (
     <div className="lm-answer flashcard__entity">
-      <TextContainer name="answer" content={[{ text: "answer" }]} />
+      <TextContainer
+        name="answer"
+        content={[{ children: [{ text: "answer" }] }]}
+      />
     </div>
   );
 };

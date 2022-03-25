@@ -15,32 +15,23 @@ type Props = {};
 
 const BookModal = ({}: Props) => {
   // That book that is will be displayed
-  const [book, setBook] = useState<LM_Book>();
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
-  const book_id = useAppSelector(
-    (state: RootState) => state.books.selectedBook.book_id
+  const book = useAppSelector(
+    (state: RootState) => state.books.selectedBook.book
   );
-
-  // Get the book data if we got the id from redux
-  if (book_id) {
-    books.books.get(book_id).then((res) => {
-      if (!res) return;
-      setBook(res);
-      setOpen(true);
-    });
-  }
 
   const navigate = useNavigate();
 
   const handleClose = () => {
     // Remove it from redux
     // dispatch(() => dispatch(removeSelectedBook("")));
-    dispatch(removeSelectedBook(""));
     setOpen(false);
   };
+
+  console.log("book: ", book);
 
   useEffect(() => {
     // NOTE Clean up function
@@ -63,30 +54,36 @@ const BookModal = ({}: Props) => {
             <p>pages: {book.pages}</p>
             <div
               onClick={() => {
-                if (!book_id) return;
-                dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+                if (!book) return;
+                dispatch(
+                  changeSelectedBook({ book_id: book.book_id, book: book })
+                );
                 handleClose();
-                navigate(`flashcards/${book_id}`);
+                navigate(`flashcards/${book.book_id}`);
               }}
             >
               <Button>Go to flashcards</Button>
             </div>
             <div
               onClick={() => {
-                if (!book_id) return;
-                dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+                if (!book.book_id) return;
+                dispatch(
+                  changeSelectedBook({ book_id: book.book_id, book: book })
+                );
                 handleClose();
-                navigate(`chaptersviewer/${book_id}`);
+                navigate(`chaptersviewer/${book.book_id}`);
               }}
             >
               <Button>Go to chapters</Button>
             </div>
             <div
               onClick={() => {
-                if (!book_id) return;
-                dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+                if (!book.book_id) return;
+                dispatch(
+                  changeSelectedBook({ book_id: book.book_id, book: book })
+                );
                 handleClose();
-                navigate(`bookmodifer/${book_id}`);
+                navigate(`bookmodifer/${book.book_id}`);
               }}
             >
               <Button>Modify bookdata</Button>

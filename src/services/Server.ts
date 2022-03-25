@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { LM_Book } from "../types/Book/book";
 import { nanoid } from 'nanoid';
+import LM_Chapter from '../types/Book/chapter';
 
 
 const env = process.env.NODE_ENV;
@@ -50,20 +51,37 @@ export default class Server {
 
         if (book.pages === null) book.pages = 0;
 
-        api.post("/books", book)
+        await api.post("/books", book)
         console.log("Sent this book data to backend: ", book)
     }
 
 
-    public static removeBook = async (book_id: string): Promise<boolean> => {
+    public static removeBook = async (book_id: string): Promise<any> => {
         let result = false;
         let api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
 
         api.delete(`/books/${book_id}`).then(() => {
             result = true;
         }).catch((err) => {
+            result = err;
         })
         console.log("Deleted book in the backend")
+
+        return result;
+    }
+
+
+    // ANCHOR Chapter
+
+    public static addChapter = async (chapter: LM_Chapter): Promise<boolean> => {
+        let result = false;
+        let api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
+
+        await api.post(`/chapters`, chapter).then(() => {
+            result = true;
+        }).catch((err) => {
+            result = err;
+        })
 
         return result;
     }
