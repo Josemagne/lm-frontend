@@ -47,17 +47,10 @@ const ChapterAdder = ({ book_id }: Props) => {
     initialValues: initialValues,
     onSubmit: async (values, { resetForm }) => {
       resetForm();
-      console.log("dispatched!");
-      console.log("book:", _book);
       // Add locally
       // redux
       if (!_book) return;
-      console.log("passed!");
       // Copy the book
-      let newBook = { ..._book };
-      console.log("copied the book");
-      console.log("newBook: ", newBook);
-      // Copy the chapters
       dispatch(
         changeSelectedChapter({
           chapter: values,

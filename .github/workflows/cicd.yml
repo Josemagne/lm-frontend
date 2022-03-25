@@ -8,14 +8,18 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu:latest
+    name: build project
+    runs-on: ubuntu-latest
 
-  steps:
-    - uses: actions/checkout@v2
-    - name: use node.js
-    - uses: actions/setup-node@2
-    - name: build
-    - run: |
-        npm ci
-        npm run build
-        npm test
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+
+      - name: use node.js
+        uses: actions/setup-node@2
+
+      - name: build
+      - run: |
+          npm ci
+          npm run build
+          npm test
