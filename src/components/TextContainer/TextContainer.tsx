@@ -10,6 +10,9 @@ import { useMemo } from "react";
 import { withReact, Slate, Editable, RenderElementProps } from "slate-react";
 import { createEditor, Node, Descendant, Transforms } from "slate";
 import { FieldInputProps } from "formik";
+import { LM_TextcontainerActions } from "../../types/slate/actions";
+import LM_Chapter from "../../types/Book/chapter";
+import { LM_Book } from "../../types/Book/book";
 
 type Props = {
   /**
@@ -17,15 +20,15 @@ type Props = {
    */
   values?: FieldInputProps<Descendant[]>;
   content?: Descendant[];
+  chapterId?: number;
   name: string;
   /**
    * The entity whose text field we are manipulating
    */
   entity?: any;
-  /**
-   * The property of entity we want to change
-   */
-  propToChange?: string;
+  action?: LM_TextcontainerActions;
+
+  chapterIndex?: number;
   changeHandler?: (newEntity: any) => void;
 };
 
@@ -35,7 +38,9 @@ const TextContainer = ({
   name,
   changeHandler,
   entity,
-  propToChange,
+  chapterIndex,
+  chapterId,
+  action,
 }: Props) => {
   const editorRef: any = useRef(null);
 
@@ -46,17 +51,28 @@ const TextContainer = ({
   );
   const handleChange = (v: Descendant[]) => {
     setValue(v);
+    const entityCopy = JSON.parse(JSON.stringify(entity));
+    console.log("entityCopy", entityCopy);
     if (!entity) return;
-    if (!propToChange) return;
     if (!changeHandler) return;
-    entity[propToChange] = v;
-    changeHandler(entity);
+    if (action === "AddSummaryToBook") {
+      console.log("AddSummaryToBook");
+      console.log("ChapterIndex before", chapterIndex);
+      if (chapterIndex || chapterIndex === 0) {
+        console.log("chapterIndex: ", chapterIndex);
+        console.log(entity.chapters[chapterIndex].summary);
+        (entityCopy as LM_Book).chapters[chapterIndex].summary = v;
+      }
+    }
+    changeHandler(entityCopy);
   };
+
+  useEffect(() => {}, [content]);
 
   return (
     <div className="lm-textcontainer">
       {/* @ts-ignore */}
-      <Slate editor={editor} value={value} onChange={(v) => setValue(v)}>
+      <Slate editor={editor} value={value} onChange={(v) => handleChange(v)}>
         <Editable />
       </Slate>
     </div>

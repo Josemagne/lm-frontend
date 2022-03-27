@@ -27,6 +27,10 @@ interface LM_InitialState {
     selectedChapter: {
         chapter: null | LM_Chapter;
         chapter_id: null | string;
+        /**
+         * The index of the chapter in LM_Book.chapters
+         */
+        chapterIndex: number | null;
     },
     /**
      * Decides if we open the modal in BooksViewer
@@ -48,6 +52,7 @@ const initialState: LM_InitialState = {
     selectedChapter: {
         chapter: null,
         chapter_id: null
+        , chapterIndex: null
     },
     openBooksViewerModal: false
 
@@ -157,22 +162,34 @@ export const bookSlice = createSlice({
             if (!action.payload.book) return;
             state.selectedBook.book = action.payload.book;
 
+
         },
         removeSelectedBook: (state, action) => {
             state.selectedBook.book_id = null;
             state.selectedBook.book = null;
         },
         // ANCHOR selectedChapter
-        changeSelectedChapter: (state, action: PayloadAction<{ chapter_id: string, chapter: LM_Chapter | null }>) => {
-            if (!action.payload.chapter) return;
+        changeSelectedChapter: (state, action: PayloadAction<{ chapter_id: string, chapter: LM_Chapter }>) => {
             state.selectedBook.book?.chapters.push(action.payload.chapter)
             state.selectedChapter.chapter = action.payload.chapter;
             state.selectedChapter.chapter_id = action.payload.chapter_id;
+
+            let index = 0;
+            (state.selectedBook.book as LM_Book).chapters.find((ch, i) => {
+                if (ch.chapter_id === action.payload.chapter_id) {
+                    index = i;
+                }
+            })
+            console.log("index in store", index)
+
+            state.selectedChapter.chapterIndex = index;
+
         },
 
         removeSelectedChapter: (state, action) => {
             state.selectedChapter.chapter = null;
             state.selectedChapter.chapter_id = null;
+            state.selectedChapter.chapterIndex = null;
         },
         toggleBooksViewerModal: (state, action) => {
             state.openBooksViewerModal = !state.openBooksViewerModal;

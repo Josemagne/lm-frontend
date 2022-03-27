@@ -14,20 +14,20 @@ const Delete = ({ book_id }: Props) => {
 
   const dispatch = useAppDispatch();
 
-  const deleteBook = (e: React.MouseEvent<Element, MouseEvent>) => {
+  const deleteBook = async (e: React.MouseEvent<Element, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
     // Frontend
-    Book.removeBook(bookId);
+    await Book.removeBook(book_id);
     // TODO Metadata remove
-    Metadata.removeFrontendBook(book_id);
-    dispatch(removeBook(bookId));
+    await Metadata.removeFrontendBook(book_id);
+    dispatch(removeBook(book_id));
     // Backend
-    Server.removeBook(bookId);
+    await Server.removeBook(book_id);
   };
 
   return (
-    <div className="lm-delete" onClick={(e) => deleteBook(e)}>
+    <div className="lm-deletebutton" onClick={(e) => deleteBook(e)}>
       x
     </div>
   );

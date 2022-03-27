@@ -32,11 +32,21 @@
     .lm-pagesviewer {
       grid-area: pages;
     }
-    .lm-delete {
-      grid-area: delete;
+    .lm-deletebutton {
+      background-color: rgb(226, 77, 77);
+      padding: 1rem;
+      width: 1ch;
+      height: 1ch;
+      border-radius: 50%;
       display: flex;
-      justify-self: flex-end;
-      right: 0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lm-deletebutton:hover {
+      background-color: rgb(128, 124, 124);
+      color: white;
+      font-weight: bolder;
     }
   }
 }

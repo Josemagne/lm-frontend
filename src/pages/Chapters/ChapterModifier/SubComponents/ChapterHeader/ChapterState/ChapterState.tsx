@@ -3,7 +3,7 @@ import { Toggle } from "rsuite";
 import useAppSelector from "../../../../../../../build/hooks/useAppSelector";
 import useAppDispatch from "../../../../../../../build/hooks/useAppDispatch";
 import { changeSelectedBook } from "../../../../../../state/redux/features/bookSlice";
-import LM_Book from "../../../../../../classes/LM_Book";
+import { LM_Book } from "../../../../../../types/Book/book";
 
 interface Props {
   changeHandler: (newBook: LM_Book) => void;

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import axios, { AxiosInstance } from "axios";
 import { LM_Book } from "../types/Book/book";
 import { nanoid } from 'nanoid';
@@ -60,7 +61,7 @@ export default class Server {
 
         let api = axios.create({ baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}` });
 
-        await api.post(`/books/${book.book_id}`).then((res) => {
+        await api.put(`/books/${book.book_id}`).then((res) => {
             result = res;
         }).catch((err) => {
             result = err;
