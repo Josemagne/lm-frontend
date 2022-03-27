@@ -12,12 +12,13 @@ type Props = {};
 const App = (props: Props) => {
   return (
     <div className="app">
-      <header>
-        <Navbar />
-      </header>
       {/* TODO Should we use BrowserRouter? */}
       <HashRouter>
+        <header>
+          <Navbar />
+        </header>
         <Routes>
+          <Route path="/" element={<BooksViewer />} />
           <Route path="/bookmodifier" element={<BookModifier />} />
           <Route path="/bookmodifier/:bookID" element={<BookModifier />} />
           <Route path="/booksviewer" element={<BooksViewer />} />
@@ -28,7 +29,6 @@ const App = (props: Props) => {
             element={<ChapterModifier />}
           />
           <Route path="/flashcards" element={<FlashCards />} />
-          <Route path="/" element={<BooksViewer />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </HashRouter>

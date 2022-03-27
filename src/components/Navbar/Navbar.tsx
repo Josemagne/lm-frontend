@@ -10,6 +10,7 @@ import {
   Button,
   NavLink,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
 
 type Props = {};
@@ -81,13 +82,21 @@ const Navbar = (props: Props) => {
             <p>i</p>
           </LMNBavbar.Brand>
           <Nav>
-            <Nav.Item href="/">Books</Nav.Item>
-            <Nav.Item href="/bookmodifier">Modifier</Nav.Item>
+            <Nav.Item as={Link} to="/" href="/">
+              Books
+            </Nav.Item>
+            <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
+              Modifier
+            </Nav.Item>
             <Dropdown title="Other">
-              <Nav.Item href="/settings">Settings</Nav.Item>
+              <Nav.Item href="/settings" to="/settings" as={Link}>
+                Settings
+              </Nav.Item>
             </Dropdown>
             <Nav.Item>Coordinator</Nav.Item>
-            <Nav.Item href="/flashcards">FlashCards</Nav.Item>
+            <Nav.Item href="/flashcards" as={Link} to="/flashcards">
+              FlashCards
+            </Nav.Item>
           </Nav>
         </LMNBavbar>
       )}

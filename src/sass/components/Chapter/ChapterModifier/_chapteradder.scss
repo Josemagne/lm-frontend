@@ -1,5 +1,24 @@
 .lm-chapteradder {
   grid-area: lm-chapteradder;
+  display: "lm-chapteradder__index lm-chpateradder__title lm-chapteradder_title"
+    "lm-chapteradder__subchapters lm-chapteradder__subchapters lm-chapteradder__subchapters";
+  .lm-chapteradder__index {
+    grid-area: lm-chapteradder__index;
+  }
+
+  .lm-chapteradder__title {
+    grid-area: lm-chapteradder__title;
+  }
+
+  .lm-chapteradder__subchapters {
+    grid-area: lm-chapteradder__subchapters;
+    display: grid;
+    grid-template-areas: "lm-chapteradder__subchapter";
+
+    .lm-chapteradder__subchapter {
+      grid-area: lm-chapteradder__subchapter;
+    }
+  }
   .lm-chapteradder__button {
     width: 2rem;
     height: 2rem;

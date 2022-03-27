@@ -1,37 +1,33 @@
 import { Fragment, useState, useEffect } from "react";
 import { LM_Book } from "../../../../../types/Book/book";
 import { Button, Modal } from "rsuite";
-import books from "../../../../../storage/indexedDB/books";
-import { RootState } from "../../../../../state/redux/store";
+import { useNavigate } from "react-router";
 import {
-  changeSelectedBook,
   removeSelectedBook,
+  toggleBooksViewerModal,
 } from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
-import useAppSelector from "../../../../../hooks/useAppSelector";
-import { useNavigate } from "react-router";
 
-type Props = {};
+type Props = {
+  selectedBook: LM_Book;
+};
 
-const BookModal = ({}: Props) => {
+const BookModal = ({ selectedBook }: Props) => {
   // That book that is will be displayed
   const [open, setOpen] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
 
-  const book = useAppSelector(
-    (state: RootState) => state.books.selectedBook.book
-  );
+  // const book = useAppSelector(
+  //   (state: RootState) => state.books.selectedBook.book
+  // );
 
   const navigate = useNavigate();
 
   const handleClose = () => {
-    // Remove it from redux
-    // dispatch(() => dispatch(removeSelectedBook("")));
+    dispatch(toggleBooksViewerModal(""));
     setOpen(false);
   };
-
-  console.log("book: ", book);
 
   useEffect(() => {
     // NOTE Clean up function
@@ -45,45 +41,36 @@ const BookModal = ({}: Props) => {
       onClose={handleClose}
       full={true}
     >
-      {book ? (
+      {selectedBook ? (
         <Fragment>
           <Modal.Header>
-            {book.author} {book.book_title}
+            {selectedBook.author} {selectedBook.book_title}
           </Modal.Header>
           <Modal.Body>
-            <p>pages: {book.pages}</p>
+            <p>pages: {selectedBook.pages}</p>
             <div
               onClick={() => {
-                if (!book) return;
-                dispatch(
-                  changeSelectedBook({ book_id: book.book_id, book: book })
-                );
+                if (!selectedBook) return;
                 handleClose();
-                navigate(`flashcards/${book.book_id}`);
+                navigate(`flashcards/${selectedBook.book_id}`);
               }}
             >
               <Button>Go to flashcards</Button>
             </div>
             <div
               onClick={() => {
-                if (!book.book_id) return;
-                dispatch(
-                  changeSelectedBook({ book_id: book.book_id, book: book })
-                );
+                if (!selectedBook.book_id) return;
                 handleClose();
-                navigate(`chaptersviewer/${book.book_id}`);
+                navigate(`chaptersviewer/${selectedBook.book_id}`);
               }}
             >
               <Button>Go to chapters</Button>
             </div>
             <div
               onClick={() => {
-                if (!book.book_id) return;
-                dispatch(
-                  changeSelectedBook({ book_id: book.book_id, book: book })
-                );
+                if (!selectedBook.book_id) return;
                 handleClose();
-                navigate(`bookmodifer/${book.book_id}`);
+                navigate(`bookmodifer/${selectedBook.book_id}`);
               }}
             >
               <Button>Modify bookdata</Button>

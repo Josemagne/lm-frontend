@@ -9,7 +9,9 @@ import useAppSelector from "../../../../../hooks/useAppSelector";
 import { boolean } from "yup/lib/locale";
 import Server from "../../../../../services/Server";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
+import getNextIndex from "../../../../../utils/getNextIndex";
 import {
+  addChapter,
   changeSelectedBook,
   changeSelectedChapter,
 } from "../../../../../state/redux/features/bookSlice";
@@ -32,7 +34,7 @@ const ChapterAdder = ({ book_id }: Props) => {
     title: "",
     importance: 50,
     read: false,
-    summary: "",
+    summary: [{ children: [{ text: "" }] }],
     toRead: false,
     subchapters: [],
     ended: null,
@@ -40,33 +42,38 @@ const ChapterAdder = ({ book_id }: Props) => {
     degree: null,
     parentChapter: null,
     isSubchapter: false,
-    index: "1",
+    index: "",
   };
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm, setSubmitting }) => {
       resetForm();
       // Add locally
       // redux
       if (!_book) return;
-      // Copy the book
       dispatch(
-        changeSelectedChapter({
-          chapter: values,
-          chapter_id: values.chapter_id,
-        })
+        addChapter({ chapter: values, book_id: book_id })
+        // changeSelectedChapter({
+
+        //   chapter: values,
+        //   chapter_id: values.chapter_id,
+        // })
       );
 
-      await Book.addChapter(values.chapter_id, values);
+      await Book.addChapter(_book.book_id, values);
       // Add to the server
       await Server.addChapter(values);
-      console.log("Dispatched!");
+      // Completes submission cycle
+      setSubmitting(false);
     },
     validate: () => {},
   });
 
-  useEffect(() => {}, [_book]);
+  useEffect(() => {
+    if (!_book) return;
+    formik.values.index = getNextIndex(_book);
+  }, [_book]);
 
   useEffect(() => {}, []);
 
@@ -87,6 +94,15 @@ const ChapterAdder = ({ book_id }: Props) => {
     <div className="lm-chapteradder">
       {_book ? (
         <>
+          <div className="lm-chapteradder__index">
+            <FloatingLabel controlId="index" label="Index">
+              <Form.Control
+                type="text"
+                placeholder="Index"
+                {...formik.getFieldProps("index")}
+              />
+            </FloatingLabel>
+          </div>
           <div className="lm-chapteradder__title">
             <FloatingLabel controlId="title" label="Chaptertitle">
               <Form.Control
@@ -96,41 +112,32 @@ const ChapterAdder = ({ book_id }: Props) => {
               />
             </FloatingLabel>
           </div>
-          <div>
-            {/* TODO Below */}
-            {/* Subchapter */}
-            <div className="lm-chapteradder__subchapters">
-              <div className="lm-chapteradder__subchapter">
-                <div className="plussign"></div>
-                <FloatingLabel
-                  controlId="subchapter"
-                  label="Subchapter Title"
-                  className="lm-chapteradder__subchapter__input"
-                >
-                  <Form.Control type="text" placeholder="Subchapter Title" />
-                </FloatingLabel>
-              </div>
+          <div className="lm-chapteradder__subchapters">
+            <div className="lm-chapteradder__subchapter">
+              <div className="plussign">+</div>
+              <FloatingLabel
+                controlId="subchapter"
+                label="Subchapter Title"
+                className="lm-chapteradder__subchapter__input"
+              >
+                <Form.Control type="text" placeholder="Subchapter Title" />
+              </FloatingLabel>
             </div>
-            <div className="lm-chapteradder__chapters">
-              <div className="chapter1"></div>
-              <div className="chapter2"></div>
-              <div className="chapter3"></div>
-            </div>
-
-            {/* roRead */}
-            {/* importance */}
-            {/* read */}
-            {/* Summary */}
-            <button
-              type="button"
-              onClick={() => {
-                formik.handleSubmit();
-              }}
-              className="lm-chapteradder__button"
-            >
-              add
-            </button>
           </div>
+
+          {/* roRead */}
+          {/* importance */}
+          {/* read */}
+          {/* Summary */}
+          <button
+            type="button"
+            onClick={() => {
+              formik.handleSubmit();
+            }}
+            className="lm-chapteradder__button"
+          >
+            add
+          </button>
         </>
       ) : null}
       {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}

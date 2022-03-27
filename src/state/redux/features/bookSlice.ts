@@ -27,7 +27,11 @@ interface LM_InitialState {
     selectedChapter: {
         chapter: null | LM_Chapter;
         chapter_id: null | string;
-    }
+    },
+    /**
+     * Decides if we open the modal in BooksViewer
+     */
+    openBooksViewerModal: boolean;
 }
 
 const initialState: LM_InitialState = {
@@ -39,12 +43,13 @@ const initialState: LM_InitialState = {
     },
     selectedBook: {
         book_id: null,
-        book: null
+        book: null,
     },
     selectedChapter: {
         chapter: null,
         chapter_id: null
-    }
+    },
+    openBooksViewerModal: false
 
 }
 
@@ -109,6 +114,43 @@ export const bookSlice = createSlice({
             // Change the old book with the new book
             state.books.data[arrayIndex] = action.payload;
         },
+        // ANCHOR chapter
+        /**
+         * Adds chapter to the book in the store
+         * @param state 
+         * @param action 
+         */
+        addChapter: (state, action: PayloadAction<{ chapter: LM_Chapter, book_id: string }>) => {
+            /* BOOKS */
+            state.books.data.find((book) => {
+                if (book.book_id === action.payload.book_id) {
+                    book.chapters.push(action.payload.chapter)
+                }
+                console.log("Inserted chpater in the store")
+                return book;
+            })
+
+            /* SELECTEDBOOK */
+            if (!state.selectedBook.book) return;
+            state.selectedBook.book.chapters.push(action.payload.chapter)
+
+        },
+        /**
+         * Updates chapter in the store
+         * @param state 
+         * @param action 
+         */
+        changeChapter: (state, action: PayloadAction<{ chpater: LM_Chapter, book_id: string }>) => {
+
+        },
+        /**
+         * Removes chapter from the store
+         * @param state 
+         * @param action 
+         */
+        deleteChapter: (state, action: PayloadAction<{ chpater_id: string, book_id: string }>) => {
+
+        },
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<{ book_id: string, book: LM_Book | null }>) => {
             state.selectedBook.book_id = action.payload.book_id;
@@ -120,7 +162,6 @@ export const bookSlice = createSlice({
             state.selectedBook.book_id = null;
             state.selectedBook.book = null;
         },
-
         // ANCHOR selectedChapter
         changeSelectedChapter: (state, action: PayloadAction<{ chapter_id: string, chapter: LM_Chapter | null }>) => {
             if (!action.payload.chapter) return;
@@ -132,8 +173,10 @@ export const bookSlice = createSlice({
         removeSelectedChapter: (state, action) => {
             state.selectedChapter.chapter = null;
             state.selectedChapter.chapter_id = null;
+        },
+        toggleBooksViewerModal: (state, action) => {
+            state.openBooksViewerModal = !state.openBooksViewerModal;
         }
-
 
     },
     extraReducers: (builder) => {
@@ -178,6 +221,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal } = bookSlice.actions;
 
 export default bookSlice.reducer; 

@@ -11,6 +11,10 @@ import useAppSelector from "../../../hooks/useAppSelector";
 import { useFormik } from "formik";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import { changeSelectedBook } from "../../../state/redux/features/bookSlice";
+import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
+import AddPictures from "../../../components/AddPictures/AddPictures";
+import ChapterKeywords from "./SubComponents/ChapterBody/ChapterKeywords/ChapterKeywords";
+import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary";
 
 type Props = {};
 
@@ -26,6 +30,9 @@ const ChapterModifier = (props: Props) => {
   const bookID = window.location.href.split("/").pop();
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
+  const chapter = useAppSelector(
+    (state) => state.books.selectedChapter.chapter
+  );
 
   /**
    * Handles the change of the part of a book by dispatching the new state to the store
@@ -33,6 +40,8 @@ const ChapterModifier = (props: Props) => {
   const changeHandler = (newBook: LM_Book) => {
     dispatch(changeSelectedBook({ book: newBook, book_id: newBook.book_id }));
   };
+
+  const submitHandler = () => {};
 
   useEffect(() => {}, [book]);
 
@@ -51,14 +60,15 @@ const ChapterModifier = (props: Props) => {
       {/* TODO Move to its own File */}
       <div className="lm-chapterheader">
         <ChapterTitle book={book} changeHandler={changeHandler} />
-        <ChapterState />
-        <Adder type="button" text={"+"} />
+        {/* @ts-ignore */}
+        <ChapterState changeHandler={changeHandler} />
+        <Adder type="button" text={"+"} clickHandler={submitHandler} />
       </div>
       <div className="lm-chapterbody">
-        {/* TODO Key word taker */}
-        {/* TODO Flash cards */}
-        {/* TODO AddPicture */}
-        <SummaryModifier />
+        <ChapterSummary entity={book} changeHandler={changeHandler} />
+        <ChapterFlashcards />
+        <ChapterKeywords />
+        <AddPictures />
       </div>
       <div className="lm-chapterfooter"></div>
     </div>

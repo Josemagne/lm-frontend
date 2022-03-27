@@ -26,7 +26,7 @@ export default interface LM_Chapter {
      * Indicates if the chapter is read.
      */
     read: boolean;
-    summary: string;
+    summary: Descendant[];
     /**
      * chapter_ids of the subchapters
      */

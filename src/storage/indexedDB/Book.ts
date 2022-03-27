@@ -3,6 +3,7 @@ import { LM_Book } from '../../types/Book/book';
 import { nanoid } from 'nanoid';
 import { useLiveQuery } from 'dexie-react-hooks';
 import LM_Chapter from '../../types/Book/chapter';
+import { Descendant } from 'slate';
 
 /**
  * Class for book
@@ -60,8 +61,16 @@ export default class Book {
         return result;
     }
 
+    /**
+     * Updates the book in indexedDB
+     * @param bookId 
+     * @param book 
+     * @returns 
+     */
     public static updateBook = async (bookId: string, book: LM_Book): Promise<boolean> => {
         let result: boolean = false;
+
+        books.books.update(bookId, book);
 
         return result;
     }
@@ -82,15 +91,25 @@ export default class Book {
      * Adds chapter to indexedDB
      */
     public static addChapter = async (bookID: string, chapter: LM_Chapter): Promise<any> => {
+        console.log("STARTING  Book.addChapter()")
 
-        await books.books.get(bookID).then(async (book) => {
-            if (!book) return;
-            book.chapters.push(chapter);
-            await books.books.put(book, bookID);
-        })
+        // Get book
+        const book = await books.books.get(bookID).then((book) => book)
+
+        console.log("got bokk from indexedDB: ", book)
+
+        if (!book) return;
+
+        // Push the new chapter in the book
+        book.chapters.push(chapter);
+
+        console.log("Calling Book.updateBook()")
+        // Update the book
+        await this.updateBook(book.book_id, book)
+
+        console.log("Inserted new chapter to book in indexedDB")
 
         return bookID;
-
     }
 
     public static getChapters = async (book_id: string): Promise<LM_Chapter[] | null> => {
@@ -116,6 +135,24 @@ export default class Book {
 
         // Update book
         this.updateBook(book.book_id, book);
+    }
+
+    // ANCHOR summary
+    public static changeSummary = async (bookId: string, chapterId: string, summary: Descendant[]): Promise<any> => {
+        // Get book
+        const book = await books.books.get(bookId);
+
+        if (!book) return;
+
+        book.chapters.find((chapter) => {
+            if (chapter.chapter_id === chapterId) {
+                // Replace Summary
+                chapter.summary = summary;
+            }
+        })
+
+        // Update book
+        this.updateBook(bookId, book);
     }
 
 }

@@ -13,9 +13,12 @@ const ChaptersViewer = ({}: Props) => {
   if (!bookID) return;
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
-  console.log("book:", book);
 
-  useEffect(() => {}, [book]);
+  useEffect(() => {
+    console.log("book: ", book);
+  }, [book]);
+
+  console.log("chpaters: ", book.chapters);
 
   useEffect(() => {}, []);
 
@@ -23,7 +26,7 @@ const ChaptersViewer = ({}: Props) => {
     <div className="lm-chaptersviewer">
       <ChapterAdder book_id={bookID} />
       <div className="lm-chapters">
-        {book && book.chapters.length > 0 ? (
+        {book.chapters && book.chapters.length > 0 ? (
           book.chapters.map((ch: LM_Chapter) => {
             return (
               <ChapterContainer

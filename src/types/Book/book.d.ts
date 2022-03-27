@@ -1,4 +1,5 @@
 import type LM_Chapter from "./chapter";
+import { LM_Book_Contents } from "./contents";
 
 export declare interface LM_Book {
     /**
@@ -11,8 +12,13 @@ export declare interface LM_Book {
     author: string;
     book_title: string;
     /**
+     * Decides if we use percentage instead of pages
+     */
+    isPercentage: boolean;
+    /**
      * Number of pages
      */
+    contents: LM_Book_Contents;
     pages: number;
     /**
      * Decides if the book is finished

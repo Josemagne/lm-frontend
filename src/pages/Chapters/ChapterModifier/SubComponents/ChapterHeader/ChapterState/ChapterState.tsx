@@ -1,29 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Toggle } from "rsuite";
+import useAppSelector from "../../../../../../../build/hooks/useAppSelector";
+import useAppDispatch from "../../../../../../../build/hooks/useAppDispatch";
+import { changeSelectedBook } from "../../../../../../state/redux/features/bookSlice";
+import LM_Book from "../../../../../../classes/LM_Book";
 
-type Props = {};
+interface Props {
+  changeHandler: (newBook: LM_Book) => void;
+}
 
 /**
  * Handles whether the chapter is shown as read or not
  * @param props
  * @returns
  */
-const ChapterState = (props: Props) => {
+const ChapterState = ({ changeHandler }: Props) => {
   /*******************************/
   /************* STATE ***********/
   /*******************************/
 
-  // NOTE Decides if the chapter should be read.
-  // We expect that the user wants to read the chapter that he has added
-  const [toRead, setToRead] = useState(true);
+  const book = useAppSelector(
+    (state) => state.books.selectedChapter.chapter.read
+  );
 
   /*******************************/
   /********** FUNCTIONS **********/
   /*******************************/
 
+  const handleChange = () => {
+    book.read = !book.read;
+    changeHandler(book);
+  };
+
+  useEffect(() => {}, [book]);
+
   return (
     <div className="lm-chapterstate-container">
-      <Toggle checkedChildren="to read" onChange={() => setToRead(!toRead)} />
+      <Toggle
+        checked={book.read}
+        checkedChildren="to read"
+        onChange={() => handleChange()}
+      />
     </div>
   );
 };

@@ -29,8 +29,11 @@ const BooksViewer = (props: Props) => {
   // Get the loading status
   const loading = useAppSelector((state) => state.books.books.loading);
   const _books = useAppSelector((state) => state.books.books.data);
+  const openBooksViewerModal = useAppSelector(
+    (state) => state.books.openBooksViewerModal
+  );
   const _selectedBook = useAppSelector(
-    (state) => state.books.selectedBook.book_id
+    (state) => state.books.selectedBook.book
   );
 
   // const getBooks = async () => {
@@ -57,13 +60,10 @@ const BooksViewer = (props: Props) => {
     dispatch(fetchBooksBackend());
     // @ts-ignore
     dispatch(fetchBooksFrontend());
-    console.log("Called fetchBooks()");
     // if (books.length < 1) getBooks();
   }, []);
 
-  useEffect(() => {
-    console.log(_selectedBook);
-  }, [_selectedBook]);
+  useEffect(() => {}, [_selectedBook]);
 
   useEffect(() => {}, [_books]);
 
@@ -96,7 +96,7 @@ const BooksViewer = (props: Props) => {
       ) : (
         <p>no books here</p>
       )}
-      {_selectedBook ? <BookModal /> : null}
+      {openBooksViewerModal ? <BookModal selectedBook={_selectedBook} /> : null}
     </div>
   );
 };
