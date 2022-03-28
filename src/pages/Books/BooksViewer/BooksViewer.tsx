@@ -72,36 +72,36 @@ const BooksViewer = (props: Props) => {
 
   return (
     <div className="lm-page lm-booksviewer">
-      <>
-        <BookModifier />
-      </>
+      <BookModifier />
       {loading ? <p>Loading...</p> : null}
-      {Object.keys(_books).length > 0 ? (
-        (Object.values(_books) as LM_Book[]).map((book) => {
-          return (
-            <BookContainer
-              book={book}
-              book_id={book.book_id}
-              key={book.book_id}
-              children={
-                <Panel
-                  header={
-                    <Fragment>
-                      <AuthorViewer author_fullname={book.author} />
-                      <TitleViewer title={book.book_title} />
-                      <ProgressViewer progress={book.progress} />
-                      <PagesViewer pages={book.pages} />
-                      <ImageViewer />
-                    </Fragment>
-                  }
-                ></Panel>
-              }
-            />
-          );
-        })
-      ) : (
-        <p>no books here</p>
-      )}
+      <div className="lm-booksviewer__books">
+        {Object.keys(_books).length > 0 ? (
+          (Object.values(_books) as LM_Book[]).map((book) => {
+            return (
+              <BookContainer
+                book={book}
+                book_id={book.book_id}
+                key={book.book_id}
+                children={
+                  <Panel
+                    header={
+                      <Fragment>
+                        <AuthorViewer author_fullname={book.author} />
+                        <TitleViewer title={book.book_title} />
+                        <ProgressViewer progress={book.progress} />
+                        <PagesViewer pages={book.pages} />
+                        <ImageViewer />
+                      </Fragment>
+                    }
+                  ></Panel>
+                }
+              />
+            );
+          })
+        ) : (
+          <p>no books here</p>
+        )}
+      </div>
       {openBooksViewerModal ? <BookModal selectedBook={_selectedBook} /> : null}
     </div>
   );

@@ -47,5 +47,6 @@ deploy_netlify:
   image: node:17
   script:
     - echo "Deploying to netlify"
+    - npm install netlify-cli
     - npm run deploy-netlify
     - echo "Deployed to netlify"
