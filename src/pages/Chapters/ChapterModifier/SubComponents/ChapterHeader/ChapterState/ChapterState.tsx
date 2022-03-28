@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Toggle } from "rsuite";
-import useAppSelector from "../../../../../../../build/hooks/useAppSelector";
-import useAppDispatch from "../../../../../../../build/hooks/useAppDispatch";
 import { changeSelectedBook } from "../../../../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../../../../types/Book/book";
+import useAppSelector from "../../../../../../hooks/useAppSelector";
+import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 
 interface Props {
   changeHandler: (newBook: LM_Book) => void;
@@ -20,6 +20,7 @@ const ChapterState = ({ changeHandler }: Props) => {
   /*******************************/
 
   const book = useAppSelector(
+    // @ts-ignore
     (state) => state.books.selectedChapter.chapter.read
   );
 

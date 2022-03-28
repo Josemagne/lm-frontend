@@ -13,7 +13,7 @@ import { FieldInputProps } from "formik";
 import { LM_TextcontainerActions } from "../../types/slate/actions";
 import LM_Chapter from "../../types/Book/chapter";
 import { LM_Book } from "../../types/Book/book";
-import useAppDispatch from "../../../build/hooks/useAppDispatch";
+import useAppDispatch from "../../hooks/useAppDispatch";
 import {
   changeSelectedBook,
   changeSelectedChapter,

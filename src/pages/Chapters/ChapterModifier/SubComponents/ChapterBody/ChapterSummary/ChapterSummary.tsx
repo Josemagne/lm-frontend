@@ -1,13 +1,13 @@
 import TextContainer from "../../../../../../components/TextContainer/TextContainer";
 import { useMemo } from "react";
 import { LM_Book } from "../../../../../../types/Book/book";
-import useAppSelector from "../../../../../../../build/hooks/useAppSelector";
 import { useEffect } from "react";
 import LM_Chapter from "../../../../../../types/Book/chapter";
-import useAppDispatch from "../../../../../../../build/hooks/useAppDispatch";
 import { Editable, Slate, withReact } from "slate-react";
 import { Descendant, createEditor } from "slate";
 import { changeChapterSummary } from "../../../../../../state/redux/features/bookSlice";
+import useAppSelector from "../../../../../../hooks/useAppSelector";
+import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 
 type Props = {
   changeHandler: (book: LM_Book) => void;

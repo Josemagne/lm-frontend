@@ -2,7 +2,6 @@ import { useState } from "react";
 import ChapterTitle from "./SubComponents/ChapterHeader/ChapterTitle/ChapterTitle";
 import { useNavigate } from "react-router-dom";
 import ChapterState from "./SubComponents/ChapterHeader/ChapterState/ChapterState";
-import SummaryModifier from "./SubComponents/ChapterBody/SummaryModifier/SummaryModifier";
 import Adder from "../../../components/helpers/Adder/Adder";
 import { useEffect } from "react";
 import LM_Chapter from "../../../types/Book/chapter";

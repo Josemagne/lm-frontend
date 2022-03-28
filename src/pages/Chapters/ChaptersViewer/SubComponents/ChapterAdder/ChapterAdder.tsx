@@ -9,7 +9,6 @@ import useAppSelector from "../../../../../hooks/useAppSelector";
 import { boolean } from "yup/lib/locale";
 import Server from "../../../../../services/Server";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
-import getNextIndex from "../../../../../utils/getNextIndex";
 import {
   addChapter,
   changeSelectedBook,

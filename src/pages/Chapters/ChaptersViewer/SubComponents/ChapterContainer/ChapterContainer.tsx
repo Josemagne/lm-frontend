@@ -4,7 +4,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { useNavigate } from "react-router";
 import Book from "../../../../../storage/indexedDB/Book";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
-import Server from "../../../../../../build/services/Server";
+import Server from "../../../../../services/Server";
 import {
   changeSelectedChapter,
   deleteChapter,

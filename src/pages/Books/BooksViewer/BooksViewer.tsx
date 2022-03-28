@@ -34,6 +34,7 @@ const BooksViewer = (props: Props) => {
     (state) => state.books.openBooksViewerModal
   );
   const _selectedBook = useAppSelector(
+    // @ts-ignore
     (state) => state.books.selectedBook.book
   );
 
