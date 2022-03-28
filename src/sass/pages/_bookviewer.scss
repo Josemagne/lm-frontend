@@ -5,14 +5,18 @@
     "lm-booksviewer__books";
 
   .lm-booksviewer__books {
+    display: flex;
+    // TODO Move to _bookcontainer.scss
     .lm-bookcontainer {
       border: 2px solid black;
       padding: 1rem;
       margin: 1rem;
+      width: fit-content;
+      height: fit-content;
       display: grid;
       grid-template-areas:
-        "image author title delete"
-        "image progress pages pages";
+        "lm-image author title delete"
+        "lm-image lm-progress pages .";
 
       &:nth-child(2n) {
         background-color: rgb(155, 221, 155);
@@ -28,10 +32,10 @@
         grid-area: title;
       }
       .lm-imageviewer {
-        grid-area: image;
+        grid-area: lm-image;
       }
       .lm-progressviewer {
-        grid-area: progress;
+        grid-area: lm-progress;
       }
       .lm-pagesviewer {
         grid-area: pages;

@@ -48,5 +48,6 @@ deploy_netlify:
   script:
     - echo "Deploying to netlify"
     - npm install netlify-cli
+    - npm run build
     - npm run deploy-netlify
     - echo "Deployed to netlify"

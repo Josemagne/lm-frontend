@@ -29,38 +29,30 @@ const BookModifier = (props: Props) => {
 
   /* STATE */
   const dispatch = useAppDispatch();
-  const [book, setBook] = useState<LM_Book>();
 
-  // If the url contains a book_id then we handle this particular book
-  const book_id = useAppSelector((state) => state.books.selectedBook.book_id);
-  const _book = useAppSelector((state) => state.books.selectedBook.book);
+  const generateID = () => nanoid();
 
-  const getBook = async () => {
-    if (!book_id) return;
-    const _book = await Book.getBook(book_id);
-    if (!_book) return;
-    setBook(_book);
-  };
-
-  /**
-   * Initial values for formik
-   */
-  const initialValues: LM_Book = {
-    author: book?.author || "",
-    book_id: book?.book_id || nanoid(),
-    book_title: book?.book_title || "",
-    pages: book?.pages || 0,
-    progress: book?.progress || 0,
-    read: book?.read || true,
-    summary: book?.summary || "",
-    chapters: book?.chapters || {},
-    rate: book?.rate || 3,
-    isPercentage: false,
-    contents: {},
+  const getInitialValues = (): LM_Book => {
+    /**
+     * Initial values for formik
+     */
+    return {
+      author: "",
+      book_id: generateID(),
+      book_title: "",
+      pages: 0,
+      progress: 0,
+      read: true,
+      summary: "",
+      chapters: {},
+      rate: 3,
+      isPercentage: false,
+      contents: {},
+    };
   };
 
   const formik = useFormik({
-    initialValues: initialValues,
+    initialValues: getInitialValues(),
     onSubmit: async (values, { resetForm }) => {
       dispatch(addBook(values));
       // TODO  Add to state
@@ -79,16 +71,7 @@ const BookModifier = (props: Props) => {
 
   /* EVENTS */
 
-  useEffect(() => {
-    getBook();
-  }, []);
-
-  // Rerender if the book changed
-  useEffect(() => {
-    console.log("book: ", book);
-    console.log("book_id", book_id);
-    console.log("_book", _book);
-  }, [book]);
+  useEffect(() => {}, []);
 
   return (
     <div>

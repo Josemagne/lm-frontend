@@ -1,33 +1,27 @@
 .lm-chapteradder {
   grid-area: lm-chapteradder;
-  display: "lm-chapteradder__index lm-chapteradder__title lm-chapteradder_title"
-    "lm-chapteradder__subchapters lm-chapteradder__subchapters lm-chapteradder__button";
+  display: "lm-index lm-title lm-title"
+    "lm-subchapters lm-subchapters lm-button";
 
   .lm-chapteradder__index {
-    grid-area: lm-chapteradder__index;
+    grid-area: lm-index;
     width: 7ch;
     min-width: 7ch;
     max-width: 7ch;
   }
 
   .lm-chapteradder__title {
-    grid-area: lm-chapteradder__title;
+    grid-area: lm-title;
     width: 30ch;
     max-width: 90%;
     min-width: 80%;
   }
 
   .lm-chapteradder__subchapters {
-    grid-area: lm-chapteradder__subchapters;
-    // display: grid;
-    // grid-template-areas: "lm-chapteradder__subchapter";
-
-    // .lm-chapteradder__subchapter {
-    //   grid-area: lm-chapteradder__subchapter;
-    // }
+    grid-area: lm-subbchapters;
   }
   .lm-chapteradder__button {
-    grid-area: lm-chapteradder__button;
+    grid-area: lm-button;
     width: 2rem;
     height: 2rem;
     padding: 1rem;

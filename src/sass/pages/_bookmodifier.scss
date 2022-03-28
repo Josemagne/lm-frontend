@@ -1,7 +1,9 @@
 .lm-bookmodifier {
+  overflow: hidden;
+  background-color: rgb(174, 174, 250);
   & > form {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    // grid-template-columns: repeat(6, 1fr);
     grid-template-areas:
       "lm-bookauthor lm-bookauthor lm-booktitle lm-booktitle lm-booktitle lm-booktitle"
       "lm-bookpages lm-bookpages lm-bookpages lm-bookpages lm-bookpages lm-adder";
