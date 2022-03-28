@@ -36,7 +36,7 @@ test:
     # Run react-scripts tests
     # - npm run test-react
     - echo "*****CYPRESS******"
-    - npm run test-cypress
+    # - npm run test-cypress
     # Run unit tests with jest
     # - npm run test
   dependencies:
