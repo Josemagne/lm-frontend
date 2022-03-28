@@ -74,28 +74,26 @@ const BookModifier = (props: Props) => {
   useEffect(() => {}, []);
 
   return (
-    <div>
-      <div className="lm-bookmodifier">
-        <form onSubmit={formik.handleSubmit}>
-          {/* <BookImage bookImage="" /> */}
-          {console.log(formik.values)}
+    <div className="lm-bookmodifier">
+      <form onSubmit={formik.handleSubmit}>
+        {/* <BookImage bookImage="" /> */}
+        {console.log(formik.values)}
 
-          <BookTitle values={formik.getFieldProps("book_title")} />
+        <BookTitle values={formik.getFieldProps("book_title")} />
 
-          <BookPages values={formik.getFieldProps("pages")} />
+        <BookPages values={formik.getFieldProps("pages")} />
 
-          {/* <BookState
+        {/* <BookState
               values={formik.getFieldProps("read")}
               setFieldValue={formik.setFieldValue}
             /> */}
 
-          {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
+        {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
 
-          <BookAuthor values={formik.getFieldProps("author")} />
+        <BookAuthor values={formik.getFieldProps("author")} />
 
-          <Adder text={"+"} type="submit" />
-        </form>
-      </div>
+        <Adder text={"+"} type="submit" />
+      </form>
     </div>
   );
 };
