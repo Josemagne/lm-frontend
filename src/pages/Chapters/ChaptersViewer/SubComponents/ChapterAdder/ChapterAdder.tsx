@@ -28,8 +28,10 @@ const ChapterAdder = ({ book_id }: Props) => {
 
   const _book = useAppSelector((state) => state.books.selectedBook.book);
 
+  const newId = () => nanoid();
+
   const initialValues: LM_Chapter = {
-    chapter_id: nanoid(),
+    chapter_id: newId(),
     book_id: _book.book_id,
     title: "",
     importance: 50,
@@ -48,7 +50,6 @@ const ChapterAdder = ({ book_id }: Props) => {
   const formik = useFormik({
     initialValues: initialValues,
     onSubmit: async (values, { resetForm, setSubmitting }) => {
-      resetForm();
       // Add locally
       // redux
       if (!_book) return;
@@ -65,6 +66,7 @@ const ChapterAdder = ({ book_id }: Props) => {
       // Add to the server
       await Server.addChapter(values);
       // Completes submission cycle
+      resetForm();
       setSubmitting(false);
     },
     validate: () => {},

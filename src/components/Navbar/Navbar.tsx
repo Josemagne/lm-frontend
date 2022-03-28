@@ -88,25 +88,25 @@ const Navbar = (props: Props) => {
         </div>
       ) : (
         <LMNBavbar>
-          <LMNBavbar.Brand>
-            <p>i</p>
+          <LMNBavbar.Brand as={Link} to="/">
+            LM
           </LMNBavbar.Brand>
           <Nav>
             <Nav.Item as={Link} to="/" href="/">
               Books
             </Nav.Item>
-            <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
+            {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
               Modifier
-            </Nav.Item>
+            </Nav.Item> */}
             <Dropdown title="Other">
               <Nav.Item href="/settings" to="/settings" as={Link}>
                 Settings
               </Nav.Item>
             </Dropdown>
-            <Nav.Item>Coordinator</Nav.Item>
-            <Nav.Item href="/flashcards" as={Link} to="/flashcards">
+            {/* <Nav.Item>Coordinator</Nav.Item> */}
+            {/* <Nav.Item href="/flashcards" as={Link} to="/flashcards">
               FlashCards
-            </Nav.Item>
+            </Nav.Item> */}
           </Nav>
         </LMNBavbar>
       )}
