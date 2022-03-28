@@ -72,7 +72,6 @@ const ChapterAdder = ({ book_id }: Props) => {
 
   useEffect(() => {
     if (!_book) return;
-    formik.values.index = getNextIndex(_book);
   }, [_book]);
 
   useEffect(() => {}, []);
@@ -114,7 +113,6 @@ const ChapterAdder = ({ book_id }: Props) => {
           </div>
           <div className="lm-chapteradder__subchapters">
             <div className="lm-chapteradder__subchapter">
-              <div className="plussign">+</div>
               <FloatingLabel
                 controlId="subchapter"
                 label="Subchapter Title"
@@ -129,15 +127,16 @@ const ChapterAdder = ({ book_id }: Props) => {
           {/* importance */}
           {/* read */}
           {/* Summary */}
-          <button
-            type="button"
-            onClick={() => {
-              formik.handleSubmit();
-            }}
-            className="lm-chapteradder__button"
-          >
-            add
-          </button>
+          <div className="lm-chapteradder__button">
+            <button
+              type="button"
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
+              add
+            </button>
+          </div>
         </>
       ) : null}
       {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}

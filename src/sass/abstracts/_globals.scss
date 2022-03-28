@@ -30,7 +30,17 @@ body {
   width: 100%;
   // Take the whole height
   height: 100vh;
-  padding: 3rem;
+  overflow-x: hidden;
+  // margin-top: 2rem;
+  // margin-left: 2rem;
+  // margin-right: 2rem;
+  padding-top: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.lm-page::after {
+  content: "";
 }
 
 .invinsible {

@@ -13,6 +13,11 @@ import { FieldInputProps } from "formik";
 import { LM_TextcontainerActions } from "../../types/slate/actions";
 import LM_Chapter from "../../types/Book/chapter";
 import { LM_Book } from "../../types/Book/book";
+import useAppDispatch from "../../../build/hooks/useAppDispatch";
+import {
+  changeSelectedBook,
+  changeSelectedChapter,
+} from "../../state/redux/features/bookSlice";
 
 type Props = {
   /**
@@ -20,7 +25,7 @@ type Props = {
    */
   values?: FieldInputProps<Descendant[]>;
   content?: Descendant[];
-  chapterId?: number;
+  chapterId?: string;
   name: string;
   /**
    * The entity whose text field we are manipulating
@@ -44,6 +49,7 @@ const TextContainer = ({
 }: Props) => {
   const editorRef: any = useRef(null);
 
+  const dispatch = useAppDispatch();
   // @ts-ignore
   const editor = useMemo(() => withReact(createEditor()), []);
   const [value, setValue] = useState<Descendant[]>(
@@ -58,13 +64,15 @@ const TextContainer = ({
     if (action === "AddSummaryToBook") {
       console.log("AddSummaryToBook");
       console.log("ChapterIndex before", chapterIndex);
-      if (chapterIndex || chapterIndex === 0) {
-        console.log("chapterIndex: ", chapterIndex);
-        console.log(entity.chapters[chapterIndex].summary);
-        (entityCopy as LM_Book).chapters[chapterIndex].summary = v;
-      }
+      const entityCopy = JSON.parse(JSON.stringify(entity));
+      if (!chapterId) return;
+      (entityCopy as LM_Book).chapters[chapterId].summary = v;
+      dispatch(
+        changeSelectedBook({ book_id: entityCopy.book_id, book: entityCopy })
+      );
+
+      changeHandler(entityCopy);
     }
-    changeHandler(entityCopy);
   };
 
   useEffect(() => {}, [content]);

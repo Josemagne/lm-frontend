@@ -5,10 +5,16 @@
 
   .lm-chapteradder__index {
     grid-area: lm-chapteradder__index;
+    width: 7ch;
+    min-width: 7ch;
+    max-width: 7ch;
   }
 
   .lm-chapteradder__title {
     grid-area: lm-chapteradder__title;
+    width: 30ch;
+    max-width: 90%;
+    min-width: 80%;
   }
 
   .lm-chapteradder__subchapters {
@@ -27,8 +33,6 @@
     padding: 1rem;
     margin: 1rem;
     border-radius: 50% !important;
-    background-color: blue;
-    color: white;
     font-weight: bolder;
     font-size: 2rem;
   }

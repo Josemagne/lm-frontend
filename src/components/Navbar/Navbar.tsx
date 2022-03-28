@@ -12,16 +12,19 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
+import { nanoid } from "nanoid";
+import Navigation from "../Navigation/Navigation";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const [width, setWidth] = useState<number>(0);
+  const [show, setShow] = useState<boolean>(false);
   window.addEventListener("resize", () => {
     setWidth(global.window.innerWidth);
   });
 
-  useEffect(() => {}, [width]);
+  useEffect(() => {}, [width, show]);
   useEffect(() => {
     const width = window.innerWidth;
     setWidth(width);
@@ -34,43 +37,50 @@ const Navbar = (props: Props) => {
           <BNavbar bg="light" expand={false}>
             <Container fluid>
               <BNavbar.Brand href="#">LibriMem</BNavbar.Brand>
-              <BNavbar.Toggle aria-controls="offcanvasBNavbar" />
+              <BNavbar.Toggle
+                aria-controls="offcanvasBNavbar"
+                onClick={() => setShow(true)}
+              />
               <BNavbar.Offcanvas
                 id="offcanvasBNavbar"
                 aria-labelledby="offcanvasBNavbarLabel"
                 placement="start"
+                key={nanoid()}
+                show={show}
+                onHide={() => setShow(false)}
               >
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title id="offcanvasBNavbarLabel">
-                    Offcanvas
+                    LibriMem
                   </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <Nav className="justify-content-end flex-grow-1 pe-3">
-                    <NavLink href="#action1">Home</NavLink>
-                    <NavLink href="#action2">Link</NavLink>
-                    <NavDropdown title="Dropdown" id="offcanvasBNavbarDropdown">
-                      <NavDropdown.Item href="#action3">
-                        Action
-                      </NavDropdown.Item>
-                      <NavDropdown.Item href="#action4">
-                        Another action
-                      </NavDropdown.Item>
-                      <NavDropdown.Divider />
-                      <NavDropdown.Item href="#action5">
-                        Something else here
-                      </NavDropdown.Item>
-                    </NavDropdown>
-                  </Nav>
-                  <Form className="d-flex">
-                    <FormControl
-                      type="search"
-                      placeholder="Search"
-                      className="me-2"
-                      aria-label="Search"
-                    />
-                    <Button variant="outline-success">Search</Button>
-                  </Form>
+                  <div className=" d-flex ">
+                    <Nav.Item
+                      as={Link}
+                      to="/"
+                      href="/"
+                      onClick={() => setShow(false)}
+                    >
+                      Books
+                    </Nav.Item>
+                    <Nav.Item
+                      to="/bookmodifier"
+                      as={Link}
+                      onClick={() => setShow(false)}
+                    >
+                      Modify book
+                    </Nav.Item>
+                    <Dropdown title="Other">
+                      <Nav.Item
+                        to="/settings"
+                        as={Link}
+                        onClick={() => setShow(false)}
+                      >
+                        Settings
+                      </Nav.Item>
+                    </Dropdown>
+                  </div>
                 </Offcanvas.Body>
               </BNavbar.Offcanvas>
             </Container>

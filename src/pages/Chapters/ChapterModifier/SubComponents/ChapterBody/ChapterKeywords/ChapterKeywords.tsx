@@ -8,7 +8,7 @@ type Props = {};
  * @returns
  */
 const ChapterKeywords = (props: Props) => {
-  return <div className="lm-chapterkeywords">ChapterKeywords</div>;
+  return <div className="lm-chaptermodifier__keywords">ChapterKeywords</div>;
 };
 
 export default ChapterKeywords;

@@ -6,6 +6,7 @@
     "lm-chapterfooter";
   grid-template-rows: 3;
 
+  // ANCHOR lm-chapterhader
   .lm-chapterheader {
     grid-area: lm-chapterheader;
     display: grid;
@@ -20,17 +21,32 @@
     }
   }
 
+  // ANCHOR lm-chapterbody
   .lm-chapterbody {
     grid-area: lm-chapterbody;
     display: grid;
-    grid-template-areas: "lm-summarymodifier";
+    grid-template-areas:
+      "lm-summarymodifier"
+      "lm-chaptermodifier__flashcards"
+      "lm-chaptermodifier__keywords"
+      "lm-chaptermodifier__pictures";
     .lm-summarymodifier {
       grid-area: lm-summarymodifier;
       border: 1px solid black;
       display: grid;
     }
+    .lm-chaptermodifer__flashcards {
+      grid-area: lm-chaptermodifier__flashcards;
+    }
+    .lm-chaptermodifier__keywords {
+      grid-area: lm-chaptermodifier__keywords;
+    }
+    .lm-chaptermodifier__pictures {
+      grid-area: lm-chaptermodifier__pictures;
+    }
   }
 
+  // ANCHOR lm-chapterfooter
   .lm-chapterfooter {
     grid-area: lm-chapterfooter;
   }

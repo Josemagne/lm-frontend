@@ -16,11 +16,13 @@ import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
 import Metadata from "../../../utils/Metadata";
 import useAppSelector from "../../../hooks/useAppSelector";
+import { Modal } from "rsuite";
+import { addBook } from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 
 /**
- * Page where we can edit and add a book
+ * Part of BooksViewer where we can edit and add a book
  */
 const BookModifier = (props: Props) => {
   /* STORAGE */
@@ -51,7 +53,7 @@ const BookModifier = (props: Props) => {
     progress: book?.progress || 0,
     read: book?.read || true,
     summary: book?.summary || "",
-    chapters: book?.chapters || [],
+    chapters: book?.chapters || {},
     rate: book?.rate || 3,
     isPercentage: false,
     contents: {},
@@ -59,29 +61,18 @@ const BookModifier = (props: Props) => {
 
   const formik = useFormik({
     initialValues: initialValues,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm }) => {
+      dispatch(addBook(values));
       // TODO  Add to state
-      Metadata.addFrontendBook(values.book_id);
+      await Metadata.addFrontendBook(values.book_id);
       // useAppDispatch(addBook(values));
       // Persists locally
-      Book.addBook(values);
+      await Book.addBook(values);
       // Persist on backend
-      Server.addBook(values);
+      await Server.addBook(values);
       // NOTE Resets the values of the form
       resetForm();
     },
-    // validationSchema: () => {
-    //   yup.object({
-    //     author: yup
-    //       .string()
-    //       .max(30, "Must be 30 characters or less")
-    //       .required("required"),
-    //     pages: yup
-    //       .number()
-    //       .max(5000, "There cannot be more than 5000 pages.")
-    //       .required("required"),
-    //   });
-    // },
   });
 
   /* METHODS */
@@ -101,30 +92,7 @@ const BookModifier = (props: Props) => {
 
   return (
     <div>
-      {book ? (
-        <div className="lm-page lm-bookmodifier">
-          <form onSubmit={formik.handleSubmit}>
-            {/* <BookImage bookImage="" /> */}
-            {console.log(formik.values)}
-
-            <BookTitle values={formik.getFieldProps("book_title")} />
-
-            <BookPages values={formik.getFieldProps("pages")} />
-
-            {/* <BookState
-              values={formik.getFieldProps("read")}
-              setFieldValue={formik.setFieldValue}
-            /> */}
-
-            {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
-
-            <BookAuthor values={formik.getFieldProps("author")} />
-
-            <Adder text={"+"} type="submit" />
-          </form>
-        </div>
-      ) : null}
-      <div className="lm-page lm-bookmodifier">
+      <div className="lm-bookmodifier">
         <form onSubmit={formik.handleSubmit}>
           {/* <BookImage bookImage="" /> */}
           {console.log(formik.values)}

@@ -1,0 +1,38 @@
+.lm-navigation {
+  min-width: 100vw;
+  max-width: 100vw;
+  width: 100vw;
+  min-height: 10vh;
+  max-height: 10vh;
+  position: fixed;
+  bottom: 0;
+
+  background-color: rgb(190, 190, 216);
+
+  display: grid;
+  grid-template-areas: "return undo";
+
+  @media screen and (min-width: 576px) {
+    display: none;
+  }
+
+  .lm-navigation__return {
+    grid-area: return;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 1rem;
+
+    background-color: white;
+    border-radius: 50%;
+    transform: scale(1);
+    fill: black;
+  }
+
+  .lm-navigation__return:hover {
+    fill: red;
+    cursor: pointer;
+  }
+}

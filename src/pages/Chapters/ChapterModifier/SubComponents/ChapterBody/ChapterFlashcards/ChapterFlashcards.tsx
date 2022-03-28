@@ -3,7 +3,9 @@ import React from "react";
 type Props = {};
 
 const ChapterFlashcards = (props: Props) => {
-  return <div className="lm-chapterflashcards">ChapterFlashcards</div>;
+  return (
+    <div className="lm-chaptermodifier__flashcards">ChapterFlashcards</div>
+  );
 };
 
 export default ChapterFlashcards;

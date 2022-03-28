@@ -6,6 +6,7 @@ import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
 import FlashCards from "./pages/FlashCards/FlashCards";
 import ErrorPage from "./pages/Error";
+import Navigation from "./components/Navigation/Navigation";
 
 type Props = {};
 
@@ -19,18 +20,19 @@ const App = (props: Props) => {
         </header>
         <Routes>
           <Route path="/" element={<BooksViewer />} />
-          <Route path="/bookmodifier" element={<BookModifier />} />
-          <Route path="/bookmodifier/:bookID" element={<BookModifier />} />
+          {/* <Route path="/bookmodifier" element={<BookModifier />} /> */}
+          {/* <Route path="/bookmodifier/:bookID" element={<BookModifier />} /> */}
           <Route path="/booksviewer" element={<BooksViewer />} />
           {/* @ts-ignore */}
           <Route path="/chaptersviewer/:bookID" element={<ChaptersViewer />} />
-          <Route
+          {/* <Route
             path="/chaptermodifier/:bookID/:chapterID"
             element={<ChapterModifier />}
-          />
+          /> */}
           <Route path="/flashcards" element={<FlashCards />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
+        <footer>{/* <Navigation /> */}</footer>
       </HashRouter>
     </div>
   );

@@ -17,6 +17,7 @@ import {
   fetchBooksFrontend,
 } from "../../../state/redux/features/bookSlice";
 import { LM_Metadata } from "../../../types/common/metadata";
+import BookModifier from "../BookModifier/BookModifier";
 
 type Props = {};
 
@@ -28,7 +29,7 @@ const BooksViewer = (props: Props) => {
 
   // Get the loading status
   const loading = useAppSelector((state) => state.books.books.loading);
-  const _books = useAppSelector((state) => state.books.books.data);
+  const _books = useAppSelector((state) => state.books.books.books);
   const openBooksViewerModal = useAppSelector(
     (state) => state.books.openBooksViewerModal
   );
@@ -63,15 +64,19 @@ const BooksViewer = (props: Props) => {
     // if (books.length < 1) getBooks();
   }, []);
 
+  useEffect(() => {}, [loading]);
   useEffect(() => {}, [_selectedBook]);
 
   useEffect(() => {}, [_books]);
 
   return (
     <div className="lm-page lm-booksviewer">
+      <>
+        <BookModifier />
+      </>
       {loading ? <p>Loading...</p> : null}
-      {_books.length > 0 ? (
-        (_books as LM_Book[]).map((book) => {
+      {Object.keys(_books).length > 0 ? (
+        (Object.values(_books) as LM_Book[]).map((book) => {
           return (
             <BookContainer
               book={book}
