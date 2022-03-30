@@ -23,4 +23,4 @@ jobs:
           npm run build-ts
           npm run build
           # npm run test
-          npm run deploy-netlify
+          npx netlify deploy --auth ${{secrets.NETLIFY_AUTH_TOKEN}} --build --dir dist --prod --site librimem
