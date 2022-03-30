@@ -4,6 +4,7 @@ import type { Config } from '@jest/types';
 const config: Config.InitialOptions = {
     verbose: true,
     preset: "ts-jest",
-    modulePathIgnorePatterns: ["<rootDir>/lm-components/"]
+    modulePathIgnorePatterns: ["<rootDir>/lm-components/"],
+    setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"]
 };
 export default config;

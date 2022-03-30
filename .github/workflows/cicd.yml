@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-    name: build project
-    runs-on: ubuntu-latest
+    name: build lm
+    runs-on: ubuntu-20.04
 
     steps:
       - name: checkout code
@@ -20,6 +20,8 @@ jobs:
 
       - name: build
       - run: |
-          npm ci
+          npm install yarn
+          yarn
           npm run build
-          npm test
+          # npm run test
+          npm run deploy-netlify
