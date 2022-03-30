@@ -19,9 +19,11 @@ const ChapterState = ({ changeHandler }: Props) => {
   /************* STATE ***********/
   /*******************************/
 
-  const book = useAppSelector(
+  const dispatch = useAppDispatch();
+
+  const chapter = useAppSelector(
     // @ts-ignore
-    (state) => state.books.selectedChapter.chapter.read
+    (state) => state.books.selectedChapter.chapter
   );
 
   /*******************************/
@@ -29,16 +31,18 @@ const ChapterState = ({ changeHandler }: Props) => {
   /*******************************/
 
   const handleChange = () => {
-    book.read = !book.read;
-    changeHandler(book);
+    const chapterCopy = JSON.parse(JSON.stringify(chapter));
+    chapterCopy.read = !chapter.read;
+    chapter.read = !chapter.read;
+    changeHandler(chapter);
   };
 
-  useEffect(() => {}, [book]);
+  useEffect(() => {}, [chapter]);
 
   return (
     <div className="lm-chapterstate-container">
       <Toggle
-        checked={book.read}
+        checked={chapter.read}
         checkedChildren="to read"
         onChange={() => handleChange()}
       />

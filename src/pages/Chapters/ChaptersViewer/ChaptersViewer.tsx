@@ -22,9 +22,7 @@ const ChaptersViewer = ({}: Props) => {
     (state) => state.books.openChapterModifierModal
   );
 
-  useEffect(() => {
-    console.log("book: ", book.chapters);
-  }, [book.chapters]);
+  useEffect(() => {}, [book.chapters]);
 
   useEffect(() => {}, [openChapterModiferModal]);
   useEffect(() => {}, []);

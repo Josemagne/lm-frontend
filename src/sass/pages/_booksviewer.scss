@@ -5,15 +5,18 @@
     "lm-booksviewer__books";
 
   .lm-booksviewer__books {
+    width: 100%;
+    height: 100%;
     display: flex;
-
-    background-color: rgb(211, 137, 137);
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    border: 1px solid black;
     // TODO Move to _bookcontainer.scss
     .lm-bookcontainer {
       border: 2px solid black;
       background-color: rgb(252, 249, 249);
-      padding: 1rem;
-      margin: 1rem;
+      padding: 0.5rem;
+      margin: 0.5rem;
       width: fit-content;
       height: fit-content;
       display: grid;

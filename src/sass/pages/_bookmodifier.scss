@@ -1,12 +1,12 @@
 .lm-bookmodifier {
+  grid-area: lm-bookmodifier;
+  min-height: 20vw;
+  position: sticky;
   overflow: hidden;
   background-color: rgb(174, 174, 250);
   & > form {
-    display: grid;
-    // grid-template-columns: repeat(6, 1fr);
-    grid-template-areas:
-      "lm-bookauthor lm-bookauthor lm-booktitle lm-booktitle lm-booktitle lm-booktitle"
-      "lm-bookpages lm-bookpages lm-bookpages lm-bookpages lm-bookpages lm-adder";
+    position: relative;
+    display: flex;
 
     .lm-bookimage {
       grid-area: lm-bookimage;
@@ -32,7 +32,35 @@
     }
 
     .lm-adder {
-      margin: auto;
+      // grid-area: lm-button;
+      position: absolute;
+      right: 10%;
+      bottom: -130%;
+      width: 4rem;
+      min-width: 4rem;
+      max-width: 5%;
+      height: 3rem;
+      min-height: 2.5rem;
+      max-height: 3rem;
+      padding: 1rem;
+      margin: 1rem;
+      border-radius: 50% !important;
+      background-color: blue;
+      font-weight: bolder;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      div {
+        padding: 1rem;
+        font-weight: bolder;
+        transform: scale(2);
+        color: white;
+        &:hover {
+          cursor: pointer;
+          color: red;
+        }
+      }
     }
   }
 }

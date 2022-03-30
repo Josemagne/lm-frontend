@@ -30,15 +30,10 @@ const BookModifier = (props: Props) => {
   /* STATE */
   const dispatch = useAppDispatch();
 
-  const generateID = () => nanoid();
-
-  const getInitialValues = (): LM_Book => {
-    /**
-     * Initial values for formik
-     */
+  function getInitialValues() {
     return {
       author: "",
-      book_id: generateID(),
+      book_id: nanoid(),
       book_title: "",
       pages: 0,
       progress: 0,
@@ -49,11 +44,12 @@ const BookModifier = (props: Props) => {
       isPercentage: false,
       contents: {},
     };
-  };
+  }
 
   const formik = useFormik({
     initialValues: getInitialValues(),
     onSubmit: async (values, { resetForm }) => {
+      console.log("id: ", values.book_id);
       dispatch(addBook(values));
       // TODO  Add to state
       await Metadata.addFrontendBook(values.book_id);
@@ -61,9 +57,13 @@ const BookModifier = (props: Props) => {
       // Persists locally
       await Book.addBook(values);
       // Persist on backend
-      await Server.addBook(values);
+      // await Server.addBook(values);
       // NOTE Resets the values of the form
-      resetForm();
+      resetForm({
+        values: getInitialValues(),
+      });
+      console.log("id after: ", values.book_id);
+      // formik.values.book_id = nanoid();
     },
   });
 
@@ -71,13 +71,12 @@ const BookModifier = (props: Props) => {
 
   /* EVENTS */
 
-  useEffect(() => {}, []);
+  useEffect(() => {}, [formik.values]);
 
   return (
     <div className="lm-bookmodifier">
       <form onSubmit={formik.handleSubmit}>
         {/* <BookImage bookImage="" /> */}
-        {console.log(formik.values)}
 
         <BookTitle values={formik.getFieldProps("book_title")} />
 
@@ -92,7 +91,7 @@ const BookModifier = (props: Props) => {
 
         <BookAuthor values={formik.getFieldProps("author")} />
 
-        <Adder text={"+"} type="submit" />
+        <Adder clickHandler={formik.handleSubmit} text={"+"} type="submit" />
       </form>
     </div>
   );

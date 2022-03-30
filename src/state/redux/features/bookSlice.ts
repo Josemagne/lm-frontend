@@ -5,6 +5,7 @@ import Server from '../../../services/Server';
 import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
+import { LM_Flashcard } from "../../../types/flashcards/flashcard";
 
 interface LM_InitialState {
     books: {
@@ -29,9 +30,7 @@ interface LM_InitialState {
     selectedChapter: {
         chapter: null | LM_Chapter;
         chapter_id: null | string;
-        /**
-         * The index of the chapter in LM_Book.chapters
-         */
+        selectedFlashcard: null | LM_Flashcard;
     },
     /**
      * Decides if we open the modal in BooksViewer
@@ -57,7 +56,8 @@ const initialState: LM_InitialState = {
     },
     selectedChapter: {
         chapter: null,
-        chapter_id: null
+        chapter_id: null,
+        selectedFlashcard: null
     },
     openBooksViewerModal: false,
     openChapterModifierModal: false
@@ -108,7 +108,6 @@ export const bookSlice = createSlice({
             delete state.books.books[action.payload];
         },
         updateBook: (state, action: PayloadAction<LM_Book>) => {
-
             const book = action.payload;
             state.books.books[book.book_id] = book;
         },
@@ -183,9 +182,7 @@ export const bookSlice = createSlice({
             state.selectedChapter.chapter_id = null;
             state.openChapterModifierModal = false;
         },
-        toggleBooksViewerModal: (state, action) => {
-            state.openBooksViewerModal = !state.openBooksViewerModal;
-        },
+
 
         // ANCHOR chapterSummary
         changeChapterSummary: (state, action: PayloadAction<{ bookId: string, chapter: LM_Chapter }>) => {
@@ -206,9 +203,26 @@ export const bookSlice = createSlice({
             /* selectedChapter */
             state.selectedChapter.chapter = action.payload.chapter;
             state.selectedChapter.chapter_id = action.payload.chapter.chapter_id;
-        }
+        },
 
+        // ANCHOR flashcard
+        /**
+         * Changes the selected flashcard in the store
+         * @param state 
+         * @param action 
+         */
+        changeSelectedFlashCard: (state, action: PayloadAction<LM_Flashcard>) => {
+            state.selectedChapter.selectedFlashcard = action.payload;
+        },
 
+        // ANCHOR Modals
+        toggleBooksViewerModal: (state, action) => {
+            state.openBooksViewerModal = !state.openBooksViewerModal;
+        },
+        toggleChapterModiferModal: (state, action) => {
+            state.openChapterModifierModal = !state.openChapterModifierModal;
+
+        },
 
     },
     extraReducers: (builder) => {
@@ -252,6 +266,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModiferModal, changeSelectedFlashCard } = bookSlice.actions;
 
 export default bookSlice.reducer; 

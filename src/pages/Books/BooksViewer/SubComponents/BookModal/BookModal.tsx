@@ -7,6 +7,7 @@ import {
   toggleBooksViewerModal,
 } from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
+import useAppSelector from "../../../../../../build/hooks/useAppSelector";
 
 type Props = {
   selectedBook: LM_Book;
@@ -21,6 +22,10 @@ const BookModal = ({ selectedBook }: Props) => {
   // const book = useAppSelector(
   //   (state: RootState) => state.books.selectedBook.book
   // );
+
+  const openChapterModiferModal = useAppSelector(
+    (state) => state.books.openChapterModifierModal
+  );
 
   const navigate = useNavigate();
 
@@ -48,7 +53,7 @@ const BookModal = ({ selectedBook }: Props) => {
           </Modal.Header>
           <Modal.Body>
             <p>pages: {selectedBook.pages}</p>
-            <div
+            {/* <div
               onClick={() => {
                 if (!selectedBook) return;
                 handleClose();
@@ -56,7 +61,7 @@ const BookModal = ({ selectedBook }: Props) => {
               }}
             >
               <Button>Go to flashcards</Button>
-            </div>
+            </div> */}
             <div
               onClick={() => {
                 if (!selectedBook.book_id) return;
@@ -66,7 +71,7 @@ const BookModal = ({ selectedBook }: Props) => {
             >
               <Button>Go to chapters</Button>
             </div>
-            <div
+            {/* <div
               onClick={() => {
                 if (!selectedBook.book_id) return;
                 handleClose();
@@ -74,7 +79,7 @@ const BookModal = ({ selectedBook }: Props) => {
               }}
             >
               <Button>Modify bookdata</Button>
-            </div>
+            </div> */}
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
           {/* Author */}

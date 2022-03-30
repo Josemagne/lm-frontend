@@ -25,7 +25,7 @@ export default class Metadata {
                 amount: 0, books: []
             }, serverBooks: {
                 amount: 0, books: []
-            }, notSynchronizedBooks: []
+            }, notSynchronizedBooks: [], unSynchronizedBooks: []
         }
         return await new lssv().createStorageObject("metadata", metadata)
     }
@@ -68,5 +68,20 @@ export default class Metadata {
         return book_id;
     }
 
+    public static async addUnsynchronizedBook(book: LM_Book): Promise<boolean> {
+        let result = false;
+        await this.getMetadata().then((metadata) => {
+            if (!metadata) return;
+            const unsynchronizedBooks = metadata.unSynchronizedBooks;
+            unsynchronizedBooks.push(book);
+            metadata.unSynchronizedBooks = unsynchronizedBooks;
 
+            this.changeMetadata(metadata);
+            result = true;
+        })
+
+        return result;
+
+    }
 }
+

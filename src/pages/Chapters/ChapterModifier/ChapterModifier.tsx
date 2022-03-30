@@ -11,7 +11,9 @@ import { useFormik } from "formik";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import {
   changeSelectedBook,
+  changeSelectedChapter,
   removeSelectedChapter,
+  updateBook,
 } from "../../../state/redux/features/bookSlice";
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
 import AddPictures from "../../../components/AddPictures/AddPictures";
@@ -21,11 +23,12 @@ import Book from "../../../storage/indexedDB/Book";
 import Server from "../../../services/Server";
 import Return from "../../../components/Navigation/SubComponents/Return/Return";
 import { Modal } from "rsuite";
+import { nanoid } from "nanoid";
+import Metadata from "../../../utils/Metadata";
 
 type Props = {};
 
 const ChapterModifier = (props: Props) => {
-  const [chapterIndex, setChapterIndex] = useState<number>();
   /**
    * Dispatches action creator to the store
    */
@@ -51,6 +54,7 @@ const ChapterModifier = (props: Props) => {
 
   const submitHandler = async () => {
     console.log("book when we dispatch it: ", book);
+    dispatch(updateBook(book));
     // Add to indexedDB
     await Book.updateBook(book.book_id, book);
 
@@ -64,6 +68,7 @@ const ChapterModifier = (props: Props) => {
    * Closes the modal
    */
   const handleClose = () => {
+    // Metadata.addUnsynchronizedBook(book);
     dispatch(removeSelectedChapter(""));
   };
 
@@ -84,13 +89,10 @@ const ChapterModifier = (props: Props) => {
           <>
             {/* TODO Move to its own File */}
             <div className="lm-chapterheader">
-              <ChapterTitle
-                book={book}
-                changeHandler={changeHandler}
-                chapterIndex={chapter.chapterIndex}
-              />
+              <ChapterTitle />
               {/* @ts-ignore */}
-              <ChapterState changeHandler={changeHandler} />
+              {/* TODO Correct */}
+              {/* <ChapterState changeHandler={changeHandler} /> */}
               <Adder type="button" text={"+"} clickHandler={submitHandler} />
             </div>
             <div className="lm-chapterbody">
@@ -104,6 +106,7 @@ const ChapterModifier = (props: Props) => {
               <ChapterFlashcards />
               <ChapterKeywords />
               <AddPictures />
+              {/* TODO Subchapters */}
             </div>
             <div className="lm-chapterfooter"></div>
           </>
