@@ -20,6 +20,7 @@ jobs:
       - run: |
           npm install yarn
           yarn
+          npm run build-ts
           npm run build
           # npm run test
           npm run deploy-netlify

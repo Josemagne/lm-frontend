@@ -1,13 +1,13 @@
 import React from "react";
-import useAppDispatch from "../../../../../../../build/hooks/useAppDispatch";
 import { useEffect } from "react";
-import useAppSelector from "../../../../../../../build/hooks/useAppSelector";
+import useAppSelector from "../../../../../../hooks/useAppSelector";
 import Question from "../../../../../FlashCards/SubComponents/Question/Question";
 import { Card, Tab, Container, Table } from "react-bootstrap";
 import { LM_Flashcard } from "../../../../../../types/flashcards/flashcard";
 import QuestionAdder from "../../../../../FlashCards/SubComponents/Question/QuestionAdder";
 import FlashcardsAdder from "../../../../../FlashCards/FlashCardAdder";
 import Answer from "../../../../../FlashCards/SubComponents/Answer/Answer";
+import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 
 type Props = {};
 

@@ -1,9 +1,10 @@
 import React from "react";
-import useAppDispatch from "../../../../../build/hooks/useAppDispatch";
-import useAppSelector from "../../../../../build/hooks/useAppSelector";
+
 import { useMemo, useEffect } from "react";
 import { Editable, Slate, withReact } from "slate-react";
 import { createEditor, Descendant } from "slate";
+import useAppDispatch from "../../../../hooks/useAppDispatch";
+import useAppSelector from "../../../../hooks/useAppSelector";
 
 type Props = {};
 

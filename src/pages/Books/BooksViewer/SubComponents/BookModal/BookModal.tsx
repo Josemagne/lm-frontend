@@ -7,7 +7,7 @@ import {
   toggleBooksViewerModal,
 } from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
-import useAppSelector from "../../../../../../build/hooks/useAppSelector";
+import useAppSelector from "../../../../../hooks/useAppSelector";
 
 type Props = {
   selectedBook: LM_Book;

@@ -5,7 +5,7 @@ import QuestionAdder from "./SubComponents/Question/QuestionAdder";
 import useAppSelector from "../../hooks/useAppSelector";
 import Flashcard from "../../classes/Flashcard";
 import { changeSelectedFlashCard } from "../../state/redux/features/bookSlice";
-import useAppDispatch from "../../../build/hooks/useAppDispatch";
+import useAppDispatch from "../../hooks/useAppDispatch";
 
 type Props = {};
 
