@@ -1,5 +1,4 @@
-import TextContainer from "../../../../../../components/TextContainer/TextContainer";
-import { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { LM_Book } from "../../../../../../types/Book/book";
 import { useEffect } from "react";
 import LM_Chapter from "../../../../../../types/Book/chapter";
@@ -26,6 +25,7 @@ const ChapterSummary = ({
   chapterId,
   chapterIndex,
 }: Props) => {
+  const [value, setValue] = useState<Descendant[]>();
   const dispatch = useAppDispatch();
   // @ts-ignore
   const editor = useMemo(() => withReact(createEditor()), []);
@@ -38,19 +38,9 @@ const ChapterSummary = ({
 
   const handleChange = (v: Descendant[]) => {
     const bookCopy: LM_Book = JSON.parse(JSON.stringify(book));
-    console.log("chapter id: ", chapter.chapter_id);
-    console.log("chapter: ", bookCopy.chapters);
-    console.log("chapter: ", bookCopy.chapters[chapter.chapter_id]);
     bookCopy.chapters[chapter.chapter_id].summary = v;
     dispatch(changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id }));
-    // const chapterCopy = JSON.parse(JSON.stringify(chapter));
-    // chapterCopy.summary = v;
-    // dispatch(
-    //   changeChapterSummary({ bookId: chapter.book_id, chapter: chapterCopy })
-    // );
   };
-
-  console.log("chaptersummary-->chapterId", chapterId, chapter.chapter_id);
 
   useEffect(() => {}, [chapter.summary]);
   return (

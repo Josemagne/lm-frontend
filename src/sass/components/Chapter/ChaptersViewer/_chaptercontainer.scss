@@ -1,7 +1,20 @@
 .lm-chaptercontainer {
+  width: fit-content;
+  min-width: 400px;
+  max-width: 992px;
+  height: 3rem;
+  min-height: fit-content;
+  border-radius: 5px;
+  margin-top: 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
+  padding: 2rem;
   background-color: rgb(89, 174, 89);
+  position: relative;
+  .lm-deletebutton {
+    position: absolute;
+    right: 0;
+  }
 }
 
 .lm-chaptercontainer:hover {

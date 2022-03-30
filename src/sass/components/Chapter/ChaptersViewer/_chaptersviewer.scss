@@ -5,6 +5,8 @@
 
   .lm-chapters {
     grid-area: lm-chapters;
+    display: flex;
+    flex-wrap: wrap;
 
     .lm-chaptercontainer {
       display: grid;

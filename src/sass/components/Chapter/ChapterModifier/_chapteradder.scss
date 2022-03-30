@@ -1,9 +1,11 @@
 .lm-chapteradder {
   grid-area: lm-chapteradder;
   display: flex;
+  flex-direction: column;
 
   justify-content: center;
   @media screen and (min-width: 576px) {
+    flex-direction: row;
   }
 
   .lm-chapteradder__index {

@@ -103,7 +103,7 @@ const ChapterModifier = (props: Props) => {
                 // @ts-ignore
                 chpaterId={chapter.chapter.chapter_id}
               />
-              <ChapterFlashcards />
+              {/* <ChapterFlashcards /> */}
               <ChapterKeywords />
               <AddPictures />
               {/* TODO Subchapters */}
@@ -111,6 +111,12 @@ const ChapterModifier = (props: Props) => {
             <div className="lm-chapterfooter"></div>
           </>
         ) : null}
+        <button
+          className="btn btn-danger lm-chaptermodifier__close"
+          onClick={handleClose}
+        >
+          x
+        </button>
       </Modal>
     </div>
   );

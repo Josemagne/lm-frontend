@@ -77,6 +77,11 @@
       }
     }
   }
+  .lm-chaptermodifier__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
 }
 
 @media screen and (min-width: 576px) {

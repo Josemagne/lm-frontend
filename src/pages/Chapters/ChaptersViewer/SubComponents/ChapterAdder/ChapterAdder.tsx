@@ -24,8 +24,6 @@ type Props = {
 const ChapterAdder = ({ book_id }: Props) => {
   const dispatch = useAppDispatch();
   /* STATE */
-  const [book, setBook] = useState<LM_Book | undefined>();
-  const [numberOfSubchapters, setNumberOfSubchapters] = useState<number>(0);
 
   const _book = useAppSelector((state) => state.books.selectedBook.book);
 
@@ -66,7 +64,6 @@ const ChapterAdder = ({ book_id }: Props) => {
       if (!_book) return;
       const bookCopy = JSON.parse(JSON.stringify(_book));
       bookCopy.chapters[values.chapter_id] = values;
-      console.log("chapter_id: ", values.chapter_id);
       dispatch(updateBook(bookCopy));
       dispatch(
         changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id })
@@ -87,10 +84,6 @@ const ChapterAdder = ({ book_id }: Props) => {
   }, [_book]);
 
   useEffect(() => {}, []);
-
-  console.log(formik.values);
-
-  useEffect(() => {}, [numberOfSubchapters]);
 
   return (
     <div className="lm-chapteradder">

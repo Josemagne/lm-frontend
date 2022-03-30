@@ -49,7 +49,8 @@ const BookModal = ({ selectedBook }: Props) => {
       {selectedBook ? (
         <Fragment>
           <Modal.Header>
-            {selectedBook.author} {selectedBook.book_title}
+            {selectedBook.author}
+            {" - "} {selectedBook.book_title}
           </Modal.Header>
           <Modal.Body>
             <p>pages: {selectedBook.pages}</p>
