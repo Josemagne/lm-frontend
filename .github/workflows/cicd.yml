@@ -17,8 +17,6 @@ jobs:
 
       - name: use node.js
         uses: actions/setup-node@2
-
-      - name: build
       - run: |
           npm install yarn
           yarn
