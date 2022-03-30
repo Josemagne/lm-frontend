@@ -64,14 +64,14 @@ const Navbar = (props: Props) => {
                     >
                       Books
                     </Nav.Item>
-                    <Nav.Item
+                    {/* <Nav.Item
                       to="/bookmodifier"
                       as={Link}
                       onClick={() => setShow(false)}
                     >
                       Modify book
-                    </Nav.Item>
-                    <Dropdown title="Other">
+                    </Nav.Item> */}
+                    {/* <Dropdown title="Other">
                       <Nav.Item
                         to="/settings"
                         as={Link}
@@ -79,7 +79,7 @@ const Navbar = (props: Props) => {
                       >
                         Settings
                       </Nav.Item>
-                    </Dropdown>
+                    </Dropdown> */}
                   </div>
                 </Offcanvas.Body>
               </BNavbar.Offcanvas>
@@ -98,11 +98,11 @@ const Navbar = (props: Props) => {
             {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
               Modifier
             </Nav.Item> */}
-            <Dropdown title="Other">
+            {/* <Dropdown title="Other">
               <Nav.Item href="/settings" to="/settings" as={Link}>
                 Settings
               </Nav.Item>
-            </Dropdown>
+            </Dropdown> */}
             {/* <Nav.Item>Coordinator</Nav.Item> */}
             {/* <Nav.Item href="/flashcards" as={Link} to="/flashcards">
               FlashCards
