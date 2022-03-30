@@ -1,5 +1,5 @@
 import { Descendant, createEditor } from "slate";
-import { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Editable, Slate, withReact } from "slate-react";
 import LM_Chapter from "../../../../types/Book/chapter";
 import {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Answer from "./SubComponents/Answer/Answer";
 import { Panel } from "rsuite";
 import QuestionAdder from "./SubComponents/Question/QuestionAdder";

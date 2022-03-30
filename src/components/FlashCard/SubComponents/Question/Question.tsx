@@ -1,6 +1,4 @@
-import React from "react";
-
-import { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect } from "react";
 import { Editable, Slate, withReact } from "slate-react";
 import { createEditor, Descendant } from "slate";
 import useAppDispatch from "../../../../hooks/useAppDispatch";
