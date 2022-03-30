@@ -5,10 +5,13 @@ import Server from '../../../services/Server';
 import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
+import { LM_Flashcard } from "../../../types/flashcards/flashcard";
 
 interface LM_InitialState {
     books: {
-        data: LM_Book[];
+        books: {
+            [id: string]: LM_Book;
+        };
         /**
          * book_id strings of the books 
          */
@@ -27,24 +30,37 @@ interface LM_InitialState {
     selectedChapter: {
         chapter: null | LM_Chapter;
         chapter_id: null | string;
-    }
+        selectedFlashcard: null | LM_Flashcard;
+    },
+    /**
+     * Decides if we open the modal in BooksViewer
+     */
+    openBooksViewerModal: boolean;
+
+    /**
+     * Decides if we open the modal to modify a chapter
+     */
+    openChapterModifierModal: boolean;
 }
 
 const initialState: LM_InitialState = {
     books: {
-        data: [],
+        books: {},
         ids: [],
         loading: false,
         error: null
     },
     selectedBook: {
         book_id: null,
-        book: null
+        book: null,
     },
     selectedChapter: {
         chapter: null,
-        chapter_id: null
-    }
+        chapter_id: null,
+        selectedFlashcard: null
+    },
+    openBooksViewerModal: false,
+    openChapterModifierModal: false
 
 }
 
@@ -85,29 +101,52 @@ export const bookSlice = createSlice({
     initialState: initialState,
     reducers: {
         addBook: (state, action: PayloadAction<LM_Book>) => {
+            state.books.books[action.payload.book_id] = action.payload;
 
         },
         removeBook: (state, action: PayloadAction<string>) => {
-            state.books.data.filter((book, index) => {
-                if (book.book_id === action.payload) {
-                    state.books.data.splice(index, 1);
-                }
-            })
+            delete state.books.books[action.payload];
         },
         updateBook: (state, action: PayloadAction<LM_Book>) => {
-            const id = action.payload.book_id;
+            const book = action.payload;
+            state.books.books[book.book_id] = book;
+        },
+        // ANCHOR chapter
+        /**
+         * Adds chapter to the book in the store
+         * @param state 
+         * @param action 
+         */
+        addChapter: (state, action: PayloadAction<{ chapter: LM_Chapter, book_id: string }>) => {
+            /* BOOKS */
+            state.books.books[action.payload.book_id].chapters[action.payload.chapter.chapter_id] = action.payload.chapter;
 
-            let arrayIndex = 0;
-            state.books.data.find((book, index) => {
-                if (book.book_id === id) {
-                    arrayIndex = index;
-                    return 1;
-                }
-            });
+            /* SELECTEDBOOK */
+            if (!state.selectedBook.book) return;
+            state.selectedBook.book.chapters[action.payload.book_id] = action.payload.chapter;
 
-            if (!arrayIndex) return;
-            // Change the old book with the new book
-            state.books.data[arrayIndex] = action.payload;
+        },
+        /**
+         * Updates chapter in the store
+         * @param state 
+         * @param action 
+         */
+        changeChapter: (state, action: PayloadAction<{ chpater: LM_Chapter, book_id: string }>) => {
+
+        },
+        /**
+         * Removes chapter from the store
+         * @param state 
+         * @param action 
+         */
+        deleteChapter: (state, action: PayloadAction<{ chapter_id: string, book_id: string }>) => {
+
+            /* Book */
+
+            /* selectedBook */
+            if (!state.selectedBook.book) return;
+            delete state.selectedBook.book.chapters[action.payload.chapter_id]
+
         },
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<{ book_id: string, book: LM_Book | null }>) => {
@@ -115,25 +154,75 @@ export const bookSlice = createSlice({
             if (!action.payload.book) return;
             state.selectedBook.book = action.payload.book;
 
+
         },
         removeSelectedBook: (state, action) => {
             state.selectedBook.book_id = null;
             state.selectedBook.book = null;
         },
-
         // ANCHOR selectedChapter
-        changeSelectedChapter: (state, action: PayloadAction<{ chapter_id: string, chapter: LM_Chapter | null }>) => {
-            if (!action.payload.chapter) return;
-            state.selectedBook.book?.chapters.push(action.payload.chapter)
+        changeSelectedChapter: (state, action: PayloadAction<{ chapter_id: string, chapter: LM_Chapter }>) => {
+            // /* BOOK */
+            // (state.selectedBook.book as LM_Book).chapters[action.payload.chapter_id] = action.payload.chapter;
+
+            // /* SELECTED BOOK */
+            // (state.selectedBook.book as LM_Book).chapters[action.payload.chapter_id] = action.payload.chapter;
+
+            /* SELECTED CHAPTER */
             state.selectedChapter.chapter = action.payload.chapter;
+
             state.selectedChapter.chapter_id = action.payload.chapter_id;
+
+            state.openChapterModifierModal = true;
+
         },
 
         removeSelectedChapter: (state, action) => {
             state.selectedChapter.chapter = null;
             state.selectedChapter.chapter_id = null;
-        }
+            state.openChapterModifierModal = false;
+        },
 
+
+        // ANCHOR chapterSummary
+        changeChapterSummary: (state, action: PayloadAction<{ bookId: string, chapter: LM_Chapter }>) => {
+            const chapter = action.payload.chapter;
+            /* books */
+
+            /* selectedBook */
+            if (!state.selectedBook.book) return;
+
+            // NOTE Delete the previous chapter
+            const previousChapterID = state.selectedChapter.chapter_id;
+
+            // if (!previousChapterID) return;
+            // delete state.selectedBook.book.chapters[previousChapterID];
+
+            state.selectedBook.book.chapters[chapter.chapter_id] = chapter;
+
+            /* selectedChapter */
+            state.selectedChapter.chapter = action.payload.chapter;
+            state.selectedChapter.chapter_id = action.payload.chapter.chapter_id;
+        },
+
+        // ANCHOR flashcard
+        /**
+         * Changes the selected flashcard in the store
+         * @param state 
+         * @param action 
+         */
+        changeSelectedFlashCard: (state, action: PayloadAction<LM_Flashcard>) => {
+            state.selectedChapter.selectedFlashcard = action.payload;
+        },
+
+        // ANCHOR Modals
+        toggleBooksViewerModal: (state, action) => {
+            state.openBooksViewerModal = !state.openBooksViewerModal;
+        },
+        toggleChapterModiferModal: (state, action) => {
+            state.openChapterModifierModal = !state.openChapterModifierModal;
+
+        },
 
     },
     extraReducers: (builder) => {
@@ -143,13 +232,13 @@ export const bookSlice = createSlice({
             state.books.loading = true;
         }),
             builder.addCase(fetchBooksBackend.fulfilled, (state, action: PayloadAction<LM_Book[]>) => {
-                state.books.loading = false;
+
                 action.payload.forEach((book) => {
-                    if (!state.books.ids.includes(book.book_id)) {
-                        state.books.ids.push(book.book_id)
-                        state.books.data.push(book)
+                    if (!state.books.books[book.book_id]) {
+                        state.books.books[book.book_id] = book;
                     }
                 })
+                state.books.loading = false;
             }),
             builder.addCase(fetchBooksBackend.rejected, (state, action) => {
                 state.books.loading = false;
@@ -163,13 +252,12 @@ export const bookSlice = createSlice({
             state.books.loading = true;
         }),
             builder.addCase(fetchBooksFrontend.fulfilled, (state, action: PayloadAction<LM_Book[]>) => {
-                state.books.loading = false;
                 action.payload.forEach((book) => {
-                    if (!state.books.ids.includes(book.book_id)) {
-                        state.books.ids.push(book.book_id)
-                        state.books.data.push(book);
+                    if (!state.books.books[book.book_id]) {
+                        state.books.books[book.book_id] = book;
                     }
                 })
+                state.books.loading = false;
             }),
             builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
                 state.books.loading = false;
@@ -178,6 +266,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModiferModal, changeSelectedFlashCard } = bookSlice.actions;
 
 export default bookSlice.reducer; 

@@ -1,3 +1,4 @@
+import { LM_Book } from "../Book/book";
 import { LM_User } from "./user";
 
 export declare interface LM_Metadata {
@@ -33,5 +34,9 @@ export declare interface LM_Metadata {
      * Contains an array of book_id strings
      */
     favoriteBooks: string[];
+    /**
+     * Books that are not synchronized
+     */
+    unSynchronizedBooks: LM_Book[]
 
 }

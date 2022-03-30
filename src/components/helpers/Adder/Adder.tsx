@@ -20,8 +20,7 @@ const Adder = ({ text, clickHandler, type }: Props) => {
   /* EVENTS */
 
   return (
-    <button
-      type={type}
+    <div
       // The button triggers a submit in the form
       onClick={() => {
         if (clickHandler) {
@@ -30,8 +29,8 @@ const Adder = ({ text, clickHandler, type }: Props) => {
       }}
       className="lm-adder"
     >
-      {text}
-    </button>
+      <div>{text}</div>
+    </div>
   );
 };
 

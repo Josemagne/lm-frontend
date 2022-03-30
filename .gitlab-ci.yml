@@ -1,5 +1,5 @@
 stages:
-  - build
+  # - build
   - test
   - deploy_netlify
   - deploy_production
@@ -7,26 +7,26 @@ stages:
 variables:
   name: Barakat
 
-build:
-  stage: build
-  image: node:17
-  variables:
-    name: Orlando
-    NODE_ENV: production
-  script:
-    - echo "Building librimem"
-    - npm install yarn
-    - yarn
-    - yarn add typescript
-    - npm run build-ts
-  artifacts:
-    paths:
-      - build
-  cache:
-    key: $CI_COMMIT_REF_SLUG
-    paths:
-      - node_modules
-    policy: pull-push
+# build:
+#   stage: build
+#   image: node:17
+#   variables:
+#     name: Orlando
+#     NODE_ENV: production
+#   script:
+#     - echo "Building librimem"
+#     - npm install yarn
+#     - yarn
+#     - yarn add typescript
+#     - npm run build-ts
+#   artifacts:
+#     paths:
+#       - build
+#   cache:
+#     key: $CI_COMMIT_REF_SLUG
+#     paths:
+#       - node_modules
+#     policy: pull-push
 
 test:
   stage: test
@@ -36,16 +36,18 @@ test:
     # Run react-scripts tests
     # - npm run test-react
     - echo "*****CYPRESS******"
-    - npm run test-cypress
+    # - npm run test-cypress
     # Run unit tests with jest
     # - npm run test
-  dependencies:
-    - build
+  # dependencies:
+  #   - build
 
 deploy_netlify:
   stage: deploy_netlify
   image: node:17
   script:
     - echo "Deploying to netlify"
+    - npm install netlify-cli
+    - npm run build
     - npm run deploy-netlify
     - echo "Deployed to netlify"

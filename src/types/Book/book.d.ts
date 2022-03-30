@@ -1,4 +1,5 @@
 import type LM_Chapter from "./chapter";
+import { LM_Book_Contents } from "./contents";
 
 export declare interface LM_Book {
     /**
@@ -11,8 +12,13 @@ export declare interface LM_Book {
     author: string;
     book_title: string;
     /**
+     * Decides if we use percentage instead of pages
+     */
+    isPercentage: boolean;
+    /**
      * Number of pages
      */
+    contents: LM_Book_Contents;
     pages: number;
     /**
      * Decides if the book is finished
@@ -22,7 +28,9 @@ export declare interface LM_Book {
      * A number between 1 and 100 that indicates how far we have gotten with the book.
      */
     progress: number;
-    chapters: LM_Chapter[];
+    chapters: {
+        [id: string]: LM_Chapter;
+    };
     summary: string;
     /**
      * Number between 1 and 5 for stars.

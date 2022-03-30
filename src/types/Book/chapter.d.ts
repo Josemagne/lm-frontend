@@ -1,5 +1,6 @@
 import LM_Summary from './summary';
 import { Descendant } from 'slate';
+import { LM_Flashcard } from '../flashcards/flashcard';
 export default interface LM_Chapter {
     chapter_id: string;
     /**
@@ -26,32 +27,35 @@ export default interface LM_Chapter {
      * Indicates if the chapter is read.
      */
     read: boolean;
-    summary: string;
+    summary: Descendant[];
     /**
      * chapter_ids of the subchapters
      */
-    subchapters: string[];
     started: Date | null;
     ended: Date | null;
+    flashcards: {
+        [id: string]: LM_Flashcard;
+    }
     /**
      * Decides if the chapter is a subchapter
      */
     isSubchapter: boolean;
+    subchapters?: string[];
     /**
      * The index of the chapter
      * E.g. 1.1.1
      */
-    index: string;
+    index?: string;
     /**
      * The degree of the chapter
      * E.g. 1 --> x.1
      * E.g. 2 --> x.1.1
      */
-    degree: number | null;
+    degree?: number | null;
     /**
      * ID of the parent chapter
      */
-    parentChapter: string | null;
+    parentChapter?: string | null;
 
 }
 

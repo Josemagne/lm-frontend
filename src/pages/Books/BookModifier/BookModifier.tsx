@@ -16,137 +16,83 @@ import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
 import Metadata from "../../../utils/Metadata";
 import useAppSelector from "../../../hooks/useAppSelector";
+import { Modal } from "rsuite";
+import { addBook } from "../../../state/redux/features/bookSlice";
 
 type Props = {};
 
 /**
- * Page where we can edit and add a book
+ * Part of BooksViewer where we can edit and add a book
  */
 const BookModifier = (props: Props) => {
   /* STORAGE */
 
   /* STATE */
   const dispatch = useAppDispatch();
-  const [book, setBook] = useState<LM_Book>();
 
-  // If the url contains a book_id then we handle this particular book
-  const book_id = useAppSelector((state) => state.books.selectedBook.book_id);
-  const _book = useAppSelector((state) => state.books.selectedBook.book);
-
-  const getBook = async () => {
-    if (!book_id) return;
-    const _book = await Book.getBook(book_id);
-    if (!_book) return;
-    setBook(_book);
-  };
-
-  /**
-   * Initial values for formik
-   */
-  const initialValues: LM_Book = {
-    author: book?.author || "",
-    book_id: book?.book_id || nanoid(),
-    book_title: book?.book_title || "",
-    pages: book?.pages || 0,
-    progress: book?.progress || 0,
-    read: book?.read || true,
-    summary: book?.summary || "",
-    chapters: book?.chapters || [],
-    rate: book?.rate || 3,
-  };
+  function getInitialValues() {
+    return {
+      author: "",
+      book_id: nanoid(),
+      book_title: "",
+      pages: 0,
+      progress: 0,
+      read: true,
+      summary: "",
+      chapters: {},
+      rate: 3,
+      isPercentage: false,
+      contents: {},
+    };
+  }
 
   const formik = useFormik({
-    initialValues: initialValues,
-    onSubmit: (values, { resetForm }) => {
+    initialValues: getInitialValues(),
+    onSubmit: async (values, { resetForm }) => {
+      console.log("id: ", values.book_id);
+      dispatch(addBook(values));
       // TODO  Add to state
-      // Remove values from form
-      formik.resetForm();
-      Metadata.addFrontendBook(values.book_id);
+      await Metadata.addFrontendBook(values.book_id);
       // useAppDispatch(addBook(values));
       // Persists locally
-      Book.addBook(values);
+      await Book.addBook(values);
       // Persist on backend
-      Server.addBook(values);
+      // await Server.addBook(values);
       // NOTE Resets the values of the form
-      resetForm();
+      resetForm({
+        values: getInitialValues(),
+      });
+      console.log("id after: ", values.book_id);
+      // formik.values.book_id = nanoid();
     },
-    // validationSchema: () => {
-    //   yup.object({
-    //     author: yup
-    //       .string()
-    //       .max(30, "Must be 30 characters or less")
-    //       .required("required"),
-    //     pages: yup
-    //       .number()
-    //       .max(5000, "There cannot be more than 5000 pages.")
-    //       .required("required"),
-    //   });
-    // },
   });
 
   /* METHODS */
 
   /* EVENTS */
 
-  useEffect(() => {
-    getBook();
-  }, []);
-
-  // Rerender if the book changed
-  useEffect(() => {
-    console.log("book: ", book);
-    console.log("book_id", book_id);
-    console.log("_book", _book);
-  }, [book]);
+  useEffect(() => {}, [formik.values]);
 
   return (
-    <div>
-      {book ? (
-        <div className="lm-page lm-bookmodifier">
-          <form onSubmit={formik.handleSubmit}>
-            {/* <BookImage bookImage="" /> */}
-            {console.log(formik.values)}
+    <div className="lm-bookmodifier">
+      <form onSubmit={formik.handleSubmit}>
+        {/* <BookImage bookImage="" /> */}
 
-            <BookTitle values={formik.getFieldProps("book_title")} />
+        <BookTitle values={formik.getFieldProps("book_title")} />
 
-            <BookPages values={formik.getFieldProps("pages")} />
+        <BookPages values={formik.getFieldProps("pages")} />
 
-            {/* <BookState
+        {/* <BookState
               values={formik.getFieldProps("read")}
               setFieldValue={formik.setFieldValue}
             /> */}
 
-            {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
+        {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
 
-            <BookAuthor values={formik.getFieldProps("author")} />
+        <BookAuthor values={formik.getFieldProps("author")} />
 
-            <Adder text={"+"} type="submit" />
-          </form>
-        </div>
-      ) : null}
-      {!book_id ? (
-        <div className="lm-page lm-bookmodifier">
-          <form onSubmit={formik.handleSubmit}>
-            {/* <BookImage bookImage="" /> */}
-            {console.log(formik.values)}
-
-            <BookTitle values={formik.getFieldProps("book_title")} />
-
-            <BookPages values={formik.getFieldProps("pages")} />
-
-            {/* <BookState
-              values={formik.getFieldProps("read")}
-              setFieldValue={formik.setFieldValue}
-            /> */}
-
-            {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
-
-            <BookAuthor values={formik.getFieldProps("author")} />
-
-            <Adder text={"+"} type="submit" />
-          </form>
-        </div>
-      ) : null}
+        <Adder clickHandler={formik.handleSubmit} text={"+"} type="submit" />
+      </form>
     </div>
   );
 };

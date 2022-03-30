@@ -1,15 +1,44 @@
 .lm-chapteradder {
   grid-area: lm-chapteradder;
+  display: flex;
+
+  justify-content: center;
+  @media screen and (min-width: 576px) {
+  }
+
+  .lm-chapteradder__index {
+    width: 7ch;
+    min-width: 7ch;
+    max-width: 7ch;
+  }
+
+  .lm-chapteradder__title {
+    width: 30ch;
+    max-width: 90%;
+    min-width: 80%;
+  }
+
   .lm-chapteradder__button {
-    width: 2rem;
-    height: 2rem;
-    padding: 1rem;
-    margin: 1rem;
+    // grid-area: lm-button;
+    width: 4rem;
+    min-width: 4rem;
+    max-width: 5%;
+    min-height: 2.5rem;
+    max-height: 3rem;
     border-radius: 50% !important;
     background-color: blue;
-    color: white;
     font-weight: bolder;
-    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+      font-weight: bolder;
+      color: white;
+      &:hover {
+        cursor: pointer;
+        color: red;
+      }
+    }
   }
 }
 

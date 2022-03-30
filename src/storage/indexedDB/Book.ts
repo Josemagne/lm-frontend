@@ -3,6 +3,7 @@ import { LM_Book } from '../../types/Book/book';
 import { nanoid } from 'nanoid';
 import { useLiveQuery } from 'dexie-react-hooks';
 import LM_Chapter from '../../types/Book/chapter';
+import { Descendant } from 'slate';
 
 /**
  * Class for book
@@ -19,9 +20,6 @@ export default class Book {
      */
     public static addBook = async (book: any): Promise<boolean> => {
         let result: boolean = false;
-
-        // Create a unique id
-        book.book_id = nanoid();
 
         // Add it to indexedDB
         books.books.add(book).then((res) => {
@@ -60,8 +58,16 @@ export default class Book {
         return result;
     }
 
+    /**
+     * Updates the book in indexedDB
+     * @param bookId 
+     * @param book 
+     * @returns 
+     */
     public static updateBook = async (bookId: string, book: LM_Book): Promise<boolean> => {
         let result: boolean = false;
+
+        await books.books.update(bookId, book);
 
         return result;
     }
@@ -82,19 +88,29 @@ export default class Book {
      * Adds chapter to indexedDB
      */
     public static addChapter = async (bookID: string, chapter: LM_Chapter): Promise<any> => {
+        console.log("STARTING  Book.addChapter()")
 
-        await books.books.get(bookID).then(async (book) => {
-            if (!book) return;
-            book.chapters.push(chapter);
-            await books.books.put(book, bookID);
-        })
+        // Get book
+        const book = await books.books.get(bookID).then((book) => book)
+
+        console.log("got bokk from indexedDB: ", book)
+
+        if (!book) return;
+
+        // Push the new chapter in the book
+        book.chapters[chapter.chapter_id] = chapter;
+
+        console.log("Calling Book.updateBook()")
+        // Update the book
+        await this.updateBook(book.book_id, book)
+
+        console.log("Inserted new chapter to book in indexedDB")
 
         return bookID;
-
     }
 
     public static getChapters = async (book_id: string): Promise<LM_Chapter[] | null> => {
-        let result: null | LM_Chapter[] = null;
+        let result: null | { [id: string]: LM_Chapter } = null;
         await books.books.get(book_id).then((book) => {
             if (book)
                 result = book?.chapters;
@@ -104,18 +120,26 @@ export default class Book {
 
     public static removeChapter = async (chapter_id: string, book_id: string): Promise<any> => {
         const book = await this.getBook(book_id)
-        /**
-         * Index of the chapter in book.chapters[] that we are going to delete
-         */
-        let index = 0;
+
         if (!book) return;
-        book.chapters.find((ch, i) => {
-            if (ch.chapter_id === chapter_id) index = i;
-        })
-        book.chapters.slice(index, 1);
+
+        delete book.chapters[chapter_id];
 
         // Update book
         this.updateBook(book.book_id, book);
+    }
+
+    // ANCHOR summary
+    public static changeSummary = async (bookId: string, chapterId: string, summary: Descendant[]): Promise<any> => {
+        // Get book
+        const book = await books.books.get(bookId);
+
+        if (!book) return;
+
+        book.chapters[chapterId].summary = summary;
+
+        // Update book
+        this.updateBook(bookId, book);
     }
 
 }

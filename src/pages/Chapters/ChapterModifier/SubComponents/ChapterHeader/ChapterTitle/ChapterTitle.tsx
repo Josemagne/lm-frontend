@@ -7,33 +7,40 @@ import useAppSelector from "../../../../../../hooks/useAppSelector";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import { changeSelectedBook } from "../../../../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../../../../types/Book/book";
+import LM_Chapter from "../../../../../../types/Book/chapter";
 
-type Props = {
-  changeHandler: (newBook: LM_Book) => void;
-  book: LM_Book;
-};
+type Props = {};
 
 /**
  * Manages the state of the chaptertitle
  * @param props
  * @returns
  */
-const ChapterTitle = ({ book, changeHandler }: Props) => {
+const ChapterTitle = ({}: Props) => {
+  const book = useAppSelector((state) => state.books.selectedBook.book);
+  const chapter = useAppSelector(
+    (state) => state.books.selectedChapter.chapter
+  );
+  const dispatch = useAppDispatch();
+
   const handleChange = (newTitle: string) => {
-    book.book_title = newTitle;
-    changeHandler(book);
+    const bookCopy = JSON.parse(JSON.stringify(book));
+    bookCopy.chapters[chapter.chapter_id].title = newTitle;
+    dispatch(changeSelectedBook(bookCopy));
   };
 
-  useEffect(() => {}, [book]);
+  useEffect(() => {}, [chapter]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(book.chapters[chapter.chapter_id]);
+  }, []);
 
   return (
     <div className="lm-chaptertitle">
       <Form>
         <FloatingLabel controlId="chapter" label="Kapitel">
           <Form.Control
-            defaultValue={book.book_title}
+            defaultValue={chapter.title}
             type="text"
             placeholder="Kapitel"
             onChange={(e) => handleChange(e.target.value)}
