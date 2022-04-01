@@ -22,6 +22,7 @@ import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSu
 import Book from "../../../storage/indexedDB/Book";
 import Server from "../../../services/Server";
 import { Modal } from "react-bootstrap";
+import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
 
 type Props = {};
 
@@ -95,7 +96,7 @@ const ChapterModifier = (props: Props) => {
               // @ts-ignore
               chpaterId={chapter.chapter.chapter_id}
             />
-            {/* <ChapterFlashcards /> */}
+            <ChapterFlashcards />
             <ChapterKeywords />
             <AddPictures />
             {/* TODO Subchapters */}

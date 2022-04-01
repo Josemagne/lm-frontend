@@ -15,7 +15,7 @@ type Props = {
   isNew: boolean;
 };
 
-const Question = ({ isNew }: Props) => {
+const Answer = ({ isNew }: Props) => {
   const dispatch = useAppDispatch();
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
@@ -44,16 +44,16 @@ const Question = ({ isNew }: Props) => {
     const bookCopy = JSON.parse(JSON.stringify(book));
     bookCopy.chapters[chapter.chapter_id].flashcards[
       newFlashcard.flashcard_id
-    ].question = v;
+    ].answer = v;
     if (!isNew) {
       const selectedFlashcardCopy = JSON.parse(
         JSON.stringify(selectedFlashcard)
       );
-      selectedFlashcard.question = v;
+      selectedFlashcard.answer = v;
       dispatch(changeSelectedFlashCard(selectedFlashcardCopy));
     } else {
       const newFlashcardCopy = JSON.parse(JSON.stringify(newFlashcard));
-      newFlashcardCopy.question = v;
+      newFlashcardCopy.answer = v;
       dispatch(changeNewFlashcard(newFlashcardCopy));
     }
   };
@@ -64,7 +64,7 @@ const Question = ({ isNew }: Props) => {
     <div className="lm-gc-flashcard__question">
       <Slate
         editor={editor}
-        value={isNew ? newFlashcard.question : selectedFlashcard.question}
+        value={isNew ? newFlashcard.answer : selectedFlashcard.answer}
         onChange={(v) => handleChange(v)}
       >
         <Editable />
@@ -73,4 +73,4 @@ const Question = ({ isNew }: Props) => {
   );
 };
 
-export default Question;
+export default Answer;

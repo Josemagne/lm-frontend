@@ -1,16 +1,23 @@
 import React from "react";
 import { useEffect } from "react";
 import useAppSelector from "../../../../../../hooks/useAppSelector";
-import Question from "../../../../../FlashCards/SubComponents/Question/Question";
 import { Card, Tab, Container, Table } from "react-bootstrap";
 import { LM_Flashcard } from "../../../../../../types/flashcards/flashcard";
-import QuestionAdder from "../../../../../FlashCards/SubComponents/Question/QuestionAdder";
-import FlashcardsAdder from "../../../../../FlashCards/FlashCardAdder";
-import Answer from "../../../../../FlashCards/SubComponents/Answer/Answer";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
+import { Node, Descendant } from "slate";
+import ChapterFlashcardQuestion from "./SubComponents/ChapterFlashcard/SubComponents/ChapterFlashcardQuestion/ChapterFlashcardQuestion";
+import ChapterFlashcardAnswer from "./SubComponents/ChapterFlashcard/SubComponents/ChapterFlashcardAnswer/ChapterFlashcardAnswer";
+import { changeSelectedFlashCard } from "../../../../../../state/redux/features/bookSlice";
+import ChapterFlashcard from "./SubComponents/ChapterFlashcard/ChapterFlashcard";
+import FlashcardAdder from "../../../../../../components/FlashcardAdder/FlashcardAdder";
 
 type Props = {};
 
+/**
+ * Handles the flashcards in the Modal
+ * @param props
+ * @returns
+ */
 const ChapterFlashcards = (props: Props) => {
   const dispatch = useAppDispatch();
 
@@ -19,19 +26,29 @@ const ChapterFlashcards = (props: Props) => {
     (state) => state.books.selectedChapter.chapter
   );
 
+  /**
+   * Sets the selectedFlashcard
+   * @param flashcard_id
+   */
+  const clickHandler = (flashcard_id: string) => {
+    const selectedFlashcard = chapter.flashcards[flashcard_id];
+    dispatch(changeSelectedFlashCard);
+  };
+
   useEffect(() => {}, [chapter]);
   return (
-    <div className="lm-chaptermodifier__flashcards">
+    <div className="lm-chaptermodifier__flashcards mt-3">
       <div className="container">
-        <FlashcardsAdder />
+        <h3>Flashcards</h3>
+        <FlashcardAdder />
         {Object.values(chapter.flashcards as LM_Flashcard[]).map(
           (flashcard) => {
             return (
               <div className="row">
-                <div className="col">
-                  <Question flashcard={flashcard} />
-                </div>
-                <div className="col">{/* <Answer /> */}</div>
+                <ChapterFlashcard
+                  clickHandler={clickHandler}
+                  flashcard={flashcard}
+                />
               </div>
             );
           }

@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar/Navbar";
 import BookModifier from "./pages/Books/BookModifier/BookModifier";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
-import FlashCards from "./pages/FlashCards/FlashCardAdder";
 import ErrorPage from "./pages/Error";
 import Navigation from "./components/Navigation/Navigation";
 
@@ -29,7 +28,6 @@ const App = (props: Props) => {
             path="/chaptermodifier/:bookID/:chapterID"
             element={<ChapterModifier />}
           /> */}
-          <Route path="/flashcards" element={<FlashCards />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <footer>{/* <Navigation /> */}</footer>

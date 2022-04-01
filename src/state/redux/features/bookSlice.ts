@@ -6,6 +6,7 @@ import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
 import { LM_Flashcard } from "../../../types/flashcards/flashcard";
+import Flashcard from '../../../../build/classes/Flashcard';
 
 interface LM_InitialState {
     books: {
@@ -30,7 +31,14 @@ interface LM_InitialState {
     selectedChapter: {
         chapter: null | LM_Chapter;
         chapter_id: null | string;
+        /**
+         * The flashcard that is being edited
+         */
         selectedFlashcard: null | LM_Flashcard;
+        /**
+         * The new flashcard that is about to be added
+         */
+        newFlashcard: LM_Flashcard;
     },
     /**
      * Decides if we open the modal in BooksViewer
@@ -57,7 +65,8 @@ const initialState: LM_InitialState = {
     selectedChapter: {
         chapter: null,
         chapter_id: null,
-        selectedFlashcard: null
+        selectedFlashcard: null,
+        newFlashcard: new Flashcard()
     },
     openBooksViewerModal: false,
     openChapterModifierModal: false
@@ -204,8 +213,16 @@ export const bookSlice = createSlice({
             state.selectedChapter.chapter = action.payload.chapter;
             state.selectedChapter.chapter_id = action.payload.chapter.chapter_id;
         },
-
-        // ANCHOR flashcard
+        /**
+         * Changes newFlashcard
+         * newFlashcard is the flashcard that we want to add
+         * newFlashcard != selectedFlashcard
+         * @param state 
+         * @param action 
+         */
+        changeNewFlashcard: (state, action: PayloadAction<LM_Flashcard>) => {
+            state.selectedChapter.newFlashcard = action.payload;
+        },
         /**
          * Changes the selected flashcard in the store
          * @param state 
@@ -266,6 +283,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard, changeNewFlashcard } = bookSlice.actions;
 
 export default bookSlice.reducer; 

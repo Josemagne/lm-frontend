@@ -6,7 +6,6 @@ import LM_Chapter from "../../../../../types/Book/chapter";
 import { useFormik } from "formik";
 import { nanoid } from "nanoid";
 import useAppSelector from "../../../../../hooks/useAppSelector";
-import { boolean } from "yup/lib/locale";
 import Server from "../../../../../services/Server";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import {
@@ -16,22 +15,21 @@ import {
   updateBook,
 } from "../../../../../state/redux/features/bookSlice";
 import Chapter from "../../../../../classes/Chapter";
+import Flashcard from "../../../../../classes/Flashcard";
 
 type Props = {
   book_id: string;
 };
 
 const ChapterAdder = ({ book_id }: Props) => {
+  const [currentID, setCurrentID] = useState(nanoid());
   const dispatch = useAppDispatch();
   /* STATE */
 
   const _book = useAppSelector((state) => state.books.selectedBook.book);
 
-  const chapterID = nanoid();
-  const flashcardID = nanoid();
-
-  const initialValues: LM_Chapter = {
-    chapter_id: chapterID,
+  let initialValues: LM_Chapter = {
+    chapter_id: nanoid(),
     book_id: _book.book_id,
     title: "",
     importance: 50,
@@ -46,11 +44,7 @@ const ChapterAdder = ({ book_id }: Props) => {
     isSubchapter: false,
     index: "",
     flashcards: {
-      flashcardID: {
-        flashcard_id: flashcardID,
-        question: [{ children: [{ text: "" }] }],
-        answer: [{ children: [{ text: "" }] }],
-      },
+      [currentID]: new Flashcard(currentID),
     },
   };
 
@@ -59,6 +53,8 @@ const ChapterAdder = ({ book_id }: Props) => {
     onSubmit: async (values, { resetForm, setSubmitting }) => {
       values.book_id = _book.book_id;
       values.chapter_id = nanoid();
+      console.log("v: ", values);
+
       // Add locally
       // redux
       if (!_book) return;
@@ -74,6 +70,10 @@ const ChapterAdder = ({ book_id }: Props) => {
       await Server.addChapter(values);
       // Completes submission cycle
       resetForm();
+      delete formik.values.flashcards[currentID];
+      let id = nanoid();
+      formik.values.flashcards[id] = new Flashcard(id);
+      setCurrentID(id);
       setSubmitting(false);
     },
     validate: () => {},

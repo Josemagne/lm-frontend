@@ -8,7 +8,10 @@ class Flashcard implements LM_Flashcard {
     answer: Descendant[] = [{ children: [{ text: "" }] }]
 
 
-    constructor(question?: Descendant[], answer?: Descendant[]) {
+    constructor(flashcard_id?: string, question?: Descendant[], answer?: Descendant[]) {
+        if (flashcard_id) {
+            this.flashcard_id = flashcard_id;
+        }
         if (question) {
             this.question = question
         }
