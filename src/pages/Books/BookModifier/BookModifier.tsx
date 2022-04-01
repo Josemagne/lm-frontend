@@ -1,22 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import BookTitle from "./SubComponents/BookTitle/BookTitle";
 import BookPages from "./SubComponents/BookPages/BookPages";
 import Adder from "../../../components/helpers/Adder/Adder";
-import BookImage from "./SubComponents/BookImage/BookImage";
 import Book from "../../../storage/indexedDB/Book";
-import * as yup from "yup";
-import Server from "../../../services/Server";
-import { LM_Book } from "../../../types/Book/book";
-import { useFormik, FormikProps, Formik, Form } from "formik";
-import BookProgress from "./SubComponents/BookProgress/BookProgress";
+import { useFormik } from "formik";
 import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
-import { string } from "yup/lib/locale";
-import { useDispatch } from "react-redux";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
 import Metadata from "../../../utils/Metadata";
-import useAppSelector from "../../../hooks/useAppSelector";
-import { Modal } from "rsuite";
 import { addBook } from "../../../state/redux/features/bookSlice";
 
 type Props = {};

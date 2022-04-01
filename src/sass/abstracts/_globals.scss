@@ -50,3 +50,18 @@ body {
 .invinsible {
   display: none;
 }
+
+// NOTE makes the modal from bootstrap full width
+.modal-dialog {
+  width: 100vw;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  height: auto;
+  min-height: 100vh;
+  min-width: 100vw;
+  border-radius: 0;
+}

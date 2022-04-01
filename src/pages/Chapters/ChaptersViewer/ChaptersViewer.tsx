@@ -13,18 +13,22 @@ const ChaptersViewer = ({}: Props) => {
   const bookID = window.location.href.split("/").pop();
   if (!bookID) return <p>No book selected</p>;
 
-  const book = useAppSelector((state) => state.books.selectedBook.book);
+  const selectedChapter = useAppSelector(
+    (state) => state.books.selectedChapter
+  );
   const chapters = useAppSelector(
     (state) => state.books.selectedBook.book.chapters
   );
 
-  const openChapterModiferModal = useAppSelector(
+  const openChapterModifierModal = useAppSelector(
     (state) => state.books.openChapterModifierModal
   );
 
-  useEffect(() => {}, [book.chapters]);
+  console.log("open???", openChapterModifierModal);
 
-  useEffect(() => {}, [openChapterModiferModal]);
+  useEffect(() => {}, [chapters, selectedChapter]);
+
+  useEffect(() => {}, [openChapterModifierModal]);
   useEffect(() => {}, []);
 
   return (
@@ -49,7 +53,7 @@ const ChaptersViewer = ({}: Props) => {
           </div>
         )}
       </div>
-      {openChapterModiferModal ? <ChapterModifier /> : null}
+      {selectedChapter.chapter ? <ChapterModifier /> : null}
     </div>
   );
 };

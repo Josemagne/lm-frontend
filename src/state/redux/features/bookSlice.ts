@@ -219,9 +219,9 @@ export const bookSlice = createSlice({
         toggleBooksViewerModal: (state, action) => {
             state.openBooksViewerModal = !state.openBooksViewerModal;
         },
-        toggleChapterModiferModal: (state, action) => {
+        toggleChapterModifierModal: (state, action) => {
             state.openChapterModifierModal = !state.openChapterModifierModal;
-
+            console.log(state.openChapterModifierModal)
         },
 
     },
@@ -266,6 +266,6 @@ export const bookSlice = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModiferModal, changeSelectedFlashCard } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard } = bookSlice.actions;
 
 export default bookSlice.reducer; 

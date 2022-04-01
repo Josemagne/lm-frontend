@@ -13,18 +13,15 @@ import {
   changeSelectedBook,
   changeSelectedChapter,
   removeSelectedChapter,
+  toggleChapterModifierModal,
   updateBook,
 } from "../../../state/redux/features/bookSlice";
-import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
 import AddPictures from "../../../components/AddPictures/AddPictures";
 import ChapterKeywords from "./SubComponents/ChapterBody/ChapterKeywords/ChapterKeywords";
 import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary";
 import Book from "../../../storage/indexedDB/Book";
 import Server from "../../../services/Server";
-import Return from "../../../components/Navigation/SubComponents/Return/Return";
-import { Modal } from "rsuite";
-import { nanoid } from "nanoid";
-import Metadata from "../../../utils/Metadata";
+import { Modal } from "react-bootstrap";
 
 type Props = {};
 
@@ -33,10 +30,6 @@ const ChapterModifier = (props: Props) => {
    * Dispatches action creator to the store
    */
   const dispatch = useAppDispatch();
-  /**
-   * Lets us navigate throught the pages
-   */
-  const navigate = useNavigate();
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
   const chapter = useAppSelector((state) => state.books.selectedChapter);
@@ -53,15 +46,12 @@ const ChapterModifier = (props: Props) => {
   };
 
   const submitHandler = async () => {
-    console.log("book when we dispatch it: ", book);
     dispatch(updateBook(book));
     // Add to indexedDB
     await Book.updateBook(book.book_id, book);
 
     // Add to server
     await Server.updateBook(book);
-
-    console.log("Updated the chapter");
   };
 
   /**
@@ -69,56 +59,57 @@ const ChapterModifier = (props: Props) => {
    */
   const handleClose = () => {
     // Metadata.addUnsynchronizedBook(book);
+    dispatch(toggleChapterModifierModal(""));
     dispatch(removeSelectedChapter(""));
   };
 
-  useEffect(() => {}, [openChapterModifierModal]);
+  useEffect(() => {
+    console.log("open?: ", openChapterModifierModal);
+    console.log("chapter: ", chapter);
+  }, [openChapterModifierModal]);
   useEffect(() => {}, [book, chapter]);
 
   useEffect(() => {}, []);
 
   return (
-    <div className="lm-page lm-chaptermodifier">
-      <Modal
-        overflow={true}
-        open={openChapterModifierModal}
-        onClose={handleClose}
-        full={true}
+    <Modal
+      show={chapter.chapter ? true : false}
+      onHide={handleClose}
+      className="lm-chaptermodifier"
+    >
+      {chapter && book ? (
+        <>
+          {/* TODO Move to its own File */}
+          <div className="lm-chapterheader">
+            <ChapterTitle />
+            {/* @ts-ignore */}
+            {/* TODO Correct */}
+            {/* <ChapterState changeHandler={changeHandler} /> */}
+            <Adder type="button" text={"+"} clickHandler={submitHandler} />
+          </div>
+          <div className="lm-chapterbody">
+            <ChapterSummary
+              entity={{ ...book }}
+              chapterIndex={chapter.chapterIndex}
+              changeHandler={changeHandler}
+              // @ts-ignore
+              chpaterId={chapter.chapter.chapter_id}
+            />
+            {/* <ChapterFlashcards /> */}
+            <ChapterKeywords />
+            <AddPictures />
+            {/* TODO Subchapters */}
+          </div>
+          <div className="lm-chapterfooter"></div>
+        </>
+      ) : null}
+      <button
+        className="btn btn-danger lm-chaptermodifier__close"
+        onClick={handleClose}
       >
-        {chapter && book ? (
-          <>
-            {/* TODO Move to its own File */}
-            <div className="lm-chapterheader">
-              <ChapterTitle />
-              {/* @ts-ignore */}
-              {/* TODO Correct */}
-              {/* <ChapterState changeHandler={changeHandler} /> */}
-              <Adder type="button" text={"+"} clickHandler={submitHandler} />
-            </div>
-            <div className="lm-chapterbody">
-              <ChapterSummary
-                entity={{ ...book }}
-                chapterIndex={chapter.chapterIndex}
-                changeHandler={changeHandler}
-                // @ts-ignore
-                chpaterId={chapter.chapter.chapter_id}
-              />
-              {/* <ChapterFlashcards /> */}
-              <ChapterKeywords />
-              <AddPictures />
-              {/* TODO Subchapters */}
-            </div>
-            <div className="lm-chapterfooter"></div>
-          </>
-        ) : null}
-        <button
-          className="btn btn-danger lm-chaptermodifier__close"
-          onClick={handleClose}
-        >
-          x
-        </button>
-      </Modal>
-    </div>
+        x
+      </button>
+    </Modal>
   );
 };
 

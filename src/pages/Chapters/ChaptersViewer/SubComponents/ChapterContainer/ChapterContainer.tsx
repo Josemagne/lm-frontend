@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 import LM_Chapter from "../../../../../types/Book/chapter";
-import { useLiveQuery } from "dexie-react-hooks";
-import { useNavigate } from "react-router";
 import Book from "../../../../../storage/indexedDB/Book";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import Server from "../../../../../services/Server";
 import {
   changeSelectedChapter,
   deleteChapter,
+  toggleChapterModifierModal,
 } from "../../../../../state/redux/features/bookSlice";
 
 type Props = {
@@ -37,9 +36,8 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
         chapter_id: chapter.chapter_id,
       })
     );
-    // navigate(`/chaptermodifier/${book_id}/${chapter.chapter_id}`, {
-    //   replace: true,
-    // });
+    dispatch(toggleChapterModifierModal(""));
+    console.log("clicked");
   };
 
   const removeChapter = async (e: any) => {
