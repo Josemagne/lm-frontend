@@ -16,6 +16,7 @@ const BookSelector = (props: Props) => {
   const [titles, setTitles] = useState<string[]>([]);
   const dispatch = useAppDispatch();
 
+  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
   const books = useAppSelector((state) => state.books.books.books);
   if (!books)
     return (
@@ -38,7 +39,7 @@ const BookSelector = (props: Props) => {
     setTitles(_titles);
   }
 
-  if (titles.length < 1) {
+  if (!titles.length < 1) {
     getTitles(Object.values(books));
   }
 
@@ -59,13 +60,12 @@ const BookSelector = (props: Props) => {
     setSelectedBook(JSON.parse(JSON.stringify(selectedBook.book_id)));
   };
 
-  useEffect(() => {
-    console.log(books);
-  }, []);
+  useEffect(() => {}, [selectedBook]);
 
   return (
     <div className="lm-lc-bookselector">
-      {books ? (
+      {selectedBook ? <h3>{selectedBook.title}</h3> : <h3>No Book selected</h3>}
+      {titles ? (
         //   @ts-ignore
         <AutoComplete data={titles} onChange={(v) => changeHandler(v)} />
       ) : null}
