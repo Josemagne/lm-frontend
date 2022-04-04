@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit"
 import { LM_Book } from "../../../types/Book/book"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Server from '../../../services/Server';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
 import { LM_Flashcard } from "../../../types/flashcards/flashcard";
-import Flashcard from '../../../../build/classes/Flashcard';
+import Flashcard from "../../../classes/Flashcard";
 
 interface LM_InitialState {
     books: {
@@ -128,10 +128,12 @@ export const bookSlice = createSlice({
          */
         addChapter: (state, action: PayloadAction<{ chapter: LM_Chapter, book_id: string }>) => {
             /* BOOKS */
+            // @ts-ignore
             state.books.books[action.payload.book_id].chapters[action.payload.chapter.chapter_id] = action.payload.chapter;
 
             /* SELECTEDBOOK */
             if (!state.selectedBook.book) return;
+            // @ts-ignore
             state.selectedBook.book.chapters[action.payload.book_id] = action.payload.chapter;
 
         },
@@ -150,10 +152,10 @@ export const bookSlice = createSlice({
          */
         deleteChapter: (state, action: PayloadAction<{ chapter_id: string, book_id: string }>) => {
 
-            /* Book */
 
             /* selectedBook */
             if (!state.selectedBook.book) return;
+            // @ts-ignore
             delete state.selectedBook.book.chapters[action.payload.chapter_id]
 
         },
@@ -207,11 +209,26 @@ export const bookSlice = createSlice({
             // if (!previousChapterID) return;
             // delete state.selectedBook.book.chapters[previousChapterID];
 
-            state.selectedBook.book.chapters[chapter.chapter_id] = chapter;
+            // state.selectedBook.book.chapters[chapter.chapter_id] = chapter;
 
             /* selectedChapter */
             state.selectedChapter.chapter = action.payload.chapter;
             state.selectedChapter.chapter_id = action.payload.chapter.chapter_id;
+        },
+        /**
+         * 
+         * @param state 
+         * @param action 
+         */
+        addFlashcard: (state, action: PayloadAction<LM_Flashcard>) => {
+            const flashcard = action.payload;
+
+            const selectedBook = state.selectedBook.book;
+            const selectedChapter = state.selectedChapter.chapter;
+            const selectedFlashcard = state.selectedChapter.selectedFlashcard;
+
+
+
         },
         /**
          * Changes newFlashcard

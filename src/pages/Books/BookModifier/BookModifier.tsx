@@ -9,6 +9,8 @@ import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
 import Metadata from "../../../utils/Metadata";
 import { addBook } from "../../../state/redux/features/bookSlice";
+import { LM_Book } from "../../../types/Book/book";
+import { Descendant } from "slate";
 
 type Props = {};
 
@@ -21,7 +23,7 @@ const BookModifier = (props: Props) => {
   /* STATE */
   const dispatch = useAppDispatch();
 
-  function getInitialValues() {
+  function getInitialValues(): LM_Book {
     return {
       author: "",
       book_id: nanoid(),
@@ -33,7 +35,8 @@ const BookModifier = (props: Props) => {
       chapters: {},
       rate: 3,
       isPercentage: false,
-      contents: {},
+      contents: [{ children: [{ text: "" }] }],
+      chaptersIndexing: {},
     };
   }
 

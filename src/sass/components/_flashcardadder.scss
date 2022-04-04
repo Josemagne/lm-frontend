@@ -1,8 +1,17 @@
 .lm-gc-flashcardadder {
   border: 1px solid rgba(0, 0, 0, 0.785) !important;
+  display: flex;
+  justify-content: center;
+
+  .lm-gc-flashcardadder__question {
+  }
+
+  .lm-gc-flashcardadder__answer {
+  }
 
   .lm-gc-flashcardadder__button {
     background-color: red;
     color: white;
+    font-weight: bolder;
   }
 }

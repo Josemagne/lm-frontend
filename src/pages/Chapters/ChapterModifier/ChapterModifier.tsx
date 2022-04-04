@@ -23,6 +23,7 @@ import Book from "../../../storage/indexedDB/Book";
 import Server from "../../../services/Server";
 import { Modal } from "react-bootstrap";
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
+import "react-quill/dist/quill.snow.css";
 
 type Props = {};
 
@@ -86,7 +87,6 @@ const ChapterModifier = (props: Props) => {
             {/* @ts-ignore */}
             {/* TODO Correct */}
             {/* <ChapterState changeHandler={changeHandler} /> */}
-            <Adder type="button" text={"+"} clickHandler={submitHandler} />
           </div>
           <div className="lm-chapterbody">
             <ChapterSummary
@@ -97,11 +97,19 @@ const ChapterModifier = (props: Props) => {
               chpaterId={chapter.chapter.chapter_id}
             />
             <ChapterFlashcards />
-            <ChapterKeywords />
-            <AddPictures />
+            {/* <ChapterKeywords /> */}
+            {/* <AddPictures /> */}
             {/* TODO Subchapters */}
           </div>
-          <div className="lm-chapterfooter"></div>
+          <div className="lm-chapterfooter">
+            <button
+              type="button"
+              onClick={submitHandler}
+              className="lm-chaptermodifier__adder"
+            >
+              +
+            </button>
+          </div>
         </>
       ) : null}
       <button

@@ -37,16 +37,14 @@ const ChapterTitle = ({}: Props) => {
 
   return (
     <div className="lm-chaptertitle">
-      <Form>
-        <FloatingLabel controlId="chapter" label="Kapitel">
-          <Form.Control
-            defaultValue={chapter.title}
-            type="text"
-            placeholder="Kapitel"
-            onChange={(e) => handleChange(e.target.value)}
-          />
-        </FloatingLabel>
-      </Form>
+      <FloatingLabel controlId="chapter" label="Kapitel">
+        <Form.Control
+          defaultValue={chapter.title}
+          type="text"
+          placeholder="Kapitel"
+          onChange={(e) => handleChange(e.target.value)}
+        />
+      </FloatingLabel>
     </div>
   );
 };

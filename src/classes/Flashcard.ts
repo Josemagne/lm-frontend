@@ -4,11 +4,11 @@ import { nanoid } from 'nanoid';
 
 class Flashcard implements LM_Flashcard {
     flashcard_id: string = nanoid();
-    question: Descendant[] = [{ children: [{ text: "" }] }];
-    answer: Descendant[] = [{ children: [{ text: "" }] }]
+    question: string = "";
+    answer: string = "";
 
 
-    constructor(flashcard_id?: string, question?: Descendant[], answer?: Descendant[]) {
+    constructor(flashcard_id?: string, question?: string, answer?: string) {
         if (flashcard_id) {
             this.flashcard_id = flashcard_id;
         }

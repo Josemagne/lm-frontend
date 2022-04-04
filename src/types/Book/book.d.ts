@@ -1,5 +1,7 @@
+import { string } from "yup";
 import type LM_Chapter from "./chapter";
 import { LM_Book_Contents } from "./contents";
+import { Descendant } from 'slate';
 
 export declare interface LM_Book {
     /**
@@ -18,7 +20,7 @@ export declare interface LM_Book {
     /**
      * Number of pages
      */
-    contents: LM_Book_Contents;
+    contents: Descendant[];
     pages: number;
     /**
      * Decides if the book is finished
@@ -30,7 +32,13 @@ export declare interface LM_Book {
     progress: number;
     chapters: {
         [id: string]: LM_Chapter;
-    };
+    } | null;
+    /**
+     * Mapping of the chapter's index to its id
+     */
+    chaptersIndexing: {
+        [index: string]: string;
+    }
     summary: string;
     /**
      * Number between 1 and 5 for stars.

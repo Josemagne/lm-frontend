@@ -14,7 +14,7 @@ class Chapter implements LM_Chapter {
     toRead: boolean;
     read: boolean = false;
     importance: number;
-    summary: Descendant[];
+    summary: string;
     flashcards: {};
     started: Date | null;
     ended: Date | null;
@@ -26,13 +26,14 @@ class Chapter implements LM_Chapter {
 
 
     constructor(
+        chapter_id: string,
         book_id: string,
         title: string,
         toRead: boolean,
         isSubchapter: boolean,
         read: boolean,
         importance: number,
-        summary: Descendant[],
+        summary: string,
         subchapters?: string[],
         started?: Date | null,
         ended?: Date | null,

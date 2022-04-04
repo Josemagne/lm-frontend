@@ -4,10 +4,10 @@ export declare interface LM_Flashcard {
     /**
      * HTML string with question
      */
-    question: Descendant[];
+    question: string;
     /**
      * HTML string with answer
      */
-    answer: Descendant[];
+    answer: string;
 
 }

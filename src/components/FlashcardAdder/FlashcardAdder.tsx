@@ -1,9 +1,18 @@
 import { useEffect } from "react";
-import useAppDispatch from "../../../build/hooks/useAppDispatch";
-import useAppSelector from "../../../build/hooks/useAppSelector";
+
+import Flashcard from "../../classes/Flashcard";
+import {
+  changeNewFlashcard,
+  changeSelectedBook,
+  changeSelectedChapter,
+} from "../../state/redux/features/bookSlice";
+import Book from "../../storage/indexedDB/Book";
 import { LM_Book } from "../../types/Book/book";
 import Answer from "../FlashCard/SubComponents/Answer/Answer";
 import Question from "../FlashCard/SubComponents/Question/Question";
+import LM_Chapter from "../../types/Book/chapter";
+import useAppDispatch from "../../hooks/useAppDispatch";
+import useAppSelector from "../../hooks/useAppSelector";
 
 type Props = {};
 
@@ -26,14 +35,33 @@ const FlashcardAdder = (props: Props) => {
   /**
    * Changes the book with the new flashcard
    */
-  function submitHandler() {
+  async function submitHandler() {
+    const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(selectedChapter));
+    chapterCopy.flashcards[newFlashcard.flashcard_id] = newFlashcard;
+
     const bookCopy: LM_Book = JSON.parse(JSON.stringify(selectedBook));
-    bookCopy.chapters[selectedChapter.chapter_id].flashcards[
-      newFlashcard.flashcard_id
-    ] = newFlashcard;
+
+    // @ts-ignore
+    bookCopy.chapters[chapterCopy.chapter_id] = chapterCopy;
+
+    // Add a new Flashcard
+    const flashcard = new Flashcard();
+    dispatch(changeNewFlashcard(flashcard));
+    dispatch(changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id }));
+
+    // indexedDB
+    await Book.addFlashcard(
+      bookCopy.book_id,
+      selectedChapter.chapter_id,
+      newFlashcard
+    );
+
+    // TODO server
   }
 
-  useEffect(() => {}, [newFlashcard]);
+  useEffect(() => {
+    console.log("newFlashcard: ", newFlashcard);
+  }, [newFlashcard]);
 
   return (
     <div className="lm-gc-flashcardadder">

@@ -3,7 +3,7 @@ import { LM_Book } from '../../types/Book/book';
 import { nanoid } from 'nanoid';
 import { useLiveQuery } from 'dexie-react-hooks';
 import LM_Chapter from '../../types/Book/chapter';
-import { Descendant } from 'slate';
+import { LM_Flashcard } from '../../types/flashcards/flashcard';
 
 /**
  * Class for book
@@ -95,9 +95,9 @@ export default class Book {
 
         console.log("got bokk from indexedDB: ", book)
 
-        if (!book) return;
+        if (!book || !book.chapters) return;
 
-        // Push the new chapter in the book
+        // Push the new chapter into the book
         book.chapters[chapter.chapter_id] = chapter;
 
         console.log("Calling Book.updateBook()")
@@ -121,7 +121,7 @@ export default class Book {
     public static removeChapter = async (chapter_id: string, book_id: string): Promise<any> => {
         const book = await this.getBook(book_id)
 
-        if (!book) return;
+        if (!book || !book.chapters) return;
 
         delete book.chapters[chapter_id];
 
@@ -130,16 +130,55 @@ export default class Book {
     }
 
     // ANCHOR summary
-    public static changeSummary = async (bookId: string, chapterId: string, summary: Descendant[]): Promise<any> => {
+    public static changeSummary = async (bookId: string, chapterId: string, summary: string): Promise<any> => {
         // Get book
         const book = await books.books.get(bookId);
 
-        if (!book) return;
+        if (!book || !book.chapters || !book.chapters[chapterId].summary) return;
 
         book.chapters[chapterId].summary = summary;
 
         // Update book
         this.updateBook(bookId, book);
+    }
+
+
+    // ANCHOR flashcard
+
+    public static addFlashcard = async (bookId: string, chapterId: string, flashcard: LM_Flashcard): Promise<any> => {
+        const book = await books.books.get(bookId)
+
+        if (!book || !book.chapters || !book.chapters[chapterId].flashcards) return;
+
+        book.chapters[chapterId].flashcards[flashcard.flashcard_id] = flashcard;
+
+        await this.updateBook(book.book_id, book);
+
+        return "success!";
+    }
+
+    public static updateFlashcard = async (bookId: string, chapterId: string, flashcard: LM_Flashcard): Promise<any> => {
+        const book = await books.books.get(bookId)
+
+        if (!book || !book.chapters || !book.chapters[chapterId].flashcards) return;
+
+        book.chapters[chapterId].flashcards[flashcard.flashcard_id] = flashcard;
+
+        await this.updateBook(book.book_id, book);
+
+        return "success!";
+    }
+
+    public static removeFlashcard = async (bookId: string, chapterId: string, flashcard_id: string): Promise<any> => {
+        const book = await this.getBook(bookId);
+
+        if (!book || !book.chapters || !book.chapters[chapterId].flashcards) return;
+
+        delete book.chapters[chapterId].flashcards[flashcard_id];
+
+        await this.updateBook(book.book_id, book);
+
+        return "success!";
     }
 
 }

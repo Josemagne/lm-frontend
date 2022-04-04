@@ -1,4 +1,7 @@
 .lm-chaptercontainer {
+  position: relative;
+  display: flex;
+
   width: fit-content;
   min-width: 300px;
   max-width: 992px;
@@ -9,14 +12,56 @@
   margin-right: 1rem;
   margin-left: 1rem;
   padding: 2rem;
-  background-color: rgb(89, 174, 89);
-  position: relative;
+  box-shadow: 10px 10px 5px rgb(231, 227, 227);
+
+  font-weight: bold !important;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media screen and (min-width: 576px) {
+  }
+
+  .lm-chaptercontainer__index {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .lm-chaptercontainer__seperator {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .lm-chaptercontainer__title {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
   .lm-deletebutton {
     position: absolute;
-    right: 0;
-  }
-}
+    right: 0.5rem;
+    top: 0.5rem;
+    background-color: rgb(226, 77, 77);
+    padding: 1rem;
+    width: 1ch;
+    height: 1ch;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.lm-chaptercontainer:hover {
-  cursor: pointer;
+    button {
+      background-color: transparent;
+    }
+
+    &:hover {
+      background-color: white;
+    }
+  }
 }

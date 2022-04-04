@@ -60,7 +60,15 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
 
   return (
     <div className="lm-chaptercontainer" onClick={handleClick}>
-      <p>{chapter.title}</p>
+      <div className="lm-chaptercontainer__index">
+        <p>{chapter.index}</p>
+      </div>
+      <div className="lm-chaptercontainer__seperator">
+        <p>-</p>
+      </div>
+      <div className="lm-chaptercontainer__title">
+        <p>{chapter.title}</p>
+      </div>
       {/* TODO */}
       <div className="lm-deletebutton" onClick={(e) => removeChapter(e)}>
         <button>x</button>

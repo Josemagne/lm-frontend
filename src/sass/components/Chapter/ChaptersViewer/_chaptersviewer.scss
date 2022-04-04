@@ -3,33 +3,11 @@
     "lm-chapteradder"
     "lm-chapters";
 
+  background-color: rgb(246, 240, 240);
+
   .lm-chapters {
     grid-area: lm-chapters;
     display: flex;
     flex-wrap: wrap;
-
-    .lm-chaptercontainer {
-      display: grid;
-
-      // grid-template-areas: "" ;
-      .lm-deletebutton {
-        background-color: rgb(226, 77, 77);
-        padding: 1rem;
-        width: 1ch;
-        height: 1ch;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        button {
-          background-color: transparent;
-        }
-
-        &:hover {
-          background-color: white;
-        }
-      }
-    }
   }
 }

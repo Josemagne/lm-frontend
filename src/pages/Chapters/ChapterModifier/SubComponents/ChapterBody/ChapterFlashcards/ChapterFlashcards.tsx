@@ -32,10 +32,12 @@ const ChapterFlashcards = (props: Props) => {
    */
   const clickHandler = (flashcard_id: string) => {
     const selectedFlashcard = chapter.flashcards[flashcard_id];
-    dispatch(changeSelectedFlashCard);
+    dispatch(changeSelectedFlashCard(selectedFlashcard));
   };
 
-  useEffect(() => {}, [chapter]);
+  useEffect(() => {
+    console.log("v: ", chapter.flashcards);
+  }, [chapter]);
   return (
     <div className="lm-chaptermodifier__flashcards mt-3">
       <div className="container">

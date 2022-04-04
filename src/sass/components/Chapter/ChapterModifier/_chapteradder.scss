@@ -21,18 +21,20 @@
   }
 
   .lm-chapteradder__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     align-self: flex-end;
+    margin-bottom: auto;
+    margin-top: auto;
     width: 4rem;
     min-width: 4rem;
     max-width: 5%;
     min-height: 2.5rem;
     max-height: 3rem;
-    border-radius: 50% !important;
+    border-radius: 5px !important;
     background-color: blue;
     font-weight: bolder;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     div {
       font-weight: bolder;
       color: white;

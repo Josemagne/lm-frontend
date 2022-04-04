@@ -1,16 +1,17 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useRef } from "react";
 import { LM_Book } from "../../../../../../types/Book/book";
 import { useEffect } from "react";
 import LM_Chapter from "../../../../../../types/Book/chapter";
-import { Editable, Slate, withReact } from "slate-react";
 import { Descendant, createEditor } from "slate";
 import {
   changeChapterSummary,
   changeSelectedBook,
+  changeSelectedChapter,
 } from "../../../../../../state/redux/features/bookSlice";
 import useAppSelector from "../../../../../../hooks/useAppSelector";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import { Card, Container } from "react-bootstrap";
+import ReactQuill from "react-quill";
 
 type Props = {
   changeHandler: (book: LM_Book) => void;
@@ -25,10 +26,10 @@ const ChapterSummary = ({
   chapterId,
   chapterIndex,
 }: Props) => {
-  const [value, setValue] = useState<Descendant[]>();
+  const editorRef = useRef(null);
+  const [value, setValue] = useState<string>("");
   const dispatch = useAppDispatch();
   // @ts-ignore
-  const editor = useMemo(() => withReact(createEditor()), []);
 
   const chapter = useAppSelector(
     (state) => state.books.selectedChapter.chapter
@@ -36,32 +37,44 @@ const ChapterSummary = ({
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
 
-  const handleChange = (v: Descendant[]) => {
+  const handleChange = (v: string) => {
+    setValue(v);
     const bookCopy: LM_Book = JSON.parse(JSON.stringify(book));
+    const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(chapter));
+    chapterCopy.summary = v;
+    // @ts-ignore
     bookCopy.chapters[chapter.chapter_id].summary = v;
     dispatch(changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id }));
+    dispatch(
+      changeSelectedChapter({
+        chapter_id: chapter.chapter_id,
+        chapter: chapterCopy,
+      })
+    );
   };
 
+  useEffect(() => {
+    setValue(chapter.summary);
+  }, []);
   useEffect(() => {}, [chapter.summary]);
   return (
     <div className="lm-chaptermodifier__summary">
-      <Container>
+      <Container
+        onClick={() => {
+          // @ts-ignore
+          editorRef.current.focus();
+        }}
+      >
         <Card>
-          <Card.Header>Summary</Card.Header>
-          <Card.Body>
-            <div className="lm-textcontainer">
-              {/* @ts-ignore */}
-              {chapter ? (
-                <Slate
-                  editor={editor}
-                  value={chapter.summary}
-                  onChange={(v) => handleChange(v)}
-                >
-                  <Editable />
-                </Slate>
-              ) : null}
-            </div>
-          </Card.Body>
+          <Card.Title>Summary</Card.Title>
+          <div className="lm-textcontainer">
+            <ReactQuill
+              ref={editorRef}
+              defaultValue={chapter.summary}
+              value={value}
+              onChange={(v) => handleChange(v)}
+            />
+          </div>
         </Card>
       </Container>
     </div>

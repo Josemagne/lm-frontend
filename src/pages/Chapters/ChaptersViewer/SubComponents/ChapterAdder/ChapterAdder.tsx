@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { LM_Book } from "../../../../../types/Book/book";
 import Book from "../../../../../storage/indexedDB/Book";
@@ -28,29 +28,18 @@ const ChapterAdder = ({ book_id }: Props) => {
 
   const _book = useAppSelector((state) => state.books.selectedBook.book);
 
-  let initialValues: LM_Chapter = {
-    chapter_id: nanoid(),
-    book_id: _book.book_id,
-    title: "",
-    importance: 50,
-    read: false,
-    summary: [{ children: [{ text: "" }] }],
-    toRead: false,
-    subchapters: [],
-    ended: null,
-    started: null,
-    degree: null,
-    parentChapter: null,
-    isSubchapter: false,
-    index: "",
-    flashcards: {
-      [currentID]: new Flashcard(currentID),
-    },
-  };
-
   const formik = useFormik({
-    initialValues: initialValues,
-    onSubmit: async (values, { resetForm, setSubmitting }) => {
+    initialValues: new Chapter(
+      currentID,
+      _book.book_id,
+      "",
+      false,
+      false,
+      false,
+      0,
+      ""
+    ),
+    onSubmit: async (values, { resetForm, setValues }) => {
       values.book_id = _book.book_id;
       values.chapter_id = nanoid();
       console.log("v: ", values);
@@ -70,11 +59,21 @@ const ChapterAdder = ({ book_id }: Props) => {
       await Server.addChapter(values);
       // Completes submission cycle
       resetForm();
-      delete formik.values.flashcards[currentID];
-      let id = nanoid();
-      formik.values.flashcards[id] = new Flashcard(id);
-      setCurrentID(id);
-      setSubmitting(false);
+      setValues(() => {
+        setCurrentID(nanoid());
+        const newChapter = new Chapter(
+          currentID,
+          _book.book_id,
+          "",
+          false,
+          false,
+          false,
+          0,
+          ""
+        );
+        newChapter.chapter_id = currentID;
+        return newChapter;
+      });
     },
     validate: () => {},
   });
@@ -83,7 +82,9 @@ const ChapterAdder = ({ book_id }: Props) => {
     if (!_book) return;
   }, [_book]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setCurrentID(nanoid());
+  }, [formik.values]);
 
   return (
     <div className="lm-chapteradder">
@@ -110,14 +111,13 @@ const ChapterAdder = ({ book_id }: Props) => {
       {/* importance */}
       {/* read */}
       {/* Summary */}
-      <div className="lm-chapteradder__button">
-        <div
-          onClick={() => {
-            formik.handleSubmit();
-          }}
-        >
-          +
-        </div>
+      <div
+        className="lm-chapteradder__button"
+        onClick={() => {
+          formik.handleSubmit();
+        }}
+      >
+        <div>+</div>
       </div>
 
       {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}

@@ -1,12 +1,13 @@
-import React, { useMemo, useEffect } from "react";
-import { Editable, Slate, withReact } from "slate-react";
-import { createEditor, Descendant } from "slate";
+import React, { useMemo, useEffect, useRef, useState } from "react";
 import useAppDispatch from "../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../hooks/useAppSelector";
 import {
   changeNewFlashcard,
+  changeSelectedBook,
+  changeSelectedChapter,
   changeSelectedFlashCard,
 } from "../../../../state/redux/features/bookSlice";
+import ReactQuill from "react-quill";
 
 type Props = {
   /**
@@ -16,6 +17,8 @@ type Props = {
 };
 
 const Question = ({ isNew }: Props) => {
+  const [value, setValue] = useState<string>("");
+  const editorRef = useRef(null);
   const dispatch = useAppDispatch();
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
@@ -33,18 +36,15 @@ const Question = ({ isNew }: Props) => {
     (state) => state.books.selectedChapter.selectedFlashcard
   );
 
-  // @ts-ignore
-  const editor = useMemo(() => withReact(createEditor()), []);
+  const actualFlashcard = isNew ? newFlashcard : selectedFlashcard;
 
   /**
    * Either changes newFlashcard or selectedFlashcard
    * @param v
    */
-  const handleChange = (v: Descendant[]) => {
-    const bookCopy = JSON.parse(JSON.stringify(book));
-    bookCopy.chapters[chapter.chapter_id].flashcards[
-      newFlashcard.flashcard_id
-    ].question = v;
+  const handleChange = (v: string) => {
+    setValue(v);
+
     if (!isNew) {
       const selectedFlashcardCopy = JSON.parse(
         JSON.stringify(selectedFlashcard)
@@ -58,17 +58,20 @@ const Question = ({ isNew }: Props) => {
     }
   };
 
-  useEffect(() => {}, [isNew ? newFlashcard : selectedFlashcard]);
+  useEffect(() => {
+    console.log("q: ", actualFlashcard);
+    if (actualFlashcard.question) setValue(actualFlashcard.question);
+  }, [isNew ? newFlashcard : selectedFlashcard]);
 
   return (
     <div className="lm-gc-flashcard__question">
-      <Slate
-        editor={editor}
-        value={isNew ? newFlashcard.question : selectedFlashcard.question}
+      <ReactQuill
+        modules={{ toolbar: false }}
+        ref={editorRef}
+        // defaultValue={""}
+        value={value}
         onChange={(v) => handleChange(v)}
-      >
-        <Editable />
-      </Slate>
+      />
     </div>
   );
 };
