@@ -14,10 +14,10 @@ export default class Book implements LM_Book {
     progress: number;
     chapters: {
         [id: string]: LM_Chapter
-    },
-    chaptersIndexing: { [index: string]: string; };
-    summary: string;
-    rate: number;
+    } = {};
+    chaptersIndexing: { [index: string]: string; } = {};
+    summary: string = "";
+    rate: number = 1;
 
 
 
@@ -39,8 +39,6 @@ export default class Book implements LM_Book {
         this.pages = pages
         this.read = read
         this.progress = progress
-        this.summary = summary
-        this.rate = rate
     }
 
     private generateChaptersIndexing() {
