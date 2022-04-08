@@ -28,6 +28,10 @@ const App = (props: Props) => {
             path="/chaptermodifier/:bookID/:chapterID"
             element={<ChapterModifier />}
           /> */}
+          {/* TODO Add Contact */}
+          {/* TODO Add Community */}
+          {/* TODO Add Account */}
+          {/* TODO Add Settings */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <footer>{/* <Navigation /> */}</footer>

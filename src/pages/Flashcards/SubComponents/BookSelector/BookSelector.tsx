@@ -8,7 +8,7 @@ import { changeSelectedBook } from "../../../../state/redux/features/bookSlice";
 type Props = {};
 
 /**
- * Lets us select the book.
+ * Lets us select the book for the flashcards.
  * @param props
  * @returns
  */
@@ -25,6 +25,11 @@ const BookSelector = (props: Props) => {
       </div>
     );
 
+  /**
+   * Gets each title from the book and sets it int titles: string[]
+   * @param books
+   * @returns
+   */
   function getTitles(books: LM_Book[]) {
     const _books = Object.values(books);
     const _titles: string[] = [];
@@ -39,7 +44,7 @@ const BookSelector = (props: Props) => {
     setTitles(_titles);
   }
 
-  if (!titles.length < 1) {
+  if (titles.length < 1) {
     getTitles(Object.values(books));
   }
 
