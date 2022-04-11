@@ -105,7 +105,7 @@ export const fetchBooksFrontend = createAsyncThunk("books/fetchBooksFrontend", a
 //     return book;
 // })
 
-export const bookSlice = createSlice({
+export const bookSlice: Slice<LM_InitialState> = createSlice({
     name: "books",
     initialState: initialState,
     reducers: {

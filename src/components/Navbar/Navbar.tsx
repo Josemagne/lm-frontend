@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navbar as LMNBavbar, Dropdown, Nav } from "rsuite";
+import { Navbar as LMNBavbar, Dropdown } from "rsuite";
 import {
   Navbar as BNavbar,
   Offcanvas,
@@ -9,6 +9,7 @@ import {
   FormControl,
   Button,
   NavLink,
+  Nav,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
@@ -56,12 +57,7 @@ const Navbar = (props: Props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className=" d-flex ">
-                    <Nav.Item
-                      as={Link}
-                      to="/"
-                      href="/"
-                      onClick={() => setShow(false)}
-                    >
+                    <Nav.Item as={Link} to="/" onClick={() => setShow(false)}>
                       Books
                     </Nav.Item>
                     {/* <Nav.Item
@@ -92,7 +88,7 @@ const Navbar = (props: Props) => {
             LM
           </LMNBavbar.Brand>
           <Nav>
-            <Nav.Item as={Link} to="/" href="/">
+            <Nav.Item as={Link} to="/">
               Books
             </Nav.Item>
             {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
@@ -104,9 +100,9 @@ const Navbar = (props: Props) => {
               </Nav.Item>
             </Dropdown> */}
             {/* <Nav.Item>Coordinator</Nav.Item> */}
-            {/* <Nav.Item href="/flashcards" as={Link} to="/flashcards">
+            <Nav.Item as={Link} to="/flashcards">
               FlashCards
-            </Nav.Item> */}
+            </Nav.Item>
           </Nav>
         </LMNBavbar>
       )}

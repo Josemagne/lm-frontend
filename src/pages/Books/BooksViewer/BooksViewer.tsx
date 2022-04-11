@@ -8,7 +8,6 @@ import BookContainer from "./SubComponents/BookContainer/BookContainer";
 import ImageViewer from "./SubComponents/ImageViewer/ImageViewer";
 import BookModal from "./SubComponents/BookModal/BookModal";
 import { Panel } from "rsuite";
-import ChapterModifier from "../../Chapters/ChapterModifier/ChapterModifier";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import Metadata from "../../../utils/Metadata";
@@ -21,6 +20,11 @@ import BookModifier from "../BookModifier/BookModifier";
 
 type Props = {};
 
+/**
+ * Lists all the books
+ * @param props
+ * @returns
+ */
 const BooksViewer = (props: Props) => {
   /* STATE */
 
@@ -58,6 +62,7 @@ const BooksViewer = (props: Props) => {
 
   // only runs at the mounting
   useEffect(() => {
+    /* Fetch the books and save them in the store */
     // @ts-ignore
     dispatch(fetchBooksBackend());
     // @ts-ignore

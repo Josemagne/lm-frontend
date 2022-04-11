@@ -13,36 +13,31 @@ type Props = {
   selectedBook: LM_Book;
 };
 
+/**
+ * Shows Modal for the book
+ * @param param0
+ * @returns
+ */
 const BookModal = ({ selectedBook }: Props) => {
-  // That book that is will be displayed
-  const [open, setOpen] = useState<boolean>(true);
-
   const dispatch = useAppDispatch();
 
-  // const book = useAppSelector(
-  //   (state: RootState) => state.books.selectedBook.book
-  // );
-
-  const openChapterModiferModal = useAppSelector(
-    (state) => state.books.openChapterModifierModal
+  const openBooksViewerModal: boolean = useAppSelector(
+    (state) => state.books.openBooksViewerModal
   );
 
   const navigate = useNavigate();
 
   const handleClose = () => {
     dispatch(toggleBooksViewerModal(""));
-    setOpen(false);
   };
 
-  useEffect(() => {
-    // NOTE Clean up function
-  }, [open]);
+  useEffect(() => {}, [openBooksViewerModal]);
 
   return (
     <Modal
       className="lm-bookmodal"
       overflow={true}
-      open={open}
+      open={openBooksViewerModal}
       onClose={handleClose}
       full={true}
     >
@@ -54,15 +49,15 @@ const BookModal = ({ selectedBook }: Props) => {
           </Modal.Header>
           <Modal.Body>
             <p>pages: {selectedBook.pages}</p>
-            {/* <div
+            <div
               onClick={() => {
                 if (!selectedBook) return;
                 handleClose();
-                navigate(`flashcards/${selectedBook.book_id}`);
+                navigate(`flashcards/${selectedBook.book_title}`);
               }}
             >
               <Button>Go to flashcards</Button>
-            </div> */}
+            </div>
             <div
               onClick={() => {
                 if (!selectedBook.book_id) return;

@@ -1,9 +1,17 @@
 *,
 *::after,
 *::before {
-  font-size: 14px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+p {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
   @media screen and (min-width: 576px) {
-    font-size: 16px;
+    font-size: 14px;
   }
+}
+
+h1 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 33px;
 }
