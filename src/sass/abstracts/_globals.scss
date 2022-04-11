@@ -40,6 +40,12 @@ body {
   padding-top: 2rem;
   padding-left: 2rem;
   padding-right: 2rem;
+
+  // NOTE For lm-navbar < 576px
+  margin-top: 3rem !important;
+  @media screen and (min-width: 576px) {
+    margin-bottom: 1rem;
+  }
 }
 
 .invinsible {

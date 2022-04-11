@@ -148,8 +148,9 @@ export default class Book {
     public static addFlashcard = async (bookId: string, chapterId: string, flashcard: LM_Flashcard): Promise<any> => {
         const book = await books.books.get(bookId)
 
-        if (!book || !book.chapters || !book.chapters[chapterId].flashcards) return;
+        if (!book || !book.chapters || !book.chapters[chapterId].flashcards || !book.chapters[chapterId].flashcards) return;
 
+        // @ts-ignore
         book.chapters[chapterId].flashcards[flashcard.flashcard_id] = flashcard;
 
         await this.updateBook(book.book_id, book);
@@ -162,6 +163,7 @@ export default class Book {
 
         if (!book || !book.chapters || !book.chapters[chapterId].flashcards) return;
 
+        // @ts-ignore
         book.chapters[chapterId].flashcards[flashcard.flashcard_id] = flashcard;
 
         await this.updateBook(book.book_id, book);
@@ -174,6 +176,7 @@ export default class Book {
 
         if (!book || !book.chapters || !book.chapters[chapterId].flashcards) return;
 
+        // @ts-ignore
         delete book.chapters[chapterId].flashcards[flashcard_id];
 
         await this.updateBook(book.book_id, book);

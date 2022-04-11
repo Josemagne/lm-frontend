@@ -37,6 +37,8 @@ const FlashcardAdder = (props: Props) => {
    */
   async function submitHandler() {
     const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(selectedChapter));
+
+    // @ts-ignore
     chapterCopy.flashcards[newFlashcard.flashcard_id] = newFlashcard;
 
     const bookCopy: LM_Book = JSON.parse(JSON.stringify(selectedBook));

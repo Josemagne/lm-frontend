@@ -43,18 +43,6 @@ const ChapterFlashcards = (props: Props) => {
       <div className="container">
         <h3>Flashcards</h3>
         <FlashcardAdder />
-        {Object.values(chapter.flashcards as LM_Flashcard[]).map(
-          (flashcard) => {
-            return (
-              <div className="row">
-                <ChapterFlashcard
-                  clickHandler={clickHandler}
-                  flashcard={flashcard}
-                />
-              </div>
-            );
-          }
-        )}
       </div>
 
       <div className="lm-chaptermodifier__flashcards__question"></div>

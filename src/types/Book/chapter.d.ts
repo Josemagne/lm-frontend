@@ -1,6 +1,7 @@
 import LM_Summary from './summary';
 import { Descendant } from 'slate';
 import { LM_Flashcard } from '../flashcards/flashcard';
+import { LM_Citation } from './citation';
 export default interface LM_Chapter {
     chapter_id: string;
     /**
@@ -29,11 +30,14 @@ export default interface LM_Chapter {
     read: boolean;
     summary: string;
     /**
-     * chapter_ids of the subchapters
+     * Date when the chapter has started to be read
      */
     started: Date | null;
+    /**
+     * Date when the chapter has been read
+     */
     ended: Date | null;
-    flashcards: {
+    flashcards?: {
         [id: string]: LM_Flashcard;
     }
     /**
@@ -56,6 +60,9 @@ export default interface LM_Chapter {
      * ID of the parent chapter
      */
     parentChapter?: string | null;
+    citations?: {
+        [citation_id: string]: LM_Citation;
+    }
 
 }
 

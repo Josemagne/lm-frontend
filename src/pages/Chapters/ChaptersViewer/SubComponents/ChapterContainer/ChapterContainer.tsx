@@ -18,9 +18,6 @@ type Props = {
  * Contains the metadata about the chapter
  */
 const ChapterContainer = ({ chapter, book_id }: Props) => {
-  /**
-   * Lets us navigate to another URL
-   */
   // const navigate = useNavigate();
 
   const dispatch = useAppDispatch();

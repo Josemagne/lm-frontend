@@ -53,7 +53,7 @@ const BookModal = ({ selectedBook }: Props) => {
               onClick={() => {
                 if (!selectedBook) return;
                 handleClose();
-                navigate(`flashcards/${selectedBook.book_title}`);
+                navigate(`flashcards`);
               }}
             >
               <Button>Go to flashcards</Button>

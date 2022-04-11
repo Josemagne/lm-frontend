@@ -13,19 +13,9 @@ import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import { Card, Container } from "react-bootstrap";
 import ReactQuill from "react-quill";
 
-type Props = {
-  changeHandler: (book: LM_Book) => void;
-  entity: any;
-  chapterIndex: number;
-  chapterId: string;
-};
+type Props = {};
 
-const ChapterSummary = ({
-  changeHandler,
-  entity,
-  chapterId,
-  chapterIndex,
-}: Props) => {
+const ChapterSummary = ({}: Props) => {
   const editorRef = useRef(null);
   const [value, setValue] = useState<string>("");
   const dispatch = useAppDispatch();
@@ -55,8 +45,10 @@ const ChapterSummary = ({
 
   useEffect(() => {
     setValue(chapter.summary);
-  }, []);
-  useEffect(() => {}, [chapter.summary]);
+    console.log("chapter.summary:", chapter.summary);
+    console.log("value: ", value);
+  }, [chapter.summary]);
+  useEffect(() => {}, []);
   return (
     <div className="lm-chaptermodifier__summary">
       <Container

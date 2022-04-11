@@ -32,12 +32,12 @@ const Navbar = (props: Props) => {
   }, []);
 
   return (
-    <div className="lm-BNavbar">
+    <div className="lm-navbar">
       {width < 576 ? (
-        <div className="lm-BNavbar">
-          <BNavbar bg="light" expand={false}>
+        <>
+          <BNavbar expand={false}>
             <Container fluid>
-              <BNavbar.Brand href="#">LibriMem</BNavbar.Brand>
+              <BNavbar.Brand href="/">LibriMem</BNavbar.Brand>
               <BNavbar.Toggle
                 aria-controls="offcanvasBNavbar"
                 onClick={() => setShow(true)}
@@ -56,17 +56,21 @@ const Navbar = (props: Props) => {
                   </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                  <div className=" d-flex ">
-                    <Nav.Item as={Link} to="/" onClick={() => setShow(false)}>
-                      Books
-                    </Nav.Item>
-                    {/* <Nav.Item
-                      to="/bookmodifier"
-                      as={Link}
-                      onClick={() => setShow(false)}
-                    >
-                      Modify book
-                    </Nav.Item> */}
+                  <div className=" lm-navbar__linkscontainer ">
+                    <div className="lm-navbar__link">
+                      <Nav.Item as={Link} to="/" onClick={() => setShow(false)}>
+                        Books
+                      </Nav.Item>
+                    </div>
+                    <div className="lm-navbar__link">
+                      <Nav.Item
+                        to="/flashcards"
+                        as={Link}
+                        onClick={() => setShow(false)}
+                      >
+                        Flashcards
+                      </Nav.Item>
+                    </div>
                     {/* <Dropdown title="Other">
                       <Nav.Item
                         to="/settings"
@@ -81,7 +85,7 @@ const Navbar = (props: Props) => {
               </BNavbar.Offcanvas>
             </Container>
           </BNavbar>
-        </div>
+        </>
       ) : (
         <LMNBavbar>
           <LMNBavbar.Brand as={Link} to="/">

@@ -39,6 +39,9 @@ export declare interface LM_Book {
     chaptersIndexing: {
         [index: string]: string;
     }
+    /**
+     * The summary for the entire book
+     */
     summary: string;
     /**
      * Number between 1 and 5 for stars.

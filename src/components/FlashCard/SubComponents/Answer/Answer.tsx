@@ -58,8 +58,11 @@ const Answer = ({ isNew }: Props) => {
   };
 
   useEffect(() => {
-    console.log("a: ", actualFlashcard);
-  }, [isNew ? newFlashcard : selectedFlashcard]);
+    // When a new flashcard was added
+    if (actualFlashcard.answer === "" && value.length > 1)
+      setValue(actualFlashcard.answer as string);
+    if (actualFlashcard.answer) setValue(actualFlashcard.answer);
+  }, [actualFlashcard]);
 
   return (
     <div className="lm-gc-flashcard__question">

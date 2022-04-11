@@ -89,14 +89,9 @@ const ChapterModifier = (props: Props) => {
             {/* <ChapterState changeHandler={changeHandler} /> */}
           </div>
           <div className="lm-chapterbody">
-            <ChapterSummary
-              entity={{ ...book }}
-              chapterIndex={chapter.chapterIndex}
-              changeHandler={changeHandler}
-              // @ts-ignore
-              chpaterId={chapter.chapter.chapter_id}
-            />
+            <ChapterSummary />
             <ChapterFlashcards />
+            {/* TODO Citation */}
             {/* <ChapterKeywords /> */}
             {/* <AddPictures /> */}
             {/* TODO Subchapters */}

@@ -1,8 +1,22 @@
 .lm-navbar {
-  position: sticky;
-  bottom: 0;
+  background-color: #2ea0ce;
+  width: 100vw;
+  z-index: 100;
+  position: fixed;
+  bottom: 0 !important;
 
   @media screen and (min-width: 578px) {
-    top: 0;
+    position: sticky;
+    top: 0 !important;
+  }
+  .lm-navbar__linkscontainer {
+    display: flex;
+    flex-direction: column;
+    .lm-navbar__link {
+      padding: 2rem !important;
+      .nav-item {
+        text-decoration: none !important;
+      }
+    }
   }
 }
