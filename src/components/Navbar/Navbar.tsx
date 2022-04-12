@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Navbar as LMNBavbar, Dropdown } from "rsuite";
 import {
   Navbar as BNavbar,
   Offcanvas,
@@ -14,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
 import { nanoid } from "nanoid";
-import Navigation from "../Navigation/Navigation";
+import LM_Icon from "../../assets/images/favicon.svg";
 
 type Props = {};
 
@@ -49,6 +48,7 @@ const Navbar = (props: Props) => {
                 key={nanoid()}
                 show={show}
                 onHide={() => setShow(false)}
+                className="lm-offcanvas"
               >
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title id="offcanvasBNavbarLabel">
@@ -87,12 +87,12 @@ const Navbar = (props: Props) => {
           </BNavbar>
         </>
       ) : (
-        <LMNBavbar>
-          <LMNBavbar.Brand as={Link} to="/">
-            LM
-          </LMNBavbar.Brand>
-          <Nav>
-            <Nav.Item as={Link} to="/">
+        <BNavbar>
+          <BNavbar.Brand as={Link} to="/" className="lm-navbar__brand">
+            <img src={LM_Icon} alt="brand" />
+          </BNavbar.Brand>
+          <Nav className="lm-navbar__linkscontainer">
+            <Nav.Item as={Link} to="/" className="lm-navbar__link">
               Books
             </Nav.Item>
             {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
@@ -104,11 +104,11 @@ const Navbar = (props: Props) => {
               </Nav.Item>
             </Dropdown> */}
             {/* <Nav.Item>Coordinator</Nav.Item> */}
-            <Nav.Item as={Link} to="/flashcards">
+            <Nav.Item as={Link} to="/flashcards" className="lm-navbar__link">
               FlashCards
             </Nav.Item>
           </Nav>
-        </LMNBavbar>
+        </BNavbar>
       )}
     </div>
   );
