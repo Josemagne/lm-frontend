@@ -8,6 +8,7 @@ import {
   deleteChapter,
   toggleChapterModifierModal,
 } from "../../../../../state/redux/features/bookSlice";
+import ChapterState from "../../../ChapterModifier/SubComponents/ChapterHeader/ChapterState/ChapterState";
 
 type Props = {
   chapter: LM_Chapter;
@@ -26,7 +27,9 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
    * Navigates the user to ChapterModifier
    *
    */
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
     dispatch(
       changeSelectedChapter({
         chapter: chapter,
@@ -56,7 +59,10 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
   useEffect(() => {}, [chapter]);
 
   return (
-    <div className="lm-chaptercontainer" onClick={handleClick}>
+    <div className="lm-chaptercontainer" onClick={(e) => handleClick(e)}>
+      <div className="lm-chaptercontainer__state">
+        <ChapterState chapter={chapter} />
+      </div>
       <div className="lm-chaptercontainer__index">
         <p>{chapter.index}</p>
       </div>
