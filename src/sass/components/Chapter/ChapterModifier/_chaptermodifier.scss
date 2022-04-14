@@ -4,7 +4,11 @@
     "lm-chapterheader"
     "lm-chapterbody"
     "lm-chapterfooter";
-  position: relative !important;
+
+  // NOTE Makes scrollbar in modal
+  position: absolute !important;
+  overflow-y: scroll !important;
+  max-height: 100%;
 
   & > div {
     max-width: 992px;
@@ -40,10 +44,15 @@
 
     margin-top: 1rem;
 
-    .lm-summarymodifier {
+    .lm-chaptermodifier__summary {
       grid-area: lm-summarymodifier;
-      border: 1px solid black;
-      display: grid;
+      max-height: 50vh;
+      overflow-y: scroll;
+      position: relative;
+
+      margin: auto !important;
+
+      overscroll-behavior-y: initial;
     }
     .lm-chaptermodifer__flashcards {
       grid-area: lm-chaptermodifier__flashcards;

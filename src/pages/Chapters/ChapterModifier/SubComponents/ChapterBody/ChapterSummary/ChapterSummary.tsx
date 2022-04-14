@@ -15,7 +15,15 @@ import ReactQuill from "react-quill";
 
 type Props = {};
 
+/**
+ * Handles the summary for the chapter
+ * @param param0
+ * @returns
+ */
 const ChapterSummary = ({}: Props) => {
+  // Decides if we open the summarymodifier to the fullest
+  const [open, setOpen] = useState<boolean>(false);
+
   const editorRef = useRef(null);
   const [value, setValue] = useState<string>("");
   const dispatch = useAppDispatch();
@@ -43,14 +51,26 @@ const ChapterSummary = ({}: Props) => {
     );
   };
 
+  const openSummary = () => {
+    setOpen(!open);
+  };
+
   useEffect(() => {
     setValue(chapter.summary);
     console.log("chapter.summary:", chapter.summary);
     console.log("value: ", value);
   }, [chapter.summary]);
+
   useEffect(() => {}, []);
+
   return (
-    <div className="lm-chaptermodifier__summary">
+    <div
+      className={
+        open
+          ? "lm-chaptermodifier__summary open"
+          : "lm-chaptermodifier__summary"
+      }
+    >
       <Container
         onClick={() => {
           // @ts-ignore
@@ -58,7 +78,7 @@ const ChapterSummary = ({}: Props) => {
         }}
       >
         <Card>
-          <Card.Title>Summary</Card.Title>
+          <Card.Title className="title">Summary</Card.Title>
           <div className="lm-textcontainer">
             <ReactQuill
               ref={editorRef}
@@ -68,6 +88,7 @@ const ChapterSummary = ({}: Props) => {
             />
           </div>
         </Card>
+        {/* NOTE If we click on it then we show the full summary */}
       </Container>
     </div>
   );

@@ -8,6 +8,7 @@
   .lm-chapters {
     grid-area: lm-chapters;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
   }
 }

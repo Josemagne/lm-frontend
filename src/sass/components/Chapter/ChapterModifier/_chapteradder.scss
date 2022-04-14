@@ -9,12 +9,14 @@
   }
 
   .lm-chapteradder__index {
+    margin: auto;
     width: 7ch;
     min-width: 7ch;
     max-width: 7ch;
   }
 
   .lm-chapteradder__title {
+    margin: auto;
     width: 30ch;
     max-width: 90%;
     min-width: 80%;
@@ -24,9 +26,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: auto;
     align-self: flex-end;
     margin-bottom: auto;
-    margin-top: auto;
+    margin-top: 1rem;
     width: 4rem;
     min-width: 4rem;
     max-width: 5%;
@@ -42,6 +45,11 @@
         cursor: pointer;
         color: red;
       }
+    }
+    @media screen and (min-width: 576px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

@@ -5,7 +5,6 @@ import BookModifier from "./pages/Books/BookModifier/BookModifier";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
 import ErrorPage from "./pages/Error";
-import Navigation from "./components/Navigation/Navigation";
 import Flashcards from "./pages/Flashcards/Flashcards";
 
 type Props = {};

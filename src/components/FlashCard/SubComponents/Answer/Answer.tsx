@@ -66,6 +66,9 @@ const Answer = ({ isNew }: Props) => {
 
   return (
     <div className="lm-gc-flashcard__question">
+      <div className="answer__title">
+        <h4>Answer</h4>
+      </div>
       <ReactQuill
         modules={{ toolbar: false }}
         ref={editorRef}

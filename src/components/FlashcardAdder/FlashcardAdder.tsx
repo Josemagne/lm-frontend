@@ -76,7 +76,7 @@ const FlashcardAdder = (props: Props) => {
             <Answer isNew={true} />
           </div>
           <div className="lm-gc-flashcardadder__button" onClick={submitHandler}>
-            <button>+</button>
+            <button className="btn btn-primary">+</button>
           </div>
         </div>
       </div>

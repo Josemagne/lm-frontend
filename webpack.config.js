@@ -107,7 +107,7 @@ const config = {
       template: indexHTML,
       filename: "index.html",
       inject: "body",
-      favicon: join(__diranme, "src", "assets", "images", "favicon.svg"),
+      favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
     }),
   ],
 };

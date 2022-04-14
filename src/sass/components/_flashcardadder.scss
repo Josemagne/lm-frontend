@@ -4,13 +4,17 @@
   justify-content: center;
 
   .lm-gc-flashcardadder__question {
+    margin: 0.5rem;
   }
 
   .lm-gc-flashcardadder__answer {
+    margin: 0.5rem;
   }
 
   .lm-gc-flashcardadder__button {
-    background-color: red;
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem;
     color: white;
     font-weight: bolder;
   }
