@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Navbar as LMNBavbar, Dropdown } from "rsuite";
 import {
   Navbar as BNavbar,
   Offcanvas,
@@ -14,7 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
 import { nanoid } from "nanoid";
-import Navigation from "../Navigation/Navigation";
+import LM_Icon from "../../assets/images/favicon.svg";
 
 type Props = {};
 
@@ -49,6 +48,7 @@ const Navbar = (props: Props) => {
                 key={nanoid()}
                 show={show}
                 onHide={() => setShow(false)}
+                className="lm-offcanvas"
               >
                 <Offcanvas.Header closeButton>
                   <Offcanvas.Title id="offcanvasBNavbarLabel">
@@ -70,6 +70,30 @@ const Navbar = (props: Props) => {
                       >
                         Flashcards
                       </Nav.Item>
+                      <Nav.Item
+                        as={Link}
+                        to={
+                          localStorage.getItem("token")
+                            ? "/user"
+                            : "/authenticate"
+                        }
+                        className="lm-navbar__link"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          className="bi bi-person-circle"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                          <path
+                            fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                          />
+                        </svg>
+                      </Nav.Item>
                     </div>
                     {/* <Dropdown title="Other">
                       <Nav.Item
@@ -87,12 +111,12 @@ const Navbar = (props: Props) => {
           </BNavbar>
         </>
       ) : (
-        <LMNBavbar>
-          <LMNBavbar.Brand as={Link} to="/">
-            LM
-          </LMNBavbar.Brand>
-          <Nav>
-            <Nav.Item as={Link} to="/">
+        <BNavbar>
+          <BNavbar.Brand as={Link} to="/" className="lm-navbar__brand">
+            <img src={LM_Icon} alt="brand" />
+          </BNavbar.Brand>
+          <Nav className="lm-navbar__linkscontainer">
+            <Nav.Item as={Link} to="/" className="lm-navbar__link">
               Books
             </Nav.Item>
             {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
@@ -104,11 +128,31 @@ const Navbar = (props: Props) => {
               </Nav.Item>
             </Dropdown> */}
             {/* <Nav.Item>Coordinator</Nav.Item> */}
-            <Nav.Item as={Link} to="/flashcards">
+            <Nav.Item as={Link} to="/flashcards" className="lm-navbar__link">
               FlashCards
             </Nav.Item>
+            <Nav.Item
+              as={Link}
+              to={localStorage.getItem("token") ? "/user" : "/authenticate"}
+              className="lm-navbar__link"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="currentColor"
+                className="bi bi-person-circle"
+                viewBox="0 0 16 16"
+              >
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                />
+              </svg>
+            </Nav.Item>
           </Nav>
-        </LMNBavbar>
+        </BNavbar>
       )}
     </div>
   );

@@ -1,0 +1,21 @@
+.lm-lc-flashcardsviewer {
+  .lm-lc-flashcardsviewer__container {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 576px) {
+    }
+
+    .flashcard {
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.5rem !important;
+      .lm-lc-flashcardsviewer__flashcard {
+        .question {
+        }
+
+        .answer {
+        }
+      }
+    }
+  }
+}

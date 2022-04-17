@@ -37,6 +37,7 @@ const ChapterAdder = ({ book_id }: Props) => {
       false,
       false,
       0,
+      "",
       ""
     ),
     onSubmit: async (values, { resetForm, setValues }) => {
@@ -69,6 +70,7 @@ const ChapterAdder = ({ book_id }: Props) => {
           false,
           false,
           0,
+          "",
           ""
         );
         newChapter.chapter_id = currentID;

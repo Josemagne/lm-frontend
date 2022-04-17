@@ -1,4 +1,4 @@
-const { resolve } = require("path");
+const { resolve, join } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
@@ -78,10 +78,11 @@ const config = {
         test: /\.less$/i,
         use: ["style-loader", "css-loader", "less-loader"],
       },
-      // {
-      //   test: /\.svg$/,
-      //   loader: "url-loader",
-      // },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ["@svgr/webpack"],
+      },
       {
         test: /\.(png|jp(e*)g|svg|gif)$/,
         use: [
@@ -106,6 +107,7 @@ const config = {
       template: indexHTML,
       filename: "index.html",
       inject: "body",
+      favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
     }),
   ],
 };

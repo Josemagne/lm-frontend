@@ -5,8 +5,9 @@ import BookModifier from "./pages/Books/BookModifier/BookModifier";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
 import ErrorPage from "./pages/Error";
-import Navigation from "./components/Navigation/Navigation";
 import Flashcards from "./pages/Flashcards/Flashcards";
+import Register from "./sass/pages/Authentication/Register/Register";
+import Authenticate from "./pages/Authenticate/Authenticate";
 
 type Props = {};
 
@@ -25,7 +26,9 @@ const App = (props: Props) => {
           <Route path="/booksviewer" element={<BooksViewer />} />
           {/* @ts-ignore */}
           <Route path="/chaptersviewer/:bookID" element={<ChaptersViewer />} />
-          <Route path="/flashcards/" element={<Flashcards />} />
+          <Route path="/flashcards" element={<Flashcards />} />
+          <Route path="/authenticate" element={<Authenticate />} />
+          <Route path="/register" element={<Register />} />
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}

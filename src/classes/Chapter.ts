@@ -20,7 +20,7 @@ class Chapter implements LM_Chapter {
     ended: Date | null;
     isSubchapter: boolean;
     subchapters?: string[]
-    index?: string;
+    index: string;
     degree?: number | null;
     parentChapter?: string | null;
 
@@ -34,10 +34,10 @@ class Chapter implements LM_Chapter {
         read: boolean,
         importance: number,
         summary: string,
+        index: string,
         subchapters?: string[],
         started?: Date | null,
         ended?: Date | null,
-        index?: string,
         degree?: number,
         parentChapter?: string
     ) {

@@ -118,6 +118,17 @@ export default class Book {
         return result;
     }
 
+    public static updateChapter = async (chapter: LM_Chapter): Promise<LM_Chapter | undefined> => {
+        const oldBook = await this.getBook(chapter.book_id);
+
+        if (!oldBook) return;
+
+        // @ts-ignore
+        oldBook.chapters[chapter.chapter_id] = chapter;
+
+        await books.books.update(oldBook.book_id, oldBook);
+    }
+
     public static removeChapter = async (chapter_id: string, book_id: string): Promise<any> => {
         const book = await this.getBook(book_id)
 

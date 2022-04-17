@@ -159,6 +159,17 @@ export const bookSlice: Slice<LM_InitialState> = createSlice({
             delete state.selectedBook.book.chapters[action.payload.chapter_id]
 
         },
+        // ANCHOR toggleChapterState
+        toggleChapterState: (state, action: PayloadAction<{ bookId: string, chapterId: string }>) => {
+            const { bookId, chapterId } = action.payload;
+
+            // @ts-ignore
+            const read = state.selectedBook.book.chapters[chapterId].read;
+            // @ts-ignore
+            state.selectedBook.book.chapters[chapterId].read = !read;
+            // @ts-ignore
+            state.books.books[bookId].chapters[chapterId].read = !read;
+        },
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<{ book_id: string, book: LM_Book | null }>) => {
             state.selectedBook.book_id = action.payload.book_id;
@@ -300,6 +311,6 @@ export const bookSlice: Slice<LM_InitialState> = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard, changeNewFlashcard } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard, changeNewFlashcard, toggleChapterState } = bookSlice.actions;
 
 export default bookSlice.reducer; 

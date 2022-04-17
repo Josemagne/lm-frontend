@@ -1,18 +1,18 @@
 .lm-chaptercontainer {
   position: relative;
-  display: flex;
-
+  display: grid;
+  grid-template-areas: "state index seperator title delete";
+  height: 100%;
   width: fit-content;
   min-width: 300px;
   max-width: 992px;
-  height: 3rem;
   min-height: fit-content;
   border-radius: 5px;
   margin-top: 1rem;
   margin-right: 1rem;
   margin-left: 1rem;
-  padding: 2rem;
   box-shadow: 10px 10px 5px rgb(231, 227, 227);
+  padding: 1rem;
 
   font-weight: bold !important;
 
@@ -20,33 +20,40 @@
     cursor: pointer;
   }
 
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   @media screen and (min-width: 576px) {
   }
 
+  .lm-chaptercontainer__state {
+    grid-area: state;
+  }
+
   .lm-chaptercontainer__index {
-    margin-top: 1rem;
-    margin-right: 1rem;
+    grid-area: index;
     display: flex;
     align-items: center;
   }
 
   .lm-chaptercontainer__seperator {
-    margin-top: 1rem;
+    grid-area: seperator;
     display: flex;
     align-items: center;
   }
 
   .lm-chaptercontainer__title {
-    margin-top: 1rem;
-    margin-left: 1rem;
+    grid-area: title;
     display: flex;
     align-items: center;
   }
 
   .lm-deletebutton {
-    position: absolute;
-    right: 0.5rem;
-    top: 0.5rem;
+    grid-area: delete;
+
     background-color: rgb(226, 77, 77);
     padding: 1rem;
     width: 1ch;
@@ -55,6 +62,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    justify-self: right;
 
     button {
       background-color: transparent;

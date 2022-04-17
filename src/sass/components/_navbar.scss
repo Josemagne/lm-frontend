@@ -1,3 +1,5 @@
+@use "sass:map";
+@import "../abstracts/colors";
 .lm-navbar {
   background-color: #2ea0ce;
   width: 100vw;
@@ -5,17 +7,35 @@
   position: fixed;
   bottom: 0 !important;
 
-  @media screen and (min-width: 578px) {
-    position: sticky;
-    top: 0 !important;
+  .offcanvas-body {
+    .lm-navbar__linkscontainer {
+      display: flex;
+      flex-direction: row;
+      .lm-navbar__link {
+        padding: 0.5rem !important;
+        text-decoration: none !important;
+        color: map.get($colors, "secondary");
+      }
+    }
   }
+
+  @media screen and (min-width: 576px) {
+    position: sticky !important;
+  }
+  .lm-navbar__brand {
+    border-radius: 5px;
+    padding: 1rem;
+  }
+
   .lm-navbar__linkscontainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     .lm-navbar__link {
-      padding: 2rem !important;
+      padding: 0.5rem !important;
+      text-decoration: none !important;
+
+      color: map.get($colors, "secondary");
       .nav-item {
-        text-decoration: none !important;
       }
     }
   }

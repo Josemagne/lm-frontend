@@ -1,7 +1,7 @@
 import lssv from 'localpersistence/lssv';
 import { LM_Book } from '../types/Book/book';
 import { LM_Metadata } from '../types/common/metadata';
-import { LM_User } from '../types/common/user';
+import { LM_User } from '../types/auth/user';
 /**
 * Gets the metadata
  */
@@ -17,7 +17,7 @@ export default class Metadata {
         if (new lssv().getStorageObject("metadata")) return new lssv().getStorageObject("metadata");
 
         const user: LM_User = {
-            name: ''
+            email: ""
         }
 
         const metadata: LM_Metadata = {

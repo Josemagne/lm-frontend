@@ -49,7 +49,7 @@ export default interface LM_Chapter {
      * The index of the chapter
      * E.g. 1.1.1
      */
-    index?: string;
+    index: string;
     /**
      * The degree of the chapter
      * E.g. 1 --> x.1

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Accordion, Container, Row } from "react-bootstrap";
 import useAppSelector from "../../../../hooks/useAppSelector";
 import LM_Chapter from "../../../../types/Book/chapter";
 import { LM_Flashcard } from "../../../../types/flashcards/flashcard";
@@ -33,26 +33,26 @@ const Flashcardsviewer = (props: Props) => {
 
   return (
     <div className="lm-lc-flashcardsviewer">
-      <Container>
+      <Accordion className="lm-lc-flashcardsviewer__container">
         {flashcards && flashcards.length > 0 ? (
-          flashcards.map((f) => {
+          flashcards.map((f, index) => {
             return (
-              <Row>
-                <div
-                  className="question "
-                  dangerouslySetInnerHTML={{ __html: f.question }}
-                ></div>
-                <div
-                  className="answer "
-                  dangerouslySetInnerHTML={{ __html: f.answer }}
-                ></div>
-              </Row>
+              <Accordion.Item eventKey={index.toString()} className="flashcard">
+                <div className="lm-lc-flashcardsviewer__flashcard">
+                  <Accordion.Header className="question">
+                    <div dangerouslySetInnerHTML={{ __html: f.question }}></div>
+                  </Accordion.Header>
+                  <Accordion.Body className="answer ">
+                    <div dangerouslySetInnerHTML={{ __html: f.answer }}></div>
+                  </Accordion.Body>
+                </div>
+              </Accordion.Item>
             );
           })
         ) : (
           <p>No flashcards yet!</p>
         )}
-      </Container>
+      </Accordion>
     </div>
   );
 };
