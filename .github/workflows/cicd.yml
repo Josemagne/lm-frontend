@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-netlify:
-    name: build lm
+    name: build netlify
     runs-on: ubuntu-20.04
 
     steps:
@@ -26,7 +26,7 @@ jobs:
           npx netlify deploy --auth ${{secrets.NETLIFY}} --build --dir dist --prod --site librimem
 
   build:
-    name: build with docker
+    name: build docker
     runs-on: ubuntu-latest
 
     steps:
@@ -67,6 +67,8 @@ jobs:
           script: |
             # Login to registry
             docker login -u josemagne -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            # Pull new image
+            docker pull josemagne/lm-frontend:1.0.4
             # Stop running container
             docker stop josemagne/lm-frontend:1.0.3
             # Remove old container
