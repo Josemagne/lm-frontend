@@ -77,7 +77,7 @@ jobs:
             docker run -d \
             --restart always \
             -p 80:80 \
-            --net=lm-network
+            --net=lm-network \
             -e BACKEND_IP_PRODUCTION='localhost' \
             --name lm-frontend \
             josemagne/lm-frontend:1.0.4
