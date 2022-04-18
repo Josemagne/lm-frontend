@@ -8,7 +8,7 @@ export declare interface LM_Book {
      * Unique id that identifies the book
      */
     book_id: string;
-    
+
     /**
      * Full name of the author
      */

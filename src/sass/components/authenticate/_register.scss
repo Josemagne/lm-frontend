@@ -1,0 +1,22 @@
+.lm-register {
+  width: 66px;
+  min-width: 414px;
+  max-width: 1200px;
+
+  display: flex;
+  justify-content: center;
+  .lm-register__container {
+    form {
+      div {
+        .form-control {
+          margin: 1rem 0;
+        }
+      }
+    }
+    .register__btn {
+      margin: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

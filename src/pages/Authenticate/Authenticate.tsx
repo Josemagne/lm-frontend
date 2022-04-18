@@ -1,19 +1,19 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import Login from "./Login/Login";
+import Register from "./Register/Register";
 
 type Props = {};
 
 const Authenticate = (props: Props) => {
   const navigate = useNavigate();
 
+  const token = localStorage.getItem("token");
+
   return (
     <div className="lm-authenticate">
-      <div className="go-to-register">
-        {" "}
-        You do not have yet an account? Let's register:{" "}
-        <span onClick={() => navigate("/register")}>Register</span>
-      </div>
-      <div className="go-to-login"></div>
+      {/* If we have already a token then we redirect to the login */}
+      {token ? <Login /> : <Register />}
     </div>
   );
 };

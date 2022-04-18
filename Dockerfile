@@ -8,7 +8,7 @@ COPY . .
 
 RUN npm install yarn
 
-RUN npm install
+RUN yarn
 
 RUN npm run build
 

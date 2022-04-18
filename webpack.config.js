@@ -79,11 +79,6 @@ const config = {
         use: ["style-loader", "css-loader", "less-loader"],
       },
       {
-        test: /\.svg$/i,
-        issuer: /\.[jt]sx?$/,
-        use: ["@svgr/webpack"],
-      },
-      {
         test: /\.(png|jp(e*)g|svg|gif)$/,
         use: [
           {

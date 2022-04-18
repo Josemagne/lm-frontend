@@ -11,6 +11,7 @@ import Metadata from "../../../utils/Metadata";
 import { addBook } from "../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../types/Book/book";
 import { Descendant } from "slate";
+import Server from "../../../services/Server";
 
 type Props = {};
 
@@ -50,13 +51,15 @@ const BookModifier = (props: Props) => {
       // useAppDispatch(addBook(values));
       // Persists locally
       await Book.addBook(values);
-      // Persist on backend
-      // await Server.addBook(values);
+
+      Server.addBook(values).then((res) => {
+        console.log(res);
+      });
+
       // NOTE Resets the values of the form
       resetForm({
         values: getInitialValues(),
       });
-      console.log("id after: ", values.book_id);
       // formik.values.book_id = nanoid();
     },
   });
@@ -85,7 +88,12 @@ const BookModifier = (props: Props) => {
 
         <BookAuthor values={formik.getFieldProps("author")} />
 
-        <Adder clickHandler={formik.handleSubmit} text={"+"} type="submit" />
+        <div
+          onClick={() => formik.handleSubmit()}
+          className="lm-adder-btn d-flex justify-content-center align-items-center m-4"
+        >
+          <div className="btn btn-primary">+</div>
+        </div>
       </form>
     </div>
   );
