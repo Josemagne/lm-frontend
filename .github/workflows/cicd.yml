@@ -70,9 +70,9 @@ jobs:
             # Pull new image
             docker pull josemagne/lm-frontend:1.0.4
             # Stop running container
-            docker container stop josemagne/lm-frontend
+            docker container stop lm-frontend
             # Remove old container
-            docker container rm josemagne/lm-frontend
+            docker container rm lm-frontend
             # Run a new container from a new image
             docker run -d \
             --restart always \

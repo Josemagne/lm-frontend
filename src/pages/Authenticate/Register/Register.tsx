@@ -81,16 +81,22 @@ const Register = (props: Props) => {
             />
           </Form.Group>
           <div className="register__btn">
-            <button
-              type="button"
-              className="btn btn-secondary "
-              onClick={(e) => {
-                e.preventDefault();
-                formik.handleSubmit();
-              }}
-            >
-              Register
-            </button>
+            {formik.isValid && formik.dirty ? (
+              <button
+                type="button"
+                className="btn btn-secondary "
+                onClick={(e) => {
+                  e.preventDefault();
+                  formik.handleSubmit();
+                }}
+              >
+                Register
+              </button>
+            ) : (
+              <button type="button" className="btn btn-secondary " disabled>
+                Register
+              </button>
+            )}
           </div>
           <div className="lm-register__form-error">
             <p>{error ? error : null}</p>

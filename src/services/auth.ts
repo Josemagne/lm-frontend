@@ -12,8 +12,9 @@ const register = async (newUser: { password: string, email: string }): Promise<s
     let result: string;
     try {
         const token = await api.post(`/auth/register`, newUser);
+        console.log(token)
         if (token)
-            localStorage.setItem("token", token.data.token);
+            localStorage.setItem("token", token.data.data);
         result = "success";
     }
     catch (err) {
