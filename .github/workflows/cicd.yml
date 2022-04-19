@@ -70,15 +70,16 @@ jobs:
             # Pull new image
             docker pull josemagne/lm-frontend:1.0.4
             # Stop running container
-            docker stop josemagne/lm-frontend:1.0.4
+            docker container stop josemagne/lm-frontend
             # Remove old container
-            docker container rm josemagne/lm-frontend:1.0.4
+            docker container rm josemagne/lm-frontend
             # Run a new container from a new image
             docker run -d \
             --restart always \
             -p 80:80 \
             --net=lm-network \
             -e BACKEND_IP_PRODUCTION='localhost' \
+            -e NODE_ENV='production'
             --name lm-frontend \
             josemagne/lm-frontend:1.0.4
 
