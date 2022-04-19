@@ -1,6 +1,6 @@
 import React from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
-import { useFormik } from "formik";
+import { ErrorMessage, useFormik } from "formik";
 import { login } from "../../../services/auth";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const Login = (props: Props) => {
+  const [errors, setErrors] = useState();
   const navigate = useNavigate();
   const loginSchema = yup.object().shape({
     email: yup
@@ -34,8 +35,13 @@ const Login = (props: Props) => {
     onSubmit: (values) => {
       console.log("Called onsubmit");
       login(values)
-        .then(() => {
-          navigate("/", { replace: true });
+        .then((res) => {
+          // If login
+          if (res.data.res === "success") {
+            navigate("/", { replace: true });
+          } else {
+            setErrors(res.data.data);
+          }
         })
         .catch((err) => {
           console.log(`Could not login. Here the error: `, err);
@@ -65,6 +71,7 @@ const Login = (props: Props) => {
           ></Form.Control>
         </FloatingLabel>
       </div>
+      <div className="lm-login__errors">{errors ? <p>{errors}</p> : null}</div>
       <div className="lm-login__button">
         {formik.dirty && formik.isValid ? (
           <button

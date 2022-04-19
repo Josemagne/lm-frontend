@@ -1,4 +1,4 @@
-FROM node:17 AS build_stage
+FROM tiangolo/node-frontend:10 as build-stage
 
 RUN mkdir /app
 
@@ -12,7 +12,7 @@ RUN yarn
 
 RUN npm run build
 
-FROM tiangolo/node-frontend:10 as build-stage
+FROM nginx:1.15
 
 WORKDIR /usr/share/nginx/html
 

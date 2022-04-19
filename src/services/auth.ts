@@ -25,14 +25,11 @@ const register = async (newUser: { password: string, email: string }): Promise<b
  * @param user 
  * @returns 
  */
-const login = async (user: { password: string, email: string }): Promise<boolean> => {
+const login = async (user: { password: string, email: string }) => {
     const token = await api.post(`/auth/login`, user);
     localStorage.setItem("token", JSON.stringify(token));
 
-    if (token) {
-        return true;
-    }
-    return false;
+    return token;
 
 }
 
