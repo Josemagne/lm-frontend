@@ -26,7 +26,7 @@ export default class Server {
      */
     public static getBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}`, headers: {
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
@@ -46,7 +46,7 @@ export default class Server {
 
 
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}`, headers: {
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
@@ -65,7 +65,7 @@ export default class Server {
     public static addBook = async (book: LM_Book) => {
         if (book.pages === null) book.pages = 0;
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}`, headers: {
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
@@ -76,7 +76,7 @@ export default class Server {
     public static updateBook = async (book: LM_Book): Promise<any> => {
         let result: any;
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}`, headers: {
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
@@ -94,7 +94,7 @@ export default class Server {
 
     public static removeBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}`, headers: {
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
@@ -116,7 +116,7 @@ export default class Server {
 
     public static addChapter = async (chapter: LM_Chapter): Promise<boolean> => {
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}` : `http://${process.env.BACKEND_IP_PRODUCTION}`, headers: {
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
         });
