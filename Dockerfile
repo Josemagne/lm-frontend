@@ -12,14 +12,14 @@ RUN yarn
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM tiangolo/node-frontend:10 as build-stage
 
 WORKDIR /usr/share/nginx/html
 
 RUN rm -Rf ./*
 
-COPY --from=build_stage /app/dist .
+COPY --from=build-stage /app/dist .
+
+COPY --from=build-stage /nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
