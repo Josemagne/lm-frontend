@@ -35,7 +35,7 @@ const Login = (props: Props) => {
     onSubmit: async (values) => {
       await login(values)
         .then((res) => {
-          if (res.data.res === "success") {
+          if (res === "success") {
             navigate("/", { replace: true });
           }
         })
