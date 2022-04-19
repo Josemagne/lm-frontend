@@ -49,6 +49,7 @@ const Register = (props: Props) => {
       const { password, email } = values;
       const result = await register({ password, email });
 
+      console.log("The result: ", result);
       if (result === "success") {
         navigate("/", { replace: true });
       } else {
@@ -81,6 +82,7 @@ const Register = (props: Props) => {
           </Form.Group>
           <div className="register__btn">
             <button
+              type="button"
               className="btn btn-secondary "
               onClick={(e) => {
                 e.preventDefault();

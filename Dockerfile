@@ -4,9 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install yarn
-
-RUN yarn
+RUN npm install
 
 RUN npm run build
 

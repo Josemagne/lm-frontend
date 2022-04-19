@@ -9,11 +9,18 @@ let api = axios.create({ baseURL: process.env.NODE_ENV === "development" ? `http
  */
 const register = async (newUser: { password: string, email: string }): Promise<string> => {
 
-    const token = await api.post(`/auth/register`, newUser);
-
-
-    localStorage.setItem("token", token.data.token);
-    return token.data.res;
+    let result: string;
+    try {
+        const token = await api.post(`/auth/register`, newUser);
+        if (token)
+            localStorage.setItem("token", token.data.token);
+        result = "success";
+    }
+    catch (err) {
+        console.log(": ", err)
+        result = "failure";
+    }
+    return result;
 
 }
 
@@ -23,10 +30,22 @@ const register = async (newUser: { password: string, email: string }): Promise<s
  * @returns 
  */
 const login = async (user: { password: string, email: string }) => {
-    const token = await api.post(`/auth/login`, user);
-    localStorage.setItem("token", JSON.stringify(token));
+    let result: string;
 
-    return token;
+    try {
+
+        const token = await api.post(`/auth/login`, user);
+
+        if (token) {
+            localStorage.setItem("token", JSON.stringify(token));
+        }
+
+        result = "success";
+    }
+    catch (err) {
+        result = "The email or the password are not correct."
+    }
+    return result;
 
 }
 
