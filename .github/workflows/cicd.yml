@@ -137,7 +137,7 @@ jobs:
             --restart always \
             -p 3000:80 \
             --net=lm-network \
-            -e BACKEND_IP_PRODUCTION='localhost' \
+            -e BACKEND_IP_PRODUCTION=lm-backend \
             -e NODE_ENV='production' \
             --name lm-frontend \
             josemagne/lm-frontend:1.0.4
