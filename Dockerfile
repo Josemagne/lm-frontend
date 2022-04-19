@@ -1,7 +1,5 @@
 FROM tiangolo/node-frontend:10 as build-stage
 
-RUN mkdir /app
-
 WORKDIR /app
 
 COPY . .

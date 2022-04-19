@@ -16,6 +16,7 @@ type Props = {};
 const Register = (props: Props) => {
   const navigate = useNavigate();
 
+  const [error, setError] = useState<string | undefined>();
   const registerSchema = yup.object().shape({
     email: yup
       .string()
@@ -44,12 +45,15 @@ const Register = (props: Props) => {
 
       registerSchema.isValid(values);
     },
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
       const { password, email } = values;
-      register({ password, email }).then(() => {
-        resetForm();
-        navigate("/");
-      });
+      const result = await register({ password, email });
+
+      if (result === "success") {
+        navigate("/", { replace: true });
+      } else {
+        setError("The email already exists");
+      }
     },
   });
 
@@ -86,6 +90,9 @@ const Register = (props: Props) => {
               Register
             </button>
           </div>
+          <div className="lm-register__form-error">
+            <p>{error ? error : null}</p>
+          </div>
         </Form>
         <div className="login-redirec">
           <p>Already registered?</p>
@@ -97,7 +104,6 @@ const Register = (props: Props) => {
           </button>
         </div>
         {/* TODO Error */}
-        <div className="lm-register__form-error"></div>
       </div>
     </div>
   );

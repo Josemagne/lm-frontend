@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { ErrorMessage, useFormik } from "formik";
 import { login } from "../../../services/auth";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const Login = (props: Props) => {
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState<undefined | string>();
   const navigate = useNavigate();
   const loginSchema = yup.object().shape({
     email: yup
@@ -32,19 +32,16 @@ const Login = (props: Props) => {
         password: values.password,
       });
     },
-    onSubmit: (values) => {
-      console.log("Called onsubmit");
-      login(values)
+    onSubmit: async (values) => {
+      await login(values)
         .then((res) => {
-          // If login
           if (res.data.res === "success") {
             navigate("/", { replace: true });
-          } else {
-            setErrors(res.data.data);
           }
         })
         .catch((err) => {
           console.log(`Could not login. Here the error: `, err);
+          setErrors("The email or password is false");
         });
     },
   });

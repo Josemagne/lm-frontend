@@ -26,24 +26,26 @@ const Home = (props: Props) => {
       {/* See how you progress */}
 
       {/* ANCHOR Action to login */}
-      <div className="lm-cta-authenticate">
-        <div
-          className="lm-cta-register"
-          onClick={() => navigate("/register", { replace: true })}
-        >
-          <button type="button" className="btn btn-primary">
-            Register
-          </button>
+      {localStorage.getItem("token") ? (
+        <div className="lm-cta-authenticate">
+          <div
+            className="lm-cta-register"
+            onClick={() => navigate("/register", { replace: true })}
+          >
+            <button type="button" className="btn btn-primary">
+              Register
+            </button>
+          </div>
+          <div
+            className="lm-cta-login"
+            onClick={() => navigate("/login", { replace: true })}
+          >
+            <button type="button" className="btn btn-primary">
+              Login
+            </button>
+          </div>
         </div>
-        <div
-          className="lm-cta-login"
-          onClick={() => navigate("/login", { replace: true })}
-        >
-          <button type="button" className="btn btn-primary">
-            Login
-          </button>
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 };

@@ -7,16 +7,13 @@ let api = axios.create({ baseURL: process.env.NODE_ENV === "development" ? `http
  * @param newUser 
  * @returns 
  */
-const register = async (newUser: { password: string, email: string }): Promise<boolean> => {
+const register = async (newUser: { password: string, email: string }): Promise<string> => {
 
     const token = await api.post(`/auth/register`, newUser);
 
 
-    if (token) {
-        localStorage.setItem("token", token.data.token);
-        return true;
-    }
-    return false;
+    localStorage.setItem("token", token.data.token);
+    return token.data.res;
 
 }
 
