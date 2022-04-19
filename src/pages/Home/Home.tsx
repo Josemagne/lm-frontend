@@ -5,6 +5,8 @@ type Props = {};
 
 const Home = (props: Props) => {
   const navigate = useNavigate();
+
+  if (sessionStorage.token) navigate("booksviewer", { replace: true });
   return (
     <div className="lm-home">
       {/* ANCHOR Flashcard */}
@@ -26,7 +28,7 @@ const Home = (props: Props) => {
       {/* See how you progress */}
 
       {/* ANCHOR Action to login */}
-      {localStorage.getItem("token") ? (
+      {!localStorage.getItem("token") ? (
         <div className="lm-cta-authenticate">
           <div
             className="lm-cta-register"

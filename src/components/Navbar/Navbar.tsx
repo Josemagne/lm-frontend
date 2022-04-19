@@ -10,7 +10,7 @@ import {
   NavLink,
   Nav,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
 import { nanoid } from "nanoid";
 import LM_Icon from "../../assets/images/favicon.svg";
@@ -18,6 +18,7 @@ import LM_Icon from "../../assets/images/favicon.svg";
 type Props = {};
 
 const Navbar = (props: Props) => {
+  const navigate = useNavigate();
   const [width, setWidth] = useState<number>(0);
   const [show, setShow] = useState<boolean>(false);
   window.addEventListener("resize", () => {
@@ -58,7 +59,16 @@ const Navbar = (props: Props) => {
                 <Offcanvas.Body>
                   <div className=" lm-navbar__linkscontainer ">
                     <div className="lm-navbar__link">
-                      <Nav.Item as={Link} to="/" onClick={() => setShow(false)}>
+                      <Nav.Item
+                        as={Link}
+                        to="/booksviewer"
+                        onClick={() => {
+                          navigate("/booksviewer", {
+                            replace: true,
+                          });
+                          setShow(false);
+                        }}
+                      >
                         Books
                       </Nav.Item>
                     </div>
@@ -66,7 +76,12 @@ const Navbar = (props: Props) => {
                       <Nav.Item
                         to="/flashcards"
                         as={Link}
-                        onClick={() => setShow(false)}
+                        onClick={() => {
+                          navigate("/flashcards", {
+                            replace: true,
+                          });
+                          setShow(false);
+                        }}
                       >
                         Flashcards
                       </Nav.Item>
@@ -75,7 +90,12 @@ const Navbar = (props: Props) => {
                       <Nav.Item
                         as={Link}
                         to={"authenticate"}
-                        onClick={() => setShow(false)}
+                        onClick={() => {
+                          navigate("/login", {
+                            replace: true,
+                          });
+                          setShow(false);
+                        }}
                       >
                         Login
                         <svg
@@ -115,7 +135,16 @@ const Navbar = (props: Props) => {
             <img src={LM_Icon} alt="brand" />
           </BNavbar.Brand>
           <Nav className="lm-navbar__linkscontainer">
-            <Nav.Item as={Link} to="/" className="lm-navbar__link">
+            <Nav.Item
+              as={Link}
+              to="/booksviewer"
+              className="lm-navbar__link"
+              onClick={() => {
+                navigate("/booksviewer", {
+                  replace: true,
+                });
+              }}
+            >
               Books
             </Nav.Item>
             {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
@@ -127,13 +156,27 @@ const Navbar = (props: Props) => {
               </Nav.Item>
             </Dropdown> */}
             {/* <Nav.Item>Coordinator</Nav.Item> */}
-            <Nav.Item as={Link} to="/flashcards" className="lm-navbar__link">
+            <Nav.Item
+              as={Link}
+              to="/flashcards"
+              className="lm-navbar__link"
+              onClick={() => {
+                navigate("/flashcards", {
+                  replace: true,
+                });
+              }}
+            >
               FlashCards
             </Nav.Item>
             <Nav.Item
               as={Link}
               to={"/authenticate"}
               className="lm-navbar__link user-icon"
+              onClick={() => {
+                navigate("/Login", {
+                  replace: true,
+                });
+              }}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
