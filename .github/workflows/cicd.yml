@@ -79,7 +79,7 @@ jobs:
             -p 80:80 \
             --net=lm-network \
             -e BACKEND_IP_PRODUCTION='localhost' \
-            -e NODE_ENV='production'
+            -e NODE_ENV='production' \
             --name lm-frontend \
             josemagne/lm-frontend:1.0.4
 
