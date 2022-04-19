@@ -8,6 +8,7 @@ import {
 } from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../../hooks/useAppSelector";
+import { replace } from "cypress/types/lodash";
 
 type Props = {
   selectedBook: LM_Book;
@@ -53,7 +54,9 @@ const BookModal = ({ selectedBook }: Props) => {
               onClick={() => {
                 if (!selectedBook) return;
                 handleClose();
-                navigate(`flashcards`);
+                navigate(`/flashcards`, {
+                  replace: true,
+                });
               }}
             >
               <Button>Go to flashcards</Button>
@@ -62,7 +65,9 @@ const BookModal = ({ selectedBook }: Props) => {
               onClick={() => {
                 if (!selectedBook.book_id) return;
                 handleClose();
-                navigate(`chaptersviewer/${selectedBook.book_id}`);
+                navigate(`/chaptersviewer/${selectedBook.book_title}`, {
+                  replace: true,
+                });
               }}
             >
               <Button>Go to chapters</Button>
