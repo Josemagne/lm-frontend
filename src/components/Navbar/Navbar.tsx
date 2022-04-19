@@ -34,7 +34,7 @@ const Navbar = (props: Props) => {
     <div className="lm-navbar">
       {width < 576 ? (
         <>
-          <BNavbar expand={false}>
+          <BNavbar expand={false} className="lm-navbar__inner">
             <Container fluid>
               <BNavbar.Brand href="/">LibriMem</BNavbar.Brand>
               <BNavbar.Toggle
@@ -70,15 +70,14 @@ const Navbar = (props: Props) => {
                       >
                         Flashcards
                       </Nav.Item>
+                    </div>
+                    <div className="lm-navbar__link">
                       <Nav.Item
                         as={Link}
-                        to={
-                          localStorage.getItem("token")
-                            ? "/user"
-                            : "/authenticate"
-                        }
-                        className="lm-navbar__link"
+                        to={"authenticate"}
+                        onClick={() => setShow(false)}
                       >
+                        Login
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -111,7 +110,7 @@ const Navbar = (props: Props) => {
           </BNavbar>
         </>
       ) : (
-        <BNavbar>
+        <BNavbar className="lm-navbar__inner">
           <BNavbar.Brand as={Link} to="/" className="lm-navbar__brand">
             <img src={LM_Icon} alt="brand" />
           </BNavbar.Brand>
@@ -133,8 +132,8 @@ const Navbar = (props: Props) => {
             </Nav.Item>
             <Nav.Item
               as={Link}
-              to={localStorage.getItem("token") ? "/user" : "/authenticate"}
-              className="lm-navbar__link"
+              to={"/authenticate"}
+              className="lm-navbar__link user-icon"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

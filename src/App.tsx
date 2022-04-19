@@ -8,6 +8,8 @@ import ErrorPage from "./pages/Error";
 import Flashcards from "./pages/Flashcards/Flashcards";
 import Register from "./pages/Authenticate/Register/Register";
 import Authenticate from "./pages/Authenticate/Authenticate";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Authenticate/Login/Login";
 
 type Props = {};
 
@@ -20,7 +22,7 @@ const App = (props: Props) => {
           <Navbar />
         </header>
         <Routes>
-          <Route path="/" element={<BooksViewer />} />
+          <Route path="/" element={<Home />} />
           {/* <Route path="/bookmodifier" element={<BookModifier />} /> */}
           {/* <Route path="/bookmodifier/:bookID" element={<BookModifier />} /> */}
           <Route path="/booksviewer" element={<BooksViewer />} />
@@ -29,6 +31,7 @@ const App = (props: Props) => {
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/authenticate" element={<Authenticate />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}

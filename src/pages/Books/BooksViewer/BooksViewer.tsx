@@ -48,25 +48,13 @@ const BooksViewer = (props: Props) => {
   //   setBooks(result);
   // };
 
-  /**
-   * Checks if there are no books in the frontend and only then requests the backend
-   */
-  const noFrontendBooks = async (): Promise<boolean> => {
-    let result: boolean = false;
-    await Metadata.getMetadata().then((m) => {
-      if (!m) return;
-      if (m?.frontendBooks.books.length < 1) result = true;
-    });
-    return result;
-  };
-
   // only runs at the mounting
   useEffect(() => {
     /* Fetch the books and save them in the store */
     // @ts-ignore
-    dispatch(fetchBooksBackend());
-    // @ts-ignore
     dispatch(fetchBooksFrontend());
+    // @ts-ignore
+    dispatch(fetchBooksBackend());
     // if (books.length < 1) getBooks();
   }, []);
 
@@ -104,7 +92,7 @@ const BooksViewer = (props: Props) => {
             );
           })
         ) : (
-          <p>no books here</p>
+          <p>no books</p>
         )}
       </div>
       {openBooksViewerModal ? <BookModal selectedBook={_selectedBook} /> : null}

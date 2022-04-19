@@ -16,6 +16,7 @@ import {
 } from "../../../../../state/redux/features/bookSlice";
 import Chapter from "../../../../../classes/Chapter";
 import Flashcard from "../../../../../classes/Flashcard";
+import * as yup from "yup";
 
 type Props = {
   book_id: string;
@@ -28,7 +29,13 @@ const ChapterAdder = ({ book_id }: Props) => {
 
   const _book = useAppSelector((state) => state.books.selectedBook.book);
 
+  const chapterSchema = yup.object().shape({
+    title: yup.string().required().min(2, "Too short").max(40, "Too long"),
+  });
+
   const formik = useFormik({
+    validateOnBlur: true,
+    validationSchema: chapterSchema,
     initialValues: new Chapter(
       currentID,
       _book.book_id,
@@ -40,6 +47,11 @@ const ChapterAdder = ({ book_id }: Props) => {
       "",
       ""
     ),
+    validate: async (values) => {
+      return await chapterSchema.isValid({
+        title: values.title,
+      });
+    },
     onSubmit: async (values, { resetForm, setValues }) => {
       values.book_id = _book.book_id;
       values.chapter_id = nanoid();
@@ -56,6 +68,8 @@ const ChapterAdder = ({ book_id }: Props) => {
       );
 
       await Book.addChapter(_book.book_id, values);
+
+      console.log("Sending book to backend");
       // Add to the server
       await Server.addChapter(values);
       // Completes submission cycle
@@ -77,7 +91,6 @@ const ChapterAdder = ({ book_id }: Props) => {
         return newChapter;
       });
     },
-    validate: () => {},
   });
 
   useEffect(() => {

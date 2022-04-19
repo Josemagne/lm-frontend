@@ -13,6 +13,8 @@ const ChaptersViewer = ({}: Props) => {
   const bookID = window.location.href.split("/").pop();
   if (!bookID) return <p>No book selected</p>;
 
+  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+
   const selectedChapter = useAppSelector(
     (state) => state.books.selectedChapter
   );
@@ -33,6 +35,13 @@ const ChaptersViewer = ({}: Props) => {
 
   return (
     <div className="lm-chaptersviewer lm-page">
+      {/* NOTE Shows the book that we are treating at the moment */}
+      <div className="lm-chaptersviewer__bookinformation">
+        <h4>
+          <span>{selectedBook.author}</span>
+          <span>{selectedBook.book_title}</span>
+        </h4>
+      </div>
       <ChapterAdder book_id={bookID} />
       <div className="lm-chapters">
         {chapters && Object.keys(chapters).length > 0 ? (

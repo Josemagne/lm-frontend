@@ -12,6 +12,7 @@ import { addBook } from "../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../types/Book/book";
 import { Descendant } from "slate";
 import Server from "../../../services/Server";
+import * as yup from "yup";
 
 type Props = {};
 
@@ -41,8 +42,41 @@ const BookModifier = (props: Props) => {
     };
   }
 
+  const bookSchema = yup.object().shape({
+    author: yup.string().required().min(2, "Too short").max(40, "Too long"),
+    book_title: yup.string().required().min(2, "Too short").max(40, "Too long"),
+    pages: yup
+      .number()
+      .required()
+      .min(5, "Too Short")
+      .max(4000, "Too long")
+      .positive()
+      .integer(),
+  });
+
   const formik = useFormik({
     initialValues: getInitialValues(),
+    validateOnBlur: true,
+    validateOnChange: true,
+    validationSchema: bookSchema,
+    validate: async (values) => {
+      let errors: any = {};
+
+      if (!values.book_title) {
+        errors.book_title = "Book title is required";
+      }
+
+      if (!values.author) {
+        errors.author = "A author must be given";
+      }
+      formik.isValid = await bookSchema.isValid({
+        book_title: values.book_title,
+        author: values.author,
+        pages: values.pages,
+      });
+
+      return errors;
+    },
     onSubmit: async (values, { resetForm }) => {
       console.log("id: ", values.book_id);
       dispatch(addBook(values));
@@ -68,7 +102,9 @@ const BookModifier = (props: Props) => {
 
   /* EVENTS */
 
-  useEffect(() => {}, [formik.values]);
+  useEffect(() => {
+    console.log(formik.errors);
+  }, [formik.values]);
 
   return (
     <div className="lm-bookmodifier">
@@ -76,6 +112,9 @@ const BookModifier = (props: Props) => {
         {/* <BookImage bookImage="" /> */}
 
         <BookTitle values={formik.getFieldProps("book_title")} />
+        <div className="lm-form-error">
+          {formik.errors.book_title ? <p>{formik.errors.book_title}</p> : null}
+        </div>
 
         <BookPages values={formik.getFieldProps("pages")} />
 
@@ -88,11 +127,20 @@ const BookModifier = (props: Props) => {
 
         <BookAuthor values={formik.getFieldProps("author")} />
 
-        <div
-          onClick={() => formik.handleSubmit()}
-          className="lm-adder-btn d-flex justify-content-center align-items-center m-4"
-        >
-          <div className="btn btn-primary">+</div>
+        <div className="lm-adder-btn d-flex justify-content-center align-items-center m-4">
+          {formik.isValid && formik.dirty ? (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => formik.handleSubmit()}
+            >
+              +
+            </button>
+          ) : (
+            <button type="button" className="btn btn-primary" disabled>
+              +
+            </button>
+          )}
         </div>
       </form>
     </div>

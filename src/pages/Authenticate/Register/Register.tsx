@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import User from "../../../classes/User";
 import { register } from "../../../services/auth";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 
 type Props = {};
 
@@ -14,14 +15,34 @@ type Props = {};
  */
 const Register = (props: Props) => {
   const navigate = useNavigate();
+
+  const registerSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email()
+      .required()
+      .min(5, "Too short")
+      .max(40, "Too long"),
+    password: yup.string().required().min(7, "Too short").max(30, "Too long"),
+  });
   const formik = useFormik({
     initialValues: {
       password: "",
       email: "",
-      emailConfirm: "",
+      passwordConfirm: "",
     },
     validate: (values) => {
-      let errors = {};
+      let errors: any = {};
+
+      if (!(values.password.length > 6)) {
+        errors.password = "Password must be at least 7 characters long";
+      }
+
+      if (values.email !== values.passwordConfirm) {
+        errors.password = "The password are not the same";
+      }
+
+      registerSchema.isValid(values);
     },
     onSubmit: async (values, { resetForm }) => {
       const { password, email } = values;
@@ -66,8 +87,17 @@ const Register = (props: Props) => {
             </button>
           </div>
         </Form>
+        <div className="login-redirec">
+          <p>Already registered?</p>
+          <button
+            className="login-redirect__btn"
+            onClick={() => navigate("/login", { replace: true })}
+          >
+            Login
+          </button>
+        </div>
         {/* TODO Error */}
-        <div className="lm-register__error"></div>
+        <div className="lm-register__form-error"></div>
       </div>
     </div>
   );

@@ -7,12 +7,30 @@
   position: fixed;
   bottom: 0 !important;
 
-  .offcanvas-body {
+  .lm-navbar__inner {
     .lm-navbar__linkscontainer {
       display: flex;
       flex-direction: row;
+      width: 100% !important;
       .lm-navbar__link {
         padding: 0.5rem !important;
+        text-decoration: none !important;
+        color: map.get($colors, "secondary");
+      }
+      .lm-navbar__link.user-icon {
+        justify-self: end !important;
+      }
+    }
+  }
+
+  .offcanvas-body {
+    .lm-navbar__linkscontainer {
+      display: flex;
+      flex-direction: column;
+      width: 100% !important;
+      .lm-navbar__link {
+        padding: 2rem !important;
+        margin: 2rem !important;
         text-decoration: none !important;
         color: map.get($colors, "secondary");
       }
@@ -37,6 +55,10 @@
       color: map.get($colors, "secondary");
       .nav-item {
       }
+    }
+
+    .lm-navbar__link.user-icon {
+      justify-self: end;
     }
   }
 }
