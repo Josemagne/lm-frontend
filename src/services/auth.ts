@@ -18,11 +18,11 @@ const register = async (newUser: { password: string, email: string }): Promise<s
 
     let result = "";
     try {
-        const token = await api.post(`/auth/register`, newUser);
-        console.log(token)
-        if (token) {
-            localStorage.setItem("token", token.data.token);
-            sessionStorage.setItem("token", token.data.token)
+        const res = await api.post(`/auth/register`, newUser);
+
+        if (res.data.result === "success") {
+            localStorage.setItem("token", res.data.token);
+            sessionStorage.setItem("token", res.data.token)
             result = "success";
         }
     }
@@ -44,11 +44,11 @@ const login = async (user: { password: string, email: string }) => {
 
     try {
 
-        const token = await api.post(`/auth/login`, user);
+        const res = await api.post(`/auth/login`, user);
 
-        if (token) {
-            localStorage.setItem("token", token.data.token)
-            sessionStorage.setItem("token", token.data.token)
+        if (res) {
+            localStorage.setItem("token", res.data.token)
+            sessionStorage.setItem("token", res.data.token)
         }
 
         result = "success";

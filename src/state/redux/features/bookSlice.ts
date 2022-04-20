@@ -86,6 +86,7 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
     });
 
     const data = await api.get("/books");
+    console.log("Backned books: ", data.data.books)
     if (error) return error;
     return data.data.books;
 });
