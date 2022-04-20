@@ -64,9 +64,15 @@ export default class Server {
 
     public static addBook = async (book: LM_Book) => {
         if (book.pages === null) book.pages = 0;
+
+        console.log("token: ", localStorage.getItem("token"))
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+
+            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`,
+
+
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
 

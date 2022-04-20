@@ -32,6 +32,9 @@ const Register = (props: Props) => {
       email: "",
       passwordConfirm: "",
     },
+    validateOnChange: true,
+    validateOnBlur: true,
+    validationSchema: registerSchema,
     validate: (values) => {
       let errors: any = {};
 
@@ -39,11 +42,11 @@ const Register = (props: Props) => {
         errors.password = "Password must be at least 7 characters long";
       }
 
-      if (values.email !== values.passwordConfirm) {
-        errors.password = "The password are not the same";
+      if (values.password !== values.passwordConfirm) {
+        errors.password = "The passwords are not the same";
       }
 
-      registerSchema.isValid(values);
+      return errors;
     },
     onSubmit: async (values) => {
       const { password, email } = values;
@@ -69,6 +72,9 @@ const Register = (props: Props) => {
               placeholder="E-Mail"
               {...formik.getFieldProps("email")}
             />
+            <div className="lm-register__errors">
+              {formik.errors.email ? <p>{formik.errors.email}</p> : null}
+            </div>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -79,6 +85,9 @@ const Register = (props: Props) => {
               placeholder="Password again"
               {...formik.getFieldProps("passwordConfirm")}
             />
+            <div className="lm-register__errors">
+              {formik.errors.password ? <p>{formik.errors.password}</p> : null}
+            </div>
           </Form.Group>
           <div className="register__btn">
             {formik.isValid && formik.dirty ? (

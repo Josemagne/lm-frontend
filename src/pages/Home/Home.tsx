@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Props = {};
@@ -6,7 +6,11 @@ type Props = {};
 const Home = (props: Props) => {
   const navigate = useNavigate();
 
-  if (sessionStorage.token) navigate("booksviewer", { replace: true });
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      navigate("/booksviewer", { replace: true });
+    }
+  }, []);
   return (
     <div className="lm-home">
       {/* ANCHOR Flashcard */}

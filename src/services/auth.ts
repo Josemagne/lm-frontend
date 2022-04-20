@@ -1,6 +1,13 @@
 import axios from "axios";
 
-let api = axios.create({ baseURL: process.env.NODE_ENV === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api` });
+let api = axios.create({
+    baseURL: process.env.NODE_ENV === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+        "Access-Control-Allow-Origin": "*"
+    }
+}
+
+
+);
 
 /**
  * Registers a new user
@@ -9,14 +16,15 @@ let api = axios.create({ baseURL: process.env.NODE_ENV === "development" ? `http
  */
 const register = async (newUser: { password: string, email: string }): Promise<string> => {
 
-    let result: string;
+    let result = "";
     try {
         const token = await api.post(`/auth/register`, newUser);
         console.log(token)
-        if (token)
-            localStorage.setItem("token", token.data.data);
-        sessionStorage.setItem("token", token.data.data)
-        result = "success";
+        if (token) {
+            localStorage.setItem("token", token.data.token);
+            sessionStorage.setItem("token", token.data.token)
+            result = "success";
+        }
     }
     catch (err) {
         console.log(": ", err)
@@ -39,8 +47,8 @@ const login = async (user: { password: string, email: string }) => {
         const token = await api.post(`/auth/login`, user);
 
         if (token) {
-            localStorage.setItem("token", token.data.data)
-            sessionStorage.setItem("token", token.data.data)
+            localStorage.setItem("token", token.data.token)
+            sessionStorage.setItem("token", token.data.token)
         }
 
         result = "success";

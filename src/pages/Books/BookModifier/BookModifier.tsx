@@ -69,11 +69,6 @@ const BookModifier = (props: Props) => {
       if (!values.author) {
         errors.author = "A author must be given";
       }
-      formik.isValid = await bookSchema.isValid({
-        book_title: values.book_title,
-        author: values.author,
-        pages: values.pages,
-      });
 
       return errors;
     },
