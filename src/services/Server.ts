@@ -27,7 +27,7 @@ export default class Server {
     public static getBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
             baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
         let book = await api.get(`/books/${book_id}`).then((book) => {
@@ -47,7 +47,7 @@ export default class Server {
 
         const api = axios.create({
             baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
         // TODO Use the id and look if the user is logged in. Then we will return the books!
@@ -83,7 +83,7 @@ export default class Server {
         let result: any;
         const api = axios.create({
             baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
 
@@ -101,7 +101,7 @@ export default class Server {
     public static removeBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
             baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
         let result = false;
@@ -121,7 +121,7 @@ export default class Server {
     public static addChapter = async (chapter: LM_Chapter): Promise<boolean> => {
         const api = axios.create({
             baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
         let result = false;

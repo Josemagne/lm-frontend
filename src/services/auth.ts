@@ -39,22 +39,22 @@ const register = async (newUser: { password: string, email: string }): Promise<a
  * @returns 
  */
 const login = async (user: { password: string, email: string }) => {
-    let res: any;
+    let res: string;
 
     try {
 
-        res = await api.post(`/auth/login`, user);
 
-        if (res.data.result === "success") {
-            localStorage.setItem("token", res.data.token)
-            sessionStorage.setItem("token", res.data.token)
+        const result = await api.post(`/auth/login`, user);
+
+        if (result.data.result === "success") {
+            localStorage.setItem("token", result.data.token)
+            sessionStorage.setItem("token", result.data.token)
         }
 
     }
     catch (err) {
-        res.data.result = "The email or the password are not correct."
     }
-    return res;
+    return "success";
 
 }
 

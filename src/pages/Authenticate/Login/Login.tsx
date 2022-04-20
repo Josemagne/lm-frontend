@@ -28,9 +28,8 @@ const Login = (props: Props) => {
     validationSchema: loginSchema,
     // validate: (values) => {},
     onSubmit: async (values) => {
-      const res: any = await login(values);
-      console.log("res: ", res);
-      if (res.data.result === "success") {
+      const res: string = await login(values);
+      if (res === "success") {
         navigate("/", { replace: true });
       } else {
         setErrors("The email or password is false");
