@@ -33,16 +33,12 @@ const Login = (props: Props) => {
       });
     },
     onSubmit: async (values) => {
-      await login(values)
-        .then((res) => {
-          if (res === "success") {
-            navigate("/", { replace: true });
-          }
-        })
-        .catch((err) => {
-          console.log(`Could not login. Here the error: `, err);
-          setErrors("The email or password is false");
-        });
+      const res: any = await login(values);
+      if (res.data.result === "succes") {
+        navigate("/", { replace: true });
+      } else {
+        setErrors("The email or password is false");
+      }
     },
   });
   return (

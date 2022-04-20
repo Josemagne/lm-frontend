@@ -50,10 +50,9 @@ const Register = (props: Props) => {
     },
     onSubmit: async (values) => {
       const { password, email } = values;
-      const result = await register({ password, email });
+      const res: any = await register({ password, email });
 
-      console.log("The result: ", result);
-      if (result === "success") {
+      if (res.data.result === "success") {
         navigate("/", { replace: true });
       } else {
         setError("The email already exists");

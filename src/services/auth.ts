@@ -14,23 +14,22 @@ let api = axios.create({
  * @param newUser 
  * @returns 
  */
-const register = async (newUser: { password: string, email: string }): Promise<string> => {
+const register = async (newUser: { password: string, email: string }): Promise<any> => {
 
-    let result = "";
+    let res: any;
     try {
-        const res = await api.post(`/auth/register`, newUser);
+        res = await api.post(`/auth/register`, newUser);
 
         if (res.data.result === "success") {
             localStorage.setItem("token", res.data.token);
             sessionStorage.setItem("token", res.data.token)
-            result = "success";
         }
     }
     catch (err) {
         console.log(": ", err)
-        result = "failure";
+        res.data.result = "failure"
     }
-    return result;
+    return res;
 
 }
 
@@ -40,7 +39,7 @@ const register = async (newUser: { password: string, email: string }): Promise<s
  * @returns 
  */
 const login = async (user: { password: string, email: string }) => {
-    let result: string;
+    let res: any;
 
     try {
 
@@ -51,12 +50,11 @@ const login = async (user: { password: string, email: string }) => {
             sessionStorage.setItem("token", res.data.token)
         }
 
-        result = "success";
     }
     catch (err) {
-        result = "The email or the password are not correct."
+        res.data.result = "The email or the password are not correct."
     }
-    return result;
+    return res;
 
 }
 
