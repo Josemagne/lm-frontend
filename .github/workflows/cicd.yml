@@ -135,9 +135,9 @@ jobs:
             # Run a new container from a new image
             docker run -d \
             --restart always \
-            -p 3000:80 \
+            -p 80:80 \
             --net=lm-network \
-            -e BACKEND_IP_PRODUCTION='localhost' \
+            -e BACKEND_IP_PRODUCTION='lm-backend' \
             -e NODE_ENV='production' \
             --name lm-frontend \
             josemagne/lm-frontend:1.0.4
