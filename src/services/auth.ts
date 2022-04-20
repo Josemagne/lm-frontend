@@ -39,7 +39,7 @@ const register = async (newUser: { password: string, email: string }): Promise<a
  * @returns 
  */
 const login = async (user: { password: string, email: string }) => {
-    let res: string;
+    let res: string = "";
 
     try {
 
@@ -49,13 +49,16 @@ const login = async (user: { password: string, email: string }) => {
         if (result.data.result === "success") {
             localStorage.setItem("token", result.data.token)
             sessionStorage.setItem("token", result.data.token)
+
+            res = "success";
         }
 
     }
     catch (err) {
+        res = "failure";
     }
-    return "success";
 
+    return res;
 }
 
 export { register, login }
