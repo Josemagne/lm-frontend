@@ -79,9 +79,15 @@ const initialState: LM_InitialState = {
 export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", async (): Promise<LM_Book[] | any> => {
     let error: any = null;
     // const data = await Server.getBooks();
-    const { data } = await axios.get("http://localhost:4000/books");
+    let api = axios.create({
+        baseURL: process.env.NODE_ENV === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+
+    const data = await api.get("/books");
     if (error) return error;
-    return data;
+    return data.data.books;
 });
 
 /**

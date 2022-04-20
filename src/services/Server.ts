@@ -108,8 +108,6 @@ export default class Server {
 
         await api.delete(`/books/${book_id}`).then((res) => {
             result = true;
-            console.log("Deleted book in the backend")
-            console.log(res.data)
         }).catch((err) => {
             result = err;
         })
