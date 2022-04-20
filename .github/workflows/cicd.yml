@@ -105,42 +105,66 @@ jobs:
   #           --name lm-webserver \
   #           josemagne/lm-webserver:1.0.4
 
+  # deploy:
+  #   name: deploy frontend app
+  #   needs: [build]
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Install SSH Key
+  #       uses: shimataro/ssh-key-action@v2
+  #       with:
+  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #         known_hosts: "blabla"
+  #     - name: Adding Known Hosts
+  #       run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+  #     - name: Deploy to linode via SSH action
+  #       uses: appleboy/ssh-action@v0.1.3
+  #       with:
+  #         host: ${{ secrets.HOST }}
+  #         username: root
+  #         key: ${{ secrets.SSH_PRIVATE_KEY }}
+  #         script: |
+  #           # Login to registry
+  #           docker login -u josemagne -p ${{ secrets.DOCKERHUB_PASSWORD }}
+  #           # Pull new image
+  #           docker pull josemagne/lm-frontend:1.0.4
+  #           # Stop running container
+  #           docker container stop lm-frontend
+  #           # Remove old container
+  #           docker container rm lm-frontend
+  #           # Run a new container from a new image
+  #           docker run -d \
+  #           --restart always \
+  #           -p 80:80 \
+  #           --net=lm-network \
+  #           -e BACKEND_IP_PRODUCTION='lm-backend' \
+  #           -e NODE_ENV='production' \
+  #           --name lm-frontend \
+  #           josemagne/lm-frontend:1.0.4
+
   deploy:
-    name: deploy frontend app
-    needs: [build]
-    runs-on: ubuntu-20.04
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: "blabla"
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-      - name: Deploy to linode via SSH action
-        uses: appleboy/ssh-action@v0.1.3
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: use node.js
+        uses: actions/setup-node@v2
+      - name: Build
+        run: |
+          npm install yarn
+          yarn
+          npm run build
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
           username: root
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            # Login to registry
-            docker login -u josemagne -p ${{ secrets.DOCKERHUB_PASSWORD }}
-            # Pull new image
-            docker pull josemagne/lm-frontend:1.0.4
-            # Stop running container
-            docker container stop lm-frontend
-            # Remove old container
-            docker container rm lm-frontend
-            # Run a new container from a new image
-            docker run -d \
-            --restart always \
-            -p 80:80 \
-            --net=lm-network \
-            -e BACKEND_IP_PRODUCTION='lm-backend' \
-            -e NODE_ENV='production' \
-            --name lm-frontend \
-            josemagne/lm-frontend:1.0.4
+          key: ${{ secrets.SSH_PRIVATE_KEY}}
+          source: "dist/*"
+          target: "/frontend/dist"
 
       # - name: Kubernetes set context
       #   uses: Azure/k8s-set-context@v1
