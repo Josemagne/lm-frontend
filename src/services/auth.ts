@@ -43,9 +43,9 @@ const login = async (user: { password: string, email: string }) => {
 
     try {
 
-        const res = await api.post(`/auth/login`, user);
+        res = await api.post(`/auth/login`, user);
 
-        if (res) {
+        if (res.data.result === "success") {
             localStorage.setItem("token", res.data.token)
             sessionStorage.setItem("token", res.data.token)
         }
