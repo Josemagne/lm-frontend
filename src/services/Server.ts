@@ -3,6 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { LM_Book } from "../types/Book/book";
 import { nanoid } from 'nanoid';
 import LM_Chapter from '../types/Book/chapter';
+import LM_Summary from '../types/Book/summary';
 
 
 const env = process.env.NODE_ENV;
@@ -26,7 +27,7 @@ export default class Server {
      */
     public static getBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -46,7 +47,7 @@ export default class Server {
 
 
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -68,7 +69,7 @@ export default class Server {
         console.log("token: ", localStorage.getItem("token"))
         const api = axios.create({
 
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`,
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`,
 
 
             headers: {
@@ -82,7 +83,7 @@ export default class Server {
     public static updateBook = async (book: LM_Book): Promise<any> => {
         let result: any;
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -100,7 +101,7 @@ export default class Server {
 
     public static removeBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -120,7 +121,7 @@ export default class Server {
 
     public static addChapter = async (chapter: LM_Chapter): Promise<boolean> => {
         const api = axios.create({
-            baseURL: env === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -133,6 +134,28 @@ export default class Server {
         })
 
         return result;
+    }
+
+    public static getChapters = async (): Promise<LM_Chapter[]> => {
+        const api = axios.create({
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
+            }
+        });
+
+        return await api.get("/chapters");
+    }
+
+    // ANCHOR Summary
+    public static getSummaries = async (): Promise<LM_Summary[]> => {
+        const api = axios.create({
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
+            }
+        });
+
+        return await api.get("/summaries");
+
     }
 
 }

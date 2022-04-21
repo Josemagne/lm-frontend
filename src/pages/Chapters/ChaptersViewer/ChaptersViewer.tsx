@@ -4,6 +4,7 @@ import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
 import useAppSelector from "../../../hooks/useAppSelector";
 import ChapterModifier from "../ChapterModifier/ChapterModifier";
+import { fetchChapters } from "../../../state/redux/features/chapterSlice";
 
 // ANCHOR tinymce
 
@@ -31,7 +32,9 @@ const ChaptersViewer = ({}: Props) => {
   useEffect(() => {}, [chapters, selectedChapter]);
 
   useEffect(() => {}, [openChapterModifierModal]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchChapters();
+  }, []);
 
   return (
     <div className="lm-chaptersviewer lm-page">

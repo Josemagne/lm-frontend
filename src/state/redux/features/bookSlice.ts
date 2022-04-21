@@ -7,8 +7,9 @@ import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
 import { LM_Flashcard } from "../../../types/flashcards/flashcard";
 import Flashcard from "../../../classes/Flashcard";
+import LM_Summary from "../../../types/Book/summary";
 
-interface LM_InitialState {
+interface InitialBookState {
     books: {
         books: {
             [id: string]: LM_Book;
@@ -51,7 +52,7 @@ interface LM_InitialState {
     openChapterModifierModal: boolean;
 }
 
-const initialState: LM_InitialState = {
+const initialState: InitialBookState = {
     books: {
         books: {},
         ids: [],
@@ -80,16 +81,24 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
     let error: any = null;
     // const data = await Server.getBooks();
     let api = axios.create({
-        baseURL: process.env.NODE_ENV === "development" ? `http://localhost:${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+        baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     });
 
     const data = await api.get("/books");
-    console.log("Backned books: ", data.data.books)
     if (error) return error;
     return data.data.books;
 });
+
+
+
+const fetchSummaries = createAsyncThunk("summaries/", async (): Promise<LM_Summary[]> => {
+    let summaries = await Server.getSummaries()
+
+    return summaries;
+})
+
 
 /**
  * Fetches books from frontend with redux thunk
@@ -112,7 +121,7 @@ export const fetchBooksFrontend = createAsyncThunk("books/fetchBooksFrontend", a
 //     return book;
 // })
 
-export const bookSlice: Slice<LM_InitialState> = createSlice({
+export const bookSlice: Slice<InitialBookState> = createSlice({
     name: "books",
     initialState: initialState,
     reducers: {
@@ -298,7 +307,7 @@ export const bookSlice: Slice<LM_InitialState> = createSlice({
             })
 
 
-        /* ANCHOR FRONTEND */
+        /* ANCHOR FRONTEND BOOKS */
         // Get books from indexedDB
         builder.addCase(fetchBooksFrontend.pending, (state, action) => {
             state.books.loading = true;
@@ -315,6 +324,7 @@ export const bookSlice: Slice<LM_InitialState> = createSlice({
                 state.books.loading = false;
                 state.books.error = action.payload;
             })
+
     }
 })
 

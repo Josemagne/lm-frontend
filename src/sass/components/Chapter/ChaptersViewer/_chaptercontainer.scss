@@ -30,12 +30,15 @@
   }
 
   .lm-chaptercontainer__state {
+    display: flex;
+    justify-content: left;
     grid-area: state;
   }
 
   .lm-chaptercontainer__index {
     grid-area: index;
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 
