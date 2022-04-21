@@ -30,7 +30,6 @@ const ChaptersViewer = ({}: Props) => {
   console.log("open???", openChapterModifierModal);
 
   useEffect(() => {}, [chapters, selectedChapter]);
-
   useEffect(() => {}, [openChapterModifierModal]);
   useEffect(() => {
     fetchChapters();

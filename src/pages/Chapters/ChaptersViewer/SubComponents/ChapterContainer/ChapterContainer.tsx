@@ -52,8 +52,7 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
     await Book.removeChapter(chapter.chapter_id, book_id);
 
     // Server
-    // TODO
-    // Server.re
+    Server.deleteChapter(chapter.chapter_id);
   };
 
   useEffect(() => {}, [chapter]);

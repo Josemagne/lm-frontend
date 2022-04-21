@@ -34,7 +34,9 @@ const ChapterModifier = (props: Props) => {
   const dispatch = useAppDispatch();
 
   const book = useAppSelector((state) => state.books.selectedBook.book);
-  const chapter = useAppSelector((state) => state.books.selectedChapter);
+  const chapter = useAppSelector(
+    (state) => state.books.selectedChapter.chapter
+  );
   const openChapterModifierModal = useAppSelector(
     (state) => state.books.openChapterModifierModal
   );
@@ -52,8 +54,9 @@ const ChapterModifier = (props: Props) => {
     // Add to indexedDB
     await Book.updateBook(book.book_id, book);
 
+    console.log("Sending: ", chapter);
     // Add to server
-    await Server.updateBook(book);
+    await Server.updateChapter(chapter);
   };
 
   /**
@@ -75,7 +78,7 @@ const ChapterModifier = (props: Props) => {
 
   return (
     <Modal
-      show={chapter.chapter ? true : false}
+      show={chapter ? true : false}
       onHide={handleClose}
       className="lm-chaptermodifier"
     >

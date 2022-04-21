@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import Server from '../../../services/Server';
+import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
 import { addChapter } from './bookSlice';
 
@@ -65,6 +66,9 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
 
                         // Transfer the chapters to the book state
                         addChapter(chapter);
+
+                        // Persist the chapters in frontend
+                        Book.addChapter(chapter.book_id, chapter);
                     })
                 }
                 else state.chapters.chapters = null;

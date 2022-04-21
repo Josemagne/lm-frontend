@@ -7,7 +7,8 @@ import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
 import { LM_Flashcard } from "../../../types/flashcards/flashcard";
 import Flashcard from "../../../classes/Flashcard";
-import LM_Summary from "../../../types/Book/summary";
+import LM_Summary from "../../../types/Book/booksummary";
+import LM_BookSummary from '../../../types/Book/booksummary';
 
 interface InitialBookState {
     books: {
@@ -41,6 +42,10 @@ interface InitialBookState {
          */
         newFlashcard: LM_Flashcard;
     },
+    summaries: {
+        loading: boolean;
+        error: null | string;
+    },
     /**
      * Decides if we open the modal in BooksViewer
      */
@@ -69,6 +74,10 @@ const initialState: InitialBookState = {
         selectedFlashcard: null,
         newFlashcard: new Flashcard()
     },
+    summaries: {
+        loading: false,
+        error: null
+    },
     openBooksViewerModal: false,
     openChapterModifierModal: false
 
@@ -93,8 +102,8 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
 
 
 
-const fetchSummaries = createAsyncThunk("summaries/", async (): Promise<LM_Summary[]> => {
-    let summaries = await Server.getSummaries()
+const fetchBookSummaries = createAsyncThunk("summaries/", async (): Promise<LM_BookSummary[]> => {
+    let summaries = await Server.getBookSummaries();
 
     return summaries;
 })
@@ -323,6 +332,20 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
             builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
                 state.books.loading = false;
                 state.books.error = action.payload;
+            }),
+            // ANCHOR BookSummary
+            builder.addCase(fetchBookSummaries.pending, (state, action) => {
+                state.summaries.loading = true;
+            }),
+            builder.addCase(fetchBookSummaries.fulfilled, (state, action) => {
+                const summaries = action.payload;
+                summaries.forEach((summary) => {
+                    state.books.books[summary.book_id].summary = summary.summary;
+                })
+            }),
+            builder.addCase(fetchBookSummaries.rejected, (state, action) => {
+                state.summaries.error = action.payload as string;
+                state.summaries.loading = false;
             })
 
     }

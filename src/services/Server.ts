@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 import { LM_Book } from "../types/Book/book";
 import { nanoid } from 'nanoid';
 import LM_Chapter from '../types/Book/chapter';
-import LM_Summary from '../types/Book/summary';
+import LM_Summary from '../types/Book/booksummary';
 
 
 const env = process.env.NODE_ENV;
@@ -146,8 +146,28 @@ export default class Server {
         return await api.get("/chapters");
     }
 
-    // ANCHOR Summary
-    public static getSummaries = async (): Promise<LM_Summary[]> => {
+    public static updateChapter = async (chapter: LM_Chapter): Promise<LM_Chapter> => {
+        const api = axios.create({
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
+            }
+        });
+
+        return await api.post(`/chapters/${chapter.chapter_id}`, chapter);
+    }
+
+    public static deleteChapter = async (chapter_id: string): Promise<LM_Chapter> => {
+        const api = axios.create({
+            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
+            }
+        });
+
+        return api.delete(`/chapters/${chapter_id}`, chapter_id);
+    }
+
+    // ANCHOR BookSummary
+    public static getBookSummaries = async (): Promise<LM_Summary[]> => {
         const api = axios.create({
             baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
@@ -157,5 +177,59 @@ export default class Server {
         return await api.get("/summaries");
 
     }
+
+    public static addBookSummary = async () => {
+
+    }
+
+    public static updateBookSummary = async () => {
+
+    }
+
+    public static deleteBookSummary = async () => {
+
+    }
+
+    // ANCHOR ChapterSummary
+    public static getChapterSummary = async () => {
+
+    }
+
+    public static updateChapterSummary = async () => {
+
+    }
+
+    public static deleteChapterSummary = async () => {
+
+    }
+
+
+    // ANCHOR BookFlashcard
+    public static getBookFlashcards = async () => {
+
+    }
+
+    public static updateBookFlashcard = async () => {
+
+    }
+
+    public static deleteBookFlashcard = async () => {
+
+    }
+
+    // ANCHOR ChapterFlashcard
+    public static getChapterFlashcards = async () => {
+
+    }
+
+    public static updateChapterFlashcard = async () => {
+
+    }
+
+    public static deleteChapterFlashcard = async () => {
+
+    }
+
+
 
 }

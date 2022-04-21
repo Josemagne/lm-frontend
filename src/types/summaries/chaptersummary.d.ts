@@ -7,9 +7,13 @@ export default interface LM_Summary {
      */
     summary_id: string;
     /**
+     * ID of the book
+     */
+    book_id: string;
+    /**
      * If null then it is the summary of a book
      */
-    chapter_id: string | null;
+    chapter_id: string;
     /**
      * The HTML string of the summary
      */
