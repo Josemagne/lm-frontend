@@ -5,6 +5,8 @@ import LM_Chapter from "../../../types/Book/chapter";
 import useAppSelector from "../../../hooks/useAppSelector";
 import ChapterModifier from "../ChapterModifier/ChapterModifier";
 import { fetchChapters } from "../../../state/redux/features/chapterSlice";
+import { LM_Book } from "../../../types/Book/book";
+import BookSelector from "../../../components/BookSelector/BookSelector";
 
 // ANCHOR tinymce
 
@@ -14,14 +16,29 @@ const ChaptersViewer = ({}: Props) => {
   const bookID = window.location.href.split("/").pop();
   if (!bookID) return <p>No book selected</p>;
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+  let selectedBook: LM_Book | null;
 
-  const selectedChapter = useAppSelector(
-    (state) => state.books.selectedChapter
-  );
-  const chapters = useAppSelector(
-    (state) => state.books.selectedBook.book.chapters
-  );
+  try {
+    selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+  } catch (err) {
+    selectedBook = null;
+  }
+
+  let selectedChapter: LM_Chapter | null;
+  try {
+    selectedChapter = useAppSelector((state) => state.books.selectedChapter);
+  } catch (err) {
+    selectedChapter = null;
+  }
+
+  let chapters: LM_Chapter[] | null;
+  try {
+    chapters = useAppSelector(
+      (state) => state.books.selectedBook.book.chapters
+    );
+  } catch (err) {
+    chapters = null;
+  }
 
   const openChapterModifierModal = useAppSelector(
     (state) => state.books.openChapterModifierModal
@@ -29,7 +46,7 @@ const ChaptersViewer = ({}: Props) => {
 
   console.log("open???", openChapterModifierModal);
 
-  useEffect(() => {}, [chapters, selectedChapter]);
+  useEffect(() => {}, [chapters, selectedChapter, selectedBook]);
   useEffect(() => {}, [openChapterModifierModal]);
   useEffect(() => {
     fetchChapters();
@@ -38,33 +55,40 @@ const ChaptersViewer = ({}: Props) => {
   return (
     <div className="lm-chaptersviewer lm-page">
       {/* NOTE Shows the book that we are treating at the moment */}
-      <div className="lm-chaptersviewer__bookinformation">
-        <h4>
-          <span>{selectedBook.author}</span>
-          <span>{selectedBook.book_title}</span>
-        </h4>
-      </div>
-      <ChapterAdder book_id={bookID} />
-      <div className="lm-chapters">
-        {chapters && Object.keys(chapters).length > 0 ? (
-          Object.values(chapters as { [id: string]: LM_Chapter }).map(
-            (ch: LM_Chapter) => {
-              return (
-                <ChapterContainer
-                  key={ch.chapter_id}
-                  book_id={bookID}
-                  chapter={ch}
-                />
-              );
-            }
-          )
-        ) : (
-          <div>
-            <p>No chapters yet...</p>
+      {selectedBook ? (
+        <>
+          <div className="lm-chaptersviewer__bookinformation">
+            <h4>
+              <span>{selectedBook.author}</span>
+              <span>{selectedBook.book_title}</span>
+            </h4>
           </div>
-        )}
-      </div>
-      {selectedChapter.chapter ? <ChapterModifier /> : null}
+          <ChapterAdder />
+          <div className="lm-chapters">
+            {chapters && Object.keys(chapters).length > 0 ? (
+              // @ts-ignore
+              Object.values(chapters as { [id: string]: LM_Chapter }).map(
+                (ch: LM_Chapter) => {
+                  return (
+                    <ChapterContainer
+                      key={ch.chapter_id}
+                      book_id={bookID}
+                      chapter={ch}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div>
+                <p>No chapters yet...</p>
+              </div>
+            )}
+          </div>
+          {selectedChapter ? <ChapterModifier /> : null}
+        </>
+      ) : (
+        <BookSelector />
+      )}
     </div>
   );
 };

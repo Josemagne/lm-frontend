@@ -88,6 +88,20 @@ const Navbar = (props: Props) => {
                     </div>
                     <div className="lm-navbar__link">
                       <Nav.Item
+                        to="/chaptersviewer"
+                        as={Link}
+                        onClick={() => {
+                          navigate("/chaptersviewer", {
+                            replace: true,
+                          });
+                          setShow(false);
+                        }}
+                      >
+                        Chapters
+                      </Nav.Item>
+                    </div>
+                    <div className="lm-navbar__link">
+                      <Nav.Item
                         as={Link}
                         to={"authenticate"}
                         onClick={() => {
@@ -114,6 +128,7 @@ const Navbar = (props: Props) => {
                         </svg>
                       </Nav.Item>
                     </div>
+
                     {/* <Dropdown title="Other">
                       <Nav.Item
                         to="/settings"
@@ -167,6 +182,18 @@ const Navbar = (props: Props) => {
               }}
             >
               FlashCards
+            </Nav.Item>
+            <Nav.Item
+              as={Link}
+              to="/chaptersviewer"
+              className="lm-navbar__link"
+              onClick={() => {
+                navigate("/chaptersviewer", {
+                  replace: true,
+                });
+              }}
+            >
+              Chapters
             </Nav.Item>
             <Nav.Item
               as={Link}

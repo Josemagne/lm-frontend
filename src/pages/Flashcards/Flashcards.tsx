@@ -1,7 +1,7 @@
 import React from "react";
 import useAppDispatch from "../../hooks/useAppDispatch";
 import useAppSelector from "../../hooks/useAppSelector";
-import BookSelector from "./SubComponents/BookSelector/BookSelector";
+import BookSelector from "../../components/BookSelector/BookSelector";
 import Flashcardsviewer from "./SubComponents/Flashcardsviewer/Flashcardsviewer";
 
 type Props = {};

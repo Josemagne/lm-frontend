@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useAppDispatch from "../../../../hooks/useAppDispatch";
+import useAppDispatch from "../../hooks/useAppDispatch";
 import { AutoComplete } from "rsuite";
-import useAppSelector from "../../../../hooks/useAppSelector";
-import { LM_Book } from "../../../../types/Book/book";
-import { changeSelectedBook } from "../../../../state/redux/features/bookSlice";
+import useAppSelector from "../../hooks/useAppSelector";
+import { LM_Book } from "../../types/Book/book";
+import { changeSelectedBook } from "../../state/redux/features/bookSlice";
 
 type Props = {};
 

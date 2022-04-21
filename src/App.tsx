@@ -27,11 +27,13 @@ const App = (props: Props) => {
           {/* <Route path="/bookmodifier/:bookID" element={<BookModifier />} /> */}
           <Route path="/booksviewer" element={<BooksViewer />} />
           {/* @ts-ignore */}
+          <Route path="/chaptersviewer" element={<ChaptersViewer />} />
           <Route path="/chaptersviewer/:bookID" element={<ChaptersViewer />} />
           <Route path="/flashcards" element={<Flashcards />} />
           <Route path="/authenticate" element={<Authenticate />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}

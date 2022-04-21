@@ -18,11 +18,9 @@ import Chapter from "../../../../../classes/Chapter";
 import Flashcard from "../../../../../classes/Flashcard";
 import * as yup from "yup";
 
-type Props = {
-  book_id: string;
-};
+type Props = {};
 
-const ChapterAdder = ({ book_id }: Props) => {
+const ChapterAdder = ({}: Props) => {
   const [currentID, setCurrentID] = useState(nanoid());
   const dispatch = useAppDispatch();
   /* STATE */
