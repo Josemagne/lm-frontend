@@ -3,17 +3,13 @@ export declare interface LM_Citation {
     /**
      * The citation itself
      */
-    data: string;
+    citation: string;
     /**
      * ID of the book where the citation belongs
      */
     book_id: string;
     /**
-     * ID of the chapter where the citation belongs
+     * Commentary for a citation
      */
-    chapter_id: string;
-    /**
-     * Comment for a citation
-     */
-    comment: string;
+    commentary: string;
 }

@@ -31,6 +31,9 @@ const ChaptersViewer = ({}: Props) => {
     selectedChapter = null;
   }
 
+  /**
+   * Contains the chapters
+   */
   let chapters: LM_Chapter[] | null;
   try {
     chapters = useAppSelector(

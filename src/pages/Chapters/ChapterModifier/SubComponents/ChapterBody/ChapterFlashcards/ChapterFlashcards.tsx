@@ -42,11 +42,11 @@ const ChapterFlashcards = (props: Props) => {
     <div className="lm-chaptermodifier__flashcards mt-3">
       <div className="container">
         <h3>Flashcards</h3>
-        <FlashcardAdder />
+        <FlashcardAdder forBook={false} />
       </div>
 
-      <div className="lm-chaptermodifier__flashcards__question"></div>
-      <div className="lm-chaptermodifier__flashcards__answer"></div>
+      {/* <div className="lm-chaptermodifier__flashcards__question"></div>
+      <div className="lm-chaptermodifier__flashcards__answer"></div> */}
     </div>
   );
 };

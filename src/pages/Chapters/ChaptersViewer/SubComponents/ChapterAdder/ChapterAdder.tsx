@@ -15,7 +15,7 @@ import {
   updateBook,
 } from "../../../../../state/redux/features/bookSlice";
 import Chapter from "../../../../../classes/Chapter";
-import Flashcard from "../../../../../classes/Flashcard";
+import Flashcard from "../../../../../classes/base/Flashcard";
 import * as yup from "yup";
 
 type Props = {};

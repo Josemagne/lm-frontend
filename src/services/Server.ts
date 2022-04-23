@@ -4,6 +4,7 @@ import { LM_Book } from "../types/Book/book";
 import { nanoid } from 'nanoid';
 import LM_Chapter from '../types/Book/chapter';
 import LM_Summary from '../types/Book/booksummary';
+import { LM_BookFlashcard } from "../types/Book/bookflashcard";
 
 
 const env = process.env.NODE_ENV;
@@ -27,7 +28,7 @@ export default class Server {
      */
     public static getBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -47,7 +48,7 @@ export default class Server {
 
 
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -69,7 +70,7 @@ export default class Server {
         console.log("token: ", localStorage.getItem("token"))
         const api = axios.create({
 
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`,
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`,
 
 
             headers: {
@@ -83,7 +84,7 @@ export default class Server {
     public static updateBook = async (book: LM_Book): Promise<any> => {
         let result: any;
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -101,7 +102,7 @@ export default class Server {
 
     public static removeBook = async (book_id: string): Promise<any> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -121,7 +122,7 @@ export default class Server {
 
     public static addChapter = async (chapter: LM_Chapter): Promise<boolean> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -138,7 +139,7 @@ export default class Server {
 
     public static getChapters = async (): Promise<LM_Chapter[]> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -148,7 +149,7 @@ export default class Server {
 
     public static updateChapter = async (chapter: LM_Chapter): Promise<LM_Chapter> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -158,7 +159,7 @@ export default class Server {
 
     public static deleteChapter = async (chapter_id: string): Promise<LM_Chapter> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -169,7 +170,7 @@ export default class Server {
     // ANCHOR BookSummary
     public static getBookSummaries = async (): Promise<LM_Summary[]> => {
         const api = axios.create({
-            baseURL: env === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
@@ -205,6 +206,10 @@ export default class Server {
 
 
     // ANCHOR BookFlashcard
+    public static addBookFlashcard = async (newBookFlashcard: LM_BookFlashcard) => {
+
+    }
+
     public static getBookFlashcards = async () => {
 
     }
@@ -218,6 +223,9 @@ export default class Server {
     }
 
     // ANCHOR ChapterFlashcard
+    public static addChapterFlashcard = async () => {
+
+    }
     public static getChapterFlashcards = async () => {
 
     }

@@ -2,6 +2,8 @@ import { string } from "yup";
 import type LM_Chapter from "./chapter";
 import { LM_Book_Contents } from "./contents";
 import { Descendant } from 'slate';
+import { LM_BookFlashcard } from "./bookflashcard";
+import { LM_Collection } from "../collection";
 
 export declare interface LM_Book {
     /**
@@ -48,4 +50,13 @@ export declare interface LM_Book {
      * Number between 1 and 5 for stars.
      */
     rate: number;
+    flashcards: {
+        [flashcard_id]: LM_BookFlashcard;
+    }
+    /**
+     * The collections the book belongs to
+     */
+    collections: {
+        [collection_id: string]: LM_Collection;
+    }
 }

@@ -6,7 +6,7 @@ import axios from 'axios';
 import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
 import { LM_Flashcard } from "../../../types/flashcards/flashcard";
-import Flashcard from "../../../classes/Flashcard";
+import Flashcard from "../../../classes/base/Flashcard";
 import LM_Summary from "../../../types/Book/booksummary";
 import LM_BookSummary from '../../../types/Book/booksummary';
 

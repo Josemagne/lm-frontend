@@ -50,29 +50,32 @@ const BookModal = ({ selectedBook }: Props) => {
           </Modal.Header>
           <Modal.Body>
             <p>pages: {selectedBook.pages}</p>
-            <div
-              onClick={() => {
-                if (!selectedBook) return;
-                handleClose();
-                navigate(`/flashcards`, {
-                  replace: true,
-                });
-              }}
-            >
-              <Button>Go to flashcards</Button>
-            </div>
-            <div
-              onClick={() => {
-                if (!selectedBook.book_id) return;
-                handleClose();
-                navigate(`/chaptersviewer/${selectedBook.book_title}`, {
-                  replace: true,
-                });
-              }}
-            >
-              <Button>Go to chapters</Button>
-            </div>
-            {/* <div
+
+            {/* NOTE The links lead to other parts of the website */}
+            <div className="lm-bookmodal__links">
+              <div
+                onClick={() => {
+                  if (!selectedBook) return;
+                  handleClose();
+                  navigate(`/flashcards`, {
+                    replace: true,
+                  });
+                }}
+              >
+                <Button>Go to flashcards</Button>
+              </div>
+              <div
+                onClick={() => {
+                  if (!selectedBook.book_id) return;
+                  handleClose();
+                  navigate(`/chaptersviewer/${selectedBook.book_title}`, {
+                    replace: true,
+                  });
+                }}
+              >
+                <Button>Go to chapters</Button>
+              </div>
+              {/* <div
               onClick={() => {
                 if (!selectedBook.book_id) return;
                 handleClose();
@@ -81,6 +84,7 @@ const BookModal = ({ selectedBook }: Props) => {
             >
               <Button>Modify bookdata</Button>
             </div> */}
+            </div>
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
           {/* Author */}

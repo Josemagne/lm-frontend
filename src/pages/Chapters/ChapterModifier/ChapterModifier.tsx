@@ -27,6 +27,11 @@ import "react-quill/dist/quill.snow.css";
 
 type Props = {};
 
+/**
+ * Modal where we can edit information about a chapter
+ * @param props
+ * @returns
+ */
 const ChapterModifier = (props: Props) => {
   /**
    * Dispatches action creator to the store

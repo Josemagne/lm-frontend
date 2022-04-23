@@ -1,5 +1,5 @@
 import { Descendant } from 'slate';
-import { LM_Flashcard } from "../types/flashcards/flashcard";
+import { LM_Flashcard } from "../../types/flashcards/flashcard";
 import { nanoid } from 'nanoid';
 
 class Flashcard implements LM_Flashcard {
