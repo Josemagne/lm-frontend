@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV === "development" ? "development" : "production
 
 export default function BookSummaryAPI<TBase extends Constructor>(Base: TBase) {
 
-    return class extends Base {
+    return class BookSummaryAPI extends Base {
 
         public api: AxiosInstance;
 

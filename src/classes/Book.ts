@@ -1,50 +1,45 @@
 import { LM_Book } from "../types/Book/book";
-import { Descendant } from 'slate';
 import LM_Chapter from '../types/Book/chapter';
+import { LM_Flashcard } from "../types/flashcards/flashcard";
+import { ScriptureStatus } from '../types/common/scripturestatus';
 
 export default class Book implements LM_Book {
     book_id: string;
     author: string;
-
+    status: ScriptureStatus;
     book_title: string;
-    isPercentage: boolean;
-    contents: Descendant[];
     pages: number;
     read: boolean;
     progress: number;
-    chapters: {
-        [id: string]: LM_Chapter
-    } = {};
-    chaptersIndexing: { [index: string]: string; } = {};
     summary: string = "";
     rate: number = 1;
-
+    chapters: string[] = []
+    flashcards: string[] = []
+    chapterCollection: string[] = []
+    collections: string[] = []
+    notes: string[] = [];
+    commentaries: string[] = []
 
 
     constructor(
         book_id: string,
         author: string,
         book_title: string,
-        isPercentage: boolean,
-        contents: Descendant[],
         pages: number,
         read: boolean,
         progress: number,
+        status: ScriptureStatus,
+        summary: string
     ) {
         this.book_id = book_id
+        this.status = status;
+        this.summary = summary;
         this.author = author
         this.book_title = book_title
-        this.isPercentage = isPercentage
-        this.contents = contents
         this.pages = pages
         this.read = read
         this.progress = progress
     }
 
-    private generateChaptersIndexing() {
-        // Get the chapters
-        const chapters = this.chapters;
-
-    }
 
 }

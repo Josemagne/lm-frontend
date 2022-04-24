@@ -24,6 +24,9 @@ import Server from "../../../services/Server";
 import { Modal } from "react-bootstrap";
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
 import "react-quill/dist/quill.snow.css";
+import API from "../../../api/API";
+import FAPI from "../../../storage/indexedDB/FAPI";
+import { updateSelectedChapter } from "../../../state/redux/features/chapterSlice";
 
 type Props = {};
 
@@ -37,31 +40,21 @@ const ChapterModifier = (props: Props) => {
    * Dispatches action creator to the store
    */
   const dispatch = useAppDispatch();
-
-  const book = useAppSelector((state) => state.books.selectedBook.book);
-  const chapter = useAppSelector(
-    (state) => state.books.selectedChapter.chapter
-  );
-  const openChapterModifierModal = useAppSelector(
-    (state) => state.books.openChapterModifierModal
+  const selectedChapter = useAppSelector(
+    (state) => state.chapters.selectedChapter
   );
 
   /**
    * Handles the change of the part of a book by dispatching the new state to the store
    */
-  const changeHandler = (newBook: LM_Book) => {
-    dispatch(changeSelectedBook({ book: newBook, book_id: newBook.book_id }));
-    console.log("after dispatch: ", chapter.chapter.summary);
+  const changeHandler = (newChapter: LM_Chapter) => {
+    dispatch(updateSelectedChapter(newChapter));
   };
 
   const submitHandler = async () => {
-    dispatch(updateBook(book));
-    // Add to indexedDB
-    await Book.updateBook(book.book_id, book);
+    await FAPI.updateChapter(selectedChapter);
 
-    console.log("Sending: ", chapter);
-    // Add to server
-    await Server.updateChapter(chapter);
+    await API.updateChapter(selectedChapter);
   };
 
   /**
@@ -73,21 +66,15 @@ const ChapterModifier = (props: Props) => {
     dispatch(removeSelectedChapter(""));
   };
 
-  useEffect(() => {
-    console.log("open?: ", openChapterModifierModal);
-    console.log("chapter: ", chapter);
-  }, [openChapterModifierModal]);
-  useEffect(() => {}, [book, chapter]);
-
-  useEffect(() => {}, []);
+  useEffect(() => {}, [selectedChapter]);
 
   return (
     <Modal
-      show={chapter ? true : false}
+      show={selectedChapter ? true : false}
       onHide={handleClose}
       className="lm-chaptermodifier"
     >
-      {chapter && book ? (
+      {selectedChapter ? (
         <>
           {/* TODO Move to its own File */}
           <div className="lm-chapterheader">

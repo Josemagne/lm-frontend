@@ -1,7 +1,7 @@
 import LM_Chapter from '../types/Book/chapter';
-import { Descendant } from 'slate';
 import { nanoid } from 'nanoid';
 import { LM_Flashcard } from '../types/flashcards/flashcard';
+import { ScriptureStatus } from '../types/common/scripturestatus';
 
 /**
  * A chapter in a book
@@ -13,12 +13,12 @@ class Chapter implements LM_Chapter {
     chapter_id: string;
     toRead: boolean;
     read: boolean = false;
+    status: ScriptureStatus;
     importance: number;
     summary: string;
     flashcards: {};
     started: Date | null;
     ended: Date | null;
-    isSubchapter: boolean;
     subchapters?: string[]
     index: string;
     degree?: number | null;
@@ -30,8 +30,8 @@ class Chapter implements LM_Chapter {
         book_id: string,
         title: string,
         toRead: boolean,
-        isSubchapter: boolean,
         read: boolean,
+        status: ScriptureStatus,
         importance: number,
         summary: string,
         index: string,
@@ -45,6 +45,7 @@ class Chapter implements LM_Chapter {
         this.book_id = book_id;
         this.title = title
         this.flashcards = {};
+        this.status = status;
         this.toRead = toRead
         this.importance = importance
         this.read = read
@@ -52,7 +53,6 @@ class Chapter implements LM_Chapter {
         this.subchapters = subchapters
         this.started = null
         this.ended = null
-        this.isSubchapter = isSubchapter
         this.index = index
         this.degree = degree
         this.parentChapter = parentChapter

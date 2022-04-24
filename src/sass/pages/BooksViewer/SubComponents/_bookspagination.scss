@@ -1,0 +1,21 @@
+@import "./bookcontainer";
+
+.lm-lc-booksviewer__bookspagination {
+  grid-area: lm-lc-booksviewer__bookspagination;
+  .lm-booksviewer__bookspagination__books {
+    position: relative;
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: 576px) {
+      display: flex;
+    }
+    @include lm-bookcontainer;
+  }
+  .lm-booksviewer__bookspagination__rule {
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+  }
+}

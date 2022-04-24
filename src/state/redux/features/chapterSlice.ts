@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
-import Server from '../../../services/Server';
-import Book from '../../../storage/indexedDB/Book';
+import { createAsyncThunk, createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
+import API from '../../../api/API';
+import FAPI from '../../../storage/indexedDB/FAPI';
 import LM_Chapter from '../../../types/Book/chapter';
-import { addChapter } from './bookSlice';
 
 interface InitialChapterState {
     chapters: {
@@ -10,78 +9,124 @@ interface InitialChapterState {
         error: string | null;
         chapters: {
             [chapter_id: string]: LM_Chapter;
-        } | null;
-    }
+        }
+        chapter_ids: string[]
+    },
+    selectedChapter: LM_Chapter | null
 }
 
 const initialState: InitialChapterState = {
+    /**
+     * All available chapters
+     */
     chapters: {
         loading: false,
         error: null,
-        chapters: null
-
-    }
+        chapters: {},
+        chapter_ids: []
+    },
+    /**
+     * The chapter that is being handled at the moment
+     */
+    selectedChapter: null,
 }
 
-export const fetchChapters = createAsyncThunk("chapters/", async (): Promise<LM_Chapter[] | any> => {
+export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (): Promise<LM_Chapter[] | any> => {
     let error = null;
 
-    let chapters = await Server.getChapters();
+    let chapters = await API.getChapters();
 
     return chapters;
+})
+
+export const fetchChaptersFrontend = createAsyncThunk("chaptersFrontend/", async (): Promise<LM_Chapter[] | any> => {
+    let error = null;
+
+    let chapters = await FAPI.getChapters();
+
+    if (chapters) return chapters;
+    else return error;
 })
 
 export const chapterSlice: Slice<InitialChapterState> = createSlice({
     name: "chapters",
     initialState: initialState,
     reducers: {
-        addChapter: (state, action) => {
+        addChapter: (state, action: PayloadAction<LM_Chapter>) => {
+            const chapter = action.payload;
 
-        },
-        getChapter: (state, action) => {
+            // If the chapters obj is empty
+            if (!state.chapters.chapters) state.chapters.chapters = {};
 
-        },
-        getChapters: (state, action) => {
-
+            state.chapters.chapters[chapter.chapter_id] = chapter;
         },
         updateChapter: (state, action) => {
 
-        }
+        },
+        deleteChapter: (state, action) => {
+
+        },
+        /**
+         * Update the selectedChapter
+         * @param state 
+         * @param action 
+         */
+        updateSelectedChapter: (state, action) => {
+            const chapter: LM_Chapter = action.payload;
+
+            state.selectedChapter = chapter;
+            state.chapters.chapters[chapter.chapter_id] = chapter;
+        },
+        // TODO deleteSelctedChapter
+
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchChapters.pending, (state, action) => {
+        builder.addCase(fetchChaptersBackend.pending, (state, action) => {
             state.chapters.loading = true;
         }),
-            builder.addCase(fetchChapters.fulfilled, (state, action) => {
+            builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
                 const chapters = action.payload;
 
-                if (chapters.length > 1) {
-                    (chapters as LM_Chapter[]).forEach((chapter) => {
-                        // NOTE Create an object if it is null
-                        if (!state.chapters.chapters) {
-                            state.chapters.chapters = {};
-                        }
+                (chapters as LM_Chapter[]).forEach((chapter) => {
+                    // NOTE Create an object if it is null
+                    if (!state.chapters.chapters) {
+                        state.chapters.chapters = {};
+                    }
 
-                        state.chapters.chapters[chapter.chapter_id] = chapter;
+                    state.chapters.chapters[chapter.chapter_id] = chapter;
 
-                        // Transfer the chapters to the book state
-                        addChapter(chapter);
+                    // Transfer the chapters to the book state
+                    addChapter(chapter);
 
-                        // Persist the chapters in frontend
-                        Book.addChapter(chapter.book_id, chapter);
-                    })
-                }
-                else state.chapters.chapters = null;
+                })
 
 
             }),
-            builder.addCase(fetchChapters.rejected, (state, action) => {
+            builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
+                state.chapters.error = action.payload as string;
+                state.chapters.loading = false;
+            }),
+            builder.addCase(fetchChaptersFrontend.pending, (state, action) => {
+                state.chapters.loading = true;
+            }),
+            builder.addCase(fetchChaptersFrontend.fulfilled, (state, action) => {
+                const chapters: LM_Chapter[] = action.payload;
+                state.chapters.loading = false;
+                if (!chapters) state.chapters.error = chapters;
+                if (!state.chapters.chapters) state.chapters.chapters = {}
+
+                chapters.forEach((chapter) => {
+                    // @ts-ignore
+                    state.chapters.chapters[chapter.chapter_id] = chapter;
+                })
+            }),
+            builder.addCase(fetchChaptersFrontend.rejected, (state, action) => {
                 state.chapters.error = action.payload as string;
                 state.chapters.loading = false;
             })
     }
 })
 
-export const { } = chapterSlice.actions;
+export const { updateSelectedChapter, addChapter, updateChapter, deleteChapter } = chapterSlice.actions;
 
 export default chapterSlice.reducer;

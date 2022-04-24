@@ -5,13 +5,16 @@ import { LM_BookFlashcard } from "../../types/Book/bookflashcard";
 const env = process.env.NODE_ENV === "development" ? "development" : "production";
 
 
-export default function BookFlashcardAPI<TBase extends Constructor>(Base: TBase) {
-    return class extends Base {
-        public api: AxiosInstance;
+function BookFlashcardAPI<TBase extends Constructor>(Base: TBase) {
+    return class BookFlashcardAPI extends Base {
+        public api: AxiosInstance = axios.create({
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/bookflashcard` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/bookflashcard`, headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
+            }
+        })
 
         constructor(...args: any[]) {
             super(...args);
-            this.api = args[0];
         }
 
         public addBookFlashcardAPI = async (newBookFlashcard: LM_BookFlashcard) => {

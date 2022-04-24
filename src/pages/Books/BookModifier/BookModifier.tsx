@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import BookTitle from "./SubComponents/BookTitle/BookTitle";
 import BookPages from "./SubComponents/BookPages/BookPages";
 import Adder from "../../../components/helpers/Adder/Adder";
-import Book from "../../../storage/indexedDB/Book";
 import { useFormik } from "formik";
 import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import useAppDispatch from "../../../hooks/useAppDispatch";
@@ -10,9 +9,10 @@ import { nanoid } from "nanoid";
 import Metadata from "../../../utils/Metadata";
 import { addBook } from "../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../types/Book/book";
-import { Descendant } from "slate";
 import Server from "../../../services/Server";
 import * as yup from "yup";
+import Book from "../../../classes/Book";
+import FAPI from "../../../storage/indexedDB/FAPI";
 
 type Props = {};
 
@@ -26,20 +26,7 @@ const BookModifier = (props: Props) => {
   const dispatch = useAppDispatch();
 
   function getInitialValues(): LM_Book {
-    return {
-      author: "",
-      book_id: nanoid(),
-      book_title: "",
-      pages: 0,
-      progress: 0,
-      read: true,
-      summary: "",
-      chapters: {},
-      rate: 3,
-      isPercentage: false,
-      contents: [{ children: [{ text: "" }] }],
-      chaptersIndexing: {},
-    };
+    return new Book(nanoid(), "", "", 0, false, 0, "TO_READ", "");
   }
 
   const bookSchema = yup.object().shape({
@@ -75,11 +62,8 @@ const BookModifier = (props: Props) => {
     onSubmit: async (values, { resetForm }) => {
       console.log("id: ", values.book_id);
       dispatch(addBook(values));
-      // TODO  Add to state
-      await Metadata.addFrontendBook(values.book_id);
-      // useAppDispatch(addBook(values));
-      // Persists locally
-      await Book.addBook(values);
+
+      await FAPI.addBook(values);
 
       Server.addBook(values).then((res) => {
         console.log(res);
@@ -89,7 +73,6 @@ const BookModifier = (props: Props) => {
       resetForm({
         values: getInitialValues(),
       });
-      // formik.values.book_id = nanoid();
     },
   });
 
@@ -102,7 +85,7 @@ const BookModifier = (props: Props) => {
   }, [formik.values]);
 
   return (
-    <div className="lm-bookmodifier">
+    <div className="lm-lc-bookmodifier">
       <form onSubmit={formik.handleSubmit}>
         {/* <BookImage bookImage="" /> */}
 

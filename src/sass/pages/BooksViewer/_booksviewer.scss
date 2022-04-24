@@ -1,20 +1,10 @@
-@import "./SubComponents/bookcontainer";
+@import "./SubComponents/bookspagination";
+
 .lm-booksviewer {
   display: grid;
   grid-template-rows: auto;
   grid-template-areas:
-    "lm-bookmodifier"
-    "lm-booksviewer__books";
-
-  .lm-booksviewer__books {
-    position: relative;
-    width: 100%;
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    @media screen and (min-width: 576px) {
-      display: flex;
-    }
-    @include lm-bookcontainer;
-  }
+    "lm-lc-bookmodifier"
+    "lm-gc-dragging"
+    "lm-lc-booksviewer__bookspagination";
 }

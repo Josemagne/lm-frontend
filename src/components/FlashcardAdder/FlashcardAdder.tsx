@@ -17,12 +17,11 @@ import ChapterFlashcard from "../../classes/ChapterFlashcard";
 import { nanoid } from "nanoid";
 import Server from "../../services/Server";
 import BookFlashcard from "../../classes/BookFlashcard";
+import FAPI from "../../storage/indexedDB/FAPI";
+import LM_Entity, { LM_EntityName } from "../../types/Entity/entity";
 
 type Props = {
-  /**
-   * Decides if the flashcard will be added to a book. If false then it will be added to a chapter
-   */
-  forBook: boolean;
+  type: LM_EntityName;
 };
 
 /**
@@ -30,25 +29,8 @@ type Props = {
  * @param props
  * @returns
  */
-const FlashcardAdder = ({ forBook }: Props) => {
+const FlashcardAdder = ({ type }: Props) => {
   const dispatch = useAppDispatch();
-
-  let selectedBook: null | LM_Book;
-  try {
-    selectedBook = useAppSelector((state) => state.books.selectedBook.book);
-  } catch (err) {
-    selectedBook = null;
-  }
-
-  let selectedChapter: LM_Chapter | null;
-  try {
-    selectedChapter = useAppSelector(
-      (state) => state.books.selectedChapter.chapter
-    );
-  } catch (err) {
-    selectedChapter = null;
-  }
-
   const newFlashcard = useAppSelector(
     (state) => state.books.selectedChapter.newFlashcard
   );
@@ -57,45 +39,6 @@ const FlashcardAdder = ({ forBook }: Props) => {
    * Changes the book with the new flashcard
    */
   async function submitHandler() {
-    // Add flashcard to a book
-    if (forBook) {
-      if (!selectedBook) return;
-      const newBookFlashcard = new BookFlashcard(
-        selectedBook.book_id,
-        newFlashcard.flashcard_id,
-        newFlashcard.flashcard_id
-      );
-    }
-
-    // Add flashcard to a chapter
-    else {
-      if (!selectedChapter || !selectedBook) return;
-      const flashcard = new Flashcard(
-        nanoid(),
-        newFlashcard.question,
-        newFlashcard.answer
-      );
-      const newChapterFlashcard = new ChapterFlashcard(
-        selectedBook.book_id,
-        selectedChapter.chapter_id,
-        flashcard
-      );
-    }
-    const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(selectedChapter));
-
-    // @ts-ignore
-    chapterCopy.flashcards[newFlashcard.flashcard_id] = newFlashcard;
-
-    const bookCopy: LM_Book = JSON.parse(JSON.stringify(selectedBook));
-
-    // @ts-ignore
-    bookCopy.chapters[chapterCopy.chapter_id] = chapterCopy;
-
-    // Add a new Flashcard
-    const freshFlashcard = new Flashcard();
-    dispatch(changeNewFlashcard(freshFlashcard));
-    dispatch(changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id }));
-
     // indexedDB
     await Book.addFlashcard(
       bookCopy.book_id,
@@ -103,10 +46,7 @@ const FlashcardAdder = ({ forBook }: Props) => {
       newFlashcard
     );
 
-    await Book.add;
-
     // TODO server
-    Server.addBookFlashcard();
   }
 
   useEffect(() => {

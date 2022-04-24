@@ -3,6 +3,7 @@ import { LM_Book } from "../../../../../types/Book/book";
 import { Button, Modal } from "rsuite";
 import { useNavigate } from "react-router";
 import {
+  changeSelectedBook,
   removeSelectedBook,
   toggleBooksViewerModal,
 } from "../../../../../state/redux/features/bookSlice";
@@ -10,35 +11,31 @@ import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../../hooks/useAppSelector";
 import { replace } from "cypress/types/lodash";
 
-type Props = {
-  selectedBook: LM_Book;
-};
+type Props = {};
 
 /**
  * Shows Modal for the book
  * @param param0
  * @returns
  */
-const BookModal = ({ selectedBook }: Props) => {
+const BookModal = ({}: Props) => {
   const dispatch = useAppDispatch();
-
-  const openBooksViewerModal: boolean = useAppSelector(
-    (state) => state.books.openBooksViewerModal
-  );
 
   const navigate = useNavigate();
 
+  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+
   const handleClose = () => {
-    dispatch(toggleBooksViewerModal(""));
+    dispatch(changeSelectedBook(null));
   };
 
-  useEffect(() => {}, [openBooksViewerModal]);
+  useEffect(() => {}, [selectedBook]);
 
   return (
     <Modal
       className="lm-bookmodal"
       overflow={true}
-      open={openBooksViewerModal}
+      open={selectedBook}
       onClose={handleClose}
       full={true}
     >

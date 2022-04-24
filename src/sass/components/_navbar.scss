@@ -7,6 +7,9 @@
   position: fixed;
   bottom: 0 !important;
 
+  @media screen and (min-width: 576px) {
+    position: sticky !important;
+  }
   .lm-navbar__inner {
     .lm-navbar__linkscontainer {
       display: flex;
@@ -37,9 +40,6 @@
     }
   }
 
-  @media screen and (min-width: 576px) {
-    position: sticky !important;
-  }
   .lm-navbar__brand {
     border-radius: 5px;
     padding: 1rem;

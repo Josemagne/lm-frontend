@@ -9,6 +9,8 @@ import {
   toggleChapterModifierModal,
 } from "../../../../../state/redux/features/bookSlice";
 import ChapterState from "../../../ChapterModifier/SubComponents/ChapterHeader/ChapterState/ChapterState";
+import FAPI from "../../../../../storage/indexedDB/FAPI";
+import API from "../../../../../api/API";
 
 type Props = {
   chapter: LM_Chapter;
@@ -43,16 +45,14 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
   const removeChapter = async (e: any) => {
     e.preventDefault();
     e.stopPropagation();
-    // redux
+
     dispatch(
       deleteChapter({ chapter_id: chapter.chapter_id, book_id: book_id })
     );
 
-    // indexedDB
-    await Book.removeChapter(chapter.chapter_id, book_id);
+    await FAPI.deleteChapter(chapter.chapter_id);
 
-    // Server
-    Server.deleteChapter(chapter.chapter_id);
+    await API.deleteChapter(chapter.chapter_id);
   };
 
   useEffect(() => {}, [chapter]);

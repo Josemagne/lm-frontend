@@ -21,9 +21,8 @@ type Props = {};
 const ChapterFlashcards = (props: Props) => {
   const dispatch = useAppDispatch();
 
-  const book = useAppSelector((state) => state.books.selectedBook.book);
-  const chapter = useAppSelector(
-    (state) => state.books.selectedChapter.chapter
+  const selectedChapter = useAppSelector(
+    (state) => state.chapters.selectedChapter
   );
 
   /**
@@ -42,7 +41,7 @@ const ChapterFlashcards = (props: Props) => {
     <div className="lm-chaptermodifier__flashcards mt-3">
       <div className="container">
         <h3>Flashcards</h3>
-        <FlashcardAdder forBook={false} />
+        <FlashcardAdder />
       </div>
 
       {/* <div className="lm-chaptermodifier__flashcards__question"></div>

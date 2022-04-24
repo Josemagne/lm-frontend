@@ -4,20 +4,17 @@ import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
 import useAppSelector from "../../../hooks/useAppSelector";
 import ChapterModifier from "../ChapterModifier/ChapterModifier";
-import { fetchChapters } from "../../../state/redux/features/chapterSlice";
 import { LM_Book } from "../../../types/Book/book";
 import BookSelector from "../../../components/BookSelector/BookSelector";
-
-// ANCHOR tinymce
+import {
+  fetchChaptersBackend,
+  fetchChaptersFrontend,
+} from "../../../state/redux/features/chapterSlice";
 
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
-  const bookID = window.location.href.split("/").pop();
-  if (!bookID) return <p>No book selected</p>;
-
   let selectedBook: LM_Book | null;
-
   try {
     selectedBook = useAppSelector((state) => state.books.selectedBook.book);
   } catch (err) {
@@ -31,28 +28,19 @@ const ChaptersViewer = ({}: Props) => {
     selectedChapter = null;
   }
 
-  /**
-   * Contains the chapters
-   */
   let chapters: LM_Chapter[] | null;
   try {
-    chapters = useAppSelector(
-      (state) => state.books.selectedBook.book.chapters
+    chapters = Object.values(
+      useAppSelector((state) => state.chapters.chapters.chapters)
     );
   } catch (err) {
     chapters = null;
   }
 
-  const openChapterModifierModal = useAppSelector(
-    (state) => state.books.openChapterModifierModal
-  );
-
-  console.log("open???", openChapterModifierModal);
-
   useEffect(() => {}, [chapters, selectedChapter, selectedBook]);
-  useEffect(() => {}, [openChapterModifierModal]);
   useEffect(() => {
-    fetchChapters();
+    fetchChaptersBackend();
+    fetchChaptersFrontend();
   }, []);
 
   return (
@@ -75,7 +63,7 @@ const ChaptersViewer = ({}: Props) => {
                   return (
                     <ChapterContainer
                       key={ch.chapter_id}
-                      book_id={bookID}
+                      book_id={selectedBook!.book_id}
                       chapter={ch}
                     />
                   );

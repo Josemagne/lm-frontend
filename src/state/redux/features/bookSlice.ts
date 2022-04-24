@@ -9,6 +9,8 @@ import { LM_Flashcard } from "../../../types/flashcards/flashcard";
 import Flashcard from "../../../classes/base/Flashcard";
 import LM_Summary from "../../../types/Book/booksummary";
 import LM_BookSummary from '../../../types/Book/booksummary';
+import { nanoid } from 'nanoid';
+import FAPI from "../../../storage/indexedDB/FAPI";
 
 interface InitialBookState {
     books: {
@@ -18,9 +20,10 @@ interface InitialBookState {
         /**
          * book_id strings of the books 
          */
-        ids: string[],
+        book_ids: string[],
         loading: boolean;
         error: any;
+        amountOfBooks: number;
     },
     /**
      * Id of the particular book that is being focused upon
@@ -60,9 +63,10 @@ interface InitialBookState {
 const initialState: InitialBookState = {
     books: {
         books: {},
-        ids: [],
+        book_ids: [],
         loading: false,
-        error: null
+        error: null,
+        amountOfBooks: 0
     },
     selectedBook: {
         book_id: null,
@@ -72,7 +76,7 @@ const initialState: InitialBookState = {
         chapter: null,
         chapter_id: null,
         selectedFlashcard: null,
-        newFlashcard: new Flashcard()
+        newFlashcard: new Flashcard(nanoid(), "BOOK", "", "")
     },
     summaries: {
         loading: false,
@@ -101,42 +105,25 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
 });
 
 
-
-const fetchBookSummaries = createAsyncThunk("summaries/", async (): Promise<LM_BookSummary[]> => {
-    let summaries = await Server.getBookSummaries();
-
-    return summaries;
-})
-
-
 /**
  * Fetches books from frontend with redux thunk
  */
 export const fetchBooksFrontend = createAsyncThunk("books/fetchBooksFrontend", async (): Promise<LM_Book[] | any> => {
     let error: any = null;
-    let result = await Book.getBooks().then((res) => res).catch((err) => {
+    let result = await FAPI.getBooks().then((res) => res).catch((err) => {
         error = err;
     })
     if (error) return error;
     return result;
 })
 
-// export const addSelectedBook = createAsyncThunk("books/addSelectedBook", async (book_id: string): Promise<LM_Book | any> => {
-//     let error: any = null;
-//     let book = await Book.getBook(book_id).then((res) => res).catch((err) => { error = err });
-//     if (error) return error;
-
-//     if (!book) return;
-//     return book;
-// })
-
 export const bookSlice: Slice<InitialBookState> = createSlice({
     name: "books",
     initialState: initialState,
     reducers: {
         addBook: (state, action: PayloadAction<LM_Book>) => {
-            state.books.books[action.payload.book_id] = action.payload;
-
+            const book = action.payload;
+            state.books.books[book.book_id] = book;
         },
         removeBook: (state, action: PayloadAction<string>) => {
             delete state.books.books[action.payload];
@@ -196,12 +183,8 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
             state.books.books[bookId].chapters[chapterId].read = !read;
         },
         /* ANCHOR selectedBook */
-        changeSelectedBook: (state, action: PayloadAction<{ book_id: string, book: LM_Book | null }>) => {
-            state.selectedBook.book_id = action.payload.book_id;
-            if (!action.payload.book) return;
-            state.selectedBook.book = action.payload.book;
-
-
+        changeSelectedBook: (state, action: PayloadAction<LM_Book | null>) => {
+            state.selectedBook.book = action.payload;
         },
         removeSelectedBook: (state, action) => {
             state.selectedBook.book_id = null;
@@ -262,9 +245,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
             const selectedBook = state.selectedBook.book;
             const selectedChapter = state.selectedChapter.chapter;
             const selectedFlashcard = state.selectedChapter.selectedFlashcard;
-
-
-
         },
         /**
          * Changes newFlashcard
@@ -285,10 +265,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
             state.selectedChapter.selectedFlashcard = action.payload;
         },
 
-        // ANCHOR Modals
-        toggleBooksViewerModal: (state, action) => {
-            state.openBooksViewerModal = !state.openBooksViewerModal;
-        },
         toggleChapterModifierModal: (state, action) => {
             state.openChapterModifierModal = !state.openChapterModifierModal;
             console.log(state.openChapterModifierModal)
@@ -308,6 +284,7 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
                         state.books.books[book.book_id] = book;
                     }
                 })
+                state.books.amountOfBooks = action.payload.length;
                 state.books.loading = false;
             }),
             builder.addCase(fetchBooksBackend.rejected, (state, action) => {
@@ -328,25 +305,13 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
                     }
                 })
                 state.books.loading = false;
+                state.books.amountOfBooks = action.payload.length;
             }),
             builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
                 state.books.loading = false;
                 state.books.error = action.payload;
-            }),
-            // ANCHOR BookSummary
-            builder.addCase(fetchBookSummaries.pending, (state, action) => {
-                state.summaries.loading = true;
-            }),
-            builder.addCase(fetchBookSummaries.fulfilled, (state, action) => {
-                const summaries = action.payload;
-                summaries.forEach((summary) => {
-                    state.books.books[summary.book_id].summary = summary.summary;
-                })
-            }),
-            builder.addCase(fetchBookSummaries.rejected, (state, action) => {
-                state.summaries.error = action.payload as string;
-                state.summaries.loading = false;
             })
+
 
     }
 })

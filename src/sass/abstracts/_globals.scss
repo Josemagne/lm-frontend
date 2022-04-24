@@ -7,23 +7,15 @@
 }
 
 html {
-  // We do not want overflowing elements!
-  // overflow-x: hidden !important;
-  max-width: 100%;
 }
 
 body {
-  max-width: 100%;
-  // overflow-x: hidden !important;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
 }
 
 // ANCHOR .app
 .app {
   width: 100%;
-  height: 100vh;
+  overflow-x: hidden;
 }
 
 // ANCHOR lm-page
@@ -31,9 +23,9 @@ body {
   width: 100%;
   min-width: 300px;
   max-width: 992px !important;
-  margin: auto;
+  margin-right: auto;
+  margin-left: auto;
   // Take the whole height
-  overflow-x: hidden;
   // margin-top: 2rem;
   // margin-left: 2rem;
   // margin-right: 2rem;
