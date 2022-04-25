@@ -26,6 +26,20 @@ export declare interface LM_Metadata {
      * book_id strings of the books that are not saved in the backend
      */
     notSynchronizedBooks: { book_id: string, status: "add" | "delete" | "update" }[];
+    notSynchronizedEntities: {
+        /**
+         * IDs of the books that are not synchronized
+         */
+        books: string[],
+        chapters: string[],
+        subchapters: string[],
+        authors: string[],
+        questions: string[],
+        commentaries: string[],
+        flashcards: string[],
+        summaries: string[],
+        persons: string[],
+    }
     /**
      * Information about the user
      */

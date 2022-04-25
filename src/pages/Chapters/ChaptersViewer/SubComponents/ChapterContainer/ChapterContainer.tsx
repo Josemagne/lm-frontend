@@ -2,24 +2,22 @@ import { useEffect } from "react";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import Server from "../../../../../services/Server";
-import {
-  changeSelectedChapter,
-  deleteChapter,
-  toggleChapterModifierModal,
-} from "../../../../../state/redux/features/bookSlice";
-import ChapterState from "../../../ChapterModifier/SubComponents/ChapterHeader/ChapterState/ChapterState";
+import ChapterState from "../../../ChapterModal/SubComponents/ChapterHeader/ChapterState/ChapterState";
 import FAPI from "../../../../../storage/indexedDB/FAPI";
 import API from "../../../../../api/API";
+import {
+  deleteChapter,
+  updateSelectedChapter,
+} from "../../../../../state/redux/features/chapterSlice";
 
 type Props = {
   chapter: LM_Chapter;
-  book_id: string;
 };
 
 /**
  * Contains the metadata about the chapter
  */
-const ChapterContainer = ({ chapter, book_id }: Props) => {
+const ChapterContainer = ({ chapter }: Props) => {
   // const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -31,13 +29,7 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(
-      changeSelectedChapter({
-        chapter: chapter,
-        chapter_id: chapter.chapter_id,
-      })
-    );
-    dispatch(toggleChapterModifierModal(""));
+    dispatch(updateSelectedChapter(chapter));
     console.log("clicked");
   };
 
@@ -45,9 +37,7 @@ const ChapterContainer = ({ chapter, book_id }: Props) => {
     e.preventDefault();
     e.stopPropagation();
 
-    dispatch(
-      deleteChapter({ chapter_id: chapter.chapter_id, book_id: book_id })
-    );
+    dispatch(deleteChapter(chapter.chapter_id));
 
     await FAPI.deleteChapter(chapter.chapter_id);
 

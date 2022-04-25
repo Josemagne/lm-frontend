@@ -60,36 +60,14 @@ const BooksPagination = (props: Props) => {
       <div className="lm-booksviewer__bookspagination__books">
         {Object.keys(currentBooks).length > 0 ? (
           (Object.values(currentBooks) as LM_Book[]).map((book) => {
-            return (
-              <BookContainer
-                book={book}
-                book_id={book.book_id}
-                key={book.book_id}
-                children={
-                  <Panel
-                    header={
-                      <Fragment>
-                        <AuthorViewer
-                          author_prename={book.author_prename}
-                          author_name={book.author_name}
-                        />
-                        <TitleViewer title={book.book_title} />
-                        <ProgressViewer progress={book.progress} />
-                        <PagesViewer pages={book.pages} />
-                        <ImageViewer />
-                      </Fragment>
-                    }
-                  ></Panel>
-                }
-              />
-            );
+            return <BookContainer book={book} key={book.book_id} />;
           })
         ) : (
           <p>no books</p>
         )}
       </div>
       <div className="lm-booksviewer__bookspagination__rule">
-        {windowWidth < 576 ? (
+        {windowWidth < 768 ? (
           <Pagination
             prev
             last

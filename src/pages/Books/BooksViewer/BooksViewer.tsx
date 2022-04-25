@@ -42,7 +42,7 @@ const BooksViewer = (props: Props) => {
   /**
    * Opens bookmodifier
    */
-  function openBookModifier() {
+  function openBookAdder() {
     dispatch(toggleAddingNewBook(""));
   }
 
@@ -61,7 +61,7 @@ const BooksViewer = (props: Props) => {
 
   return (
     <div className="lm-page lm-booksviewer">
-      <button className="btn btn-primary" onClick={openBookModifier}>
+      <button className="btn btn-primary" onClick={openBookAdder}>
         Add a book
       </button>
       <BookAdder />

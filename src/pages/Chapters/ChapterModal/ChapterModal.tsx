@@ -34,7 +34,7 @@ type Props = {};
  * @param props
  * @returns
  */
-const ChapterModifier = (props: Props) => {
+const ChapterModal = (props: Props) => {
   /**
    * Dispatches action creator to the store
    */
@@ -111,4 +111,4 @@ const ChapterModifier = (props: Props) => {
   );
 };
 
-export default ChapterModifier;
+export default ChapterModal;

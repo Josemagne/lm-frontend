@@ -117,7 +117,7 @@ if (isProduction) {
     compress: true,
     hot: true,
     host: "localhost",
-    port: 8066,
+    port: 8067,
     historyApiFallback: true,
   };
 }

@@ -6,8 +6,6 @@ import { LM_User } from '../types/auth/user';
 * Gets the metadata
  */
 export default class Metadata {
-
-
     /**
      * Gets the metadata from localstorage
      * @returns metadata object
@@ -25,7 +23,17 @@ export default class Metadata {
                 amount: 0, books: []
             }, serverBooks: {
                 amount: 0, books: []
-            }, notSynchronizedBooks: [], unSynchronizedBooks: []
+            }, notSynchronizedBooks: [], unSynchronizedBooks: {
+                books: [],
+                chapters: [],
+                subchapters: [],
+                authors: [],
+                questions: [],
+                commentaries: [],
+                flashcards: [],
+                summaries: [],
+                persons: [],
+            }
         }
         return await new lssv().createStorageObject("metadata", metadata)
     }

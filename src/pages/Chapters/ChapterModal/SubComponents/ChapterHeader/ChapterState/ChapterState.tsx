@@ -9,7 +9,8 @@ import { LM_Book } from "../../../../../../types/Book/book";
 import useAppSelector from "../../../../../../hooks/useAppSelector";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import LM_Chapter from "../../../../../../types/Book/chapter";
-import Book from "../../../../../../storage/indexedDB/Book";
+import { updateChapter } from "../../../../../../state/redux/features/chapterSlice";
+import FAPI from "../../../../../../storage/indexedDB/FAPI";
 
 interface Props {
   chapter: LM_Chapter;
@@ -36,23 +37,26 @@ const ChapterState = ({ chapter }: Props) => {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    const chapterCopy = JSON.parse(JSON.stringify(chapter));
-    chapterCopy.read = !chapter.read;
-    dispatch(
-      toggleChapterState({
-        bookId: chapter.book_id,
-        chapterId: chapter.chapter_id,
-      })
-    );
+    const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(chapter));
+    if (chapter.status === "TO_READ" || chapter.status === "READING") {
+      chapterCopy.status = "READ";
+    } else {
+      chapterCopy.status = "TO_READ";
+    }
 
-    Book.updateChapter(chapterCopy);
+    dispatch(updateChapter(chapterCopy));
+
+    FAPI.updateChapter(chapterCopy);
   };
 
   useEffect(() => {}, [chapter]);
 
   return (
     <div className="lm-chapterstate-container" onClick={(e) => handleChange(e)}>
-      <Toggle checked={chapter.read} checkedChildren="read" />
+      <Toggle
+        checked={chapter.status !== "READING" && chapter.status !== "TO_READ"}
+        checkedChildren="read"
+      />
     </div>
   );
 };

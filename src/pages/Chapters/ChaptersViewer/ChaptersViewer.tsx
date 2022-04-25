@@ -3,17 +3,21 @@ import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer"
 import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
 import useAppSelector from "../../../hooks/useAppSelector";
-import ChapterModifier from "../ChapterModifier/ChapterModifier";
+import ChapterModifier from "../ChapterModal/ChapterModal";
 import { LM_Book } from "../../../types/Book/book";
 import BookSelector from "../../../components/BookSelector/BookSelector";
+import useAppDispatch from "../../../hooks/useAppDispatch";
 import {
   fetchChaptersBackend,
   fetchChaptersFrontend,
+  toggleAddingNewChapter,
+  updateSelectedChapter,
 } from "../../../state/redux/features/chapterSlice";
 
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
+  const dispatch = useAppDispatch();
   let selectedBook: LM_Book | null;
   try {
     selectedBook = useAppSelector((state) => state.books.selectedBook.book);
@@ -37,6 +41,14 @@ const ChaptersViewer = ({}: Props) => {
     chapters = null;
   }
 
+  const addingNewChapter = useAppSelector(
+    (state) => state.chapters.addingNewChapter
+  );
+
+  function openChapterAdder() {
+    dispatch(toggleAddingNewChapter(""));
+  }
+
   useEffect(() => {}, [chapters, selectedChapter, selectedBook]);
   useEffect(() => {
     fetchChaptersBackend();
@@ -46,40 +58,15 @@ const ChaptersViewer = ({}: Props) => {
   return (
     <div className="lm-chaptersviewer lm-page">
       {/* NOTE Shows the book that we are treating at the moment */}
-      {selectedBook ? (
-        <>
-          <div className="lm-chaptersviewer__bookinformation">
-            <h4>
-              <span>{selectedBook.author}</span>
-              <span>{selectedBook.book_title}</span>
-            </h4>
-          </div>
-          <ChapterAdder />
-          <div className="lm-chapters">
-            {chapters && Object.keys(chapters).length > 0 ? (
-              // @ts-ignore
-              Object.values(chapters as { [id: string]: LM_Chapter }).map(
-                (ch: LM_Chapter) => {
-                  return (
-                    <ChapterContainer
-                      key={ch.chapter_id}
-                      book_id={selectedBook!.book_id}
-                      chapter={ch}
-                    />
-                  );
-                }
-              )
-            ) : (
-              <div>
-                <p>No chapters yet...</p>
-              </div>
-            )}
-          </div>
-          {selectedChapter ? <ChapterModifier /> : null}
-        </>
-      ) : (
-        <BookSelector />
-      )}
+      <div className="lm-chaptersviewer__bookinformation">
+        <h4></h4>
+      </div>
+      <button className="btn btn-primary" onClick={openChapterAdder}>
+        Add a book
+      </button>
+      {selectedBook && addingNewChapter ? <ChapterAdder /> : null}
+      <div className="lm-chapters"></div>
+      <BookSelector />
     </div>
   );
 };

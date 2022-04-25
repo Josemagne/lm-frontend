@@ -13,6 +13,7 @@ interface InitialChapterState {
             [chapter_id: string]: LM_Chapter;
         }
         chapter_ids: string[]
+        amountOfChapters: 0
     },
     selectedChapter: LM_Chapter | null,
     newChapter: LM_Chapter,
@@ -27,7 +28,9 @@ const initialState: InitialChapterState = {
         loading: false,
         error: null,
         chapters: {},
-        chapter_ids: []
+        chapter_ids: [],
+        amountOfChapters: 0
+
     },
     /**
      * The chapter that is being handled at the moment
@@ -67,10 +70,16 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
             state.chapters.chapters[chapter.chapter_id] = chapter;
         },
         updateChapter: (state, action) => {
+            const chapter = action.payload;
+
+            state.chapters.chapters[chapter.chapter_id] = chapter;
+            state.selectedChapter = chapter;
 
         },
         deleteChapter: (state, action) => {
+            const chapter_id = action.payload;
 
+            delete state.chapters.chapters[chapter_id];
         },
         /**
          * Update the selectedChapter
@@ -83,7 +92,17 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
             state.selectedChapter = chapter;
             state.chapters.chapters[chapter.chapter_id] = chapter;
         },
-        // TODO deleteSelctedChapter
+        deleteSelectedChapter: (state, action) => {
+            const chapter_id = action.payload;
+
+            state.selectedChapter = null;
+            delete state.chapters.chapters[chapter_id];
+        },
+        toggleAddingNewChapter: (state, action) => {
+            state.addingNewChapter = !state.addingNewChapter;
+        }
+
+
 
     },
     extraReducers: (builder) => {
@@ -133,6 +152,6 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
     }
 })
 
-export const { updateSelectedChapter, addChapter, updateChapter, deleteChapter } = chapterSlice.actions;
+export const { updateSelectedChapter, addChapter, updateChapter, deleteChapter, toggleAddingNewChapter } = chapterSlice.actions;
 
 export default chapterSlice.reducer;

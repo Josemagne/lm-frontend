@@ -11,14 +11,14 @@ import Server from "../../../../../services/Server";
 import Delete from "../Delete/Delete";
 
 type Props = {
-  children: any;
   book: LM_Book;
-  book_id: string;
 };
 
-const BookContainer = ({ children, book_id: bookId, book }: Props) => {
-  const [book_id, SetBook_id] = useState<string>(bookId);
+const BookContainer = ({ book }: Props) => {
   const dispatch = useAppDispatch();
+
+  const { author_name, author_prename, pages, progress, book_id, book_title } =
+    book;
 
   // We lead the user to /bookmodifier/{book_id}
   const handleClick = () => {
@@ -34,7 +34,16 @@ const BookContainer = ({ children, book_id: bookId, book }: Props) => {
       }}
       className="lm-bookcontainer"
     >
-      {children}
+      <div className="lm-authorviewer">
+        <span>{author_prename}</span>
+        <span>{author_name}</span>
+      </div>
+      <div className="lm-titleviewer">
+        <span>{book_title}</span>
+      </div>
+      <div className="lm-progressviewer">{progress.toString() + "%"}</div>
+      <div className="lm-pagesviewer">pages: {pages}</div>
+      <div className="lm-imageviewer"></div>
       <Delete book_id={book_id} />
     </div>
   );

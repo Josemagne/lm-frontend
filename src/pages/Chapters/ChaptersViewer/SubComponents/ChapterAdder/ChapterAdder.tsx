@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import { LM_Book } from "../../../../../types/Book/book";
-import Book from "../../../../../storage/indexedDB/Book";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import { useFormik } from "formik";
 import { nanoid } from "nanoid";
@@ -17,6 +16,9 @@ import {
 import Chapter from "../../../../../classes/Chapter";
 import Flashcard from "../../../../../classes/base/Flashcard";
 import * as yup from "yup";
+import FAPI from "../../../../../storage/indexedDB/FAPI";
+import { Modal } from "rsuite";
+import { toggleAddingNewChapter } from "../../../../../state/redux/features/chapterSlice";
 
 type Props = {};
 
@@ -38,9 +40,7 @@ const ChapterAdder = ({}: Props) => {
       currentID,
       _book.book_id,
       "",
-      false,
-      false,
-      false,
+      "TO_READ",
       0,
       "",
       ""
@@ -65,7 +65,7 @@ const ChapterAdder = ({}: Props) => {
         changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id })
       );
 
-      await Book.addChapter(_book.book_id, values);
+      await FAPI.addChapter(values);
 
       console.log("Sending book to backend");
       // Add to the server
@@ -78,9 +78,7 @@ const ChapterAdder = ({}: Props) => {
           currentID,
           _book.book_id,
           "",
-          false,
-          false,
-          false,
+          "TO_READ",
           0,
           "",
           ""
@@ -91,6 +89,14 @@ const ChapterAdder = ({}: Props) => {
     },
   });
 
+  const addingNewChapter = useAppSelector(
+    (state) => state.chapters.addingNewChapter
+  );
+
+  function handleClose() {
+    dispatch(toggleAddingNewChapter(""));
+  }
+
   useEffect(() => {
     if (!_book) return;
   }, [_book]);
@@ -100,41 +106,43 @@ const ChapterAdder = ({}: Props) => {
   }, [formik.values]);
 
   return (
-    <div className="lm-chapteradder">
-      <div className="lm-chapteradder__index">
-        <FloatingLabel controlId="index" label="Index">
-          <Form.Control
-            type="text"
-            placeholder="Index"
-            {...formik.getFieldProps("index")}
-          />
-        </FloatingLabel>
-      </div>
-      <div className="lm-chapteradder__title">
-        <FloatingLabel controlId="title" label="Chaptertitle">
-          <Form.Control
-            type="text"
-            placeholder="Book Title"
-            {...formik.getFieldProps("title")}
-          />
-        </FloatingLabel>
-      </div>
+    <Modal open={addingNewChapter} onClose={handleClose}>
+      <div className="lm-chapteradder">
+        <div className="lm-chapteradder__index">
+          <FloatingLabel controlId="index" label="Index">
+            <Form.Control
+              type="text"
+              placeholder="Index"
+              {...formik.getFieldProps("index")}
+            />
+          </FloatingLabel>
+        </div>
+        <div className="lm-chapteradder__title">
+          <FloatingLabel controlId="title" label="Chaptertitle">
+            <Form.Control
+              type="text"
+              placeholder="Book Title"
+              {...formik.getFieldProps("title")}
+            />
+          </FloatingLabel>
+        </div>
 
-      {/* roRead */}
-      {/* importance */}
-      {/* read */}
-      {/* Summary */}
-      <div
-        className="lm-chapteradder__button"
-        onClick={() => {
-          formik.handleSubmit();
-        }}
-      >
-        <div>+</div>
-      </div>
+        {/* roRead */}
+        {/* importance */}
+        {/* read */}
+        {/* Summary */}
+        <div
+          className="lm-chapteradder__button"
+          onClick={() => {
+            formik.handleSubmit();
+          }}
+        >
+          <div>+</div>
+        </div>
 
-      {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}
-    </div>
+        {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}
+      </div>
+    </Modal>
   );
 };
 

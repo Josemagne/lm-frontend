@@ -3,7 +3,7 @@ import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
 import Navbar from "./components/Navbar/Navbar";
 import BookModifier from "./pages/Books/BookAdder/BookAdder";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
-import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
+import ChapterModifier from "./pages/Chapters/ChapterModal/ChapterModal";
 import ErrorPage from "./pages/Error";
 import Flashcards from "./pages/Flashcards/Flashcards";
 import Register from "./pages/Authenticate/Register/Register";
