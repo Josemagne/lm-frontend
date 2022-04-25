@@ -1,5 +1,5 @@
 import { any } from "cypress/types/bluebird";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -7,7 +7,14 @@ import {
   DropResult,
   ResponderProvided,
 } from "react-beautiful-dnd";
+import { Panel } from "rsuite";
 import useAppSelector from "../../hooks/useAppSelector";
+import AuthorViewer from "../../pages/Books/BooksViewer/SubComponents/AuthorViewer/AuthorViewer";
+import BookContainer from "../../pages/Books/BooksViewer/SubComponents/BookContainer/BookContainer";
+import ImageViewer from "../../pages/Books/BooksViewer/SubComponents/ImageViewer/ImageViewer";
+import PagesViewer from "../../pages/Books/BooksViewer/SubComponents/PagesViewer/PagesViewer";
+import ProgressViewer from "../../pages/Books/BooksViewer/SubComponents/ProgressViewer/ProgressViewer";
+import TitleViewer from "../../pages/Books/BooksViewer/SubComponents/TitleViewer/TitleViewer";
 import {
   LM_Entity,
   LM_EntityID,
@@ -19,10 +26,12 @@ type Props = {
 };
 
 const Dragging = ({ type }: Props) => {
-  const a = {
-    BOOK: "book_id",
-  };
-
+  /**
+   * Maps the entity name to their id name
+   * @param type
+   * @example "BOOK" --> "book_id"
+   * @returns
+   */
   const entityIDMapping = (type: LM_EntityName): LM_EntityID => {
     switch (type) {
       case "BOOK":
@@ -32,14 +41,25 @@ const Dragging = ({ type }: Props) => {
     }
   };
 
+  /**
+   * Object that contains the mapped entities for the LM_EntityStatus
+   */
   const entityMapping = {
     TO_READ: {},
     READING: {},
     READ: {},
   };
+
+  /**
+   * Contains the entities that we will fetch
+   */
   let entities: any[] = [];
 
   // TODO Move to utils
+  /**
+   * Decides which LM_Entity we will fetch
+   * @param entity
+   */
   const chooseEntity = (entity: string) => {
     switch (entity) {
       case "BOOK":
@@ -54,6 +74,10 @@ const Dragging = ({ type }: Props) => {
     }
   };
 
+  /**
+   * Distributes the entities in their LM_EntityStatus
+   * @param entity
+   */
   const distributeEntity = (entity: LM_Entity[]) => {
     entity.forEach((ent: any) => {
       if (ent.status === "TO_READ") {
@@ -74,7 +98,7 @@ const Dragging = ({ type }: Props) => {
   console.log("mapping entities: ", entities);
   function onDragEnd(result: DropResult, provided: ResponderProvided) {}
 
-  useEffect(() => {}, [entities]);
+  useEffect(() => {}, [entities, entityMapping]);
 
   return (
     <div className="lm-gc-dragging">
@@ -91,7 +115,7 @@ const Dragging = ({ type }: Props) => {
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
                 >
-                  {Object.values(entityMapping.READ).map(
+                  {Object.values(entityMapping.TO_READ).map(
                     (entity: any, index) => {
                       return (
                         <Draggable
@@ -105,8 +129,35 @@ const Dragging = ({ type }: Props) => {
                                 {...draggable.draggableProps}
                                 {...draggable.dragHandleProps}
                                 ref={draggable.innerRef}
+                                className="draggable-item"
                               >
-                                <p>{entity.book_title}</p>
+                                <BookContainer
+                                  book={entity}
+                                  book_id={entity.book_id}
+                                  key={entity.book_id}
+                                  children={
+                                    <Panel
+                                      header={
+                                        <Fragment>
+                                          <AuthorViewer
+                                            author_prename={
+                                              entity.author_prename
+                                            }
+                                            author_name={entity.author_name}
+                                          />
+                                          <TitleViewer
+                                            title={entity.book_title}
+                                          />
+                                          <ProgressViewer
+                                            progress={entity.progress}
+                                          />
+                                          <PagesViewer pages={entity.pages} />
+                                          <ImageViewer />
+                                        </Fragment>
+                                      }
+                                    ></Panel>
+                                  }
+                                />
                               </li>
                             );
                           }}
@@ -143,6 +194,7 @@ const Dragging = ({ type }: Props) => {
                                 {...draggable.dragHandleProps}
                                 {...draggable.draggableProps}
                                 ref={draggable.innerRef}
+                                className="draggable-item"
                               >
                                 <p>{entity.book_title}</p>
                               </li>

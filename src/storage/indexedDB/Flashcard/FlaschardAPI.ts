@@ -1,5 +1,5 @@
 import { Constructor } from "../../../types/common/constructor";
-import { LM_Flashcard, FlashcardType } from '../../../types/flashcards/flashcard';
+import { LM_Flashcard, FlashcardType } from '../../../types/Flashcard/flashcard';
 import FlashcardDB from "./FlashcardDB";
 
 export default function FlashcardAPI<TBase extends Constructor>(Base: TBase) {

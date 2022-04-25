@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, Slice, PayloadAction } from '@reduxjs/to
 import API from '../../../api/API';
 import FAPI from '../../../storage/indexedDB/FAPI';
 import LM_Chapter from '../../../types/Book/chapter';
+import { nanoid } from 'nanoid';
+import Chapter from '../../../classes/Chapter';
 
 interface InitialChapterState {
     chapters: {
@@ -12,7 +14,9 @@ interface InitialChapterState {
         }
         chapter_ids: string[]
     },
-    selectedChapter: LM_Chapter | null
+    selectedChapter: LM_Chapter | null,
+    newChapter: LM_Chapter,
+    addingNewChapter: boolean
 }
 
 const initialState: InitialChapterState = {
@@ -29,6 +33,8 @@ const initialState: InitialChapterState = {
      * The chapter that is being handled at the moment
      */
     selectedChapter: null,
+    newChapter: new Chapter(nanoid(), "", "", "TO_READ", 0, "", ""),
+    addingNewChapter: false
 }
 
 export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (): Promise<LM_Chapter[] | any> => {

@@ -1,7 +1,7 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
 import Navbar from "./components/Navbar/Navbar";
-import BookModifier from "./pages/Books/BookModifier/BookModifier";
+import BookModifier from "./pages/Books/BookAdder/BookAdder";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModifier/ChapterModifier";
 import ErrorPage from "./pages/Error";

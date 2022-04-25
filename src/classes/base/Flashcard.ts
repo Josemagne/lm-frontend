@@ -1,4 +1,4 @@
-import { LM_Flashcard, FlashcardType } from '../../types/flashcards/flashcard';
+import { LM_Flashcard, FlashcardType } from '../../types/Flashcard/flashcard';
 import { nanoid } from 'nanoid';
 
 class Flashcard implements LM_Flashcard {

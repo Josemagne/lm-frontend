@@ -3,14 +3,12 @@ import { LM_Book } from "../../../types/Book/book"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Server from '../../../services/Server';
 import axios from 'axios';
-import Book from '../../../storage/indexedDB/Book';
 import LM_Chapter from '../../../types/Book/chapter';
-import { LM_Flashcard } from "../../../types/flashcards/flashcard";
+import { LM_Flashcard } from "../../../types/Flashcard/flashcard";
 import Flashcard from "../../../classes/base/Flashcard";
-import LM_Summary from "../../../types/Book/booksummary";
-import LM_BookSummary from '../../../types/Book/booksummary';
 import { nanoid } from 'nanoid';
 import FAPI from "../../../storage/indexedDB/FAPI";
+import Book from '../../../classes/Book';
 
 interface InitialBookState {
     books: {
@@ -32,6 +30,12 @@ interface InitialBookState {
         book_id: string | null;
         book: LM_Book | null;
     }
+
+    newBook: LM_Book;
+    /**
+     * Decides if we show the BookModifier Modal
+     */
+    addingNewBook: boolean;
 
     selectedChapter: {
         chapter: null | LM_Chapter;
@@ -72,6 +76,10 @@ const initialState: InitialBookState = {
         book_id: null,
         book: null,
     },
+    newBook: new Book(nanoid(), "", "", "", 0, false, 0, ""),
+    addingNewBook: false,
+
+    // TODO Remove
     selectedChapter: {
         chapter: null,
         chapter_id: null,
@@ -99,7 +107,7 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
         }
     });
 
-    const data = await api.get("/books");
+    const data = await api.get("/book");
     if (error) return error;
     return data.data.books;
 });
@@ -131,6 +139,9 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         updateBook: (state, action: PayloadAction<LM_Book>) => {
             const book = action.payload;
             state.books.books[book.book_id] = book;
+        },
+        toggleAddingNewBook: (state, action) => {
+            state.addingNewBook = !state.addingNewBook
         },
         // ANCHOR chapter
         /**
@@ -316,6 +327,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard, changeNewFlashcard, toggleChapterState } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard, changeNewFlashcard, toggleChapterState, toggleAddingNewBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

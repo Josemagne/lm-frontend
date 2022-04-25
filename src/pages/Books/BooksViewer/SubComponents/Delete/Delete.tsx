@@ -4,6 +4,8 @@ import Book from "../../../../../storage/indexedDB/Book";
 import Server from "../../../../../services/Server";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import { removeBook } from "../../../../../state/redux/features/bookSlice";
+import FAPI from "../../../../../storage/indexedDB/FAPI";
+import API from "../../../../../api/API";
 
 type Props = {
   book_id: string;
@@ -17,13 +19,11 @@ const Delete = ({ book_id }: Props) => {
   const deleteBook = async (e: React.MouseEvent<Element, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();
-    // Frontend
-    await Book.removeBook(book_id);
-    // TODO Metadata remove
-    await Metadata.removeFrontendBook(book_id);
     dispatch(removeBook(book_id));
-    // Backend
-    await Server.removeBook(book_id);
+
+    await FAPI.deleteBook(book_id);
+
+    await API.deleteBook(book_id);
   };
 
   return (

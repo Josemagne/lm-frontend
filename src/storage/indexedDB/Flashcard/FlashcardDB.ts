@@ -1,6 +1,6 @@
 import Dexie, { Table } from 'dexie';
 import { LM_Book } from '../../../types/Book/book';
-import { LM_Flashcard } from '../../../types/flashcards/flashcard';
+import { LM_Flashcard } from '../../../types/Flashcard/flashcard';
 
 class FlashcardDB extends Dexie {
     flashcard!: Table<LM_Flashcard>;

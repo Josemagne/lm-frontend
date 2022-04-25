@@ -1,11 +1,17 @@
 import React from "react";
 
 type Props = {
-  author_fullname: string;
+  author_prename: string;
+  author_name: string;
 };
 
-const AuthorViewer = ({ author_fullname }: Props) => {
-  return <div className="lm-authorviewer">{author_fullname}</div>;
+const AuthorViewer = ({ author_prename, author_name }: Props) => {
+  return (
+    <div className="lm-authorviewer">
+      <span>{author_prename}</span>
+      <span>{author_name}</span>
+    </div>
+  );
 };
 
 export default AuthorViewer;

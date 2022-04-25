@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Pagination, Panel } from "rsuite";
-import useAppSelector from "../../../../../../build/hooks/useAppSelector";
 import { LM_Book } from "../../../../../types/Book/book";
 import AuthorViewer from "../AuthorViewer/AuthorViewer";
 import BookContainer from "../BookContainer/BookContainer";
@@ -8,7 +7,8 @@ import ImageViewer from "../ImageViewer/ImageViewer";
 import PagesViewer from "../PagesViewer/PagesViewer";
 import ProgressViewer from "../ProgressViewer/ProgressViewer";
 import TitleViewer from "../TitleViewer/TitleViewer";
-import useAppDispatch from "../../../../../../build/hooks/useAppDispatch";
+import useAppDispatch from "../../../../../hooks/useAppDispatch";
+import useAppSelector from "../../../../../hooks/useAppSelector";
 import {
   fetchBooksFrontend,
   fetchBooksBackend,
@@ -53,14 +53,7 @@ const BooksPagination = (props: Props) => {
   console.log("books: ", books);
   console.log("currentbooks: ", currentBooks);
 
-  useEffect(() => {
-    /* Fetch the books and save them in the store */
-    // @ts-ignore
-    dispatch(fetchBooksFrontend());
-    // @ts-ignore
-    dispatch(fetchBooksBackend());
-    // if (books.length < 1) getBooks();
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="lm-lc-booksviewer__bookspagination">
@@ -76,7 +69,10 @@ const BooksPagination = (props: Props) => {
                   <Panel
                     header={
                       <Fragment>
-                        <AuthorViewer author_fullname={book.author} />
+                        <AuthorViewer
+                          author_prename={book.author_prename}
+                          author_name={book.author_name}
+                        />
                         <TitleViewer title={book.book_title} />
                         <ProgressViewer progress={book.progress} />
                         <PagesViewer pages={book.pages} />

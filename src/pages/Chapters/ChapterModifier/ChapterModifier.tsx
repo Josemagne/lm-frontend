@@ -19,7 +19,6 @@ import {
 import AddPictures from "../../../components/AddPictures/AddPictures";
 import ChapterKeywords from "./SubComponents/ChapterBody/ChapterKeywords/ChapterKeywords";
 import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary";
-import Book from "../../../storage/indexedDB/Book";
 import Server from "../../../services/Server";
 import { Modal } from "react-bootstrap";
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";

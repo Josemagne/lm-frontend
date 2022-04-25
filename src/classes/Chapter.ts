@@ -1,7 +1,7 @@
 import LM_Chapter from '../types/Book/chapter';
 import { nanoid } from 'nanoid';
-import { LM_Flashcard } from '../types/flashcards/flashcard';
-import { ScriptureStatus } from '../types/common/scripturestatus';
+import { LM_Flashcard } from '../types/Flashcard/flashcard';
+import { LM_EntityStatus } from '../types/Entity/entity';
 
 /**
  * A chapter in a book
@@ -11,27 +11,30 @@ class Chapter implements LM_Chapter {
     book_id: string;
     title: string;
     chapter_id: string;
-    toRead: boolean;
-    read: boolean = false;
-    status: ScriptureStatus;
+    status: LM_EntityStatus;
     importance: number;
     summary: string;
-    flashcards: {};
-    started: Date | null;
-    ended: Date | null;
+    flashcards: [] = [];
+    commentary = ""
+    started: Date | undefined;
+    ended: Date | undefined;
     subchapters?: string[]
-    index: string;
+    index: string | undefined;
     degree?: number | null;
     parentChapter?: string | null;
-
+    notes: string[] = []
+    pictures: string[] = [];
+    keyWords: string[] = [];
+    loanWords: string[] = [];
+    glossaryWords: string[] = [];
+    createdAt: Date = new Date();
+    updatedAt: Date = new Date();
 
     constructor(
         chapter_id: string,
         book_id: string,
         title: string,
-        toRead: boolean,
-        read: boolean,
-        status: ScriptureStatus,
+        status: LM_EntityStatus,
         importance: number,
         summary: string,
         index: string,
@@ -41,26 +44,19 @@ class Chapter implements LM_Chapter {
         degree?: number,
         parentChapter?: string
     ) {
-        this.chapter_id = nanoid();
+        this.chapter_id = chapter_id;
         this.book_id = book_id;
         this.title = title
-        this.flashcards = {};
         this.status = status;
-        this.toRead = toRead
         this.importance = importance
-        this.read = read
         this.summary = summary
         this.subchapters = subchapters
-        this.started = null
-        this.ended = null
+        this.started = undefined;
+        this.ended = undefined;
         this.index = index
         this.degree = degree
         this.parentChapter = parentChapter
     }
-
-
-
-
 
 
 }

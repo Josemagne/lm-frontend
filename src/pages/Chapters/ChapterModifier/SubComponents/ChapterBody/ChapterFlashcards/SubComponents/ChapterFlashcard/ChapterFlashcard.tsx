@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { LM_Flashcard } from "../../../../../../../../types/flashcards/flashcard";
+import { LM_Flashcard } from "../../../../../../../../types/Flashcard/flashcard";
 import Question from "../../../../../../../../components/FlashCard/SubComponents/Question/Question";
 import Answer from "../../../../../../../../components/FlashCard/SubComponents/Answer/Answer";
 import useAppSelector from "../../../../../../../../hooks/useAppSelector";

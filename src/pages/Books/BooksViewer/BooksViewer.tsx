@@ -6,8 +6,9 @@ import useAppDispatch from "../../../hooks/useAppDispatch";
 import {
   fetchBooksBackend,
   fetchBooksFrontend,
+  toggleAddingNewBook,
 } from "../../../state/redux/features/bookSlice";
-import BookModifier from "../BookModifier/BookModifier";
+import BookAdder from "../BookAdder/BookAdder";
 import BooksPagination from "./SubComponents/BooksPagination/BooksPagination";
 import Dragging from "../../../components/Dragging/Dragging";
 
@@ -38,16 +39,34 @@ const BooksViewer = (props: Props) => {
     setWindowWith(window.innerWidth);
   });
 
+  /**
+   * Opens bookmodifier
+   */
+  function openBookModifier() {
+    dispatch(toggleAddingNewBook(""));
+  }
+
   useEffect(() => {}, [loading]);
 
   useEffect(() => {}, [_books]);
 
+  useEffect(() => {
+    /* Fetch the books and save them in the store */
+    // @ts-ignore
+    dispatch(fetchBooksFrontend());
+    // @ts-ignore
+    dispatch(fetchBooksBackend());
+    // if (books.length < 1) getBooks();
+  }, []);
+
   return (
     <div className="lm-page lm-booksviewer">
-      <BookModifier />
+      <button className="btn btn-primary" onClick={openBookModifier}>
+        Add a book
+      </button>
+      <BookAdder />
       {loading ? <p>Loading...</p> : null}
-      <Dragging type="BOOK" />
-      <BooksPagination />
+      {windowWidth < 576 ? <BooksPagination /> : <Dragging type="BOOK" />}
       {selectedBook ? <BookModal /> : null}
     </div>
   );

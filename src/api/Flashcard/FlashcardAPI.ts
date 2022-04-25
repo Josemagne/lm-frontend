@@ -1,36 +1,36 @@
 import axios, { AxiosInstance } from "axios";
 import { Constructor } from "../../types/common/constructor";
-import { LM_Flashcard } from "../../types/flashcards/flashcard";
+import { LM_Flashcard } from "../../types/Flashcard/flashcard";
 
 const env = process.env.NODE_ENV === "development" ? "development" : "production";
 
 export default function flashcardAPI<TBase extends Constructor>(Base: TBase) {
     return class extends Base {
         public api: AxiosInstance = axios.create({
-            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/bookflashcard` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/flashcard`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         })
 
 
-        public addFlashcard = (flashcard: LM_Flashcard) => {
-            this.api.post("/", flashcard);
+        public addFlashcard = async (flashcard: LM_Flashcard) => {
+            return await this.api.post("/flashcard", flashcard);
         }
 
-        public getFlashcard = () => {
-
+        public getFlashcard = async (flashcard_id: string) => {
+            return await this.api.get(`/flashcard/${flashcard_id}`)
         }
 
-        public getFlaschards = () => {
-
+        public getFlaschards = async () => {
+            return await this.api.get(`/flashcard`)
         }
 
-        public updateFlashcard = () => {
-
+        public updateFlashcard = async (flashcard: LM_Flashcard) => {
+            return await this.api.post(`/flashcard`, flashcard)
         }
 
-        public deleteFlashcard = () => {
-
+        public deleteFlashcard = async (flashcard_id: string) => {
+            return await this.api.delete(`/flashcard/${flashcard_id}`)
         }
     }
 }

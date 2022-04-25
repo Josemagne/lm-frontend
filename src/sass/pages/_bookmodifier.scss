@@ -28,6 +28,17 @@
     .lm-bookauthor {
       // grid-area: lm-bookauthor;
       min-width: fit-content;
+      .lm-bookauthor__container {
+        display: flex !important;
+        flex-direction: column;
+        @media screen and (min-width: 576px) {
+          flex-direction: row !important;
+        }
+        .author_prename {
+        }
+        .author_name {
+        }
+      }
     }
 
     .lm-booktitle {

@@ -1,3 +1,8 @@
+@import "../../pages/BooksViewer/SubComponents/bookcontainer";
+
 .lm-gc-dragging {
   background-color: rgba(78, 211, 78, 0.39);
+  .draggable-item {
+    @include lm-bookcontainer;
+  }
 }

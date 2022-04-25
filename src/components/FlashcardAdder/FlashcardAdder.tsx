@@ -6,7 +6,6 @@ import {
   changeSelectedBook,
   changeSelectedChapter,
 } from "../../state/redux/features/bookSlice";
-import Book from "../../storage/indexedDB/Book";
 import { LM_Book } from "../../types/Book/book";
 import Answer from "../FlashCard/SubComponents/Answer/Answer";
 import Question from "../FlashCard/SubComponents/Question/Question";
@@ -40,12 +39,7 @@ const FlashcardAdder = ({ type }: Props) => {
    */
   async function submitHandler() {
     // indexedDB
-    await Book.addFlashcard(
-      bookCopy.book_id,
-      selectedChapter.chapter_id,
-      newFlashcard
-    );
-
+    // await FAPI.addFlashcard();
     // TODO server
   }
 

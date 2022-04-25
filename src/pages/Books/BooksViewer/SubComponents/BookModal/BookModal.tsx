@@ -72,16 +72,9 @@ const BookModal = ({}: Props) => {
               >
                 <Button>Go to chapters</Button>
               </div>
-              {/* <div
-              onClick={() => {
-                if (!selectedBook.book_id) return;
-                handleClose();
-                navigate(`bookmodifer/${selectedBook.book_id}`);
-              }}
-            >
-              <Button>Modify bookdata</Button>
-            </div> */}
             </div>
+            {/* TODO FlashcardAdder */}
+            {/* TODO Summary */}
           </Modal.Body>
           <Modal.Footer></Modal.Footer>
           {/* Author */}

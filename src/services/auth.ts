@@ -5,8 +5,6 @@ let api = axios.create({
         "Access-Control-Allow-Origin": "*"
     }
 }
-
-
 );
 
 /**
@@ -52,7 +50,6 @@ const login = async (user: { password: string, email: string }) => {
 
             res = "success";
         }
-
     }
     catch (err) {
         res = "failure";
