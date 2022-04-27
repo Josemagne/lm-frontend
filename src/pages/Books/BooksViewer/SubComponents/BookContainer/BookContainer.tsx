@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   changeSelectedBook,
-  toggleBooksViewerModal,
 } from "../../../../../state/redux/features/bookSlice";
 import { useNavigate } from "react-router";
 import { LM_Book } from "../../../../../types/Book/book";
@@ -23,7 +22,6 @@ const BookContainer = ({ book }: Props) => {
   // We lead the user to /bookmodifier/{book_id}
   const handleClick = () => {
     dispatch(changeSelectedBook({ book_id: book_id, book: book }));
-    dispatch(toggleBooksViewerModal(""));
   };
 
   useEffect(() => {});

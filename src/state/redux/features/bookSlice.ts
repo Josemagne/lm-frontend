@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit"
 import { LM_Book } from "../../../types/Book/book"
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Server from '../../../services/Server';
 import axios from 'axios';
 import LM_Chapter from '../../../types/Book/chapter';
 import { LM_Flashcard } from "../../../types/Flashcard/flashcard";
@@ -26,10 +25,7 @@ interface InitialBookState {
     /**
      * Id of the particular book that is being focused upon
      */
-    selectedBook: {
-        book_id: string | null;
-        book: LM_Book | null;
-    }
+    selectedBook: LM_Book | null;
 
     newBook: LM_Book;
     /**
@@ -47,10 +43,7 @@ const initialState: InitialBookState = {
         error: null,
         amountOfBooks: 0
     },
-    selectedBook: {
-        book_id: null,
-        book: null,
-    },
+    selectedBook: null,
     newBook: new Book(nanoid(), "", "", "", 0, false, 0, ""),
     addingNewBook: false,
 }
@@ -62,7 +55,7 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
     let error: any = null;
     // const data = await Server.getBooks();
     let api = axios.create({
-        baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+      baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}${process.env.BACKEND_API_VERSION}` : `http://${process.env.BACKEND_IP_PRODUCTION}${process.env.BACKEND_API_VERSION}`, headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     });
@@ -105,11 +98,10 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         },
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<LM_Book | null>) => {
-            state.selectedBook.book = action.payload;
+            state.selectedBook = action.payload;
         },
         removeSelectedBook: (state, action) => {
-            state.selectedBook.book_id = null;
-            state.selectedBook.book = null;
+            state.selectedBook = null;
         },
     },
     extraReducers: (builder) => {
@@ -157,6 +149,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, toggleBooksViewerModal, changeChapterSummary, deleteChapter, toggleChapterModifierModal, changeSelectedFlashCard, changeNewFlashcard, toggleChapterState, toggleAddingNewBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, changeChapterSummary, deleteChapter, changeSelectedFlashCard, changeNewFlashcard, toggleChapterState, toggleAddingNewBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

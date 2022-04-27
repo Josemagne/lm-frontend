@@ -133,30 +133,7 @@ const Dragging = ({ type }: Props) => {
                               >
                                 <BookContainer
                                   book={entity}
-                                  book_id={entity.book_id}
                                   key={entity.book_id}
-                                  children={
-                                    <Panel
-                                      header={
-                                        <Fragment>
-                                          <AuthorViewer
-                                            author_prename={
-                                              entity.author_prename
-                                            }
-                                            author_name={entity.author_name}
-                                          />
-                                          <TitleViewer
-                                            title={entity.book_title}
-                                          />
-                                          <ProgressViewer
-                                            progress={entity.progress}
-                                          />
-                                          <PagesViewer pages={entity.pages} />
-                                          <ImageViewer />
-                                        </Fragment>
-                                      }
-                                    ></Panel>
-                                  }
                                 />
                               </li>
                             );

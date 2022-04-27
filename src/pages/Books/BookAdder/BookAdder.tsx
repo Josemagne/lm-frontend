@@ -6,20 +6,17 @@ import { useFormik } from "formik";
 import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import { nanoid } from "nanoid";
-import Metadata from "../../../utils/Metadata";
 import {
   addBook,
   toggleAddingNewBook,
 } from "../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../types/Book/book";
-import Server from "../../../services/Server";
 import * as yup from "yup";
 import Book from "../../../classes/Book";
 import FAPI from "../../../storage/indexedDB/FAPI";
 import API from "../../../api/API";
 import { Modal } from "rsuite";
 import useAppSelector from "../../../hooks/useAppSelector";
-import { CloseButton } from "react-bootstrap";
 
 type Props = {};
 
@@ -44,13 +41,6 @@ const BookAdder = (props: Props) => {
       .max(40, "Too long"),
     author_name: yup.string().min(2, "Too short").max(40, "Too long"),
     book_title: yup.string().required().min(2, "Too short").max(40, "Too long"),
-    pages: yup
-      .number()
-      .required()
-      .min(5, "Too Short")
-      .max(4000, "Too long")
-      .positive()
-      .integer(),
   });
 
   const formik = useFormik({
@@ -119,7 +109,7 @@ const BookAdder = (props: Props) => {
             ) : null}
           </div>
 
-          <BookPages values={formik.getFieldProps("pages")} />
+          {/* <BookPages values={formik.getFieldProps("pages")} /> */}
 
           {/* <BookState
               values={formik.getFieldProps("read")}

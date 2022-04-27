@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useNavigate } from "react-router";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
@@ -10,10 +10,15 @@ const Authenticate = (props: Props) => {
 
   const token = localStorage.getItem("token");
 
+  useEffect(()=> {
+  //If we have the token in localStorage then we navigate to the UserPage
+  //Else we navigate to RegisterPage
+  token ? navigate("/user",{replace: true}) : navigate("/register", {replace: true})
+
+  },[])
+
   return (
     <div className="lm-authenticate">
-      {/* If we have already a token then we redirect to the login */}
-      {token ? <Login /> : <Register />}
     </div>
   );
 };

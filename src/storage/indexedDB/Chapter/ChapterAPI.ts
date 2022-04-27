@@ -15,8 +15,8 @@ function ChapterAPI<TBase extends Constructor>(Base: TBase) {
             return await this.chapter.get(chapter_id);
         }
 
-        public getChapters = async () => {
-            return await this.chapter.toArray();
+        public getChapters = async (book_id: string) => {
+            return await this.chapter.where({book_id: book_id}).toArray();
         }
 
         public updateChapter = async (chapter: LM_Chapter) => {

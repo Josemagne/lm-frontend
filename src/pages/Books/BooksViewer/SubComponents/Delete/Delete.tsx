@@ -1,7 +1,4 @@
 import { useState } from "react";
-import Metadata from "../../../../../utils/Metadata";
-import Book from "../../../../../storage/indexedDB/Book";
-import Server from "../../../../../services/Server";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import { removeBook } from "../../../../../state/redux/features/bookSlice";
 import FAPI from "../../../../../storage/indexedDB/FAPI";

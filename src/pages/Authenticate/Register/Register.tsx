@@ -51,6 +51,7 @@ const Register = (props: Props) => {
     onSubmit: async (values) => {
       const { password, email } = values;
       const res: any = await register({ password, email });
+      console.log("res: ", res)
 
       if (res.data.result === "success") {
         navigate("/", { replace: true });

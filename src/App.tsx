@@ -10,6 +10,7 @@ import Register from "./pages/Authenticate/Register/Register";
 import Authenticate from "./pages/Authenticate/Authenticate";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Authenticate/Login/Login";
+import UserPage from "./pages/UserPage/UserPage";
 
 type Props = {};
 
@@ -33,6 +34,7 @@ const App = (props: Props) => {
           <Route path="/authenticate" element={<Authenticate />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/user" element={<UserPage />} />
 
           {/* TODO Add Contact */}
           {/* TODO Add Community */}

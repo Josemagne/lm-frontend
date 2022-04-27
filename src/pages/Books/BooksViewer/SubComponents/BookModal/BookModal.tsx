@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 import {
   changeSelectedBook,
   removeSelectedBook,
-  toggleBooksViewerModal,
 } from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../../hooks/useAppSelector";
@@ -23,7 +22,7 @@ const BookModal = ({}: Props) => {
 
   const navigate = useNavigate();
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+  const selectedBook = useAppSelector((state) => state.books.selectedBook);
 
   const handleClose = () => {
     dispatch(changeSelectedBook(null));

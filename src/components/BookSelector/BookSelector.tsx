@@ -4,6 +4,7 @@ import { AutoComplete } from "rsuite";
 import useAppSelector from "../../hooks/useAppSelector";
 import { LM_Book } from "../../types/Book/book";
 import { changeSelectedBook } from "../../state/redux/features/bookSlice";
+import {fetchBooksBackend, fetchBooksFrontend} from "../../state/redux/features/bookSlice";
 
 type Props = {};
 
@@ -16,8 +17,10 @@ const BookSelector = (props: Props) => {
   const [titles, setTitles] = useState<string[]>([]);
   const dispatch = useAppDispatch();
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+  const selectedBook = useAppSelector((state) => state.books.selectedBook);
+
   const books = useAppSelector((state) => state.books.books.books);
+
   if (!books)
     return (
       <div className="lm-lc-bookselector">
@@ -36,7 +39,14 @@ const BookSelector = (props: Props) => {
 
     if (books.length < 1) return;
     for (let i = 0; i < _books.length; i++) {
-      const title = _books[i].book_title;
+      let title = "";
+
+      if (books[i].author_name) {
+      title = books[i].author_prename + books[i].author_name +  " - " + books[i].book_title;
+      }
+      else {
+      title = books[i].author_prename + " - "+ books[i].book_title;
+      }
 
       _titles.push(title);
     }
@@ -50,29 +60,45 @@ const BookSelector = (props: Props) => {
 
   const setSelectedBook = (bookID: string) => {
     const book = books[bookID];
-    dispatch(changeSelectedBook({ book_id: book.book_id, book: book }));
+    dispatch(changeSelectedBook(book));
   };
 
   const changeHandler = (v: string) => {
+    console.log("Selected book!!!: ", v)
     const bookArray: LM_Book[] = Object.values(books);
     const selectedBook = bookArray.find((b) => {
       if (b.book_title === v) return b;
     });
 
     if (!selectedBook) return;
-    console.log("selected: ", selectedBook);
 
-    setSelectedBook(JSON.parse(JSON.stringify(selectedBook.book_id)));
+    setSelectedBook(selectedBook.book_id);
   };
 
   useEffect(() => {}, [selectedBook]);
 
+  useEffect(() => {
+    fetchBooksBackend()
+    fetchBooksFrontend()
+  }, []);
+
   return (
     <div className="lm-lc-bookselector">
-      {selectedBook ? <h3>{selectedBook.title}</h3> : <h3>No Book selected</h3>}
+      {selectedBook ? <h3>{selectedBook.title}</h3> : <h3>Select a book</h3>}
       {titles ? (
         //   @ts-ignore
-        <AutoComplete data={titles} onChange={(v) => changeHandler(v)} />
+        <AutoComplete
+          renderMenuItem={
+            (item) => {
+              return <div className="fs-2">
+                {item} 
+              </div>
+          }
+          }
+          
+        // @ts-ignore
+        data={titles} onChange={(v) => changeHandler(v)} />
+
       ) : null}
     </div>
   );

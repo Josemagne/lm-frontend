@@ -19,15 +19,16 @@ import * as yup from "yup";
 import FAPI from "../../../../../storage/indexedDB/FAPI";
 import { Modal } from "rsuite";
 import { toggleAddingNewChapter } from "../../../../../state/redux/features/chapterSlice";
+import API from "../../../../../api/API";
 
 type Props = {};
 
 const ChapterAdder = ({}: Props) => {
   const [currentID, setCurrentID] = useState(nanoid());
+  
   const dispatch = useAppDispatch();
-  /* STATE */
 
-  const _book = useAppSelector((state) => state.books.selectedBook.book);
+  const selectedBook = useAppSelector((state) => state.books.selectedBook);
 
   const chapterSchema = yup.object().shape({
     title: yup.string().required().min(2, "Too short").max(40, "Too long"),
@@ -38,7 +39,7 @@ const ChapterAdder = ({}: Props) => {
     validationSchema: chapterSchema,
     initialValues: new Chapter(
       currentID,
-      _book.book_id,
+      selectedBook.book_id,
       "",
       "TO_READ",
       0,
@@ -46,37 +47,24 @@ const ChapterAdder = ({}: Props) => {
       ""
     ),
     validate: async (values) => {
-      return await chapterSchema.isValid({
-        title: values.title,
-      });
     },
     onSubmit: async (values, { resetForm, setValues }) => {
-      values.book_id = _book.book_id;
+      values.book_id = selectedBook.book_id;
       values.chapter_id = nanoid();
       console.log("v: ", values);
 
-      // Add locally
-      // redux
-      if (!_book) return;
-      const bookCopy = JSON.parse(JSON.stringify(_book));
-      bookCopy.chapters[values.chapter_id] = values;
-      dispatch(updateBook(bookCopy));
-      dispatch(
-        changeSelectedBook({ book: bookCopy, book_id: bookCopy.book_id })
-      );
+     dispatch(addChapter) 
 
       await FAPI.addChapter(values);
 
-      console.log("Sending book to backend");
-      // Add to the server
-      await Server.addChapter(values);
-      // Completes submission cycle
+      await API.addChapter(values);
+      
       resetForm();
       setValues(() => {
         setCurrentID(nanoid());
         const newChapter = new Chapter(
           currentID,
-          _book.book_id,
+          selectedBook.book_id,
           "",
           "TO_READ",
           0,
@@ -89,6 +77,9 @@ const ChapterAdder = ({}: Props) => {
     },
   });
 
+  /**
+   * Decides if the ChapterAdder Modal will be open
+  */
   const addingNewChapter = useAppSelector(
     (state) => state.chapters.addingNewChapter
   );
@@ -98,15 +89,15 @@ const ChapterAdder = ({}: Props) => {
   }
 
   useEffect(() => {
-    if (!_book) return;
-  }, [_book]);
-
-  useEffect(() => {
     setCurrentID(nanoid());
   }, [formik.values]);
 
+  useEffect(() => {
+
+  },[addingNewChapter])
+  
   return (
-    <Modal open={addingNewChapter} onClose={handleClose}>
+    <Modal open={addingNewChapter && selectedBook} onClose={handleClose}>
       <div className="lm-chapteradder">
         <div className="lm-chapteradder__index">
           <FloatingLabel controlId="index" label="Index">

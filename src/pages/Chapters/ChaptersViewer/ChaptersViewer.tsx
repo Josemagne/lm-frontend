@@ -13,47 +13,52 @@ import {
   toggleAddingNewChapter,
   updateSelectedChapter,
 } from "../../../state/redux/features/chapterSlice";
-
+import ChapterModal from "./../ChapterModal/ChapterModal"
+import ChapterPagination from "./SubComponents/ChaptersPagination/ChaptersPagination";
 type Props = {};
 
 const ChaptersViewer = ({}: Props) => {
   const dispatch = useAppDispatch();
+
   let selectedBook: LM_Book | null;
+  let chapters: LM_Chapter[] | null;
+  let filteredChapters:LM_Chapter[] | null;
+
   try {
-    selectedBook = useAppSelector((state) => state.books.selectedBook.book);
+    selectedBook = useAppSelector((state) => state.books.selectedBook);
+    chapters = Object.values(
+      useAppSelector((state) => state.chapters.chapters.chapters))
+    
+    if (selectedBook) {
+      // @ts-ignore
+        filteredChapters = chapters.filter((chapter) => chapter.book_id === selectedBook.book_id);
+    }
   } catch (err) {
     selectedBook = null;
+    chapters = null
+    filteredChapters = null;
   }
 
   let selectedChapter: LM_Chapter | null;
   try {
-    selectedChapter = useAppSelector((state) => state.books.selectedChapter);
+    selectedChapter = useAppSelector((state) => state.chapters.selectedChapter);
   } catch (err) {
     selectedChapter = null;
-  }
-
-  let chapters: LM_Chapter[] | null;
-  try {
-    chapters = Object.values(
-      useAppSelector((state) => state.chapters.chapters.chapters)
-    );
-  } catch (err) {
-    chapters = null;
   }
 
   const addingNewChapter = useAppSelector(
     (state) => state.chapters.addingNewChapter
   );
-
+	
   function openChapterAdder() {
     dispatch(toggleAddingNewChapter(""));
   }
 
-  useEffect(() => {}, [chapters, selectedChapter, selectedBook]);
   useEffect(() => {
-    fetchChaptersBackend();
-    fetchChaptersFrontend();
-  }, []);
+    if (!selectedBook)  return;
+    fetchChaptersBackend(selectedBook.book_id);
+    fetchChaptersFrontend(selectedBook.book_id);
+  }, [selectedBook]);
 
   return (
     <div className="lm-chaptersviewer lm-page">
@@ -61,14 +66,24 @@ const ChaptersViewer = ({}: Props) => {
       <div className="lm-chaptersviewer__bookinformation">
         <h4></h4>
       </div>
-      <button className="btn btn-primary" onClick={openChapterAdder}>
-        Add a book
-      </button>
-      {selectedBook && addingNewChapter ? <ChapterAdder /> : null}
-      <div className="lm-chapters"></div>
       <BookSelector />
+
+      {selectedBook && addingNewChapter ? 
+        <>
+      <ChapterAdder /> 
+        </>
+      : null}
+      <button className="btn btn-primary" onClick={openChapterAdder}>
+        Add Chapter
+      </button>
+
+      <div className="lm-chapters"></div>
+      <ChapterModal />
+      <ChapterPagination />
     </div>
   );
 };
 
 export default ChaptersViewer;
+
+

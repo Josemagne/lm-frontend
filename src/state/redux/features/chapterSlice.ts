@@ -40,21 +40,16 @@ const initialState: InitialChapterState = {
     addingNewChapter: false
 }
 
-export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (): Promise<LM_Chapter[] | any> => {
-    let error = null;
-
-    let chapters = await API.getChapters();
+export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (book_id: string): Promise<LM_Chapter[] | any> => {
+    let chapters = await API.getChapters(book_id);
 
     return chapters;
 })
 
-export const fetchChaptersFrontend = createAsyncThunk("chaptersFrontend/", async (): Promise<LM_Chapter[] | any> => {
-    let error = null;
+export const fetchChaptersFrontend = createAsyncThunk("chaptersFrontend/", async (book_id: string): Promise<LM_Chapter[] | any> => {
+    let chapters = await FAPI.getChapters(book_id);
 
-    let chapters = await FAPI.getChapters();
-
-    if (chapters) return chapters;
-    else return error;
+    return chapters;
 })
 
 export const chapterSlice: Slice<InitialChapterState> = createSlice({

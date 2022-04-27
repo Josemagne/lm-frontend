@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Pagination } from "rsuite";
 import useAppSelector from "../../../../../hooks/useAppSelector";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import ChapterContainer from "../ChapterContainer/ChapterContainer";
+import {LM_Book} from "../../../../../types/Book/book"
+import {fetchChaptersBackend, fetchChaptersFrontend} from "../../../../../state/redux/features/chapterSlice"
 
 type Props = {};
 
@@ -12,9 +14,11 @@ const ChaptersPagination = (props: Props) => {
 
   const [chaptersPerPage, setChaptersPerPage] = useState(10);
 
-  const chapters: LM_Chapter[] = Object.values(
+  let chapters: LM_Chapter[] | null  = Object.values(
     useAppSelector((state) => state.chapters.chapters.chapters)
   );
+
+  let selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
 
   const amountOfChapters = useAppSelector(
     (state) => state.chapters.chapters.amountOfChapters
@@ -34,10 +38,16 @@ const ChaptersPagination = (props: Props) => {
     indexOfLastChapter = currentChapter * chaptersPerPage;
   }
 
+  useEffect(() => {
+    if (!selectedBook) return;
+    fetchChaptersBackend(selectedBook.book_id)
+    fetchChaptersFrontend(selectedBook.book_id)
+  },[selectedBook])
+
   return (
     <div className="lm-lc-chapterspagination">
       <div className="chapterspagination__chapters">
-        {chapters.length > 0 ? (
+        {chapters && chapters.length > 0 ? (
           chapters.map((chapter) => {
             return <ChapterContainer chapter={chapter} />;
           })

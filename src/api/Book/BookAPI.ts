@@ -9,7 +9,7 @@ export default function BookAPI<TBase extends Constructor>(Base: TBase) {
     return class BookAPI extends Base {
 
         public api: AxiosInstance = axios.create({
-            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         })
@@ -19,7 +19,7 @@ export default function BookAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public getBook = async (book_id: string) => {
-            return await this.api.get(`book/${book_id}`)
+            return await this.api.get(`/book/${book_id}`)
         }
 
         public getBooks = async () => {
@@ -31,7 +31,7 @@ export default function BookAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public deleteBook = async (book_id: string) => {
-            return await this.api.delete(`book/${book_id}`);
+            return await this.api.delete(`/book/${book_id}`);
         }
     }
 }

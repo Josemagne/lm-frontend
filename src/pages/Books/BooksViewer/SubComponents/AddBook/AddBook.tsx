@@ -1,7 +1,5 @@
 import React from "react";
 import { useMemo } from "react";
-import { withReact } from "slate-react";
-import { createEditor } from "slate";
 import { useFormik } from "formik";
 
 type Props = {};

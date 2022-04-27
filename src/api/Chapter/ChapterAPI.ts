@@ -8,7 +8,7 @@ const env = process.env.NODE_ENV === "development" ? "development" : "production
 export default function ChapterAPI<TBase extends Constructor>(Base: TBase) {
     return class extends Base {
         public api: AxiosInstance = axios.create({
-            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+            baseURL: env === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         })
@@ -20,8 +20,8 @@ export default function ChapterAPI<TBase extends Constructor>(Base: TBase) {
             return await this.api.get(`chapter/${chapter_id}`);
         }
 
-        public getChapters = async () => {
-            return await this.api.get("/chapter");
+        public getChapters = async (book_id: string) => {
+            return await this.api.get(`/chapter/${book_id}`);
         }
 
         public updateChapter = async (chapter: LM_Chapter) => {

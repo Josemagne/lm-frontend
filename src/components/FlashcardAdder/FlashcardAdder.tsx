@@ -12,10 +12,8 @@ import Question from "../FlashCard/SubComponents/Question/Question";
 import LM_Chapter from "../../types/Book/chapter";
 import useAppDispatch from "../../hooks/useAppDispatch";
 import useAppSelector from "../../hooks/useAppSelector";
-import ChapterFlashcard from "../../classes/ChapterFlashcard";
 import { nanoid } from "nanoid";
 import Server from "../../services/Server";
-import BookFlashcard from "../../classes/BookFlashcard";
 import FAPI from "../../storage/indexedDB/FAPI";
 import LM_Entity, { LM_EntityName } from "../../types/Entity/entity";
 

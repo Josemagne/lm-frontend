@@ -13,13 +13,9 @@ import {
   changeSelectedBook,
   changeSelectedChapter,
   removeSelectedChapter,
-  toggleChapterModifierModal,
   updateBook,
 } from "../../../state/redux/features/bookSlice";
-import AddPictures from "../../../components/AddPictures/AddPictures";
-import ChapterKeywords from "./SubComponents/ChapterBody/ChapterKeywords/ChapterKeywords";
 import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary";
-import Server from "../../../services/Server";
 import { Modal } from "react-bootstrap";
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
 import "react-quill/dist/quill.snow.css";
@@ -60,8 +56,6 @@ const ChapterModal = (props: Props) => {
    * Closes the modal
    */
   const handleClose = () => {
-    // Metadata.addUnsynchronizedBook(book);
-    dispatch(toggleChapterModifierModal(""));
     dispatch(removeSelectedChapter(""));
   };
 

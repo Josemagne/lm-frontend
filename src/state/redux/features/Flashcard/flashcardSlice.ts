@@ -1,6 +1,6 @@
 import { boolean } from "yup";
 import Flashcard from "../../../../classes/base/Flashcard";
-import { LM_Flashcard } from "../../../../types/flashcards/flashcard";
+import { LM_Flashcard } from "../../../../types/Flashcard/flashcard";
 import { nanoid } from 'nanoid';
 import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
 import axios from "axios";
@@ -10,7 +10,7 @@ interface InitialFlashcardState {
     flashcards: {
         flashcards: {
             [flashcard_id: string]: LM_Flashcard;
-        },
+        } | null,
         loading: boolean,
         error: string | null
     },
@@ -20,9 +20,7 @@ interface InitialFlashcardState {
 
 const initialFlashcardState: InitialFlashcardState = {
     flashcards: {
-        flashcards: {
-
-        },
+        flashcards: null,
         loading: false,
         error: null
     },
@@ -34,7 +32,7 @@ export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", asyn
     let error: any = null;
 
     let api = axios.create({
-        baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_DEV_PORT}/api` : `http://${process.env.BACKEND_IP_PRODUCTION}/api`, headers: {
+        baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_DEV_PORT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     });
@@ -58,6 +56,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
     reducers: {
         addFlashcard: (state, action) => {
             const flashcard = action.payload;
+            if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
             state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
 
             // NOTE Each new flashcard was a newFlashcard
@@ -65,6 +64,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
         },
         updateFlashcard: (state, action) => {
             const flashcard = action.payload;
+            if (!state.flashcards.flashcards) return;
             state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
 
             // We only update the selectedFlashcard
@@ -72,7 +72,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
         },
         deleteFlashcard: (state, action) => {
             const flashcardID = action.payload;
-
+            if (!state.flashcards.flashcards) return;
             delete state.flashcards.flashcards[flashcardID];
         },
 
@@ -84,6 +84,15 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
             state.flashcards.loading = true;
         }),
             builder.addCase(fetchFlashcardsBackend.fulfilled, (state, action) => {
+        const flashcards = action.payload;
+            if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
+
+              flashcards.foreach((flashcard: LM_Flashcard) => {
+                // @ts-ignore
+                if (!state.flashcards.flashcards[flashcard.flashcard_id]) {
+              
+                }
+              })
 
             }),
             builder.addCase(fetchFlashcardsBackend.rejected, (state, action) => {
