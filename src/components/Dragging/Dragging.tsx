@@ -16,6 +16,10 @@ import {
   LM_EntityID,
   LM_EntityName,
 } from "../../types/Entity/entity";
+import API from "../../api/API"
+import FAPI from "../../storage/indexedDB/FAPI"
+import {updateBook} from "../../state/redux/features/bookSlice"
+import useAppDispatch from "../../hooks/useAppDispatch"
 
 type Props = {
   type: LM_EntityName;
@@ -26,6 +30,7 @@ type Props = {
 };
 
 const Dragging = ({ type, title }: Props) => {
+  const dispatch = useAppDispatch();
   /**
    * Maps the entity name to their id name
    * @param type
@@ -36,6 +41,8 @@ const Dragging = ({ type, title }: Props) => {
     switch (type) {
       case "BOOK":
         return "book_id";
+      case "CHAPTER":
+        return "chapter_id";
       default:
         return "book_id";
     }
@@ -96,7 +103,11 @@ const Dragging = ({ type, title }: Props) => {
         // TODO Better?
         // @ts-ignore
         entityMapping.TO_READ[ent[entityIDMapping(type)]] = ent;
-      } else if (ent.status === "READ") {
+      } 
+      else if (ent.status === "READING") {
+        entityMapping.READING[ent[entityIDMapping(type)]] = ent;
+      }
+      else if (ent.status === "READ") {
         // @ts-ignore
         entityMapping.READ[ent[entityIDMapping(type)]] = ent;
       }
@@ -109,6 +120,42 @@ const Dragging = ({ type, title }: Props) => {
   console.log("mapping: ", entityMapping);
   console.log("mapping entities: ", entities);
 
+  // Move to utils
+
+  /**
+   * Calls the update function for redux, API and FAPIwith given entity obj
+   */
+  async function mappingUpdate(entityName: LM_EntityName, entityObject: LM_Entity) {
+    console.log("mappingUpdate called with: ", entityName, entityObject)
+    switch (entityName) {
+      case "BOOK": 
+        dispatch(updateBook(entityObject))
+        await FAPI.updateBook(entityObject)
+        await API.updateBook(entityObject)
+        break;
+      default:
+        break;
+    }
+  }
+
+  function sourceMapping(source: string) {
+    switch(source) {
+      case "entities":
+        return "TO_READ"
+      break;
+      case "entities_doing":
+        return "READING" 
+      break;
+      case "entities_done":
+        return "READ"
+      break;
+      default:
+        break;
+
+    }
+  }
+
+
   function onDragStart(event: DragStart) {
 
   }
@@ -118,15 +165,67 @@ const Dragging = ({ type, title }: Props) => {
   }
 
   function onDragEnd(result: DropResult, provided: ResponderProvided) {
-    console.log(result, provided)
     const {source, destination, draggableId } = result;
+    console.log("onDragEnd start")
 
+    // Do not do anything if it was the same droppable
+    if (destination && destination.droppableId === source.droppableId) return;
+
+    // If dragged to entities_doing
     if (destination && destination.droppableId === "entities_doing") {
-      entityMapping.READING[draggableId] = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId);
-    }
+      const draggedEntity = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId)
+
+      entityMapping.READING[draggableId] = draggedEntity
+      // @ts-ignore
+      delete entityMapping[sourceMapping(source.droppableId)][draggableId]
+
+      console.log("entityMapping in entities_doing", entityMapping)
+      console.log("entities: ", entities)
+      const entityCopy = JSON.parse(JSON.stringify(draggedEntity))
+      entityCopy.status = "READING"
+      mappingUpdate(type, entityCopy);
     }
 
-  useEffect(() => {}, [entities, entityMapping]);
+    // If dragged to entities_done
+  else if (destination && destination.droppableId === "entities_done") {
+
+
+      const draggedEntity = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId)
+
+
+      const entityCopy = JSON.parse(JSON.stringify(draggedEntity))
+      entityCopy.status = "READ"
+      console.log("entityCopy: ", entityCopy)
+      entityMapping.READ[draggableId] = entityCopy
+
+      console.log("entityMapping in entities_done", entityMapping)
+      console.log("entities: ", entities)
+      // @ts-ignore
+      delete entityMapping[sourceMapping(source.droppableId)][draggableId]
+      mappingUpdate(type, entityCopy);
+  }
+
+    // If dragged to entities
+    else if (destination && destination.droppableId === 'entities') {
+
+      const draggedEntity = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId)
+
+      const entityCopy = JSON.parse(JSON.stringify(draggedEntity))
+      entityCopy.status = "TO_READ"
+      entityMapping.TO_READ[draggableId] = entityCopy
+
+      console.log("entityMapping in entities", entityMapping)
+      console.log("entities: ", entities)
+      // @ts-ignore
+      delete entityMapping[sourceMapping(source.droppableId)][draggableId]
+      mappingUpdate(type, entityCopy);
+    }
+
+    }
+  useEffect(() => {
+    console.log("entityMapping: " ,entityMapping)
+    console.log("entites: ", entities)
+  }, [entities, entityMapping]);
 
   return (
     <div className="lm-gc-dragging">
@@ -180,7 +279,7 @@ const Dragging = ({ type, title }: Props) => {
         </Droppable>
         </div>
         <div className="entities_container">
-                <h3>To Read</h3>
+                <h3>Reading</h3>
         <Droppable droppableId="entities_doing">
           {(droppable,snapshot) => {
             return (
@@ -234,7 +333,7 @@ const Dragging = ({ type, title }: Props) => {
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
                 >
-                  {Object.values(entityMapping.READING).map(
+                  {Object.values(entityMapping.READ).map(
                     (entity: any, index) => {
                       return (
                         <Draggable
