@@ -1,8 +1,41 @@
 @import "../../pages/BooksViewer/SubComponents/bookcontainer";
 
 .lm-gc-dragging {
-  background-color: rgba(78, 211, 78, 0.39);
-  .draggable-item {
-    @include lm-bookcontainer;
+  height: 100%;
+  user-select: none;
+  background-color: lightgray;
+
+  display: grid;
+  grid-template-areas: "entities entities_doing entities_done";
+
+  ul,li { 
+    list-style-type: none;
+        list-style-position: inside;
+            
+      margin: 0;
+      padding: 0; }
+
+      ul {
+        height: 100%;
+
+      }
+      
+  ul.entities, ul.entities_to_do  {
+    li.draggable-item {
+      @include lm-bookcontainer;
+    }
   }
+
+  ul.entities {
+    grid-area: entities;
+  }
+
+  ul.entities_doing {
+    grid-area: entities_doint;
+  }
+
+  ul.entities_done {
+    grid-area: entities_done;
+  }
+  
 }

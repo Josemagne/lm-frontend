@@ -30,7 +30,7 @@ const BookAdder = (props: Props) => {
   const dispatch = useAppDispatch();
 
   function getInitialValues(): LM_Book {
-    return new Book(nanoid(), "", "", "", 0, false, 0, "");
+    return new Book(nanoid(),"", "", "", 0, 0, "");
   }
 
   const bookSchema = yup.object().shape({

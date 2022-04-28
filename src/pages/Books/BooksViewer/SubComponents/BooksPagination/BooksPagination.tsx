@@ -3,16 +3,8 @@ import { Pagination, Panel } from "rsuite";
 import { LM_Book } from "../../../../../types/Book/book";
 import AuthorViewer from "../AuthorViewer/AuthorViewer";
 import BookContainer from "../BookContainer/BookContainer";
-import ImageViewer from "../ImageViewer/ImageViewer";
-import PagesViewer from "../PagesViewer/PagesViewer";
-import ProgressViewer from "../ProgressViewer/ProgressViewer";
-import TitleViewer from "../TitleViewer/TitleViewer";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../../hooks/useAppSelector";
-import {
-  fetchBooksFrontend,
-  fetchBooksBackend,
-} from "../../../../../state/redux/features/bookSlice";
 
 type Props = {};
 
@@ -31,6 +23,7 @@ const BooksPagination = (props: Props) => {
   const books = Object.values(
     useAppSelector((state) => state.books.books.books)
   );
+
   const amountOfBooks = useAppSelector(
     (state) => state.books.books.amountOfBooks
   );

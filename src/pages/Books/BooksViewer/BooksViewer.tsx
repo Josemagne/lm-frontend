@@ -27,10 +27,10 @@ const BooksViewer = (props: Props) => {
 
   // Get the loading status
   const loading = useAppSelector((state) => state.books.books.loading);
-  const _books = useAppSelector((state) => state.books.books.books);
+  const books = useAppSelector((state) => state.books.books.books);
   const selectedBook = useAppSelector(
     // @ts-ignore
-    (state) => state.books.selectedBook.book
+    (state) => state.books.selectedBook
   );
 
   const [windowWidth, setWindowWith] = useState(window.innerWidth);
@@ -48,7 +48,7 @@ const BooksViewer = (props: Props) => {
 
   useEffect(() => {}, [loading]);
 
-  useEffect(() => {}, [_books]);
+  useEffect(() => {}, [books]);
 
   useEffect(() => {
     /* Fetch the books and save them in the store */
@@ -66,7 +66,7 @@ const BooksViewer = (props: Props) => {
       </button>
       <BookAdder />
       {loading ? <p>Loading...</p> : null}
-      {windowWidth < 576 ? <BooksPagination /> : <Dragging type="BOOK" />}
+      {windowWidth < 576 && books ? <BooksPagination /> : <Dragging type="BOOK" title="Books" />}
       {selectedBook ? <BookModal /> : null}
     </div>
   );

@@ -38,6 +38,7 @@ const ChaptersPagination = (props: Props) => {
     indexOfLastChapter = currentChapter * chaptersPerPage;
   }
 
+  // Once we have selected a book then we fetch its chapters
   useEffect(() => {
     if (!selectedBook) return;
     fetchChaptersBackend(selectedBook.book_id)

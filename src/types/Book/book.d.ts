@@ -19,7 +19,6 @@ export declare interface LM_Book {
     /**
      * Decides if the book is finished
      */
-    read: boolean;
     genre: string;
     /**
      * Status of the book.

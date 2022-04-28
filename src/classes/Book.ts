@@ -10,7 +10,6 @@ export default class Book implements LM_Book {
     status: LM_EntityStatus = "TO_READ"
     book_title: string;
     pages: number;
-    read: boolean;
     progress: number;
     summary: string = "";
     genre = ""
@@ -34,7 +33,6 @@ export default class Book implements LM_Book {
         author_name: string,
         book_title: string,
         pages: number,
-        read: boolean,
         progress: number,
         summary: string
     ) {
@@ -44,8 +42,22 @@ export default class Book implements LM_Book {
         this.author_name = author_name;
         this.book_title = book_title
         this.pages = pages
-        this.read = read
         this.progress = progress
+    this.status = "TO_READ"
+    this.summary= "";
+    this.genre = ""
+    this.rate= 1;
+    this.chapters= []
+    this.flashcards = []
+    this.bookCollection = [];
+    this.commentary = "";
+    this.keyWords = [];
+    this.glossaryWords = [];
+    this.loanWords = [];
+    this.chapterCollection = []
+    this.collections = []
+    this.notes= [];
+    this.commentaries = []
     }
 
 

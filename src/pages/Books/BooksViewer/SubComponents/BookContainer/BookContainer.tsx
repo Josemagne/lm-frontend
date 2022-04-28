@@ -34,7 +34,8 @@ const BookContainer = ({ book }: Props) => {
     >
       <div className="lm-authorviewer">
         <span>{author_prename}</span>
-        <span>{author_name}</span>
+        <span> - </span>
+        <span>{ author_name}</span>
       </div>
       <div className="lm-titleviewer">
         <span>{book_title}</span>

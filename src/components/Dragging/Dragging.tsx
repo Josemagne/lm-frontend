@@ -7,14 +7,8 @@ import {
   DropResult,
   ResponderProvided,
 } from "react-beautiful-dnd";
-import { Panel } from "rsuite";
 import useAppSelector from "../../hooks/useAppSelector";
-import AuthorViewer from "../../pages/Books/BooksViewer/SubComponents/AuthorViewer/AuthorViewer";
 import BookContainer from "../../pages/Books/BooksViewer/SubComponents/BookContainer/BookContainer";
-import ImageViewer from "../../pages/Books/BooksViewer/SubComponents/ImageViewer/ImageViewer";
-import PagesViewer from "../../pages/Books/BooksViewer/SubComponents/PagesViewer/PagesViewer";
-import ProgressViewer from "../../pages/Books/BooksViewer/SubComponents/ProgressViewer/ProgressViewer";
-import TitleViewer from "../../pages/Books/BooksViewer/SubComponents/TitleViewer/TitleViewer";
 import {
   LM_Entity,
   LM_EntityID,
@@ -23,9 +17,13 @@ import {
 
 type Props = {
   type: LM_EntityName;
+  /**
+   * Title for the entity
+   */
+  title: string;
 };
 
-const Dragging = ({ type }: Props) => {
+const Dragging = ({ type, title }: Props) => {
   /**
    * Maps the entity name to their id name
    * @param type
@@ -96,7 +94,9 @@ const Dragging = ({ type }: Props) => {
 
   console.log("mapping: ", entityMapping);
   console.log("mapping entities: ", entities);
-  function onDragEnd(result: DropResult, provided: ResponderProvided) {}
+  function onDragEnd(result: DropResult, provided: ResponderProvided) {
+    const {source, destination } = result;
+      }
 
   useEffect(() => {}, [entities, entityMapping]);
 
@@ -105,13 +105,13 @@ const Dragging = ({ type }: Props) => {
       <DragDropContext
         onDragEnd={(result, provided) => onDragEnd(result, provided)}
       >
-        <Droppable droppableId="entities">
+        <div className="entities_container">
+          <h3>{title}</h3>
+        <Droppable droppableId="entities entities_books">
           {(droppable) => {
             return (
               <>
-                <h3>Books</h3>
                 <ul
-                  className="entities"
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
                 >
@@ -147,13 +147,14 @@ const Dragging = ({ type }: Props) => {
             );
           }}
         </Droppable>
-        <Droppable droppableId="entities_to_do">
+        </div>
+        <div className="entities_container">
+                <h3>To Read</h3>
+        <Droppable droppableId="entities_doing entities_books">
           {(droppable) => {
             return (
               <>
-                <h3>To Read</h3>
                 <ul
-                  className="entities_to_do"
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
                 >
@@ -186,6 +187,47 @@ const Dragging = ({ type }: Props) => {
             );
           }}
         </Droppable>
+        </div>
+        <div className="entities_container">
+                <h3>Read</h3>
+        <Droppable droppableId="entities_done entities_books">
+          {(droppable) => {
+            return (
+              <>
+                <ul
+                  {...droppable.droppableProps}
+                  ref={droppable.innerRef}
+                >
+                  {Object.values(entityMapping.READING).map(
+                    (entity: any, index) => {
+                      return (
+                        <Draggable
+                          key={entity[entityIDMapping(type)]}
+                          draggableId={entity[entityIDMapping(type)]}
+                          index={index}
+                        >
+                          {(draggable) => {
+                            return (
+                              <li
+                                {...draggable.dragHandleProps}
+                                {...draggable.draggableProps}
+                                ref={draggable.innerRef}
+                                className="draggable-item"
+                              >
+                                <p>{entity.book_title}</p>
+                              </li>
+                            );
+                          }}
+                        </Draggable>
+                      );
+                    }
+                  )}
+                </ul>
+              </>
+            );
+          }}
+        </Droppable>
+        </div>
       </DragDropContext>
     </div>
   );

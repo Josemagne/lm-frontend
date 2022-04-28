@@ -44,7 +44,7 @@ const initialState: InitialBookState = {
         amountOfBooks: 0
     },
     selectedBook: null,
-    newBook: new Book(nanoid(), "", "", "", 0, false, 0, ""),
+    newBook: new Book(nanoid(), "", "", "", 0, 0, ""),
     addingNewBook: false,
 }
 
@@ -106,7 +106,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
     },
     extraReducers: (builder) => {
         /* ANCHOR BACKEND */
-        // TODO Check metadata.notAsyncBooks if we should fetch books
         builder.addCase(fetchBooksBackend.pending, (state, action) => {
             state.books.loading = true;
         }),
@@ -138,7 +137,9 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
                     }
                 })
                 state.books.loading = false;
+              if (state.books.amountOfBooks > action.payload.length) {
                 state.books.amountOfBooks = action.payload.length;
+              }
             }),
             builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
                 state.books.loading = false;

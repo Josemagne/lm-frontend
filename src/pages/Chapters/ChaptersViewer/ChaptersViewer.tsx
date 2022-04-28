@@ -20,8 +20,8 @@ type Props = {};
 const ChaptersViewer = ({}: Props) => {
   const dispatch = useAppDispatch();
 
-  let selectedBook: LM_Book | null;
-  let chapters: LM_Chapter[] | null;
+  let selectedBook: LM_Book | null = null;
+  let chapters: LM_Chapter[] | null = null;
   let filteredChapters:LM_Chapter[] | null;
 
   try {
@@ -34,9 +34,6 @@ const ChaptersViewer = ({}: Props) => {
         filteredChapters = chapters.filter((chapter) => chapter.book_id === selectedBook.book_id);
     }
   } catch (err) {
-    selectedBook = null;
-    chapters = null
-    filteredChapters = null;
   }
 
   let selectedChapter: LM_Chapter | null;

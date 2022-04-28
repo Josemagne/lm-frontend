@@ -7,8 +7,13 @@ import {LM_Flashcard} from "../../../../types/Flashcard/flashcard";
 type Props = {};
 
 const Flashcardsviewer = (props: Props) => {
-  const selectedBook = useAppSelector((state) => state.books.selectedBook.book);
-  const flashcards: LM_Flashcard[] = useAppSelector((state) => state.flashcards.flashcards);
+  const selectedBook = useAppSelector((state) => state.books.selectedBook);
+  let flashcards: LM_Flashcard[] | null = null;
+
+  try {
+  flashcards = useAppSelector((state) => state.flashcards.flashcards.flashcards);
+  } catch(err) {
+  }
 
   useEffect(() => {
   }, [selectedBook]);

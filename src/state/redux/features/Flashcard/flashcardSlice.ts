@@ -2,7 +2,7 @@ import { boolean } from "yup";
 import Flashcard from "../../../../classes/base/Flashcard";
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard";
 import { nanoid } from 'nanoid';
-import { createAsyncThunk, createSlice, Slice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, Slice} from '@reduxjs/toolkit';
 import axios from "axios";
 import FAPI from '../../../../storage/indexedDB/FAPI';
 
@@ -87,10 +87,11 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
         const flashcards = action.payload;
             if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
 
-              flashcards.foreach((flashcard: LM_Flashcard) => {
+              flashcards.forEach((flashcard: LM_Flashcard) => {
                 // @ts-ignore
                 if (!state.flashcards.flashcards[flashcard.flashcard_id]) {
-              
+                // @ts-ignore
+                  state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
                 }
               })
 
@@ -98,7 +99,26 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
             builder.addCase(fetchFlashcardsBackend.rejected, (state, action) => {
                 state.flashcards.loading = false;
                 state.flashcards.error = action.payload as string;
-            })
+            }),
+        builder.addCase(fetchFlashcardsFrontend.pending, (state, action) => {
+          state.flashcards.loading = true;
+        }),
+        builder.addCase(fetchFlashcardsFrontend.fulfilled, (state, action) => {
+          if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
+          const flashcards: LM_Flashcard[] = action.payload;
+
+          flashcards.forEach((flashcard) => {
+            // @ts-ignore
+            if (state.flashcards.flashcards[flashcard.flashcard_id]) {
+                // @ts-ignore
+                  state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
+            }
+          })
+        }),
+        builder.addCase(fetchFlashcardsFrontend.rejected, (state, action) => {
+          state.flashcards.error = action.payload as string;
+          state.flashcards.loading = false;
+        })
 
     }
 })
