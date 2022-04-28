@@ -61,12 +61,14 @@ const BooksViewer = (props: Props) => {
 
   return (
     <div className="lm-page lm-booksviewer">
-      <button className="btn btn-primary" onClick={openBookAdder}>
-        Add a book
-      </button>
-      <BookAdder />
+      <div className="lm-booksviewer__adding">
+        <button className="btn btn-primary" onClick={openBookAdder}>
+          Add a book
+        </button>
+      </div>
+        <BookAdder />
       {loading ? <p>Loading...</p> : null}
-      {windowWidth < 576 && books ? <BooksPagination /> : <Dragging type="BOOK" title="Books" />}
+      {windowWidth < 768 && books ? <BooksPagination /> : <Dragging type="BOOK" title="Books" />}
       {selectedBook ? <BookModal /> : null}
     </div>
   );

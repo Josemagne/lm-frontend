@@ -22,7 +22,14 @@
 
 
     .entities_container {
+      overflow-x: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
       border: 1px solid black;
+      & > div {
+        height: 100%;
+      }
     li.draggable-item {
       @include lm-bookcontainer;
     }

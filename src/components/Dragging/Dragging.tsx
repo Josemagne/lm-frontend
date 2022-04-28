@@ -6,6 +6,8 @@ import {
   Draggable,
   DropResult,
   ResponderProvided,
+  DragUpdate,
+  DragStart
 } from "react-beautiful-dnd";
 import useAppSelector from "../../hooks/useAppSelector";
 import BookContainer from "../../pages/Books/BooksViewer/SubComponents/BookContainer/BookContainer";
@@ -106,6 +108,15 @@ const Dragging = ({ type, title }: Props) => {
 
   console.log("mapping: ", entityMapping);
   console.log("mapping entities: ", entities);
+
+  function onDragStart(event: DragStart) {
+
+  }
+
+  function onDragUpdate(event: DragUpdate) {
+    
+  }
+
   function onDragEnd(result: DropResult, provided: ResponderProvided) {
     console.log(result, provided)
     const {source, destination, draggableId } = result;

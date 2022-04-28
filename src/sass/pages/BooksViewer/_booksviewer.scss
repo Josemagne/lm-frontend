@@ -2,9 +2,21 @@
 
 .lm-booksviewer {
   display: grid;
-  grid-template-rows: auto;
+  grid-template-rows: auto 1fr;
   grid-template-areas:
-    "lm-lc-bookmodifier"
-    "lm-gc-dragging"
+    "adding"
     "lm-lc-booksviewer__bookspagination";
+    @media screen and (min-width: 768px) {
+      grid-template-areas:
+        "adding"
+        "lm-lc-booksviewer__bookspagination";
+
+    }
+
+    .lm-boosviewer__adding {
+      grid-area: adding;
+      display: flex;
+      justify-content: center;
+
+    }
 }
