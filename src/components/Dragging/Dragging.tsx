@@ -39,10 +39,22 @@ const Dragging = ({ type, title }: Props) => {
     }
   };
 
+  interface EntityMapping  {
+    TO_READ: {
+      [id: string]: LM_Entity
+    };
+    READING: {
+      [id: string]: LM_Entity
+    };
+    READ: {
+      [id: string]: LM_Entity
+    };
+  }
+
   /**
    * Object that contains the mapped entities for the LM_EntityStatus
    */
-  const entityMapping = {
+  const entityMapping: EntityMapping = {
     TO_READ: {},
     READING: {},
     READ: {},
@@ -95,8 +107,13 @@ const Dragging = ({ type, title }: Props) => {
   console.log("mapping: ", entityMapping);
   console.log("mapping entities: ", entities);
   function onDragEnd(result: DropResult, provided: ResponderProvided) {
-    const {source, destination } = result;
-      }
+    console.log(result, provided)
+    const {source, destination, draggableId } = result;
+
+    if (destination && destination.droppableId === "entities_doing") {
+      entityMapping.READING[draggableId] = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId);
+    }
+    }
 
   useEffect(() => {}, [entities, entityMapping]);
 
@@ -107,10 +124,12 @@ const Dragging = ({ type, title }: Props) => {
       >
         <div className="entities_container">
           <h3>{title}</h3>
-        <Droppable droppableId="entities entities_books">
-          {(droppable) => {
+        <Droppable droppableId="entities">
+          {(droppable, snapshot) => {
             return (
-              <>
+              <div style={{
+                backgroundColor: snapshot.isDraggingOver ? "green" : 'lightgray'
+                }}>
                 <ul
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
@@ -123,6 +142,7 @@ const Dragging = ({ type, title }: Props) => {
                           draggableId={entity[entityIDMapping(type)]}
                           index={index}
                         >
+
                           {(draggable) => {
                             return (
                               <li
@@ -133,7 +153,6 @@ const Dragging = ({ type, title }: Props) => {
                               >
                                 <BookContainer
                                   book={entity}
-                                  key={entity.book_id}
                                 />
                               </li>
                             );
@@ -143,17 +162,20 @@ const Dragging = ({ type, title }: Props) => {
                     }
                   )}
                 </ul>
-              </>
+                            {droppable.placeholder}
+              </div>
             );
           }}
         </Droppable>
         </div>
         <div className="entities_container">
                 <h3>To Read</h3>
-        <Droppable droppableId="entities_doing entities_books">
-          {(droppable) => {
+        <Droppable droppableId="entities_doing">
+          {(droppable,snapshot) => {
             return (
-              <>
+              <div style={{
+                backgroundColor: snapshot.isDraggingOver ? "green" : 'lightgray'
+                }}>
                 <ul
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
@@ -174,7 +196,7 @@ const Dragging = ({ type, title }: Props) => {
                                 ref={draggable.innerRef}
                                 className="draggable-item"
                               >
-                                <p>{entity.book_title}</p>
+                                <BookContainer book={entity} />
                               </li>
                             );
                           }}
@@ -183,17 +205,20 @@ const Dragging = ({ type, title }: Props) => {
                     }
                   )}
                 </ul>
-              </>
+              {droppable.placeholder}
+              </div>
             );
           }}
         </Droppable>
         </div>
         <div className="entities_container">
                 <h3>Read</h3>
-        <Droppable droppableId="entities_done entities_books">
-          {(droppable) => {
+        <Droppable droppableId="entities_done">
+          {(droppable, snapshot) => {
             return (
-              <>
+              <div style={{
+                backgroundColor: snapshot.isDraggingOver ? "green" : 'lightgray'
+                }}>
                 <ul
                   {...droppable.droppableProps}
                   ref={droppable.innerRef}
@@ -214,7 +239,8 @@ const Dragging = ({ type, title }: Props) => {
                                 ref={draggable.innerRef}
                                 className="draggable-item"
                               >
-                                <p>{entity.book_title}</p>
+                              <BookContainer book={entity} />
+              {droppable.placeholder}
                               </li>
                             );
                           }}
@@ -223,7 +249,8 @@ const Dragging = ({ type, title }: Props) => {
                     }
                   )}
                 </ul>
-              </>
+              {droppable.placeholder}
+              </div>
             );
           }}
         </Droppable>

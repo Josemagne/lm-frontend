@@ -7,24 +7,26 @@
 
   display: grid;
   grid-template-areas: "entities entities_doing entities_done";
+  grid-template-columns: repeat(3, 1fr);
 
   ul,li { 
     list-style-type: none;
-        list-style-position: inside;
-            
+    list-style-position: inside;
       margin: 0;
-      padding: 0; }
+      padding: 0;
+    }
 
-      ul {
-        height: 100%;
+    ul {
+      height: 100%;
+    }
 
-      }
-      
-  ul.entities, ul.entities_to_do  {
+
+    .entities_container {
+      border: 1px solid black;
     li.draggable-item {
       @include lm-bookcontainer;
     }
-  }
+    }
 
   ul.entities {
     grid-area: entities;
