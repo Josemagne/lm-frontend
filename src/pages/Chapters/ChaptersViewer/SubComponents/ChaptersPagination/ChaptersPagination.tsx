@@ -14,15 +14,15 @@ const ChaptersPagination = (props: Props) => {
 
   const [chaptersPerPage, setChaptersPerPage] = useState(10);
 
-  let chapters: LM_Chapter[] | null  = Object.values(
+  const chapters: LM_Chapter[] | null  = Object.values(
     useAppSelector((state) => state.chapters.chapters.chapters)
   );
 
-  let selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
+  const selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
 
   const amountOfChapters = useAppSelector(
     (state) => state.chapters.chapters.amountOfChapters
-  );
+  ) ?? 10;
 
   window.addEventListener("resize", () => {
     setWindowWidth(window.innerWidth);
@@ -40,6 +40,7 @@ const ChaptersPagination = (props: Props) => {
 
   // Once we have selected a book then we fetch its chapters
   useEffect(() => {
+    console.log("cohapters paginagttio:", selectedBook)
     if (!selectedBook) return;
     fetchChaptersBackend(selectedBook.book_id)
     fetchChaptersFrontend(selectedBook.book_id)

@@ -41,13 +41,13 @@ const initialState: InitialChapterState = {
 }
 
 export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (book_id: string): Promise<LM_Chapter[] | any> => {
-    let chapters = await API.getChapters(book_id);
+    const chapters = await API.getChapters(book_id);
 
     return chapters;
 })
 
 export const fetchChaptersFrontend = createAsyncThunk("chaptersFrontend/", async (book_id: string): Promise<LM_Chapter[] | any> => {
-    let chapters = await FAPI.getChapters(book_id);
+    const chapters = await FAPI.getChapters(book_id);
 
     return chapters;
 })
@@ -88,8 +88,8 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
             state.chapters.chapters[chapter.chapter_id] = chapter;
         },
         deleteSelectedChapter: (state, action) => {
-            const chapter_id = action.payload;
-
+            if (!state.selectedChapter) return;
+            const chapter_id = state.selectedChapter.chapter_id; 
             state.selectedChapter = null;
             delete state.chapters.chapters[chapter_id];
         },
@@ -147,6 +147,6 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
     }
 })
 
-export const { updateSelectedChapter, addChapter, updateChapter, deleteChapter, toggleAddingNewChapter } = chapterSlice.actions;
+export const { updateSelectedChapter, addChapter, updateChapter, deleteChapter, toggleAddingNewChapter, deleteSelectedChapter } = chapterSlice.actions;
 
 export default chapterSlice.reducer;

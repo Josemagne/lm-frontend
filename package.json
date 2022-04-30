@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "test-react": "npx react-scripts test",
-    "test-cypress": "npx cypress run --headless -b firefox",
+    "ci:start-server": "npx cross-env NODE_ENV=development webpack-dev-server",
+    "cy:run": "npx cypress run --headless --browser chrome",
+    "ci:cy-run": "npm run ci:start-server && npm run cy:run",
     "dev": "npx cross-env NODE_ENV=development webpack-dev-server",
     "build": "rm -rf dist && npx cross-env NODE_ENV=production webpack",
     "build-ts": "npx tsc",
@@ -62,6 +64,7 @@
     "sass-loader": "^12.4.0",
     "slate-history": "^0.66.0",
     "slate-react": "^0.73.0",
+    "tiny-invariant": "^1.2.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -88,7 +91,13 @@
     "css-loader": "^6.6.0",
     "dotenv-webpack": "^7.1.0",
     "eslint": "^8.13.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-standard": "^5.0.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
@@ -96,6 +105,7 @@
     "jest-runner": "^27.5.1",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
+    "prettier": "^2.6.2",
     "react-scripts": "^5.0.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.1",
@@ -109,7 +119,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build && npm run build-ts && rm -Rf buil",
+      "pre-commit": "npm run build && npm run build-ts && rm -Rf build && eslint --cache --fix && prettier --write",
       "pre-push": "npm run build && npm run build-ts && rm -Rf dist"
     }
   }

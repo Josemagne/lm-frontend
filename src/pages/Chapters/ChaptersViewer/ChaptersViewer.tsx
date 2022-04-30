@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer";
 import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
 import LM_Chapter from "../../../types/Book/chapter";
 import useAppSelector from "../../../hooks/useAppSelector";
-import ChapterModifier from "../ChapterModal/ChapterModal";
 import { LM_Book } from "../../../types/Book/book";
 import BookSelector from "../../../components/BookSelector/BookSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
@@ -15,25 +14,25 @@ import {
 } from "../../../state/redux/features/chapterSlice";
 import ChapterModal from "./../ChapterModal/ChapterModal"
 import ChapterPagination from "./SubComponents/ChaptersPagination/ChaptersPagination";
-type Props = {};
+import {fetchBooksBackend, fetchBooksFrontend} from "../../../state/redux/features/bookSlice"
 
-const ChaptersViewer = ({}: Props) => {
+const ChaptersViewer = () => {
   const dispatch = useAppDispatch();
 
-  let selectedBook: LM_Book | null = null;
+  const selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
   let chapters: LM_Chapter[] | null = null;
   let filteredChapters:LM_Chapter[] | null;
+  const addingNewChapter = useAppSelector(
+    (state) => state.chapters.addingNewChapter
+  );
 
   try {
-    selectedBook = useAppSelector((state) => state.books.selectedBook);
-    chapters = Object.values(
-      useAppSelector((state) => state.chapters.chapters.chapters))
-    
     if (selectedBook) {
       // @ts-ignore
         filteredChapters = chapters.filter((chapter) => chapter.book_id === selectedBook.book_id);
     }
   } catch (err) {
+    filteredChapters = null;
   }
 
   let selectedChapter: LM_Chapter | null;
@@ -43,33 +42,41 @@ const ChaptersViewer = ({}: Props) => {
     selectedChapter = null;
   }
 
-  const addingNewChapter = useAppSelector(
-    (state) => state.chapters.addingNewChapter
-  );
 	
   function openChapterAdder() {
     dispatch(toggleAddingNewChapter(""));
   }
 
   useEffect(() => {
+    console.log("selectedBOok: ", selectedBook)
+    console.log("addingNewChapter: ", addingNewChapter)
     if (!selectedBook)  return;
-    fetchChaptersBackend(selectedBook.book_id);
+   fetchChaptersBackend(selectedBook.book_id);
     fetchChaptersFrontend(selectedBook.book_id);
   }, [selectedBook]);
+
+  useEffect(() => {
+
+  },[addingNewChapter])
+
+  useEffect(()=> {
+    fetchBooksFrontend()
+    fetchBooksBackend()
+  },[])
 
   return (
     <div className="lm-chaptersviewer lm-page">
       {/* NOTE Shows the book that we are treating at the moment */}
       <div className="lm-chaptersviewer__bookinformation">
-        <h4></h4>
+        <h4>{selectedBook ? selectedBook.book_title : null}</h4>
       </div>
       <BookSelector />
 
-      {selectedBook && addingNewChapter ? 
-        <>
+      {
+      selectedBook ?
       <ChapterAdder /> 
-        </>
-      : null}
+      : null
+      }
       <button className="btn btn-primary" onClick={openChapterAdder}>
         Add Chapter
       </button>

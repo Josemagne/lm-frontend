@@ -29,9 +29,9 @@ const initialFlashcardState: InitialFlashcardState = {
 }
 
 export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", async (): Promise<LM_Flashcard[] | any> => {
-    let error: any = null;
+    const error: any = null;
 
-    let api = axios.create({
+    const api = axios.create({
         baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_DEV_PORT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
@@ -75,6 +75,18 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
             if (!state.flashcards.flashcards) return;
             delete state.flashcards.flashcards[flashcardID];
         },
+      changeSelectedFlashcard: (state, action) => {
+        const newSelectedFlashcard = action.payload;
+        state.selectedFlashcard = newSelectedFlashcard;
+      },
+      renewNewFlashcard: (state, action) => {
+        const newFlashcard = action.payload;
+        if (!state.flashcards.flashcards) state.flashcards.flashcards = {}
+
+        state.flashcards.flashcards[newFlashcard.flashcard_id] = newFlashcard;
+
+        state.newFlashcard = new Flashcard(nanoid(), "BOOK", "", "");
+      }
 
 
 

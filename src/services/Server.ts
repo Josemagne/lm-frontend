@@ -32,7 +32,7 @@ export default class Server {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`, "Access-Control-Allow-Origin": "*"
             }
         });
-        let book = await api.get(`/books/${book_id}`).then((book) => {
+        const book = await api.get(`/books/${book_id}`).then((book) => {
             console.log("got the book!")
             return book;
         })
@@ -53,7 +53,7 @@ export default class Server {
             }
         });
         // TODO Use the id and look if the user is logged in. Then we will return the books!
-        let books = await api.get(`/books`).then((books) => {
+        const books = await api.get(`/books`).then((books) => {
             console.log("Got the books from the server.")
             return books;
         })

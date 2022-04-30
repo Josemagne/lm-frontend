@@ -49,7 +49,7 @@ const BookAdder = (props: Props) => {
     validateOnChange: true,
     validationSchema: bookSchema,
     validate: async (values) => {
-      let errors: any = {};
+      const errors: any = {};
 
       if (!values.book_title) {
         errors.book_title = "Book title is required";

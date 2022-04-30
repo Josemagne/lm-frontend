@@ -4,16 +4,14 @@ import { AutoComplete } from "rsuite";
 import useAppSelector from "../../hooks/useAppSelector";
 import { LM_Book } from "../../types/Book/book";
 import { changeSelectedBook } from "../../state/redux/features/bookSlice";
-import {fetchBooksBackend, fetchBooksFrontend} from "../../state/redux/features/bookSlice";
 
-type Props = {};
 
 /**
  * Lets us select the book for the flashcards.
  * @param props
  * @returns
  */
-const BookSelector = (props: Props) => {
+const BookSelector = () => {
   const [titles, setTitles] = useState<string[]>([]);
   const dispatch = useAppDispatch();
 
@@ -38,6 +36,7 @@ const BookSelector = (props: Props) => {
     const _titles: string[] = [];
 
     if (books.length < 1) return;
+    
     for (let i = 0; i < _books.length; i++) {
       let title = "";
 
@@ -63,24 +62,27 @@ const BookSelector = (props: Props) => {
     dispatch(changeSelectedBook(book));
   };
 
-  const changeHandler = (v: string) => {
-    console.log("Selected book!!!: ", v)
+  /*
+   * Gets title from the main title
+   */
+  function getTitle(mainTitle: string) {
+    return mainTitle.split("-")[1].trim();
+  }
+
+  const selectionHandler = (v: string) => {
     const bookArray: LM_Book[] = Object.values(books);
-    const selectedBook = bookArray.find((b) => {
-      if (b.book_title === v) return b;
+    const _selectedBook = bookArray.find((b) => {
+      if (b.book_title === getTitle(v)) return b;
     });
 
-    if (!selectedBook) return;
+    if (!_selectedBook) return;
 
-    setSelectedBook(selectedBook.book_id);
+    setSelectedBook(_selectedBook.book_id);
   };
 
-  useEffect(() => {}, [selectedBook]);
-
   useEffect(() => {
-    fetchBooksBackend()
-    fetchBooksFrontend()
-  }, []);
+    console.log("selectedbook:" , selectedBook) 
+  }, [selectedBook]);
 
   return (
     <div className="lm-lc-bookselector">
@@ -95,9 +97,9 @@ const BookSelector = (props: Props) => {
               </div>
           }
           }
-          
+          onSelect={(v) => selectionHandler(v)}
         // @ts-ignore
-        data={titles} onChange={(v) => changeHandler(v)} />
+        data={titles} />
 
       ) : null}
     </div>

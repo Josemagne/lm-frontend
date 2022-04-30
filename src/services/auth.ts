@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let api = axios.create({
+const api = axios.create({
   baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
         "Access-Control-Allow-Origin": "*"
     }
@@ -27,11 +27,10 @@ const register = async (newUser: { password: string, email: string }): Promise<a
         }
     }
     catch (err) {
-        console.log(": ", err)
+        console.error(": ", err)
         res.data.result = "failure"
     }
     return res;
-
 }
 
 /**
@@ -40,7 +39,7 @@ const register = async (newUser: { password: string, email: string }): Promise<a
  * @returns 
  */
 const login = async (user: { password: string, email: string }) => {
-    let res: string = "";
+    let res = "";
 
     try {
         const result = await api.post(`/auth/login`, user);

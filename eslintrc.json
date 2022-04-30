@@ -1,6 +1,20 @@
 {
   "rules": {
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"]
-  }
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "react/react-in-jsx-scope": "off"
+  },
+  "extends": [
+    "plugin:eslint:recommended",
+    "plugin:react/recommended",
+    "standard"
+], 
+"parseOptions": {
+  "ecmaFeatures": {
+    "jsx": true
+  }, 
+  "ecmaVersion": 11,
+  "sourceType": "module"
+},
+"plugin": "react"
 }

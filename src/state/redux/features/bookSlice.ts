@@ -52,10 +52,10 @@ const initialState: InitialBookState = {
  * Fetches books from backend with redux thunk
  */
 export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", async (): Promise<LM_Book[] | any> => {
-    let error: any = null;
+    const error: any = null;
     // const data = await Server.getBooks();
-    let api = axios.create({
-      baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}${process.env.BACKEND_API_VERSION}` : `http://${process.env.BACKEND_IP_PRODUCTION}${process.env.BACKEND_API_VERSION}`, headers: {
+    const api = axios.create({
+      baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`
         }
     });
@@ -71,7 +71,7 @@ export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", asy
  */
 export const fetchBooksFrontend = createAsyncThunk("books/fetchBooksFrontend", async (): Promise<LM_Book[] | any> => {
     let error: any = null;
-    let result = await FAPI.getBooks().then((res) => res).catch((err) => {
+    const result = await FAPI.getBooks().then((res) => res).catch((err) => {
         error = err;
     })
     if (error) return error;
@@ -150,6 +150,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, changeSelectedChapter, removeSelectedChapter, addChapter, changeChapterSummary, deleteChapter, changeSelectedFlashCard, changeNewFlashcard, toggleChapterState, toggleAddingNewBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, toggleAddingNewBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

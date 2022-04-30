@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import BookModal from "./SubComponents/BookModal/BookModal";
 import { Panel } from "rsuite";
 import useAppSelector from "../../../hooks/useAppSelector";
@@ -12,21 +12,18 @@ import BookAdder from "../BookAdder/BookAdder";
 import BooksPagination from "./SubComponents/BooksPagination/BooksPagination";
 import Dragging from "../../../components/Dragging/Dragging";
 
-type Props = {};
 
 /**
  * Lists all the books
  * @param props
  * @returns
  */
-const BooksViewer = (props: Props) => {
+const BooksViewer = () => {
   /* STATE */
 
   /* METHODS */
   const dispatch = useAppDispatch();
 
-  // Get the loading status
-  const loading = useAppSelector((state) => state.books.books.loading);
   const books = useAppSelector((state) => state.books.books.books);
   const selectedBook = useAppSelector(
     // @ts-ignore
@@ -45,8 +42,6 @@ const BooksViewer = (props: Props) => {
   function openBookAdder() {
     dispatch(toggleAddingNewBook(""));
   }
-
-  useEffect(() => {}, [loading]);
 
   useEffect(() => {}, [books]);
 
@@ -67,7 +62,7 @@ const BooksViewer = (props: Props) => {
         </button>
       </div>
         <BookAdder />
-      {loading ? <p>Loading...</p> : null}
+      {!books ? <p>Loading...</p> : null}
       {windowWidth < 768 && books ? <BooksPagination /> : <Dragging type="BOOK" title="Books" />}
       {selectedBook ? <BookModal /> : null}
     </div>

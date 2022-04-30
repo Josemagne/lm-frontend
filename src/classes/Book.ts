@@ -11,9 +11,9 @@ export default class Book implements LM_Book {
     book_title: string;
     pages: number;
     progress: number;
-    summary: string = "";
+    summary = "";
     genre = ""
-    rate: number = 1;
+    rate = 1;
     chapters: string[] = []
     flashcards: string[] = []
     bookCollection: string[] = [];

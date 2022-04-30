@@ -10,8 +10,8 @@ class Flashcard implements LM_Flashcard {
     chapter_id: string | undefined;
     articlecollection_id: string | undefined;
     article_id: string | undefined;
-    question: string = "";
-    answer: string = "";
+    question = "";
+    answer = "";
 
     constructor(flashcard_id: string, flashcardType: FlashcardType, question: string, answer: string, book_id?: string, chapter_id?: string, article_id?: string) {
         this.flashcard_id = flashcard_id;

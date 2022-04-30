@@ -32,11 +32,11 @@ const Register = (props: Props) => {
       email: "",
       passwordConfirm: "",
     },
-    validateOnChange: true,
-    validateOnBlur: true,
+    validateOnChange: false,
+    validateOnBlur: false,
     validationSchema: registerSchema,
     validate: (values) => {
-      let errors: any = {};
+      const errors: any = {};
 
       if (!(values.password.length > 6)) {
         errors.password = "Password must be at least 7 characters long";

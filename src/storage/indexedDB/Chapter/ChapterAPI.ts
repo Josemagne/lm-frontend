@@ -8,7 +8,7 @@ function ChapterAPI<TBase extends Constructor>(Base: TBase) {
         public chapter = ChapterDB;
 
         public addChapter = async (chapter: LM_Chapter) => {
-            this.chapter.add(chapter, chapter.chapter_id);
+            return await this.chapter.add(chapter, chapter.chapter_id);
         }
 
         public getChapter = async (chapter_id: string) => {

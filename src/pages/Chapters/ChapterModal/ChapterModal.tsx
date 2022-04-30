@@ -11,8 +11,6 @@ import { useFormik } from "formik";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import {
   changeSelectedBook,
-  changeSelectedChapter,
-  removeSelectedChapter,
   updateBook,
 } from "../../../state/redux/features/bookSlice";
 import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary";
@@ -21,16 +19,15 @@ import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/Cha
 import "react-quill/dist/quill.snow.css";
 import API from "../../../api/API";
 import FAPI from "../../../storage/indexedDB/FAPI";
-import { updateSelectedChapter } from "../../../state/redux/features/chapterSlice";
+import { updateSelectedChapter, deleteSelectedChapter } from "../../../state/redux/features/chapterSlice";
 
-type Props = {};
 
 /**
  * Modal where we can edit information about a chapter
  * @param props
  * @returns
  */
-const ChapterModal = (props: Props) => {
+const ChapterModal = () => {
   /**
    * Dispatches action creator to the store
    */
@@ -56,7 +53,7 @@ const ChapterModal = (props: Props) => {
    * Closes the modal
    */
   const handleClose = () => {
-    dispatch(removeSelectedChapter(""));
+    dispatch(deleteSelectedChapter(""));
   };
 
   useEffect(() => {}, [selectedChapter]);

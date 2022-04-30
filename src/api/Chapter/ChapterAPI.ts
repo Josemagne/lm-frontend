@@ -17,7 +17,7 @@ export default function ChapterAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public getChapter = async (chapter_id: string) => {
-            return await this.api.get(`chapter/${chapter_id}`);
+            return await this.api.get(`/chapter/${chapter_id}`);
         }
 
         public getChapters = async (book_id: string) => {

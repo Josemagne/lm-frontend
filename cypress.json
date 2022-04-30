@@ -1,1 +1,7 @@
-{}
+{
+  "chromeWebSecurity": false,
+  "video": false,
+  "baseUrl": "http://localhsot:4000",
+  "pageLoadTimeout": 60000,
+  "defaultCommandTimeout": 60000
+}
