@@ -17,6 +17,7 @@ import FAPI from "../../../storage/indexedDB/FAPI";
 import API from "../../../api/API";
 import { Modal } from "rsuite";
 import useAppSelector from "../../../hooks/useAppSelector";
+import Author from "../../../classes/Author"
 
 type Props = {};
 
@@ -66,10 +67,12 @@ const BookAdder = (props: Props) => {
 
       await FAPI.addBook(values);
 
-      // await FAPI.addAuthor({values.author_prename, values.author_name})
-
       API.addBook(values);
-      // await API.addAuthor()
+
+      const newAuthor = new Author(nanoid(), values.author_prename, values.author_name);
+       //await FAPI.addAuthor(newAuthor);
+
+       await API.addAuthor(newAuthor)
 
       // NOTE Resets the values of the form
       resetForm({

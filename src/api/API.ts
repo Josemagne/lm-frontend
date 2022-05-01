@@ -3,6 +3,7 @@ import SummaryAPI from './Summary/SummaryAPI';
 import FlashcardAPI from "./Flashcard/FlashcardAPI";
 import ChapterAPI from "./Chapter/ChapterAPI";
 import BookAPI from "./Book/BookAPI";
+import AuthorAPI from "./Author/AuthorAPI"
 import axios, { AxiosInstance } from "axios";
 
 const env = process.env.NODE_ENV === "development" ? "development" : "production";
@@ -17,6 +18,6 @@ function APIMixin<TBase extends Constructor>(Base: TBase) {
     }
 }
 
-const API = APIMixin(SummaryAPI(FlashcardAPI(ChapterAPI(BookAPI(class { })))));
+const API = APIMixin(SummaryAPI(FlashcardAPI(ChapterAPI(BookAPI(AuthorAPI(class {}))))));
 
 export default new API();

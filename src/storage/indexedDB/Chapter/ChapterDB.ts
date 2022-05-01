@@ -5,7 +5,7 @@ class ChapterDB extends Dexie {
 
     constructor() {
         super("librimem");
-        this.version(1).stores({ "chapter": "chapter_id, book_id, title, toRead, read, importance, summary, flashcards, started, ended" })
+        this.version(1).stores({ "chapter": "chapter_id, book_id, title, toRead, status, importance, summary, flashcards, started, ended" })
     }
 }
 

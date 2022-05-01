@@ -46,6 +46,11 @@ const ChaptersPagination = (props: Props) => {
     fetchChaptersFrontend(selectedBook.book_id)
   },[selectedBook])
 
+
+  useEffect(() => {
+    console.log("chapters::", chapters)
+  }, [chapters])
+
   return (
     <div className="lm-lc-chapterspagination">
       <div className="chapterspagination__chapters">

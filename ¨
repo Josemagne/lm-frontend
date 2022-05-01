@@ -1,0 +1,41 @@
+import {LM_Summary, SummaryType} from "../../../../types/summary/summary"
+import Summary from "../../../../classes/base/Summary"
+import {nanoid} from "nanoid";
+import {createAsyncThunk} from "@reduxjs/toolkit"
+import axios from "axios"
+
+
+interface InitialSummaryState {
+  summaries: {
+    summaries: {
+      [id: string]: LM_Summary<SummaryType>;
+    };
+    error: string | null;
+    amountOfSummaries: number;
+  },
+  selectedSummary: LM_Summary<SummaryType> | null;
+  newSummary: LM_Summary<SummaryType>;
+}
+
+const initialSummaryState: InitialSummaryState = {
+  summaries: {
+    summaries: {},
+    error: null,
+    amountOfSummaries: 0
+  },
+  selectedSummary: null,
+  newSummary: new Summary(nanoid(), "", "BOOK")
+}
+
+export const fetchSummariesBackend = createAsyncThunk("summary/fetchSummariesBackend", async (): Promise<LM_Summary[]>  => {
+
+  const api = axios.create({
+    baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` :`http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
+      "Authorization": `Bearer ${localStorage.getItem('token')}`
+    }
+  })  
+
+  const summaries = await api.get("/summary")
+
+  return summaries.data;
+})
