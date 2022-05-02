@@ -28,7 +28,7 @@ const initialFlashcardState: InitialFlashcardState = {
     selectedFlashcard: null
 }
 
-export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", async (): Promise<LM_Flashcard[] | any> => {
+export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", async (bookId: string): Promise<LM_Flashcard[] | any> => {
     const error: any = null;
 
     const api = axios.create({
@@ -37,7 +37,7 @@ export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", asyn
         }
     });
 
-    const flashcards = await api.get("/flashcard");
+    const flashcards = await api.get(`/flashcards/${bookId}`);
 
     return flashcards;
 })
@@ -60,7 +60,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
             state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
 
             // NOTE Each new flashcard was a newFlashcard
-            state.newFlashcard = new Flashcard(nanoid(), "ANY", "", "")
+            state.newFlashcard = new Flashcard(nanoid(), "BOOK", "", "")
         },
         updateFlashcard: (state, action) => {
             const flashcard = action.payload;
@@ -79,17 +79,11 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
         const newSelectedFlashcard = action.payload;
         state.selectedFlashcard = newSelectedFlashcard;
       },
-      renewNewFlashcard: (state, action) => {
+      changeNewFlashcard: (state, action) => {
         const newFlashcard = action.payload;
-        if (!state.flashcards.flashcards) state.flashcards.flashcards = {}
 
-        state.flashcards.flashcards[newFlashcard.flashcard_id] = newFlashcard;
-
-        state.newFlashcard = new Flashcard(nanoid(), "BOOK", "", "");
+        state.newFlashcard = newFlashcard
       }
-
-
-
     },
     extraReducers: (builder) => {
         builder.addCase(fetchFlashcardsBackend.pending, (state, action) => {
@@ -134,3 +128,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
 
     }
 })
+
+export const{changeNewFlashcard, addFlashcard, updateFlashcard, deleteFlashcard, changeSelectedFlashcard} = flashcardSlice.actions;
+
+export default flashcardSlice.reducer

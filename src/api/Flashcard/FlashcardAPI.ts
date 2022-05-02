@@ -18,11 +18,16 @@ export default function flashcardAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public getFlashcard = async (flashcard_id: string) => {
-            return await this.api.get(`/flashcard/${flashcard_id}`)
+            const response = await this.api.get(`/flashcard/${flashcard_id}`)
+            const {flashcard} = response.data; 
+            return  flashcard;
         }
 
-        public getFlaschards = async () => {
-            return await this.api.get(`/flashcard`)
+        public getFlaschards = async (bookId: string) => {
+            const response = await this.api.get(`/flashcards/${bookId}`)
+            const {flashcards} = response.data;
+
+            return flashcards;
         }
 
         public updateFlashcard = async (flashcard: LM_Flashcard) => {

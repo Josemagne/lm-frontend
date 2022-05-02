@@ -20,6 +20,10 @@ export default function AuthorAPI<TBase extends Constructor>(Base: TBase) {
       return await this.api.get(`/author/${authorID}`);
     }
 
+    public getAuthors = async () => {
+      return await this.api.get(`/authors`)
+    }
+
     public updateAuthor = async (updatedAuthor: LM_Author) => {
       return await this.api.post(`/author/${updatedAuthor.author_id}`, updatedAuthor)
     }

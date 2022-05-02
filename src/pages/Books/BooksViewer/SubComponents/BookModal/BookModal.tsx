@@ -34,7 +34,7 @@ const BookModal = ({}: Props) => {
     <Modal
       className="lm-bookmodal"
       overflow={true}
-      open={selectedBook}
+      open={selectedBook ? true : false}
       onClose={handleClose}
       full={true}
     >

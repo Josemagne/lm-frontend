@@ -4,7 +4,7 @@ import useAppSelector from "../../../../../hooks/useAppSelector";
 import LM_Chapter from "../../../../../types/Book/chapter";
 import ChapterContainer from "../ChapterContainer/ChapterContainer";
 import {LM_Book} from "../../../../../types/Book/book"
-import {fetchChaptersBackend, fetchChaptersFrontend} from "../../../../../state/redux/features/chapterSlice"
+import {fetchChaptersBackend} from "../../../../../state/redux/features/chapterSlice"
 
 type Props = {};
 
@@ -38,18 +38,15 @@ const ChaptersPagination = (props: Props) => {
     indexOfLastChapter = currentChapter * chaptersPerPage;
   }
 
-  // Once we have selected a book then we fetch its chapters
   useEffect(() => {
-    console.log("cohapters paginagttio:", selectedBook)
-    if (!selectedBook) return;
-    fetchChaptersBackend(selectedBook.book_id)
-    fetchChaptersFrontend(selectedBook.book_id)
-  },[selectedBook])
-
-
-  useEffect(() => {
+    console.log("selectedBook in chapters: ", selectedBook)
     console.log("chapters::", chapters)
   }, [chapters])
+
+  useEffect(() => {
+    if (!selectedBook) return;
+    fetchChaptersBackend(selectedBook.book_id)
+  }, [selectedBook])
 
   return (
     <div className="lm-lc-chapterspagination">

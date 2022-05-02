@@ -92,3 +92,4 @@ export const summarySlice: Slice<InitialSummaryState> = createSlice({
 
 export const {addSummary, deleteSummary, updateSummary, renewNewSummary, changeSelectedSummary} = summarySlice.actions;
 
+export default summarySlice.reducer;

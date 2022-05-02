@@ -39,7 +39,7 @@ const ChapterContainer = ({ chapter }: Props) => {
 
     dispatch(deleteChapter(chapter.chapter_id));
 
-    await FAPI.deleteChapter(chapter.chapter_id);
+    //await FAPI.deleteChapter(chapter.chapter_id);
 
     await API.deleteChapter(chapter.chapter_id);
   };

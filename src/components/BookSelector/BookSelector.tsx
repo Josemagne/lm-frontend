@@ -3,7 +3,8 @@ import useAppDispatch from "../../hooks/useAppDispatch";
 import { AutoComplete } from "rsuite";
 import useAppSelector from "../../hooks/useAppSelector";
 import { LM_Book } from "../../types/Book/book";
-import { changeSelectedBook } from "../../state/redux/features/bookSlice";
+import { changeSelectedBook, fetchBooksBackend } from "../../state/redux/features/bookSlice";
+import {fetchChaptersBackend} from "../../state/redux/features/chapterSlice"
 
 
 /**
@@ -57,10 +58,6 @@ const BookSelector = () => {
     getTitles(Object.values(books));
   }
 
-  const setSelectedBook = (bookID: string) => {
-    const book = books[bookID];
-    dispatch(changeSelectedBook(book));
-  };
 
   /*
    * Gets title from the main title
@@ -77,12 +74,15 @@ const BookSelector = () => {
 
     if (!_selectedBook) return;
 
-    setSelectedBook(_selectedBook.book_id);
+    console.log("Selected book is: ", _selectedBook)
+
+    dispatch(changeSelectedBook(_selectedBook));
   };
 
   useEffect(() => {
-    console.log("selectedbook:" , selectedBook) 
-  }, [selectedBook]);
+    // @ts-ignore
+    dispatch(fetchBooksBackend())
+  })
 
   return (
     <div className="lm-lc-bookselector">

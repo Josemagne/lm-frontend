@@ -2,9 +2,7 @@ import { useEffect } from "react";
 
 import Flashcard from "../../classes/base/Flashcard";
 import {
-  changeNewFlashcard,
   changeSelectedBook,
-  changeSelectedChapter,
 } from "../../state/redux/features/bookSlice";
 import { LM_Book } from "../../types/Book/book";
 import Answer from "../FlashCard/SubComponents/Answer/Answer";
@@ -13,9 +11,9 @@ import LM_Chapter from "../../types/Book/chapter";
 import useAppDispatch from "../../hooks/useAppDispatch";
 import useAppSelector from "../../hooks/useAppSelector";
 import { nanoid } from "nanoid";
-import Server from "../../services/Server";
-import FAPI from "../../storage/indexedDB/FAPI";
-import LM_Entity, { LM_EntityName } from "../../types/Entity/entity";
+import { LM_EntityName } from "../../types/Entity/entity";
+import API from "../../api/API"
+import {changeNewFlashcard, addFlashcard} from "../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {
   type: LM_EntityName;
@@ -29,16 +27,18 @@ type Props = {
 const FlashcardAdder = ({ type }: Props) => {
   const dispatch = useAppDispatch();
   const newFlashcard = useAppSelector(
-    (state) => state.books.selectedChapter.newFlashcard
+    (state) => state.flashcards.newFlashcard
   );
 
   /**
    * Changes the book with the new flashcard
    */
   async function submitHandler() {
-    // indexedDB
-    // await FAPI.addFlashcard();
-    // TODO server
+    await API.addFlashcard(newFlashcard)
+    let flashcardCopy = JSON.parse(JSON.stringify(newFlashcard))
+    flashcardCopy.flashcardType = type;
+    dispatch(addFlashcard(flashcardCopy))
+    dispatch(changeNewFlashcard(""))
   }
 
   useEffect(() => {

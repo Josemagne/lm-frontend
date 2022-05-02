@@ -36,23 +36,23 @@ export default interface LM_Chapter {
     /**
      * IDs of the multiple Note objs
      */
-    notes: string[];
+    notes?: string[];
     /**
      * IDs of the multiple Picture objs
      */
-    pictures: string[];
+  pictures?: string[];
     /**
      * IDs of the keywords that belong to this chapter
      */
-    keyWords: string[]
+    keyWords?: string[]
     /**
      * IDs of the LoanWord objs
      */
-    loanWords: string[]
+    loanWords?: string[]
     /**
      * IDs of the GlossaryWord objs
      */
-    glossaryWords: string[]
+    glossaryWords?: string[]
     /**
      * Date when the chapter has started to be read
      */

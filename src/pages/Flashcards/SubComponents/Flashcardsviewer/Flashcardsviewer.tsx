@@ -3,10 +3,9 @@ import { Accordion, Container, Row } from "react-bootstrap";
 import useAppSelector from "../../../../hooks/useAppSelector";
 import LM_Chapter from "../../../../types/Book/chapter";
 import {LM_Flashcard} from "../../../../types/Flashcard/flashcard";
+import {fetchFlashcardsBackend} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
-type Props = {};
-
-const Flashcardsviewer = (props: Props) => {
+const Flashcardsviewer = () => {
   const selectedBook = useAppSelector((state) => state.books.selectedBook);
   let flashcards: LM_Flashcard[] | null = null;
 
@@ -16,7 +15,11 @@ const Flashcardsviewer = (props: Props) => {
   }
 
   useEffect(() => {
-  }, [selectedBook]);
+    if (!selectedBook) return;
+    fetchFlashcardsBackend(selectedBook.book_id)}
+    , [selectedBook]);
+
+  useEffect(() => {}, [flashcards])
 
   return (
     <div className="lm-lc-flashcardsviewer">

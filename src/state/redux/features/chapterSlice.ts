@@ -12,7 +12,6 @@ interface InitialChapterState {
         chapters: {
             [chapter_id: string]: LM_Chapter;
         }
-        chapter_ids: string[]
         amountOfChapters: 0
     },
     selectedChapter: LM_Chapter | null,
@@ -28,7 +27,6 @@ const initialState: InitialChapterState = {
         loading: false,
         error: null,
         chapters: {},
-        chapter_ids: [],
         amountOfChapters: 0
 
     },
@@ -41,7 +39,10 @@ const initialState: InitialChapterState = {
 }
 
 export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (book_id: string): Promise<LM_Chapter[] | any> => {
+  console.log("fetchChaptersBackned called:");
     const chapters = await API.getChapters(book_id);
+
+    console.log("Chapters in slice: ", chapters)
 
     return chapters;
 })
@@ -107,26 +108,23 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
             builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
                 const chapters = action.payload;
 
-                (chapters as LM_Chapter[]).forEach((chapter) => {
-                    // NOTE Create an object if it is null
-                    if (!state.chapters.chapters) {
+              // @ts-ignore
+              console.log("Fetched chapters: ", chapters)
+
+                (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
                         state.chapters.chapters = {};
-                    }
 
                     state.chapters.chapters[chapter.chapter_id] = chapter;
 
-                    // Transfer the chapters to the book state
-                    addChapter(chapter);
-
                 })
-
-
+              state.chapters.error = null;
+              state.chapters.loading = false;
             }),
             builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
                 state.chapters.error = action.payload as string;
                 state.chapters.loading = false;
             }),
-            builder.addCase(fetchChaptersFrontend.pending, (state, action) => {
+            builder.addCase(fetchChaptersFrontend.pending, (state) => {
                 state.chapters.loading = true;
             }),
             builder.addCase(fetchChaptersFrontend.fulfilled, (state, action) => {

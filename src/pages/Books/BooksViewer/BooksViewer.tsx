@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import BookModal from "./SubComponents/BookModal/BookModal";
-import { Panel } from "rsuite";
 import useAppSelector from "../../../hooks/useAppSelector";
 import useAppDispatch from "../../../hooks/useAppDispatch";
 import {

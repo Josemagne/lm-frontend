@@ -64,7 +64,7 @@ const ChapterAdder = () => {
 
      dispatch(addChapter(values)) 
 
-      await FAPI.addChapter(values);
+      //await FAPI.addChapter(values);
 
       await API.addChapter(values);
       

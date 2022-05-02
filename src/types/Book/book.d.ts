@@ -13,7 +13,7 @@ export declare interface LM_Book {
     book_id: string | LM_EntityID;
     author_id: string;
     author_prename: string;
-    author_name: string;
+    author_name: string | undefined;
     book_title: string;
     pages?: number;
     /**

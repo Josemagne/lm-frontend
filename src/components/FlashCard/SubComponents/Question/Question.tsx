@@ -1,12 +1,7 @@
 import React, { useMemo, useEffect, useRef, useState } from "react";
 import useAppDispatch from "../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../hooks/useAppSelector";
-import {
-  changeNewFlashcard,
-  changeSelectedBook,
-  changeSelectedChapter,
-  changeSelectedFlashCard,
-} from "../../../../state/redux/features/bookSlice";
+import {changeSelectedFlashcard, changeNewFlashcard} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import ReactQuill from "react-quill";
 
 type Props = {
@@ -21,19 +16,19 @@ const Question = ({ isNew }: Props) => {
   const editorRef = useRef(null);
   const dispatch = useAppDispatch();
 
-  const book = useAppSelector((state) => state.books.selectedBook.book);
+  const book = useAppSelector((state) => state.books.selectedBook);
   const chapter = useAppSelector(
-    (state) => state.books.selectedChapter.chapter
+    (state) => state.books.selectedChapter
   );
 
   /* We use the component Question to change either selectedFlashcard or newFlashcard */
 
   const newFlashcard = useAppSelector(
-    (state) => state.books.selectedChapter.newFlashcard
+    (state) => state.flashcards.newFlashcard
   );
 
   const selectedFlashcard = useAppSelector(
-    (state) => state.books.selectedChapter.selectedFlashcard
+    (state) => state.flashcards.selectedFlashcard
   );
 
   const actualFlashcard = isNew ? newFlashcard : selectedFlashcard;
@@ -50,7 +45,7 @@ const Question = ({ isNew }: Props) => {
         JSON.stringify(selectedFlashcard)
       );
       selectedFlashcard.question = v;
-      dispatch(changeSelectedFlashCard(selectedFlashcardCopy));
+      dispatch(changeSelectedFlashcard(selectedFlashcardCopy));
     } else {
       const newFlashcardCopy = JSON.parse(JSON.stringify(newFlashcard));
       newFlashcardCopy.question = v;

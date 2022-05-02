@@ -17,11 +17,16 @@ export default function ChapterAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public getChapter = async (chapter_id: string) => {
-            return await this.api.get(`/chapter/${chapter_id}`);
+            const response = await this.api.get(`/chapter/${chapter_id}`);
+            const {chapter} = response.data;
+          return chapter;
         }
 
         public getChapters = async (book_id: string) => {
-            return await this.api.get(`/chapter/${book_id}`);
+            const response = await this.api.get(`/chapters/${book_id}`);
+            const {chapters} = response.data;
+            console.log("The chapters from backend: ", chapters)
+          return chapters;
         }
 
         public updateChapter = async (chapter: LM_Chapter) => {

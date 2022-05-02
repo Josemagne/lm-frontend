@@ -60,8 +60,6 @@ const ChaptersViewer = () => {
   },[addingNewChapter])
 
   useEffect(()=> {
-    fetchBooksFrontend()
-    fetchBooksBackend()
   },[])
 
   return (
