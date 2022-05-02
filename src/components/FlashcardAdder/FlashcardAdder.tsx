@@ -30,6 +30,8 @@ const FlashcardAdder = ({ type }: Props) => {
     (state) => state.flashcards.newFlashcard
   );
 
+  const selectedBook = useAppSelector((state) => state.books.selectedBook)
+
   /**
    * Changes the book with the new flashcard
    */
@@ -38,7 +40,7 @@ const FlashcardAdder = ({ type }: Props) => {
     let flashcardCopy = JSON.parse(JSON.stringify(newFlashcard))
     flashcardCopy.flashcardType = type;
     dispatch(addFlashcard(flashcardCopy))
-    dispatch(changeNewFlashcard(""))
+    dispatch(changeNewFlashcard(new Flashcard(nanoid(), "BOOK", "", "", selectedBook.book_id)))
   }
 
   useEffect(() => {
@@ -48,17 +50,18 @@ const FlashcardAdder = ({ type }: Props) => {
   return (
     <div className="lm-gc-flashcardadder">
       <div className="container">
-        <div className="row">
-          <div className="lm-gc-flashcardadder__question col-md-6">
+          <div className="lm-gc-flashcardadder__question">
             <Question isNew={true} />
           </div>
-          <div className="lm-gc-flashcardadder__answer col-md-6">
+          <div className="lm-gc-flashcardadder__answer">
             <Answer isNew={true} />
           </div>
           <div className="lm-gc-flashcardadder__button" onClick={submitHandler}>
             <button className="btn btn-primary">+</button>
           </div>
-        </div>
+      </div>
+      {/*Shows the last 3 flashcards that were added from lg and onward */}
+      <div className="lm-gc-flashcardadder__preview">
       </div>
     </div>
   );

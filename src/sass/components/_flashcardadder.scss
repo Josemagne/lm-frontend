@@ -1,7 +1,15 @@
 .lm-gc-flashcardadder {
   border: 1px solid rgba(0, 0, 0, 0.785) !important;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
+  
+  // The container contains the form to add the flashcard
+  .container {
 
   .lm-gc-flashcardadder__question {
     margin: 0.5rem;
@@ -17,5 +25,16 @@
     margin: 0.5rem;
     color: white;
     font-weight: bolder;
+  }
+  }
+
+  .lm-gc-flashcardadder__preview {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+    @media screen and (min-width: 768px) {
+      display: block;
+
+    }
   }
 }
