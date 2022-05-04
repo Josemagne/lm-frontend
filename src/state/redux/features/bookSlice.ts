@@ -8,6 +8,7 @@ import Flashcard from "../../../classes/base/Flashcard";
 import { nanoid } from 'nanoid';
 import FAPI from "../../../storage/indexedDB/FAPI";
 import Book from '../../../classes/Book';
+import API from "../../../api/API"
 //import useAppDispatch from "../../../hooks/useAppDispatch"
 
 //const dispatch = useAppDispatch()
@@ -55,17 +56,8 @@ const initialState: InitialBookState = {
  * Fetches books from backend with redux thunk
  */
 export const fetchBooksBackend = createAsyncThunk("books/fetchBooksBackend", async (): Promise<LM_Book[] | any> => {
-    const error: any = null;
-    // const data = await Server.getBooks();
-    const api = axios.create({
-      baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-    });
-
-    const data = await api.get("/book");
-    if (error) return error;
-    return data.data.books;
+    const books = await API.getBooks();
+    return books;
 });
 
 
@@ -114,6 +106,8 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         }),
             builder.addCase(fetchBooksBackend.fulfilled, (state, action: PayloadAction<LM_Book[]>) => {
 
+              const books = action.payload;
+              console.log("books in redux: ", books)
                 action.payload.forEach((book) => {
                     if (!state.books.books[book.book_id]) {
                         state.books.books[book.book_id] = book;

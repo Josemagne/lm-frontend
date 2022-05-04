@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Accordion, Container, Row } from "react-bootstrap";
 import useAppSelector from "../../../../hooks/useAppSelector";
+import useAppDispatch from "../../../../hooks/useAppDispatch"
 import LM_Chapter from "../../../../types/Book/chapter";
 import {LM_Flashcard} from "../../../../types/Flashcard/flashcard";
 import {fetchFlashcardsBackend} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
 const Flashcardsviewer = () => {
+  const dispatch = useAppDispatch();
   const selectedBook = useAppSelector((state) => state.books.selectedBook);
-  let flashcards: LM_Flashcard[] | null = null;
-
-  try {
-  flashcards = useAppSelector((state) => state.flashcards.flashcards.flashcards);
-  } catch(err) {
-  }
+  let flashcards: LM_Flashcard[] | null = useAppSelector((state) => state.flashcards.flashcards.flashcards);
+    if (flashcards) flashcards = Object.values(flashcards);
 
   useEffect(() => {
     if (!selectedBook) return;
-    fetchFlashcardsBackend(selectedBook.book_id)}
-    , [selectedBook]);
+    // @ts-ignore
+    dispatch(fetchFlashcardsBackend(selectedBook.book_id))}
+    ,[selectedBook]);
 
-  useEffect(() => {}, [flashcards])
+  useEffect(() => {
+    if (!flashcards) return;
+    console.log("the flashcards: ", flashcards)
+    console.log("and arr:", Object.values(flashcards))
+  }, [flashcards])
 
   return (
     <div className="lm-lc-flashcardsviewer">

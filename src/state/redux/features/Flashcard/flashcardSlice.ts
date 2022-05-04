@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid';
 import { createAsyncThunk, createSlice, Slice} from '@reduxjs/toolkit';
 import axios from "axios";
 import FAPI from '../../../../storage/indexedDB/FAPI';
+import API from "../../../../api/API";
 
 interface InitialFlashcardState {
     flashcards: {
@@ -29,15 +30,9 @@ const initialFlashcardState: InitialFlashcardState = {
 }
 
 export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", async (bookId: string): Promise<LM_Flashcard[] | any> => {
-    const error: any = null;
+    let error: any = null;
 
-    const api = axios.create({
-        baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_DEV_PORT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
-        }
-    });
-
-    const flashcards = await api.get(`/flashcards/${bookId}`);
+    const flashcards = await API.getFlashcards(bookId);
 
     return flashcards;
 })
@@ -91,14 +86,11 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
         }),
             builder.addCase(fetchFlashcardsBackend.fulfilled, (state, action) => {
         const flashcards = action.payload;
-            if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
+             state.flashcards.flashcards = {};
 
               flashcards.forEach((flashcard: LM_Flashcard) => {
                 // @ts-ignore
-                if (!state.flashcards.flashcards[flashcard.flashcard_id]) {
-                // @ts-ignore
                   state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
-                }
               })
 
             }),

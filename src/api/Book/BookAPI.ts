@@ -23,7 +23,10 @@ export default function BookAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public getBooks = async () => {
-            return await this.api.get("/book");
+            const response = await this.api.get("/book");
+            // @ts-ignore
+            const {books} = response.data;
+            return books;
         }
 
         public updateBook = async (book: LM_Book) => {

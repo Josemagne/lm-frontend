@@ -97,7 +97,11 @@ const config = {
     ],
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv(
+      {
+      path: path.resolve(__dirname, ".env")
+      }
+    ),
     new HtmlWebpackPlugin({
       template: indexHTML,
       filename: "index.html",
