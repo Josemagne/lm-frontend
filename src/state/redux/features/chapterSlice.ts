@@ -39,7 +39,7 @@ const initialState: InitialChapterState = {
 }
 
 export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (book_id: string): Promise<LM_Chapter[] | any> => {
-  console.log("fetchChaptersBackned called:");
+    console.log("fetchChaptersBackned called:");
     const chapters = await API.getChapters(book_id);
 
     console.log("Chapters in slice: ", chapters)
@@ -82,7 +82,7 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
          * @param state 
          * @param action 
          */
-        updateSelectedChapter: (state, action) => {
+        changeSelectedChapter: (state, action) => {
             const chapter: LM_Chapter = action.payload;
 
             state.selectedChapter = chapter;
@@ -90,13 +90,13 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
         },
         deleteSelectedChapter: (state, action) => {
             if (!state.selectedChapter) return;
-            const chapter_id = state.selectedChapter.chapter_id; 
+            const chapter_id = state.selectedChapter.chapter_id;
             state.selectedChapter = null;
             delete state.chapters.chapters[chapter_id];
         },
         toggleAddingNewChapter: (state, action) => {
             state.addingNewChapter = !state.addingNewChapter;
-        }
+        },
 
 
 
@@ -108,17 +108,17 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
             builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
                 const chapters = action.payload;
 
-              // @ts-ignore
-              console.log("Fetched chapters: ", chapters)
+                // @ts-ignore
+                console.log("Fetched chapters: ", chapters)
 
-                (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
+                    (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
                         state.chapters.chapters = {};
 
-                    state.chapters.chapters[chapter.chapter_id] = chapter;
+                        state.chapters.chapters[chapter.chapter_id] = chapter;
 
-                })
-              state.chapters.error = null;
-              state.chapters.loading = false;
+                    })
+                state.chapters.error = null;
+                state.chapters.loading = false;
             }),
             builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
                 state.chapters.error = action.payload as string;
@@ -145,6 +145,6 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
     }
 })
 
-export const { updateSelectedChapter, addChapter, updateChapter, deleteChapter, toggleAddingNewChapter, deleteSelectedChapter } = chapterSlice.actions;
+export const { changeSelectedChapter, addChapter, updateChapter, deleteChapter, toggleAddingNewChapter, deleteSelectedChapter } = chapterSlice.actions;
 
 export default chapterSlice.reducer;

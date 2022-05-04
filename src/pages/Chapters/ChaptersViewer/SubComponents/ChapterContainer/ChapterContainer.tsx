@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import LM_Chapter from "../../../../../types/Book/chapter";
-import useAppDispatch from "../../../../../hooks/useAppDispatch";
-import Server from "../../../../../services/Server";
-import ChapterState from "../../../ChapterModal/SubComponents/ChapterHeader/ChapterState/ChapterState";
-import FAPI from "../../../../../storage/indexedDB/FAPI";
-import API from "../../../../../api/API";
+import { useEffect } from "react"
+import LM_Chapter from "../../../../../types/Book/chapter"
+import useAppDispatch from "../../../../../hooks/useAppDispatch"
+import Server from "../../../../../services/Server"
+import ChapterState from "../../../ChapterModal/SubComponents/ChapterHeader/ChapterState/ChapterState"
+import FAPI from "../../../../../storage/indexedDB/FAPI"
+import API from "../../../../../api/API"
 import {
   deleteChapter,
-  updateSelectedChapter,
-} from "../../../../../state/redux/features/chapterSlice";
+  changeSelectedChapter,
+} from "../../../../../state/redux/features/chapterSlice"
 
 type Props = {
-  chapter: LM_Chapter;
-};
+  chapter: LM_Chapter
+}
 
 /**
  * Contains the metadata about the chapter
@@ -20,31 +20,31 @@ type Props = {
 const ChapterContainer = ({ chapter }: Props) => {
   // const navigate = useNavigate();
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   /**
    * Navigates the user to ChapterModifier
    *
    */
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(updateSelectedChapter(chapter));
-    console.log("clicked");
-  };
+    e.preventDefault()
+    e.stopPropagation()
+    dispatch(changeSelectedChapter(chapter))
+    console.log("clicked")
+  }
 
   const removeChapter = async (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault()
+    e.stopPropagation()
 
-    dispatch(deleteChapter(chapter.chapter_id));
+    dispatch(deleteChapter(chapter.chapter_id))
 
     //await FAPI.deleteChapter(chapter.chapter_id);
 
-    await API.deleteChapter(chapter.chapter_id);
-  };
+    await API.deleteChapter(chapter.chapter_id)
+  }
 
-  useEffect(() => {}, [chapter]);
+  useEffect(() => {}, [chapter])
 
   return (
     <div className="lm-chaptercontainer" onClick={(e) => handleClick(e)}>
@@ -65,7 +65,7 @@ const ChapterContainer = ({ chapter }: Props) => {
         <button>x</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChapterContainer;
+export default ChapterContainer

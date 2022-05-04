@@ -1,66 +1,68 @@
-import React, { useState, useEffect } from "react";
-import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer";
-import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder";
-import LM_Chapter from "../../../types/Book/chapter";
-import useAppSelector from "../../../hooks/useAppSelector";
-import { LM_Book } from "../../../types/Book/book";
-import BookSelector from "../../../components/BookSelector/BookSelector";
-import useAppDispatch from "../../../hooks/useAppDispatch";
+import React, { useState, useEffect } from "react"
+import ChapterContainer from "./SubComponents/ChapterContainer/ChapterContainer"
+import ChapterAdder from "./SubComponents/ChapterAdder/ChapterAdder"
+import LM_Chapter from "../../../types/Book/chapter"
+import useAppSelector from "../../../hooks/useAppSelector"
+import { LM_Book } from "../../../types/Book/book"
+import BookSelector from "../../../components/BookSelector/BookSelector"
+import useAppDispatch from "../../../hooks/useAppDispatch"
 import {
   fetchChaptersBackend,
   fetchChaptersFrontend,
   toggleAddingNewChapter,
-  updateSelectedChapter,
-} from "../../../state/redux/features/chapterSlice";
+} from "../../../state/redux/features/chapterSlice"
 import ChapterModal from "./../ChapterModal/ChapterModal"
-import ChapterPagination from "./SubComponents/ChaptersPagination/ChaptersPagination";
-import {fetchBooksBackend, fetchBooksFrontend} from "../../../state/redux/features/bookSlice"
+import ChapterPagination from "./SubComponents/ChaptersPagination/ChaptersPagination"
+import {
+  fetchBooksBackend,
+  fetchBooksFrontend,
+} from "../../../state/redux/features/bookSlice"
 
 const ChaptersViewer = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
-  const selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
-  let chapters: LM_Chapter[] | null = null;
-  let filteredChapters:LM_Chapter[] | null;
+  const selectedBook: LM_Book | null = useAppSelector(
+    (state) => state.books.selectedBook
+  )
+  let chapters: LM_Chapter[] | null = null
+  let filteredChapters: LM_Chapter[] | null
   const addingNewChapter = useAppSelector(
     (state) => state.chapters.addingNewChapter
-  );
+  )
 
   try {
     if (selectedBook) {
       // @ts-ignore
-        filteredChapters = chapters.filter((chapter) => chapter.book_id === selectedBook.book_id);
+      filteredChapters = chapters.filter(
+        (chapter: LM_Chapter) => chapter.book_id === selectedBook.book_id
+      )
     }
   } catch (err) {
-    filteredChapters = null;
+    filteredChapters = null
   }
 
-  let selectedChapter: LM_Chapter | null;
+  let selectedChapter: LM_Chapter | null
   try {
-    selectedChapter = useAppSelector((state) => state.chapters.selectedChapter);
+    selectedChapter = useAppSelector((state) => state.chapters.selectedChapter)
   } catch (err) {
-    selectedChapter = null;
+    selectedChapter = null
   }
 
-	
   function openChapterAdder() {
-    dispatch(toggleAddingNewChapter(""));
+    dispatch(toggleAddingNewChapter(""))
   }
 
   useEffect(() => {
     console.log("selectedBOok: ", selectedBook)
     console.log("addingNewChapter: ", addingNewChapter)
-    if (!selectedBook)  return;
-   fetchChaptersBackend(selectedBook.book_id);
-    fetchChaptersFrontend(selectedBook.book_id);
-  }, [selectedBook]);
+    if (!selectedBook) return
+    fetchChaptersBackend(selectedBook.book_id)
+    fetchChaptersFrontend(selectedBook.book_id)
+  }, [selectedBook])
 
-  useEffect(() => {
+  useEffect(() => {}, [addingNewChapter])
 
-  },[addingNewChapter])
-
-  useEffect(()=> {
-  },[])
+  useEffect(() => {}, [])
 
   return (
     <div className="lm-chaptersviewer lm-page">
@@ -70,11 +72,7 @@ const ChaptersViewer = () => {
       </div>
       <BookSelector />
 
-      {
-      selectedBook ?
-      <ChapterAdder /> 
-      : null
-      }
+      {selectedBook ? <ChapterAdder /> : null}
       <button className="btn btn-primary" onClick={openChapterAdder}>
         Add Chapter
       </button>
@@ -83,9 +81,7 @@ const ChaptersViewer = () => {
       <ChapterModal />
       <ChapterPagination />
     </div>
-  );
-};
+  )
+}
 
-export default ChaptersViewer;
-
-
+export default ChaptersViewer
