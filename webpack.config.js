@@ -1,13 +1,14 @@
-const { resolve, join } = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TerserWebpackPlugin = require("terser-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
+const { resolve, join } = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const TerserWebpackPlugin = require("terser-webpack-plugin")
+const Dotenv = require("dotenv-webpack")
+const path = require("path")
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production"
 const indexHTML =
   process.env.NODE_ENV === "production"
     ? resolve(__dirname, "public", "index.html")
-    : resolve(__dirname, "src", "index.html");
+    : resolve(__dirname, "src", "index.html")
 
 const config = {
   mode: isProduction ? "production" : "development",
@@ -60,7 +61,7 @@ const config = {
             options: {
               postcssOptions: {
                 plugins: function () {
-                  return [require("autoprefixer")];
+                  return [require("autoprefixer")]
                 },
               },
             },
@@ -97,7 +98,9 @@ const config = {
     ],
   },
   plugins: [
-    new Dotenv(),
+    new Dotenv({
+      path: path.resolve(__dirname, ".env"),
+    }),
     new HtmlWebpackPlugin({
       template: indexHTML,
       filename: "index.html",
@@ -105,12 +108,12 @@ const config = {
       favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
     }),
   ],
-};
+}
 
 if (isProduction) {
   config.optimization = {
     minimizer: [new TerserWebpackPlugin()],
-  };
+  }
 } else {
   config.devServer = {
     static: resolve(__dirname, "public"),
@@ -119,7 +122,7 @@ if (isProduction) {
     host: "localhost",
     port: 8067,
     historyApiFallback: true,
-  };
+  }
 }
 
-module.exports = config;
+module.exports = config

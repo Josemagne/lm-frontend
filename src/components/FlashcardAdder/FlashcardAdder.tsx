@@ -50,18 +50,19 @@ const FlashcardAdder = ({ type }: Props) => {
 
   return (
     <div className="lm-gc-flashcardadder">
-      <div className="lm-gc-flashcardadder__container">
-        <div className="lm-gc-flashcardadder__row">
-          <div className="lm-gc-flashcardadder__question ">
+      <div className="container">
+          <div className="lm-gc-flashcardadder__question">
             <Question isNew={true} />
           </div>
-          <div className="lm-gc-flashcardadder__answer ">
+          <div className="lm-gc-flashcardadder__answer">
             <Answer isNew={true} />
           </div>
           <div className="lm-gc-flashcardadder__button" onClick={submitHandler}>
             <button className="btn btn-primary">+</button>
           </div>
-        </div>
+      </div>
+      {/*Shows the last 3 flashcards that were added from lg and onward */}
+      <div className="lm-gc-flashcardadder__preview">
       </div>
     </div>
   );

@@ -1,15 +1,15 @@
-import React, { useMemo, useState, useRef } from "react";
-import { LM_Book } from "../../../../../../types/Book/book";
-import { useEffect } from "react";
-import LM_Chapter from "../../../../../../types/Book/chapter";
-import useAppSelector from "../../../../../../hooks/useAppSelector";
-import useAppDispatch from "../../../../../../hooks/useAppDispatch";
-import { Card, Container } from "react-bootstrap";
-import ReactQuill from "react-quill";
-import { updateSelectedChapter } from "../../../../../../state/redux/features/chapterSlice";
-import {throttle, interval, of} from "rxjs"
+import React, { useMemo, useState, useRef } from "react"
+import { LM_Book } from "../../../../../../types/Book/book"
+import { useEffect } from "react"
+import LM_Chapter from "../../../../../../types/Book/chapter"
+import useAppSelector from "../../../../../../hooks/useAppSelector"
+import useAppDispatch from "../../../../../../hooks/useAppDispatch"
+import { Card, Container } from "react-bootstrap"
+import ReactQuill from "react-quill"
+import { changeSelectedChapter } from "../../../../../../state/redux/features/chapterSlice"
+import {throttle, of, interval} from "rxjs"
 
-type Props = {};
+type Props = {}
 
 /**
  * Handles the summary for the chapter
@@ -18,15 +18,15 @@ type Props = {};
  */
 const ChapterSummary = ({}: Props) => {
   // Decides if we open the summarymodifier to the fullest
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
 
-  const editorRef = useRef(null);
-  const [value, setValue] = useState<string>("");
-  const dispatch = useAppDispatch();
+  const editorRef = useRef(null)
+  const [value, setValue] = useState<string>("")
+  const dispatch = useAppDispatch()
 
   const selectedChapter = useAppSelector((state) => {
-    state.chapters.selectedChapter;
-  }) as unknown as LM_Chapter;
+    state.chapters.selectedChapter
+  }) as unknown as LM_Chapter
 
   const handleChange = (v: string) => {
     const source = of(v);
@@ -34,26 +34,21 @@ const ChapterSummary = ({}: Props) => {
     setValue(v);
     })
 
-    const chapterCopy = JSON.parse(JSON.stringify(selectedChapter));
-    chapterCopy.summary = v;
+    const chapterCopy = JSON.parse(JSON.stringify(selectedChapter))
+    chapterCopy.summary = v
 
-    dispatch(updateSelectedChapter(chapterCopy));
-  };
+    dispatch(changeSelectedChapter(chapterCopy))
+  }
 
   const openSummary = () => {
-    setOpen(!open);
-  };
+    setOpen(!open)
+  }
 
   useEffect(() => {
-    console.log("selectedChapter summary:", selectedChapter)
-    if (!selectedChapter) return;
-    setValue(selectedChapter.summary);
-    
-  }, [selectedChapter]);
+    setValue(selectedChapter.summary)
+  }, [selectedChapter.summary])
 
-  useEffect(() => {
-    console.log("selected chapter in summary: ", selectedChapter)
-  }, []);
+  useEffect(() => {}, [])
 
   return (
     <div
@@ -66,7 +61,7 @@ const ChapterSummary = ({}: Props) => {
       <Container
         onClick={() => {
           // @ts-ignore
-          editorRef.current.focus();
+          editorRef.current.focus()
         }}
       >
         <Card>
@@ -82,7 +77,7 @@ const ChapterSummary = ({}: Props) => {
         {/* NOTE If we click on it then we show the full summary */}
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default ChapterSummary;
+export default ChapterSummary

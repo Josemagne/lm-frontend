@@ -1,15 +1,13 @@
-import { FloatingLabel, Form } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import useAppSelector from "../../../../../../hooks/useAppSelector";
-import useAppDispatch from "../../../../../../hooks/useAppDispatch";
-import {
-  changeSelectedBook,
-} from "../../../../../../state/redux/features/bookSlice";
-import { LM_Book } from "../../../../../../types/Book/book";
-import LM_Chapter from "../../../../../../types/Book/chapter";
-import { updateSelectedChapter } from "../../../../../../state/redux/features/chapterSlice";
+import { FloatingLabel, Form } from "react-bootstrap"
+import { useState, useEffect } from "react"
+import useAppSelector from "../../../../../../hooks/useAppSelector"
+import useAppDispatch from "../../../../../../hooks/useAppDispatch"
+import { changeSelectedBook } from "../../../../../../state/redux/features/bookSlice"
+import { LM_Book } from "../../../../../../types/Book/book"
+import LM_Chapter from "../../../../../../types/Book/chapter"
+import { changeSelectedChapter } from "../../../../../../state/redux/features/chapterSlice"
 
-type Props = {};
+type Props = {}
 
 /**
  * Manages the state of the chaptertitle
@@ -17,19 +15,19 @@ type Props = {};
  * @returns
  */
 const ChapterTitle = ({}: Props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const selectedChapter = useAppSelector(
     (state) => state.chapters.selectedChapter
-  );
+  )
 
   const handleChange = (newTitle: string) => {
-    const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(selectedChapter));
-    chapterCopy.title = newTitle;
-    dispatch(updateSelectedChapter(chapterCopy));
-  };
+    const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(selectedChapter))
+    chapterCopy.title = newTitle
+    dispatch(changeSelectedChapter(chapterCopy))
+  }
 
-  useEffect(() => {}, [selectedChapter]);
+  useEffect(() => {}, [selectedChapter])
 
   return (
     <div className="lm-chaptertitle">
@@ -42,7 +40,7 @@ const ChapterTitle = ({}: Props) => {
         />
       </FloatingLabel>
     </div>
-  );
-};
+  )
+}
 
-export default ChapterTitle;
+export default ChapterTitle

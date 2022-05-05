@@ -1,11 +1,11 @@
-import React from "react";
-import { useEffect } from "react";
-import useAppSelector from "../../../../../../hooks/useAppSelector";
-import LM_Flashcard  from "../../../../../../types/Flashcard/flashcard";
-import useAppDispatch from "../../../../../../hooks/useAppDispatch";
-import FlashcardAdder from "../../../../../../components/FlashcardAdder/FlashcardAdder";
+import React from "react"
+import { useEffect } from "react"
+import useAppSelector from "../../../../../../hooks/useAppSelector"
+import LM_Flashcard from "../../../../../../types/Flashcard/flashcard"
+import useAppDispatch from "../../../../../../hooks/useAppDispatch"
+import FlashcardAdder from "../../../../../../components/FlashcardAdder/FlashcardAdder"
 
-type Props = {};
+type Props = {}
 
 /**
  * Handles the flashcards in the Modal
@@ -13,12 +13,11 @@ type Props = {};
  * @returns
  */
 const ChapterFlashcards = (props: Props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const selectedChapter = useAppSelector(
     (state) => state.chapters.selectedChapter
-  );
-
+  )
 
   return (
     <div className="lm-chaptermodifier__flashcards mt-3">
@@ -27,10 +26,10 @@ const ChapterFlashcards = (props: Props) => {
         <FlashcardAdder type={"CHAPTER"} />
       </div>
 
-       <div className="lm-chaptermodifier__flashcards__question"></div>
-      <div className="lm-chaptermodifier__flashcards__answer"></div> 
+      <div className="lm-chaptermodifier__flashcards__question"></div>
+      <div className="lm-chaptermodifier__flashcards__answer"></div>
     </div>
-  );
-};
+  )
+}
 
-export default ChapterFlashcards;
+export default ChapterFlashcards

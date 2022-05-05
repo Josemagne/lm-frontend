@@ -1,6 +1,6 @@
 import { Constructor } from "../../../types/common/constructor";
 import { LM_Flashcard} from '../../../types/Flashcard/flashcard';
-import {LM_EntityName} from "../.././../types/Entity/entity"
+import {LM_EntityName} from "../../../types/Entity/entity"
 import FlashcardDB from "./FlashcardDB";
 
 export default function FlashcardAPI<TBase extends Constructor>(Base: TBase) {

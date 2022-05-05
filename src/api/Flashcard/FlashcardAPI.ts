@@ -14,7 +14,7 @@ export default function flashcardAPI<TBase extends Constructor>(Base: TBase) {
 
 
         public addFlashcard = async (flashcard: LM_Flashcard) => {
-            return await this.api.post("/flashcard", flashcard);
+            return await this.api.post(`/flashcard`, flashcard);
         }
 
         public getFlashcard = async (flashcard_id: string) => {
@@ -26,7 +26,6 @@ export default function flashcardAPI<TBase extends Constructor>(Base: TBase) {
         public getFlashcards = async (bookId: string) => {
             const response = await this.api.get(`/flashcards/${bookId}`)
             const {flashcards} = response.data;
-
             return flashcards;
         }
 

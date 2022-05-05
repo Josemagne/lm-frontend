@@ -42,7 +42,9 @@ const BooksViewer = () => {
     dispatch(toggleAddingNewBook(""));
   }
 
-  useEffect(() => {}, [books]);
+  useEffect(() => {
+    console.log("booksa:" , books)
+  }, [books]);
 
   useEffect(() => {
     /* Fetch the books and save them in the store */

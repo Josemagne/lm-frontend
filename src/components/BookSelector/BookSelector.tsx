@@ -4,7 +4,10 @@ import { AutoComplete } from "rsuite";
 import useAppSelector from "../../hooks/useAppSelector";
 import { LM_Book } from "../../types/Book/book";
 import { changeSelectedBook, fetchBooksBackend } from "../../state/redux/features/bookSlice";
-import {fetchChaptersBackend} from "../../state/redux/features/chapterSlice"
+import Flashcard from "../../classes/base/Flashcard"
+import {changeNewFlashcard} from "../../state/redux/features/Flashcard/flashcardSlice"
+import {nanoid} from "nanoid"
+
 
 
 /**
@@ -85,6 +88,12 @@ const BookSelector = () => {
     // @ts-ignore
     dispatch(fetchBooksBackend())
   },[])
+
+  useEffect(() => {
+    if (!books) return;
+    getTitles(Object.values(books));
+  },[books])
+
 
   return (
     <div className="lm-lc-bookselector">

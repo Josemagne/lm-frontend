@@ -1,26 +1,24 @@
-import { useState } from "react";
-import ChapterTitle from "./SubComponents/ChapterHeader/ChapterTitle/ChapterTitle";
-import { useNavigate } from "react-router-dom";
-import ChapterState from "./SubComponents/ChapterHeader/ChapterState/ChapterState";
-import Adder from "../../../components/helpers/Adder/Adder";
-import { useEffect } from "react";
-import LM_Chapter from "../../../types/Book/chapter";
-import { LM_Book } from "../../../types/Book/book";
-import useAppSelector from "../../../hooks/useAppSelector";
-import { useFormik } from "formik";
-import useAppDispatch from "../../../hooks/useAppDispatch";
+import { useState } from "react"
+import ChapterTitle from "./SubComponents/ChapterHeader/ChapterTitle/ChapterTitle"
+import { useNavigate } from "react-router-dom"
+import ChapterState from "./SubComponents/ChapterHeader/ChapterState/ChapterState"
+import Adder from "../../../components/helpers/Adder/Adder"
+import { useEffect } from "react"
+import LM_Chapter from "../../../types/Book/chapter"
+import { LM_Book } from "../../../types/Book/book"
+import useAppSelector from "../../../hooks/useAppSelector"
+import { useFormik } from "formik"
+import useAppDispatch from "../../../hooks/useAppDispatch"
+import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary"
+import { Modal } from "react-bootstrap"
+import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards"
+import "react-quill/dist/quill.snow.css"
+import API from "../../../api/API"
+import FAPI from "../../../storage/indexedDB/FAPI"
 import {
-  changeSelectedBook,
-  updateBook,
-} from "../../../state/redux/features/bookSlice";
-import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary";
-import { Modal } from "react-bootstrap";
-import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards";
-import "react-quill/dist/quill.snow.css";
-import API from "../../../api/API";
-import FAPI from "../../../storage/indexedDB/FAPI";
-import { updateSelectedChapter, deleteSelectedChapter } from "../../../state/redux/features/chapterSlice";
-
+  changeSelectedChapter,
+  deleteSelectedChapter,
+} from "../../../state/redux/features/chapterSlice"
 
 /**
  * Modal where we can edit information about a chapter
@@ -31,25 +29,31 @@ const ChapterModal = () => {
   /**
    * Dispatches action creator to the store
    */
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const selectedChapter = useAppSelector(
     (state) => state.chapters.selectedChapter
-  );
+  )
+
+  /**
+   * Handles the change of the part of a book by dispatching the new state to the store
+   */
+  const changeHandler = (newChapter: LM_Chapter) => {
+    dispatch(changeSelectedChapter(newChapter))
+  }
 
   const submitHandler = async () => {
-    //await FAPI.updateChapter(selectedChapter);
 
-    await API.updateChapter(selectedChapter);
-  };
+    await API.updateChapter(selectedChapter)
+  }
 
   /**
    * Closes the modal
    */
   const handleClose = () => {
-    dispatch(deleteSelectedChapter(""));
-  };
+    dispatch(deleteSelectedChapter(""))
+  }
 
-  useEffect(() => {}, [selectedChapter]);
+  useEffect(() => {}, [selectedChapter])
 
   return (
     <Modal
@@ -92,7 +96,7 @@ const ChapterModal = () => {
         x
       </button>
     </Modal>
-  );
-};
+  )
+}
 
-export default ChapterModal;
+export default ChapterModal
