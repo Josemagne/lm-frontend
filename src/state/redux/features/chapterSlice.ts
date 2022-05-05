@@ -11,7 +11,7 @@ interface InitialChapterState {
         error: string | null;
         chapters: {
             [chapter_id: string]: LM_Chapter;
-        }
+        } 
         amountOfChapters: 0
     },
     selectedChapter: LM_Chapter | null,

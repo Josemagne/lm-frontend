@@ -1,6 +1,7 @@
-import {LM_Summary, SummaryType } from "../../types/summary/summary"
+import {LM_Summary} from "../../types/summary/summary"
+import {LM_EntityName} from "../../types/Entity/entity"
 
-export default class Summary<T extends SummaryType> implements LM_Summary {
+export default class Summary<T extends LM_EntityName> implements LM_Summary {
   summary_id: string;
   summary: string;
   summaryType: T;

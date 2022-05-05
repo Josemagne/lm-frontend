@@ -1,5 +1,6 @@
 import { Constructor } from "../../../types/common/constructor";
-import { LM_Flashcard, FlashcardType } from '../../../types/Flashcard/flashcard';
+import { LM_Flashcard} from '../../../types/Flashcard/flashcard';
+import {LM_EntityName} from "../.././../types/Entity/entity"
 import FlashcardDB from "./FlashcardDB";
 
 export default function FlashcardAPI<TBase extends Constructor>(Base: TBase) {
@@ -10,7 +11,7 @@ export default function FlashcardAPI<TBase extends Constructor>(Base: TBase) {
             this.flashcard.add(flashcard, flashcard.flashcard_id)
         }
 
-        public getFlashcards = async (type: FlashcardType) => {
+        public getFlashcards = async (type: LM_EntityName) => {
             return await this.flashcard.where("flashcardType").equals(type).toArray();
         }
 

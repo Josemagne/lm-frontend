@@ -20,7 +20,7 @@ const BooksPagination = (props: Props) => {
 
   const dispatch = useAppDispatch();
 
-  const books = Object.values(
+  let books = Object.values(
     useAppSelector((state) => state.books.books.books)
   );
 
@@ -31,6 +31,8 @@ const BooksPagination = (props: Props) => {
   window.addEventListener("resize", () => {
     setWindowWidth(window.innerWidth);
   });
+
+  if (books) books = Object.values(books);
 
   let indexOfLastBook = 0;
   let indexOfFirstBook = 0;

@@ -4,7 +4,6 @@ import useAppSelector from "../../../../../../hooks/useAppSelector";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import {
   changeSelectedBook,
-  changeSelectedChapter,
 } from "../../../../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../../../../types/Book/book";
 import LM_Chapter from "../../../../../../types/Book/chapter";

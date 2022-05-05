@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import useAppSelector from "../../../../../../hooks/useAppSelector";
 import LM_Flashcard  from "../../../../../../types/Flashcard/flashcard";
 import useAppDispatch from "../../../../../../hooks/useAppDispatch";
-import { changeSelectedFlashCard } from "../../../../../../state/redux/features/bookSlice";
 import FlashcardAdder from "../../../../../../components/FlashcardAdder/FlashcardAdder";
 
 type Props = {};

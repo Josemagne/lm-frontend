@@ -37,12 +37,12 @@ export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", asyn
     return flashcards;
 })
 
-export const fetchFlashcardsFrontend = createAsyncThunk("flashcardsFrontend/", async (): Promise<LM_Flashcard[]> => {
+//export const fetchFlashcardsFrontend = createAsyncThunk("flashcardsFrontend/", async (): Promise<LM_Flashcard[]> => {
 
-    const flashcards = await FAPI.getFlashcards("ANY");
+    //const flashcards = await FAPI.getFlashcards("ANY");
 
-    return flashcards;
-})
+    //return flashcards;
+//})
 
 
 export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
@@ -97,26 +97,26 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
             builder.addCase(fetchFlashcardsBackend.rejected, (state, action) => {
                 state.flashcards.loading = false;
                 state.flashcards.error = action.payload as string;
-            }),
-        builder.addCase(fetchFlashcardsFrontend.pending, (state, action) => {
-          state.flashcards.loading = true;
-        }),
-        builder.addCase(fetchFlashcardsFrontend.fulfilled, (state, action) => {
-          if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
-          const flashcards: LM_Flashcard[] = action.payload;
+            })
+        //builder.addCase(fetchFlashcardsFrontend.pending, (state, action) => {
+          //state.flashcards.loading = true;
+        //}),
+        //builder.addCase(fetchFlashcardsFrontend.fulfilled, (state, action) => {
+          //if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
+          //const flashcards: LM_Flashcard[] = action.payload;
 
-          flashcards.forEach((flashcard) => {
-            // @ts-ignore
-            if (state.flashcards.flashcards[flashcard.flashcard_id]) {
-                // @ts-ignore
-                  state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
-            }
-          })
-        }),
-        builder.addCase(fetchFlashcardsFrontend.rejected, (state, action) => {
-          state.flashcards.error = action.payload as string;
-          state.flashcards.loading = false;
-        })
+          //flashcards.forEach((flashcard) => {
+             // @ts-ignore
+            //if (state.flashcards.flashcards[flashcard.flashcard_id]) {
+               //  @ts-ignore
+                  //state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
+            //}
+          //})
+        //}),
+        //builder.addCase(fetchFlashcardsFrontend.rejected, (state, action) => {
+          //state.flashcards.error = action.payload as string;
+          //state.flashcards.loading = false;
+        //})
 
     }
 })

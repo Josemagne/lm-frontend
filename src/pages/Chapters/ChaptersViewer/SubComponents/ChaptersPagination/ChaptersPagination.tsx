@@ -5,17 +5,21 @@ import LM_Chapter from "../../../../../types/Book/chapter";
 import ChapterContainer from "../ChapterContainer/ChapterContainer";
 import {LM_Book} from "../../../../../types/Book/book"
 import {fetchChaptersBackend} from "../../../../../state/redux/features/chapterSlice"
+import useAppDispatch from "../../../../../hooks/useAppDispatch";
 
 type Props = {};
 
 const ChaptersPagination = (props: Props) => {
+  const dispatch = useAppDispatch();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [currentChapter, setCurrentChapter] = useState(1);
 
   const [chaptersPerPage, setChaptersPerPage] = useState(10);
 
-  const chapters: LM_Chapter[] | null  = 
-    useAppSelector((state) => state.chapters.chapters.chapters) !== null ? Object.values(useAppSelector((state) => state.chapters.chapters.chapters)) : null;
+  let chapters: LM_Chapter[] | null  = 
+    useAppSelector((state) => state.chapters.chapters.chapters);
+
+  if (chapters) chapters = Object.values(chapters);
 
   const selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
 
@@ -43,9 +47,10 @@ const ChaptersPagination = (props: Props) => {
   }, [chapters])
 
   useEffect(() => {
-    console.log("selectedBook:: in chapterspagination", chapters)
+    console.log("selectedBook:: in chapterspagination", selectedBook)
     if (!selectedBook) return;
-    fetchChaptersBackend(selectedBook.book_id)
+    // @ts-ignore
+    dispatch(fetchChaptersBackend(selectedBook.book_id))
   }, [selectedBook])
 
   return (
