@@ -1,9 +1,11 @@
 .lm-chaptermodifier {
+  height: 100%;
+  width: 100%;
   display: grid;
   grid-template-areas:
     "lm-chapterheader"
-    "lm-chapterbody"
-    "lm-chapterfooter";
+    "lm-chapterbody";
+    //"lm-chapterfooter";
 
   // NOTE Makes scrollbar in modal
   position: absolute !important;
@@ -67,7 +69,10 @@
 
   // ANCHOR lm-chapterfooter
   .lm-chapterfooter {
+    position: fixed;
     grid-area: lm-chapterfooter;
+    bottom: 0;
+    margin: auto;
     display: flex;
     justify-content: center;
     .lm-chaptermodifier__adder {

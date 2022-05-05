@@ -14,9 +14,8 @@ const ChaptersPagination = (props: Props) => {
 
   const [chaptersPerPage, setChaptersPerPage] = useState(10);
 
-  const chapters: LM_Chapter[] | null  = Object.values(
-    useAppSelector((state) => state.chapters.chapters.chapters)
-  );
+  const chapters: LM_Chapter[] | null  = 
+    useAppSelector((state) => state.chapters.chapters.chapters) !== null ? Object.values(useAppSelector((state) => state.chapters.chapters.chapters)) : null;
 
   const selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
 
@@ -30,7 +29,7 @@ const ChaptersPagination = (props: Props) => {
 
   let indexOfLastChapter = 0;
   let indexOfFirstChapter = 0;
-  if (chapters.length < 10) {
+  if (chapters && chapters.length < 10) {
     indexOfLastChapter = chapters.length - 1;
     indexOfFirstChapter = 0;
   } else {
@@ -40,10 +39,11 @@ const ChaptersPagination = (props: Props) => {
 
   useEffect(() => {
     console.log("selectedBook in chapters: ", selectedBook)
-    console.log("chapters::", chapters)
+    console.log("chapters:: in pagination", chapters)
   }, [chapters])
 
   useEffect(() => {
+    console.log("selectedBook:: in chapterspagination", chapters)
     if (!selectedBook) return;
     fetchChaptersBackend(selectedBook.book_id)
   }, [selectedBook])

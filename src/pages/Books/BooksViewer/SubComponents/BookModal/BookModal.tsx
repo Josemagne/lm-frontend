@@ -8,7 +8,7 @@ import {
 } from "../../../../../state/redux/features/bookSlice";
 import useAppDispatch from "../../../../../hooks/useAppDispatch";
 import useAppSelector from "../../../../../hooks/useAppSelector";
-import { replace } from "cypress/types/lodash";
+import FlashcardAdder from "../../../../../components/FlashcardAdder/FlashcardAdder";
 
 type Props = {};
 
@@ -28,7 +28,9 @@ const BookModal = ({}: Props) => {
     dispatch(changeSelectedBook(null));
   };
 
-  useEffect(() => {}, [selectedBook]);
+  useEffect(() => {
+    console.log("selected: ", selectedBook)
+  }, [selectedBook]);
 
   return (
     <Modal
@@ -41,11 +43,24 @@ const BookModal = ({}: Props) => {
       {selectedBook ? (
         <Fragment>
           <Modal.Header>
-            {selectedBook.author}
-            {" - "} {selectedBook.book_title}
+            <h3 className="lm-bookmodal-title">
+              <span>
+
+            {selectedBook.author_prename} 
+              </span>
+              <span>
+  {selectedBook.author_name }
+              </span>
+              <span> - </span>
+              <span>
+            {selectedBook.book_title}
+              </span>
+            </h3>
           </Modal.Header>
-          <Modal.Body>
-            <p>pages: {selectedBook.pages}</p>
+          <Modal.Body className="lm-bookmodal__body">
+            {
+              selectedBook.pages > 0 && <p>pages: {selectedBook.pages}</p>
+            }
 
             {/* NOTE The links lead to other parts of the website */}
             <div className="lm-bookmodal__links">
@@ -61,6 +76,7 @@ const BookModal = ({}: Props) => {
                 <Button>Go to flashcards</Button>
               </div>
               <div
+                className="lm-bookmodal__btn"
                 onClick={() => {
                   if (!selectedBook.book_id) return;
                   handleClose();
@@ -72,7 +88,9 @@ const BookModal = ({}: Props) => {
                 <Button>Go to chapters</Button>
               </div>
             </div>
+            <hr className="my-3" />
             {/* TODO FlashcardAdder */}
+            <FlashcardAdder type="BOOK" />
             {/* TODO Summary */}
           </Modal.Body>
           <Modal.Footer></Modal.Footer>

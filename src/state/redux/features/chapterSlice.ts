@@ -42,8 +42,6 @@ export const fetchChaptersBackend = createAsyncThunk("chaptersBackend/", async (
   console.log("fetchChaptersBackned called:");
     const chapters = await API.getChapters(book_id);
 
-    console.log("Chapters in slice: ", chapters)
-
     return chapters;
 })
 
@@ -111,8 +109,8 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
               // @ts-ignore
               console.log("Fetched chapters: ", chapters)
 
-                (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
                         state.chapters.chapters = {};
+                (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
 
                     state.chapters.chapters[chapter.chapter_id] = chapter;
 

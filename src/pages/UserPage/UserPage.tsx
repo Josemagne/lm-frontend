@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import Logout from "../../components/Logout/Logout"
 type Props = {};
 
 const UserPage = (props: Props) => {
@@ -18,6 +18,7 @@ const UserPage = (props: Props) => {
     </span></div>
 
       {/* TODO Service */}
+      <Logout />
     </div>
   );
 };

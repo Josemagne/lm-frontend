@@ -7,6 +7,7 @@ import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import { Card, Container } from "react-bootstrap";
 import ReactQuill from "react-quill";
 import { updateSelectedChapter } from "../../../../../../state/redux/features/chapterSlice";
+import {throttle, interval, of} from "rxjs"
 
 type Props = {};
 
@@ -28,7 +29,10 @@ const ChapterSummary = ({}: Props) => {
   }) as unknown as LM_Chapter;
 
   const handleChange = (v: string) => {
+    const source = of(v);
+    source.pipe(throttle((val) => interval(2000))).subscribe(()=> {
     setValue(v);
+    })
 
     const chapterCopy = JSON.parse(JSON.stringify(selectedChapter));
     chapterCopy.summary = v;
@@ -41,10 +45,15 @@ const ChapterSummary = ({}: Props) => {
   };
 
   useEffect(() => {
+    console.log("selectedChapter summary:", selectedChapter)
+    if (!selectedChapter) return;
     setValue(selectedChapter.summary);
-  }, [selectedChapter.summary]);
+    
+  }, [selectedChapter]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log("selected chapter in summary: ", selectedChapter)
+  }, []);
 
   return (
     <div
@@ -65,7 +74,6 @@ const ChapterSummary = ({}: Props) => {
           <div className="lm-textcontainer">
             <ReactQuill
               ref={editorRef}
-              defaultValue={selectedChapter.summary}
               value={value}
               onChange={(v) => handleChange(v)}
             />

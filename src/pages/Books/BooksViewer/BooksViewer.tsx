@@ -47,7 +47,7 @@ const BooksViewer = () => {
   useEffect(() => {
     /* Fetch the books and save them in the store */
     // @ts-ignore
-    dispatch(fetchBooksFrontend());
+    //dispatch(fetchBooksFrontend());
     // @ts-ignore
     dispatch(fetchBooksBackend());
     // if (books.length < 1) getBooks();

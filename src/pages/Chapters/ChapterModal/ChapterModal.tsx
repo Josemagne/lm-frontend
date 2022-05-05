@@ -36,15 +36,8 @@ const ChapterModal = () => {
     (state) => state.chapters.selectedChapter
   );
 
-  /**
-   * Handles the change of the part of a book by dispatching the new state to the store
-   */
-  const changeHandler = (newChapter: LM_Chapter) => {
-    dispatch(updateSelectedChapter(newChapter));
-  };
-
   const submitHandler = async () => {
-    await FAPI.updateChapter(selectedChapter);
+    //await FAPI.updateChapter(selectedChapter);
 
     await API.updateChapter(selectedChapter);
   };
@@ -65,7 +58,7 @@ const ChapterModal = () => {
       className="lm-chaptermodifier"
     >
       {selectedChapter ? (
-        <>
+        <div className="lm-chaptermodifier__container">
           {/* TODO Move to its own File */}
           <div className="lm-chapterheader">
             <ChapterTitle />
@@ -87,10 +80,10 @@ const ChapterModal = () => {
               onClick={submitHandler}
               className="lm-chaptermodifier__adder"
             >
-              +
+              Change
             </button>
           </div>
-        </>
+        </div>
       ) : null}
       <button
         className="btn btn-danger lm-chaptermodifier__close"

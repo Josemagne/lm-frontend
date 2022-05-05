@@ -4,6 +4,10 @@
   .lm-bookmodal__header {
   }
   .lm-bookmodal__body {
+    .lm-bookmodal__links {
+      display: flex;
+      justify-content: space-betweeen;
+    }
   }
 
   .lm-bookmodal__footer {

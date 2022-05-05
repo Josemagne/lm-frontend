@@ -21,7 +21,7 @@ const BookContainer = ({ book }: Props) => {
 
   // We lead the user to /bookmodifier/{book_id}
   const handleClick = () => {
-    dispatch(changeSelectedBook({ book_id: book_id, book: book }));
+    dispatch(changeSelectedBook( book));
   };
 
   useEffect(() => {});

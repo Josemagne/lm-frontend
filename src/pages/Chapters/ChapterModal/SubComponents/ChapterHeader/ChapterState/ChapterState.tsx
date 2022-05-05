@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Toggle } from "rsuite";
 import {
   changeSelectedBook,
-  changeSelectedChapter,
-  toggleChapterState,
 } from "../../../../../../state/redux/features/bookSlice";
 import { LM_Book } from "../../../../../../types/Book/book";
 import useAppSelector from "../../../../../../hooks/useAppSelector";
@@ -11,6 +9,7 @@ import useAppDispatch from "../../../../../../hooks/useAppDispatch";
 import LM_Chapter from "../../../../../../types/Book/chapter";
 import { updateChapter } from "../../../../../../state/redux/features/chapterSlice";
 import FAPI from "../../../../../../storage/indexedDB/FAPI";
+import API from "../../../../../../api/API"
 
 interface Props {
   chapter: LM_Chapter;
@@ -46,7 +45,8 @@ const ChapterState = ({ chapter }: Props) => {
 
     dispatch(updateChapter(chapterCopy));
 
-    FAPI.updateChapter(chapterCopy);
+    //FAPI.updateChapter(chapterCopy);
+    API.updateChapter(chapterCopy)
   };
 
   useEffect(() => {}, [chapter]);

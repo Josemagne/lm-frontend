@@ -1,7 +1,9 @@
 .lm-gc-flashcardadder {
-  border: 1px solid rgba(0, 0, 0, 0.785) !important;
+  max-width: 768px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  
 
   .lm-gc-flashcardadder__question {
     margin: 0.5rem;

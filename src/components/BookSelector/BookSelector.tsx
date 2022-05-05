@@ -74,15 +74,17 @@ const BookSelector = () => {
 
     if (!_selectedBook) return;
 
-    console.log("Selected book is: ", _selectedBook)
-
     dispatch(changeSelectedBook(_selectedBook));
   };
 
   useEffect(() => {
+
+  },[books])
+
+  useEffect(() => {
     // @ts-ignore
     dispatch(fetchBooksBackend())
-  })
+  },[])
 
   return (
     <div className="lm-lc-bookselector">

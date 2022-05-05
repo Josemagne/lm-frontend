@@ -7,14 +7,10 @@ import {fetchFlashcardsBackend} from "../../../../state/redux/features/Flashcard
 
 const Flashcardsviewer = () => {
   const selectedBook = useAppSelector((state) => state.books.selectedBook);
-  let flashcards: LM_Flashcard[] | null = null;
-
-  try {
-  flashcards = useAppSelector((state) => state.flashcards.flashcards.flashcards);
-  } catch(err) {
-  }
+  let flashcards: LM_Flashcard[] | null =   useAppSelector((state) => state.flashcards.flashcards.flashcards)
 
   useEffect(() => {
+    console.log("selecteedBOOK in viewr:", selectedBook )
     if (!selectedBook) return;
     fetchFlashcardsBackend(selectedBook.book_id)}
     , [selectedBook]);
@@ -24,8 +20,8 @@ const Flashcardsviewer = () => {
   return (
     <div className="lm-lc-flashcardsviewer">
       <Accordion className="lm-lc-flashcardsviewer__container">
-        {flashcards && flashcards.length > 0 ? (
-          flashcards.map((f, index) => {
+        {flashcards && Object.values(flashcards).length > 0 ? (
+          Object.values(flashcards).map((f, index) => {
             return (
               <Accordion.Item eventKey={index.toString()} className="flashcard">
                 <div className="lm-lc-flashcardsviewer__flashcard">
