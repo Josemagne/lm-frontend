@@ -1,87 +1,109 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
-type Props = {};
+type Props = {}
 
 const Home = (props: Props) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
-      navigate("/booksviewer", { replace: true });
+      navigate("/booksviewer", { replace: true })
     }
-  }, []);
+  }, [])
+
+  const features = [
+    {
+      title: "Track your books",
+      text: "Track the books that you are reading at the moment.",
+      image: "",
+    },
+    {
+      title: "Add Flashcards",
+      text: "You surely will have to repeat what you have learnt. With LibriMem you can create flashcards and train yourself.",
+      image: "",
+    },
+    {
+      title: "Write Summaries",
+      text: "You really comprehended what read? Then write a summary and bring the most important points together.",
+      image: "",
+    },
+    {
+      title: "Commentaries",
+      text: "",
+      image: ""
+    },
+    {
+      title: "Notes",
+      text: "",
+      image: "",
+    },
+    {
+      title: "Questions",
+      text: "Sometimes we come along passages where we just don't get a point. Add a question in LM and once you are able to answer it it will be converted into a flashcard.",
+      image: ""
+    },
+    {
+      title: "Pictures",
+      text: "Text alone is boring. Add your own images to compliment your texts.",
+      image: ""
+    }, 
+    {
+      title: "Loanwords",
+      text: ""
+    }
+  ]
+
   return (
     <div className="lm-home">
+      <div className="lm-home__intro">
+        <p>
+          Reading a book can be complicated sometimes. LibriMem gives you an app
+          where you can engage in the process of learning.
+        </p>
+        <p>
+          With demanding texts such as technical books it not enough to just
+          read them. You will have to "interact" with what you have read to really grasp it.{" "}
+        </p>
+      </div>
       <div className="lm-home__features">
-        <div className="lm-home__section">
-          <div className="lm-home__section__books">
-            <h3 className="lm-home__section__boooks__title">
-              
-            </h3>
-            <div className="lm-home__section__books__text">
-              Keep 
+        {features.map((feature) => {
+          return (
+            <>
+            <div className="lm-home__section">
+              <h3 className="title">{feature.title}</h3>
+              <div className="text">{feature.text}</div>
+              <div className="image">{feature.image}</div>
             </div>
-            <div className="lm-home__section__books__image">
-            </div>
-
-          </div>
-        </div>
-        <div className="lm-home__section">
-          <div className="lm-home__section__flashcards">
-            <h3 className="lm-home__section__flashcard__title">
-              
-            </h3>
-            <div className="lm-home__section__flashcard__text">
-              Keep 
-            </div>
-            <div className="lm-home__section__flashcards__image">
-            </div>
-
-          </div>
-        </div>
-      </div>
-      {/* ANCHOR Flashcard */}
-      {/* Repeat what you've learnt */}
-      <div className="lm-home__flashcard">
-        <p>You can create flashcards</p>
+              <div className="section-divider"></div>
+            </>
+          )
+        })}
       </div>
 
-      {/* ANCHOR Summary */}
-      {/* Get the gist of what you've learnt */}
-      <div className="lm-home__summary">
-        <p>You can write summaries for chapters</p>
-      </div>
-
-      {/* ANCHOR Commentary */}
-      {/* You can write your own commentary. */}
-
-      {/* ANCHOR Statistics */}
-      {/* See how you progress */}
-
-      {/* ANCHOR Action to login */}
-      {!localStorage.getItem("token") ? (
-        <div className="lm-cta-authenticate">
-          <div
-            className="lm-cta-register"
-            onClick={() => navigate("/register", { replace: true })}
-          >
-            <button type="button" className="btn btn-primary">
-              Register
-            </button>
+        {/* ANCHOR Action to login */}
+        {!localStorage.getItem("token") ? (
+          <div className="lm-cta-authenticate">
+            <div
+              className="lm-cta-register"
+              onClick={() => navigate("/register", { replace: true })}
+            >
+              <button type="button" className="btn btn-primary">
+                Register
+              </button>
+            </div>
+            <div
+              className="lm-cta-login"
+              onClick={() => navigate("/login", { replace: true })}
+            >
+              <button type="button" className="btn btn-primary">
+                Login
+              </button>
+            </div>
           </div>
-          <div
-            className="lm-cta-login"
-            onClick={() => navigate("/login", { replace: true })}
-          >
-            <button type="button" className="btn btn-primary">
-              Login
-            </button>
-          </div>
-        </div>
-      ) : null}
+        ) : null}
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
