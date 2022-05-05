@@ -14,22 +14,37 @@ import { Link, useNavigate } from "react-router-dom";
 import Library from "./assets/icons/library.svg";
 import { nanoid } from "nanoid";
 import LM_Icon from "../../assets/images/favicon.svg";
+import authorize from "../../services/authorize"
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const navigate = useNavigate();
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [width, setWidth] = useState<number>(0);
   const [show, setShow] = useState<boolean>(false);
   window.addEventListener("resize", () => {
     setWidth(global.window.innerWidth);
   });
 
-  useEffect(() => {}, [width, show]);
+  const requestAuthorization = async () => {
+    setIsAuthorized(await authorize());
+  }
+
   useEffect(() => {
+  }, [width, show]);
+
+  useEffect(() => {
+    console.log("changed: ", isAuthorized)
+  }, [isAuthorized])
+
+  useEffect(() => {
+    requestAuthorization();
     const width = window.innerWidth;
     setWidth(width);
   }, []);
+
+
 
   return (
     <div className="lm-navbar">
@@ -58,6 +73,9 @@ const Navbar = (props: Props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className=" lm-navbar__linkscontainer ">
+                  {
+                  isAuthorized &&
+                    <>
                     <div className="lm-navbar__link">
                       <Nav.Item
                         as={Link}
@@ -100,6 +118,8 @@ const Navbar = (props: Props) => {
                         Chapters
                       </Nav.Item>
                     </div>
+                   </>
+                  }
                     <div className="lm-navbar__link">
                       <Nav.Item
                         as={Link}
@@ -150,6 +170,9 @@ const Navbar = (props: Props) => {
             <img src={LM_Icon} alt="brand" />
           </BNavbar.Brand>
           <Nav className="lm-navbar__linkscontainer">
+            {
+          isAuthorized && 
+              <>
             <Nav.Item
               as={Link}
               to="/booksviewer"
@@ -162,15 +185,6 @@ const Navbar = (props: Props) => {
             >
               Books
             </Nav.Item>
-            {/* <Nav.Item href="/bookmodifier" to="/bookmodifier" as={Link}>
-              Modifier
-            </Nav.Item> */}
-            {/* <Dropdown title="Other">
-              <Nav.Item href="/settings" to="/settings" as={Link}>
-                Settings
-              </Nav.Item>
-            </Dropdown> */}
-            {/* <Nav.Item>Coordinator</Nav.Item> */}
             <Nav.Item
               as={Link}
               to="/flashcards"
@@ -195,6 +209,8 @@ const Navbar = (props: Props) => {
             >
               Chapters
             </Nav.Item>
+              </>
+            }
             <Nav.Item
               as={Link}
               to={"/authenticate"}

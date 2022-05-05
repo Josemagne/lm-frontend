@@ -13,6 +13,34 @@ const Home = (props: Props) => {
   }, []);
   return (
     <div className="lm-home">
+      <div className="lm-home__features">
+        <div className="lm-home__section">
+          <div className="lm-home__section__books">
+            <h3 className="lm-home__section__boooks__title">
+              
+            </h3>
+            <div className="lm-home__section__books__text">
+              Keep 
+            </div>
+            <div className="lm-home__section__books__image">
+            </div>
+
+          </div>
+        </div>
+        <div className="lm-home__section">
+          <div className="lm-home__section__flashcards">
+            <h3 className="lm-home__section__flashcard__title">
+              
+            </h3>
+            <div className="lm-home__section__flashcard__text">
+              Keep 
+            </div>
+            <div className="lm-home__section__flashcards__image">
+            </div>
+
+          </div>
+        </div>
+      </div>
       {/* ANCHOR Flashcard */}
       {/* Repeat what you've learnt */}
       <div className="lm-home__flashcard">

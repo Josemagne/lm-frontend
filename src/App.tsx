@@ -40,6 +40,7 @@ const App = (props: Props) => {
           {/* TODO Add Community */}
           {/* TODO Add Account */}
           {/* TODO Add Settings */}
+          {/* TODO Add About */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <footer>{/* <Navigation /> */}</footer>
