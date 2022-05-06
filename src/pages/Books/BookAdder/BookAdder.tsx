@@ -65,9 +65,10 @@ const BookAdder = (props: Props) => {
     onSubmit: async (values, { resetForm }) => {
       dispatch(addBook(values));
 
-      await FAPI.addBook(values);
+      //await FAPI.addBook(values);
+      console.log("new booookkkkkkkkk:", values)
 
-      API.addBook(values);
+      await API.addBook(values);
 
       const newAuthor = new Author(nanoid(), values.author_prename, values.author_name);
        //await FAPI.addAuthor(newAuthor);

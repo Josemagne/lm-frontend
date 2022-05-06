@@ -19,7 +19,9 @@ export default function BookAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public getBook = async (book_id: string) => {
-            return await this.api.get(`/book/${book_id}`)
+            const response: any = await this.api.get(`/book/${book_id}`)
+            const {book} = response.data;
+            return book;
         }
 
         public getBooks = async () => {
