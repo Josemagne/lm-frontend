@@ -47,17 +47,17 @@ const ChapterContainer = ({ chapter }: Props) => {
   useEffect(() => {}, [chapter])
 
   return (
-    <div className="lm-chaptercontainer" onClick={(e) => handleClick(e)}>
+    <div className="lm-chaptercontainer" >
       <div className="lm-chaptercontainer__state">
         <ChapterState chapter={chapter} />
       </div>
-      <div className="lm-chaptercontainer__index">
+      <div className="lm-chaptercontainer__index"onClick={(e) => handleClick(e)}>
         <p>{chapter.index}</p>
       </div>
-      <div className="lm-chaptercontainer__seperator">
+      <div className="lm-chaptercontainer__seperator"onClick={(e) => handleClick(e)}>
         <p>-</p>
       </div>
-      <div className="lm-chaptercontainer__title">
+      <div className="lm-chaptercontainer__title"onClick={(e) => handleClick(e)}>
         <p>{chapter.title}</p>
       </div>
       {/* TODO */}

@@ -67,8 +67,6 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
             const chapter = action.payload;
 
             state.chapters.chapters[chapter.chapter_id] = chapter;
-            state.selectedChapter = chapter;
-
         },
         deleteChapter: (state, action) => {
             const chapter_id = action.payload;
@@ -83,8 +81,12 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
         changeSelectedChapter: (state, action) => {
             const chapter: LM_Chapter = action.payload;
 
+          if (chapter === null) {
+            state.selectedChapter = chapter;
+          } else {
             state.selectedChapter = chapter;
             state.chapters.chapters[chapter.chapter_id] = chapter;
+          }
         },
         deleteSelectedChapter: (state, action) => {
             if (!state.selectedChapter) return;

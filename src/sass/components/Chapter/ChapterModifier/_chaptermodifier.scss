@@ -4,16 +4,23 @@
   display: grid;
   grid-template-areas:
     "lm-chapterheader"
-    "lm-chapterbody";
-    //"lm-chapterfooter";
+    "lm-chapterbody"
+    "lm-chapterfooter";
 
   // NOTE Makes scrollbar in modal
   position: absolute !important;
   overflow-y: scroll !important;
   max-height: 100%;
 
-  & > div {
+  & > .modal-dialog {
     max-width: 992px;
+    height: 100%;
+    .modal-content {
+      height: 100%;
+      .lm-chaptermodifier__container {
+        height: 100%;
+      }
+    }
   }
 
   // ANCHOR lm-chapterhader
@@ -69,15 +76,15 @@
 
   // ANCHOR lm-chapterfooter
   .lm-chapterfooter {
-    position: fixed;
     grid-area: lm-chapterfooter;
-    bottom: 0;
     margin: auto;
     display: flex;
     justify-content: center;
+    align-items: center;
     .lm-chaptermodifier__adder {
-      // grid-area: lm-button;
+      position: sticky;
       margin-left: auto;
+      margin-top: auto;
       display: flex;
       justify-content: center;
       align-items: center;

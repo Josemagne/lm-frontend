@@ -58,7 +58,7 @@ const ChaptersPagination = (props: Props) => {
       <div className="chapterspagination__chapters">
         {chapters && chapters.length > 0 ? (
           chapters.map((chapter) => {
-            return <ChapterContainer chapter={chapter} />;
+            return <ChapterContainer key={chapter.chapter_id} chapter={chapter} />;
           })
         ) : (
           <p>No chapters</p>

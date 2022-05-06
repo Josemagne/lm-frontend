@@ -50,7 +50,7 @@ const ChapterModal = () => {
    * Closes the modal
    */
   const handleClose = () => {
-    dispatch(deleteSelectedChapter(""))
+    dispatch(changeSelectedChapter(null))
   }
 
   useEffect(() => {}, [selectedChapter])

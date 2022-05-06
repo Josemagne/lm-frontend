@@ -30,7 +30,7 @@ export default function ChapterAPI<TBase extends Constructor>(Base: TBase) {
         }
 
         public updateChapter = async (chapter: LM_Chapter) => {
-            return await this.api.post("/chapter", chapter);
+            return await this.api.post(`/chapter/${chapter.chapter_id}`, chapter);
         }
 
         public deleteChapter = async (chapter_id: string) => {

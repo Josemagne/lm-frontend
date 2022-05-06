@@ -45,8 +45,9 @@ const ChapterSummary = ({}: Props) => {
   }
 
   useEffect(() => {
+    if (!selectedChapter) return;
     setValue(selectedChapter.summary)
-  }, [selectedChapter.summary])
+  }, [selectedChapter])
 
   useEffect(() => {}, [])
 
