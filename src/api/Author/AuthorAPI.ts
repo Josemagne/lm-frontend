@@ -7,7 +7,7 @@ export default function AuthorAPI<TBase extends Constructor>(Base: TBase) {
   return class extends Base {
 
     public api: AxiosInstance = axios.create({
-      baseURL: process.env.NODE_ENV === "development" ? `http://${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `http://${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
+      baseURL: process.env.NODE_ENV === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
         "Authorization": `Bearer ${localStorage.getItem('token')}`, 'Access-Control-Allow-Origin': "*"
       }
     })
