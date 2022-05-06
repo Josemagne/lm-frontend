@@ -28,11 +28,12 @@ const Login = (props: Props) => {
     validationSchema: loginSchema,
     // validate: (values) => {},
     onSubmit: async (values) => {
-      const res: string = await login(values);
-      if (res === "success") {
+      const res: any = await login(values);
+      if (res.data.result === "success") {
         navigate("/", { replace: true });
+        location.reload();
       } else {
-        setErrors("The email or password is false");
+        setErrors(res.data.reason);
       }
     },
   });

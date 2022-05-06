@@ -8,6 +8,7 @@ export default function Logout() {
     sessionStorage.removeItem("token");
 
     navigate("/", {replace: true});
+    location.reload();
   }
 
   return (

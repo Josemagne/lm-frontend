@@ -17,12 +17,16 @@
   height: 10vh;
   min-height: 10vh;
   position: fixed;
-  bottom: 0;
-  
+  bottom: 2rem;
+
   display: flex;
   justify-content: center;
 
   background-color: lightgreen;
+
+  @media screen and (min-width: 576px) {
+    bottom: 0;
+  }
 
   .lm-cta-register {
     margin-right: 20%;

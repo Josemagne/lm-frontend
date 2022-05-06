@@ -38,13 +38,12 @@ const BooksPagination = (props: Props) => {
   let indexOfFirstBook = 0;
   if (books.length < 10) {
     indexOfLastBook = books.length - 1;
-    indexOfFirstBook = 0;
   } else {
     indexOfLastBook = currentPage * booksPerPage;
     indexOfFirstBook = indexOfLastBook - booksPerPage;
   }
 
-  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook);
+  const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook + 1);
   console.log("books: ", books);
   console.log("currentbooks: ", currentBooks);
 

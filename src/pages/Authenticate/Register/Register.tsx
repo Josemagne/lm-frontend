@@ -56,7 +56,7 @@ const Register = (props: Props) => {
       if (res.data.result === "success") {
         navigate("/", { replace: true });
       } else {
-        setError("The email already exists");
+        setError(res.data.reason);
       }
     },
   });

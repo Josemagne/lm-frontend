@@ -19,9 +19,10 @@
         padding: 0.5rem !important;
         text-decoration: none !important;
         color: map.get($colors, "secondary");
-      }
-      .lm-navbar__link.user-icon {
-        justify-self: end !important;
+
+        &:last-of-type {
+          margin-left: auto;
+        }
       }
     }
   }
