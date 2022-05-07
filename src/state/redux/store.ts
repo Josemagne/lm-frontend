@@ -14,9 +14,10 @@ export const store: Store = configureStore({
         summaries: summaryReducer,
         flashcards: flashcardReducer
     },
-    middleware: [reduxThunk]
+    middleware: [reduxThunk],
 })
 
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const createStore = () => store;

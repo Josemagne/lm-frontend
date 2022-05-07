@@ -13,12 +13,6 @@ type Props = {}
  * @returns
  */
 const ChapterFlashcards = (props: Props) => {
-  const dispatch = useAppDispatch()
-
-  const selectedChapter = useAppSelector(
-    (state) => state.chapters.selectedChapter
-  )
-
   return (
     <div className="lm-chaptermodifier__flashcards mt-3">
       <div className="container">

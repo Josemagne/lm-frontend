@@ -7,7 +7,7 @@ import useAppDispatch from "../../../../../../hooks/useAppDispatch"
 import { Card, Container } from "react-bootstrap"
 import ReactQuill from "react-quill"
 import { changeSelectedChapter } from "../../../../../../state/redux/features/chapterSlice"
-import { throttle, of, interval, Observable } from "rxjs"
+import { throttle, of, interval, Observable, throttleTime } from "rxjs"
 
 type Props = {}
 
@@ -24,14 +24,15 @@ const ChapterSummary = ({}: Props) => {
   const [value, setValue] = useState<string>("")
   const dispatch = useAppDispatch()
 
-  const selectedChapter = useAppSelector((state) => {
-    state.chapters.selectedChapter
-  }) as unknown as LM_Chapter
+  const selectedChapter = useAppSelector(
+    (state) => state.chapters.selectedChapter
+  ) as unknown as LM_Chapter
 
   const handleChange = (v: string) => {
-    const source = of([v])
+    const source = of(v)
     console.log("source:", source)
-    source.pipe(throttle(() => interval(5000))).subscribe(() => {
+    const result = source.pipe(throttle((ev) => interval(5000)))
+    result.subscribe(() => {
       setValue(v)
       console.log(v)
     })
@@ -60,9 +61,10 @@ const ChapterSummary = ({}: Props) => {
     <div
       className={
         open
-          ? "lm-chaptermodifier__summary open"
+          ? "lm-chaptermodifier__summary open "
           : "lm-chaptermodifier__summary"
       }
+      data-testid="lm-chaptermodifier__summary"
     >
       {selectedChapter && (
         <Container

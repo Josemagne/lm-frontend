@@ -12,7 +12,6 @@ import useAppDispatch from "../../../hooks/useAppDispatch"
 import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary"
 import { Modal } from "react-bootstrap"
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards"
-import "react-quill/dist/quill.snow.css"
 import API from "../../../api/API"
 import FAPI from "../../../storage/indexedDB/FAPI"
 import {
@@ -42,7 +41,6 @@ const ChapterModal = () => {
   }
 
   const submitHandler = async () => {
-
     await API.updateChapter(selectedChapter)
   }
 

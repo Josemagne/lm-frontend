@@ -6,7 +6,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "typeRoots": ["./src/types/**/*", "node_modules/@types"],
-    "types": ["cypress", "node", "jest", "@testing-library/jest-dom"],
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "resolveJsonModule": true,
 
     "allowJs": true,
@@ -27,6 +27,7 @@
     "**/*.test.ts",
     "**/*.spec.ts",
     "build/**/*",
-    "lm-components"
+    "lm-components",
+    "cypress/**/*"
   ]
 }
