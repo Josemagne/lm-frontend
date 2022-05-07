@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { FloatingLabel, Form } from "react-bootstrap";
-import { ErrorMessage, useFormik } from "formik";
-import { login } from "../../../services/auth";
-import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react"
+import { FloatingLabel, Form } from "react-bootstrap"
+import { ErrorMessage, useFormik } from "formik"
+import { login } from "../../../services/auth"
+import * as yup from "yup"
+import { useNavigate } from "react-router-dom"
+import ErrorModal from "./SubComponents/ErrorModal/ErrorModal"
 
-type Props = {};
+type Props = {}
 
 const Login = (props: Props) => {
-  const [errors, setErrors] = useState<undefined | string>();
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState<undefined | string>()
+  const navigate = useNavigate()
   const loginSchema = yup.object().shape({
     email: yup
       .string()
@@ -18,7 +19,7 @@ const Login = (props: Props) => {
       .min(5, "To short")
       .max(40, "Too long"),
     password: yup.string().required().min(7, "Too short").max(40, "Too long"),
-  });
+  })
 
   const formik = useFormik({
     initialValues: {
@@ -28,15 +29,17 @@ const Login = (props: Props) => {
     validationSchema: loginSchema,
     // validate: (values) => {},
     onSubmit: async (values) => {
-      const res: any = await login(values);
-      if (res.data.result === "success") {
-        navigate("/", { replace: true });
-        location.reload();
+      const res: any = await login(values)
+      if (res.result === "success") {
+        navigate("/", { replace: true })
+        location.reload()
       } else {
-        setErrors(res.data.reason);
+        setErrors(res.reason)
       }
     },
-  });
+  })
+
+  useEffect(() => {}, [errors])
   return (
     <div className="lm-login">
       <h4>Login</h4>
@@ -67,7 +70,7 @@ const Login = (props: Props) => {
             type="button"
             className="btn btn-primary"
             onClick={() => {
-              formik.handleSubmit();
+              formik.handleSubmit()
             }}
           >
             Login
@@ -77,7 +80,7 @@ const Login = (props: Props) => {
             type="button"
             className="btn btn-primary"
             onClick={() => {
-              formik.handleSubmit();
+              formik.handleSubmit()
             }}
             disabled
           >
@@ -95,7 +98,7 @@ const Login = (props: Props) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

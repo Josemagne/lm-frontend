@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import {
   Navbar as BNavbar,
   Offcanvas,
@@ -9,44 +9,45 @@ import {
   Button,
   NavLink,
   Nav,
-} from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import Library from "./assets/icons/library.svg";
-import { nanoid } from "nanoid";
-import LM_Icon from "../../assets/images/favicon.svg";
+} from "react-bootstrap"
+import { Link, useNavigate } from "react-router-dom"
+import Library from "./assets/icons/library.svg"
+import { nanoid } from "nanoid"
+import LM_Icon from "../../assets/images/favicon.svg"
 import authorize from "../../services/authorize"
-import {Dropdown, IconButton} from "rsuite"
+import { Dropdown, IconButton } from "rsuite"
 import Logout from "../Logout/Logout"
 
-type Props = {};
+type Props = {}
 
 const Navbar = (props: Props) => {
-  const navigate = useNavigate();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-  const [width, setWidth] = useState<number>(0);
-  const [show, setShow] = useState<boolean>(false);
+  const navigate = useNavigate()
+  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [width, setWidth] = useState<number>(0)
+  const [show, setShow] = useState<boolean>(false)
+
   window.addEventListener("resize", () => {
-    setWidth(global.window.innerWidth);
-  });
+    setWidth(global.window.innerWidth)
+  })
 
   const requestAuthorization = async () => {
-    setIsAuthorized(await authorize());
+    setIsAuthorized(await authorize())
   }
 
-  useEffect(() => {
-  }, [width, show]);
+  useEffect(() => {}, [width, show])
 
   useEffect(() => {
     console.log("isAuthorized: ", isAuthorized)
   }, [isAuthorized])
 
   useEffect(() => {
-    requestAuthorization();
-    const width = window.innerWidth;
-    setWidth(width);
-  }, []);
-
-
+    // If we have a token then we request authorization
+    if (localStorage.getItem("token")) {
+      requestAuthorization()
+    }
+    const width = window.innerWidth
+    setWidth(width)
+  }, [])
 
   return (
     <div className="lm-navbar">
@@ -75,53 +76,52 @@ const Navbar = (props: Props) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className=" lm-navbar__linkscontainer ">
-                  {
-                  isAuthorized &&
-                    <>
-                    <div className="lm-navbar__link">
-                      <Nav.Item
-                        as={Link}
-                        to="/booksviewer"
-                        onClick={() => {
-                          navigate("/booksviewer", {
-                            replace: true,
-                          });
-                          setShow(false);
-                        }}
-                      >
-                        Books
-                      </Nav.Item>
-                    </div>
-                    <div className="lm-navbar__link">
-                      <Nav.Item
-                        to="/flashcards"
-                        as={Link}
-                        onClick={() => {
-                          navigate("/flashcards", {
-                            replace: true,
-                          });
-                          setShow(false);
-                        }}
-                      >
-                        Flashcards
-                      </Nav.Item>
-                    </div>
-                    <div className="lm-navbar__link">
-                      <Nav.Item
-                        to="/chaptersviewer"
-                        as={Link}
-                        onClick={() => {
-                          navigate("/chaptersviewer", {
-                            replace: true,
-                          });
-                          setShow(false);
-                        }}
-                      >
-                        Chapters
-                      </Nav.Item>
-                    </div>
-                   </>
-                  }
+                    {isAuthorized && (
+                      <>
+                        <div className="lm-navbar__link">
+                          <Nav.Item
+                            as={Link}
+                            to="/booksviewer"
+                            onClick={() => {
+                              navigate("/booksviewer", {
+                                replace: true,
+                              })
+                              setShow(false)
+                            }}
+                          >
+                            Books
+                          </Nav.Item>
+                        </div>
+                        <div className="lm-navbar__link">
+                          <Nav.Item
+                            to="/flashcards"
+                            as={Link}
+                            onClick={() => {
+                              navigate("/flashcards", {
+                                replace: true,
+                              })
+                              setShow(false)
+                            }}
+                          >
+                            Flashcards
+                          </Nav.Item>
+                        </div>
+                        <div className="lm-navbar__link">
+                          <Nav.Item
+                            to="/chaptersviewer"
+                            as={Link}
+                            onClick={() => {
+                              navigate("/chaptersviewer", {
+                                replace: true,
+                              })
+                              setShow(false)
+                            }}
+                          >
+                            Chapters
+                          </Nav.Item>
+                        </div>
+                      </>
+                    )}
                     <div className="lm-navbar__link">
                       <Nav.Item
                         as={Link}
@@ -129,11 +129,11 @@ const Navbar = (props: Props) => {
                         onClick={() => {
                           navigate("/login", {
                             replace: true,
-                          });
-                          setShow(false);
+                          })
+                          setShow(false)
                         }}
                       >
-                        {localStorage.getItem("token") ? null : "Login"} 
+                        {localStorage.getItem("token") ? null : "Login"}
                       </Nav.Item>
                     </div>
 
@@ -158,47 +158,46 @@ const Navbar = (props: Props) => {
             <img src={LM_Icon} alt="brand" />
           </BNavbar.Brand>
           <Nav className="lm-navbar__linkscontainer">
-            {
-          isAuthorized && 
+            {isAuthorized && (
               <>
-            <Nav.Item
-              as={Link}
-              to="/booksviewer"
-              className="lm-navbar__link"
-              onClick={() => {
-                navigate("/booksviewer", {
-                  replace: true,
-                });
-              }}
-            >
-              Books
-            </Nav.Item>
-            <Nav.Item
-              as={Link}
-              to="/flashcards"
-              className="lm-navbar__link"
-              onClick={() => {
-                navigate("/flashcards", {
-                  replace: true,
-                });
-              }}
-            >
-              FlashCards
-            </Nav.Item>
-            <Nav.Item
-              as={Link}
-              to="/chaptersviewer"
-              className="lm-navbar__link"
-              onClick={() => {
-                navigate("/chaptersviewer", {
-                  replace: true,
-                });
-              }}
-            >
-              Chapters
-            </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to="/booksviewer"
+                  className="lm-navbar__link"
+                  onClick={() => {
+                    navigate("/booksviewer", {
+                      replace: true,
+                    })
+                  }}
+                >
+                  Books
+                </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to="/flashcards"
+                  className="lm-navbar__link"
+                  onClick={() => {
+                    navigate("/flashcards", {
+                      replace: true,
+                    })
+                  }}
+                >
+                  FlashCards
+                </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to="/chaptersviewer"
+                  className="lm-navbar__link"
+                  onClick={() => {
+                    navigate("/chaptersviewer", {
+                      replace: true,
+                    })
+                  }}
+                >
+                  Chapters
+                </Nav.Item>
               </>
-            }
+            )}
             <Nav.Item
               as={Link}
               to={"/authenticate"}
@@ -206,10 +205,9 @@ const Navbar = (props: Props) => {
               onClick={() => {
                 navigate("/Login", {
                   replace: true,
-                });
+                })
               }}
             >
-
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="50"
@@ -229,7 +227,7 @@ const Navbar = (props: Props) => {
         </BNavbar>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

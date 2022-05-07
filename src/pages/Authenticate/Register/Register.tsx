@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Form, Modal } from "react-bootstrap";
-import { useFormik } from "formik";
-import User from "../../../classes/User";
-import { register } from "../../../services/auth";
-import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
+import React, { useState, useEffect } from "react"
+import { Form, Modal } from "react-bootstrap"
+import { useFormik } from "formik"
+import User from "../../../classes/User"
+import { register } from "../../../services/auth"
+import { useNavigate } from "react-router-dom"
+import * as yup from "yup"
 
-type Props = {};
+type Props = {}
 
 /**
  * Component where we register
@@ -14,9 +14,9 @@ type Props = {};
  * @returns
  */
 const Register = (props: Props) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [error, setError] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>()
   const registerSchema = yup.object().shape({
     email: yup
       .string()
@@ -25,7 +25,7 @@ const Register = (props: Props) => {
       .min(5, "Too short")
       .max(40, "Too long"),
     password: yup.string().required().min(7, "Too short").max(30, "Too long"),
-  });
+  })
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -36,30 +36,32 @@ const Register = (props: Props) => {
     validateOnBlur: false,
     validationSchema: registerSchema,
     validate: (values) => {
-      const errors: any = {};
+      const errors: any = {}
 
       if (!(values.password.length > 6)) {
-        errors.password = "Password must be at least 7 characters long";
+        errors.password = "Password must be at least 7 characters long"
       }
 
       if (values.password !== values.passwordConfirm) {
-        errors.password = "The passwords are not the same";
+        errors.password = "The passwords are not the same"
       }
 
-      return errors;
+      return errors
     },
     onSubmit: async (values) => {
-      const { password, email } = values;
-      const res: any = await register({ password, email });
+      const { password, email } = values
+      const res: any = await register({ password, email })
       console.log("res: ", res)
 
-      if (res.data.result === "success") {
-        navigate("/", { replace: true });
+      if (res.result === "success") {
+        navigate("/", { replace: true })
       } else {
-        setError(res.data.reason);
+        setError(res.reason)
       }
     },
-  });
+  })
+
+  useEffect(() => {}, [error])
 
   return (
     <div className="lm-register">
@@ -95,8 +97,8 @@ const Register = (props: Props) => {
                 type="button"
                 className="btn btn-secondary "
                 onClick={(e) => {
-                  e.preventDefault();
-                  formik.handleSubmit();
+                  e.preventDefault()
+                  formik.handleSubmit()
                 }}
               >
                 Register
@@ -123,7 +125,7 @@ const Register = (props: Props) => {
         {/* TODO Error */}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

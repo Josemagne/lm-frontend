@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
+    baseURL: process.env.NODE_ENV === "development" ? `${process.env.BACKEND_IP_DEVELOPMENT}/api/v1` : `${process.env.BACKEND_IP_PRODUCTION}/api/v1`, headers: {
         "Access-Control-Allow-Origin": "*"
     }
 }
@@ -17,18 +17,18 @@ const register = async (newUser: { password: string, email: string }): Promise<a
 
     let res: any;
     try {
-        res = await api.post(`/auth/register`, newUser);
+        const response = await api.post(`/auth/register`, newUser);
+        res = response.data;
 
 
-        if (res.data.result === "success") {
+        if (res.result === "success") {
             localStorage.setItem("email", newUser.email)
-            localStorage.setItem("token", res.data.token);
-            sessionStorage.setItem("token", res.data.token)
+            localStorage.setItem("token", res.token);
+            sessionStorage.setItem("token", res.token)
         }
     }
-    catch (err) {
-        console.error(": ", err)
-        res.data.result = "failure"
+    catch (err: any) {
+        res = err.response.data;
     }
     return res;
 }
@@ -39,19 +39,21 @@ const register = async (newUser: { password: string, email: string }): Promise<a
  * @returns 
  */
 const login = async (user: { password: string, email: string }) => {
-  let result: any;
+    let result: any;
 
     try {
-        result = await api.post(`/auth/login`, user);
+        const response = await api.post(`/auth/login`, user);
+        result = response.data;
 
-        if (result.data.result === "success") {
+        if (result.result === "success") {
             localStorage.setItem("email", user.email)
-            localStorage.setItem("token", result.data.token)
-            sessionStorage.setItem("token", result.data.token)
+            localStorage.setItem("token", result.token)
+            sessionStorage.setItem("token", result.token)
         }
     }
-    catch (err) {
+    catch (err: any) {
         console.log("err: ", err)
+        result = err.response.data;
     }
 
     return result;

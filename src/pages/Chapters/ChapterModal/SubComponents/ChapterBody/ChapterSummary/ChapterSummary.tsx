@@ -7,7 +7,7 @@ import useAppDispatch from "../../../../../../hooks/useAppDispatch"
 import { Card, Container } from "react-bootstrap"
 import ReactQuill from "react-quill"
 import { changeSelectedChapter } from "../../../../../../state/redux/features/chapterSlice"
-import {throttle, of, interval} from "rxjs"
+import { throttle, of, interval, Observable } from "rxjs"
 
 type Props = {}
 
@@ -29,11 +29,14 @@ const ChapterSummary = ({}: Props) => {
   }) as unknown as LM_Chapter
 
   const handleChange = (v: string) => {
-    const source = of(v);
-    source.pipe(throttle((val) => interval(2000))).subscribe(()=> {
-    setValue(v);
+    const source = of([v])
+    console.log("source:", source)
+    source.pipe(throttle(() => interval(5000))).subscribe(() => {
+      setValue(v)
+      console.log(v)
     })
 
+    console.log("selectedChapter:", selectedChapter)
     const chapterCopy = JSON.parse(JSON.stringify(selectedChapter))
     chapterCopy.summary = v
 
@@ -45,11 +48,13 @@ const ChapterSummary = ({}: Props) => {
   }
 
   useEffect(() => {
-    if (!selectedChapter) return;
+    if (!selectedChapter) return
     setValue(selectedChapter.summary)
   }, [selectedChapter])
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    console.log("seelectedChapter: ", selectedChapter)
+  }, [])
 
   return (
     <div
@@ -59,24 +64,26 @@ const ChapterSummary = ({}: Props) => {
           : "lm-chaptermodifier__summary"
       }
     >
-      <Container
-        onClick={() => {
-          // @ts-ignore
-          editorRef.current.focus()
-        }}
-      >
-        <Card>
-          <Card.Title className="title">Summary</Card.Title>
-          <div className="lm-textcontainer">
-            <ReactQuill
-              ref={editorRef}
-              value={value}
-              onChange={(v) => handleChange(v)}
-            />
-          </div>
-        </Card>
-        {/* NOTE If we click on it then we show the full summary */}
-      </Container>
+      {selectedChapter && (
+        <Container
+          onClick={() => {
+            // @ts-ignore
+            editorRef.current.focus()
+          }}
+        >
+          <Card>
+            <Card.Title className="title">Summary</Card.Title>
+            <div className="lm-textcontainer">
+              <ReactQuill
+                ref={editorRef}
+                value={value}
+                onChange={(v) => handleChange(v)}
+              />
+            </div>
+          </Card>
+          {/* NOTE If we click on it then we show the full summary */}
+        </Container>
+      )}
     </div>
   )
 }

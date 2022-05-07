@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar/Navbar";
 import BookModifier from "./pages/Books/BookAdder/BookAdder";
 import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
 import ChapterModifier from "./pages/Chapters/ChapterModal/ChapterModal";
-import ErrorPage from "./pages/Error";
+import ErrorPage from "./pages/ErrorPage";
 import Flashcards from "./pages/Flashcards/Flashcards";
 import Register from "./pages/Authenticate/Register/Register";
 import Authenticate from "./pages/Authenticate/Authenticate";
