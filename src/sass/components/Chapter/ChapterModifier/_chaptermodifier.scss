@@ -48,19 +48,26 @@
     grid-template-areas:
       "lm-chaptertitle"
       "lm-chapterstate"
+      "lm-seperator1"
       "lm-summarymodifier"
       "lm-chaptermodifier__flashcards"
+      "lm-seperator2"
       "lm-chaptermodifier__keywords"
       "lm-chaptermodifier__pictures";
 
     .lm-chaptertitle {
-      grid-area: lm-chapterstate;
+      grid-area: lm-chaptertitle;
       width: 100%;
     }
 
     .lm-chapterstate {
-      grid-area: chapterstate;
+      grid-area: lm-chapterstate;
       width: 100%;
+    }
+
+    // NOTE <hr />
+    .lm-seperator1 {
+      grid-area: lm-seperator1;
     }
 
     .lm-chaptermodifier__summary {
@@ -68,6 +75,13 @@
       width: 100%;
       max-width: 992px;
       overscroll-behavior-y: initial;
+      .accordion-body {
+        padding: 0;
+      }
+    }
+
+    .lm-seperator2 {
+      grid-area: lm-seperator2;
     }
     .lm-chaptermodifer__flashcards {
       grid-area: lm-chaptermodifier__flashcards;

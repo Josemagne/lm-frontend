@@ -18,6 +18,7 @@ import {
   changeSelectedChapter,
   deleteSelectedChapter,
 } from "../../../state/redux/features/chapterSlice"
+import { Accordion } from "react-bootstrap"
 
 /**
  * Modal where we can edit information about a chapter
@@ -61,22 +62,24 @@ const ChapterModal = () => {
       open={selectedChapter ? true : false}
       onClose={handleClose}
       className={
-        selectedChapter ? "lm-chaptermodifier modal-show" : "lm-chaptermodifier"
+        selectedChapter
+          ? "lm-chaptermodifier "
+          : "lm-chaptermodifier modal-fadeOut"
       }
       overflow={true}
       full={true}
     >
       {selectedChapter && (
         <>
+          <button
+            className="btn btn-danger lm-chaptermodifier__close"
+            onClick={handleClose}
+          >
+            x
+          </button>
           <div className="lm-chapterheader"></div>
           <div className="lm-chapterbody">
             <ChapterTitle />
-            <button
-              className="btn btn-danger lm-chaptermodifier__close"
-              onClick={handleClose}
-            >
-              x
-            </button>
             {/* <button
               type="button"
               onClick={submitHandler}
@@ -87,9 +90,16 @@ const ChapterModal = () => {
             {/* @ts-ignore */}
             {/* TODO Correct */}
             {/* <ChapterState changeHandler={changeHandler} /> */}
-            <hr />
-            <ChapterSummary />
-            <hr />
+            <hr className="lm-seperator1" />
+            <Accordion defaultActiveKey="">
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Summary</Accordion.Header>
+                <Accordion.Body>
+                  <ChapterSummary />
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+            <hr className="lm-seperator2" />
             <ChapterFlashcards />
             {/* TODO Citation */}
             {/* <ChapterKeywords /> */}

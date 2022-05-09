@@ -74,7 +74,6 @@ const ChapterSummary = ({}: Props) => {
           }}
         >
           <Card>
-            <Card.Title className="title">Summary</Card.Title>
             <div className="lm-textcontainer">
               <ReactQuill
                 ref={editorRef}
