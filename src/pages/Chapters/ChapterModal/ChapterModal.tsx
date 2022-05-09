@@ -10,7 +10,7 @@ import useAppSelector from "../../../hooks/useAppSelector"
 import { useFormik } from "formik"
 import useAppDispatch from "../../../hooks/useAppDispatch"
 import ChapterSummary from "./SubComponents/ChapterBody/ChapterSummary/ChapterSummary"
-import { Modal } from "react-bootstrap"
+import { Modal } from "rsuite"
 import ChapterFlashcards from "./SubComponents/ChapterBody/ChapterFlashcards/ChapterFlashcards"
 import API from "../../../api/API"
 import FAPI from "../../../storage/indexedDB/FAPI"
@@ -47,52 +47,58 @@ const ChapterModal = () => {
   /**
    * Closes the modal
    */
-  const handleClose = () => {
+  const handleClose = async () => {
     dispatch(changeSelectedChapter(null))
+    await API.updateChapter(selectedChapter)
   }
 
-  useEffect(() => {}, [selectedChapter])
+  useEffect(() => {
+    console.log("ChapterTitle, selectedChapter: ", selectedChapter)
+  }, [selectedChapter])
 
   return (
     <Modal
-      show={selectedChapter ? true : false}
-      onHide={handleClose}
-      className="lm-chaptermodifier"
+      open={selectedChapter ? true : false}
+      onClose={handleClose}
+      className={
+        selectedChapter ? "lm-chaptermodifier modal-show" : "lm-chaptermodifier"
+      }
+      overflow={true}
+      full={true}
     >
-      {selectedChapter ? (
-        <div className="lm-chaptermodifier__container">
-          {/* TODO Move to its own File */}
-          <div className="lm-chapterheader">
+      {selectedChapter && (
+        <>
+          <div className="lm-chapterheader"></div>
+          <div className="lm-chapterbody">
             <ChapterTitle />
+            <button
+              className="btn btn-danger lm-chaptermodifier__close"
+              onClick={handleClose}
+            >
+              x
+            </button>
+            {/* <button
+              type="button"
+              onClick={submitHandler}
+              className="lm-chaptermodifier__adder"
+            >
+              Change
+            </button> */}
             {/* @ts-ignore */}
             {/* TODO Correct */}
             {/* <ChapterState changeHandler={changeHandler} /> */}
-          </div>
-          <div className="lm-chapterbody">
+            <hr />
             <ChapterSummary />
+            <hr />
             <ChapterFlashcards />
             {/* TODO Citation */}
             {/* <ChapterKeywords /> */}
             {/* <AddPictures /> */}
             {/* TODO Subchapters */}
           </div>
-          <div className="lm-chapterfooter">
-            <button
-              type="button"
-              onClick={submitHandler}
-              className="lm-chaptermodifier__adder"
-            >
-              Change
-            </button>
-          </div>
-        </div>
-      ) : null}
-      <button
-        className="btn btn-danger lm-chaptermodifier__close"
-        onClick={handleClose}
-      >
-        x
-      </button>
+          <div className="lm-chapterfooter"></div>
+        </>
+      )}
     </Modal>
   )
 }

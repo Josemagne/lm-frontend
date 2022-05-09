@@ -11,7 +11,7 @@ interface InitialChapterState {
         error: string | null;
         chapters: {
             [chapter_id: string]: LM_Chapter;
-        } 
+        }
         amountOfChapters: 0
     },
     selectedChapter: LM_Chapter | null,
@@ -81,12 +81,12 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
         changeSelectedChapter: (state, action) => {
             const chapter: LM_Chapter = action.payload;
 
-          if (chapter === null) {
-            state.selectedChapter = chapter;
-          } else {
-            state.selectedChapter = chapter;
-            state.chapters.chapters[chapter.chapter_id] = chapter;
-          }
+            if (chapter === null) {
+                state.selectedChapter = chapter;
+            } else {
+                state.selectedChapter = chapter;
+                state.chapters.chapters[chapter.chapter_id] = chapter;
+            }
         },
         deleteSelectedChapter: (state, action) => {
             if (!state.selectedChapter) return;
@@ -97,25 +97,26 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
         toggleAddingNewChapter: (state, action) => {
             state.addingNewChapter = !state.addingNewChapter;
         },
-}, extraReducers: (builder) => { builder.addCase(fetchChaptersBackend.pending, (state, action) => {
+    }, extraReducers: (builder) => {
+        builder.addCase(fetchChaptersBackend.pending, (state, action) => {
             state.chapters.loading = true;
         }),
-            builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
-                const chapters = action.payload;
+        builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
+            const chapters = action.payload;
 
-                        state.chapters.chapters = {};
-                    (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
-                        state.chapters.chapters[chapter.chapter_id] = chapter;
-                    })
-                state.chapters.error = null;
-                state.chapters.loading = false;
-            }),
-            builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
-                state.chapters.error = action.payload as string;
-                state.chapters.loading = false;
+            state.chapters.chapters = {};
+            (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
+                state.chapters.chapters[chapter.chapter_id] = chapter;
             })
+            state.chapters.error = null;
+            state.chapters.loading = false;
+        }),
+        builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
+            state.chapters.error = action.payload as string;
+            state.chapters.loading = false;
+        })
 
-}
+    }
 
 })
 
