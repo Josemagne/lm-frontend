@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { Accordion, Container, Row } from "react-bootstrap";
-import useAppSelector from "../../../../hooks/useAppSelector";
+import React, { useEffect, useState } from "react"
+import { Accordion, Container, Row } from "react-bootstrap"
+import useAppSelector from "../../../../hooks/useAppSelector"
 import useAppDispatch from "../../../../hooks/useAppDispatch"
-import LM_Chapter from "../../../../types/Book/chapter";
-import {LM_Flashcard} from "../../../../types/Flashcard/flashcard";
-import {fetchFlashcardsBackend} from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import LM_Chapter from "../../../../types/Book/chapter"
+import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
+import { fetchFlashcardsBackend } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import { Table } from "rsuite"
+
+const { HeaderCell, Cell } = Table
 
 const Flashcardsviewer = () => {
-  const dispatch = useAppDispatch();
-  const selectedBook = useAppSelector((state) => state.books.selectedBook);
-  let flashcards: LM_Flashcard[] | null = useAppSelector((state) => state.flashcards.flashcards.flashcards);
-    if (flashcards) flashcards = Object.values(flashcards);
+  const dispatch = useAppDispatch()
+  const selectedBook = useAppSelector((state) => state.books.selectedBook)
+  let flashcards: LM_Flashcard[] | null = useAppSelector(
+    (state) => state.flashcards.flashcards.flashcards
+  )
+  if (flashcards) flashcards = Object.values(flashcards)
 
   useEffect(() => {
-    console.log("selecteedBOOK in viewr:", selectedBook )
-    if (!selectedBook) return;
+    if (!selectedBook) return
     // @ts-ignore
-    dispatch(fetchFlashcardsBackend(selectedBook.book_id))}
-    ,[selectedBook]);
+    dispatch(fetchFlashcardsBackend(selectedBook.book_id))
+  }, [selectedBook])
 
   useEffect(() => {
-    if (!flashcards) return;
-    console.log("the flashcards: ", flashcards)
-    console.log("and arr:", Object.values(flashcards))
+    if (!flashcards) return
   }, [flashcards])
 
   return (
@@ -41,14 +43,30 @@ const Flashcardsviewer = () => {
                   </Accordion.Body>
                 </div>
               </Accordion.Item>
-            );
+            )
           })
         ) : (
-          <p>No flashcards yet!</p>
+          <p>No flashcards yet.</p>
         )}
       </Accordion>
+      {/* {flashcards && Object.values(flashcards).length > 0 && (
+        <Table data={Object.values(flashcards)}>
+          <Table.Column width={100}>
+            <div className="lm-question">
+              <HeaderCell>Question</HeaderCell>
+              <Cell dataKey="question" />
+            </div>
+          </Table.Column>
+          <Table.Column width={100}>
+            <div className="lm-answer">
+              <HeaderCell>Answer</HeaderCell>
+              <Cell dataKey="answer" />
+            </div>
+          </Table.Column>
+        </Table>
+      )} */}
     </div>
-  );
-};
+  )
+}
 
-export default Flashcardsviewer;
+export default Flashcardsviewer

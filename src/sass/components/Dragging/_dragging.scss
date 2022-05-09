@@ -3,48 +3,51 @@
 .lm-gc-dragging {
   height: 100%;
   user-select: none;
-  background-color: lightgray;
 
   display: grid;
   grid-template-areas: "entities entities_doing entities_done";
   grid-template-columns: repeat(3, 1fr);
 
-  ul,li { 
+  ul,
+  li {
     list-style-type: none;
     list-style-position: inside;
-      margin: 0;
-      padding: 0;
-    }
+    margin: 0;
+    padding: 0;
+  }
 
-    ul {
+  ul {
+    height: 100%;
+  }
+
+  .entities_container {
+    position: relative;
+    display: flex;
+    overflow-y: auto;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+      rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    h3 {
+      margin: auto;
+    }
+    & > div {
       height: 100%;
     }
-
-
-    .entities_container {
-      overflow-x: none;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      border: 1px solid black;
-      & > div {
-        height: 100%;
-      }
     li.draggable-item {
       @include lm-bookcontainer;
     }
-    }
+  }
 
   ul.entities {
     grid-area: entities;
   }
 
   ul.entities_doing {
-    grid-area: entities_doint;
+    grid-area: entities_doing;
   }
 
   ul.entities_done {
     grid-area: entities_done;
   }
-  
 }

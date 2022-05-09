@@ -3,7 +3,6 @@
 
 @mixin lm-bookcontainer {
   .lm-bookcontainer {
-    position: relative;
     width: 100%;
     background-color: rgb(252, 249, 249);
     height: fit-content;
@@ -11,14 +10,14 @@
     box-shadow: 5px 3px 10px black;
     margin: 1rem;
     grid-template-areas:
-      "lm-image lm-image delete"
-      "lm-author lm-title lm-delete"
-      "lm-progress lm-pages lm-pages";
+      "lm-image lm-image lm-image"
+      "lm-author lm-author lm-author"
+      "lm-title lm-title lm-title";
 
     @media screen and (min-width: 576px) {
       grid-template-areas:
-        "lm-image lm-author lm-title"
-        "lm-image lm-progress lm-progress";
+        "lm-image lm-author lm-author"
+        "lm-image lm-title lm-title";
     }
 
     &:hover {
@@ -38,10 +37,14 @@
       grid-area: lm-image;
     }
     .lm-progressviewer {
+      // TODO Really?
+      display: none;
       grid-area: lm-progress;
     }
     .lm-pagesviewer {
       grid-area: lm-pages;
+      // TODO Really
+      display: none;
     }
     .lm-deletebutton {
       position: absolute;
@@ -55,6 +58,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      // TODO Really
+      display: none;
     }
 
     .lm-deletebutton:hover {
