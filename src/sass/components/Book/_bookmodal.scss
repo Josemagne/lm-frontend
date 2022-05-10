@@ -1,13 +1,34 @@
 @import "../../abstracts/colors";
 
+/* NOTE Overwrite the properties of rsuite.js */
+// Wraps the modal
+.rs-modal {
+  margin: 0;
+}
+.rs-modal-sm,
+.rs-modal-full {
+  max-width: unset;
+}
+.rs-modal-wrapper {
+  overflow: initial;
+  height: 100%;
+  .rs-modal-dialog {
+    height: 100%;
+    .rs-modal-content {
+      height: 100%;
+    }
+  }
+}
+
 .lm-bookmodal {
+  height: 100vh;
   width: 100%;
   .lm-bookmodal__header {
   }
   .lm-bookmodal__body {
     .lm-bookmodal__links {
       display: flex;
-      justify-content: space-betweeen;
+      justify-content: space-between;
     }
   }
 

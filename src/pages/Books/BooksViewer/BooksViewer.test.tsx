@@ -1,4 +1,3 @@
-import { render, shallow, ShallowWrapper } from "enzyme"
 import BooksViewer from "./BooksViewer"
 import { Provider } from "react-redux"
 import { store } from "../../../state/redux/store"
@@ -13,10 +12,9 @@ import BookModal from "./SubComponents/BookModal/BookModal"
 import userEvent from "@testing-library/user-event"
 import { screen } from "@testing-library/react"
 import BooksPagination from "./SubComponents/BooksPagination/BooksPagination"
+import { render } from "enzyme"
 
 describe("BooksViewer", () => {
-  let wrapper: cheerio.Cheerio
-
   // beforeEach(() => {
   //   wrapper = render(
   //     <Provider store={store}>
@@ -28,7 +26,7 @@ describe("BooksViewer", () => {
   // })
 
   const renderBooksViewer = () => {
-    render(
+    return render(
       <Provider store={store}>
         <HashRouter>
           <BooksViewer />
@@ -40,12 +38,11 @@ describe("BooksViewer", () => {
   it("Should open BookModal if a BookContainer is clicked", () => {
     store.dispatch(addBook(new Book("a", "Tim", "Strup", "abc", 22, 33, "")))
 
-    renderBooksViewer()
+    const wrapper = renderBooksViewer()
 
     console.log(store.getState())
-    const book = screen.queryByText("Tim")
 
-    console.log(book)
+    console.log(wrapper)
 
     // userEvent.click(book)
 

@@ -1,12 +1,28 @@
+/* NOTE Overwrite the properties of rsuite.js */
 // Wraps the modal
+.rs-modal {
+  margin: 0;
+}
+.rs-modal-sm,
+.rs-modal-full {
+  max-width: unset;
+}
 .rs-modal-wrapper {
   overflow: initial;
+  height: 100%;
+  .rs-modal-dialog {
+    height: 100%;
+    .rs-modal-content {
+      height: 100%;
+    }
+  }
 }
 
 .lm-chaptermodifier {
   width: 100%;
   height: 100vh;
   max-height: 100vh;
+  margin: 0;
   display: grid;
   overflow: hidden;
   grid-template-areas:
@@ -32,11 +48,25 @@
   // ANCHOR lm-chapterhader
   .lm-chapterheader {
     grid-area: lm-chapterheader;
-    margin-top: 4rem;
-    margin-left: auto;
     margin-right: auto;
     display: grid;
-    grid-template-areas: "lm-chaptertitle lm-chaptertitle lm-chapterstate";
+    grid-template-areas:
+      "lm-chaptertitle lm-chaptertitle lm-chapterstate"
+      "lm-seperator1 . .";
+    margin-bottom: 1rem;
+
+    .lm-chaptertitle {
+      grid-area: lm-chaptertitle;
+      width: 100%;
+    }
+    .lm-chapterstate {
+      grid-area: lm-chapterstate;
+      width: 100%;
+    }
+
+    .lm-seperator1 {
+      grid-area: lm-seperator1;
+    }
   }
 
   // ANCHOR lm-chapterbody
@@ -46,31 +76,13 @@
     overflow-y: auto;
     display: grid;
     grid-template-areas:
-      "lm-chaptertitle"
-      "lm-chapterstate"
-      "lm-seperator1"
       "lm-summarymodifier"
-      "lm-chaptermodifier__flashcards"
       "lm-seperator2"
+      "lm-chaptermodifier__flashcards"
       "lm-chaptermodifier__keywords"
       "lm-chaptermodifier__pictures";
 
-    .lm-chaptertitle {
-      grid-area: lm-chaptertitle;
-      width: 100%;
-    }
-
-    .lm-chapterstate {
-      grid-area: lm-chapterstate;
-      width: 100%;
-    }
-
-    // NOTE <hr />
-    .lm-seperator1 {
-      grid-area: lm-seperator1;
-    }
-
-    .lm-chaptermodifier__summary {
+    .lm-summary-accordion {
       grid-area: lm-summarymodifier;
       width: 100%;
       max-width: 992px;

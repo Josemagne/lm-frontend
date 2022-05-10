@@ -77,9 +77,11 @@ const ChapterModal = () => {
           >
             x
           </button>
-          <div className="lm-chapterheader"></div>
-          <div className="lm-chapterbody">
+          <div className="lm-chapterheader">
             <ChapterTitle />
+          </div>
+          <hr className="lm-seperator1" />
+          <div className="lm-chapterbody">
             {/* <button
               type="button"
               onClick={submitHandler}
@@ -90,8 +92,7 @@ const ChapterModal = () => {
             {/* @ts-ignore */}
             {/* TODO Correct */}
             {/* <ChapterState changeHandler={changeHandler} /> */}
-            <hr className="lm-seperator1" />
-            <Accordion defaultActiveKey="">
+            <Accordion defaultActiveKey="" className="lm-summary-accordion">
               <Accordion.Item eventKey="0">
                 <Accordion.Header>Summary</Accordion.Header>
                 <Accordion.Body>

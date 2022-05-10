@@ -1,5 +1,5 @@
-import { any } from "cypress/types/bluebird";
-import { Fragment, useEffect } from "react";
+import { any } from "cypress/types/bluebird"
+import { Fragment, useEffect } from "react"
 import {
   DragDropContext,
   Droppable,
@@ -7,30 +7,30 @@ import {
   DropResult,
   ResponderProvided,
   DragUpdate,
-  DragStart
-} from "react-beautiful-dnd";
-import useAppSelector from "../../hooks/useAppSelector";
-import BookContainer from "../../pages/Books/BooksViewer/SubComponents/BookContainer/BookContainer";
+  DragStart,
+} from "react-beautiful-dnd"
+import useAppSelector from "../../hooks/useAppSelector"
+import BookContainer from "../../pages/Books/BooksViewer/SubComponents/BookContainer/BookContainer"
 import {
   LM_Entity,
   LM_EntityID,
   LM_EntityName,
-} from "../../types/Entity/entity";
+} from "../../types/Entity/entity"
 import API from "../../api/API"
 import FAPI from "../../storage/indexedDB/FAPI"
-import {updateBook} from "../../state/redux/features/bookSlice"
+import { updateBook } from "../../state/redux/features/bookSlice"
 import useAppDispatch from "../../hooks/useAppDispatch"
 
 type Props = {
-  type: LM_EntityName;
+  type: LM_EntityName
   /**
    * Title for the entity
    */
-  title: string;
-};
+  title: string
+}
 
 const Dragging = ({ type, title }: Props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   /**
    * Maps the entity name to their id name
    * @param type
@@ -40,24 +40,24 @@ const Dragging = ({ type, title }: Props) => {
   const entityIDMapping = (type: LM_EntityName): LM_EntityID => {
     switch (type) {
       case "BOOK":
-        return "book_id";
+        return "book_id"
       case "CHAPTER":
-        return "chapter_id";
+        return "chapter_id"
       default:
-        return "book_id";
+        return "book_id"
     }
-  };
+  }
 
-  interface EntityMapping  {
+  interface EntityMapping {
     TO_READ: {
       [id: string]: LM_Entity
-    };
+    }
     READING: {
       [id: string]: LM_Entity
-    };
+    }
     READ: {
       [id: string]: LM_Entity
-    };
+    }
   }
 
   /**
@@ -67,12 +67,12 @@ const Dragging = ({ type, title }: Props) => {
     TO_READ: {},
     READING: {},
     READ: {},
-  };
+  }
 
   /**
    * Contains the entities that we will fetch
    */
-  let entities: any[] = [];
+  let entities: any[] = []
 
   // TODO Move to utils
   /**
@@ -85,13 +85,13 @@ const Dragging = ({ type, title }: Props) => {
         {
           entities = Object.values(
             useAppSelector((state) => state.books.books.books)
-          );
+          )
         }
-        break;
+        break
       default: {
       }
     }
-  };
+  }
 
   /**
    * Distributes the entities in their LM_EntityStatus
@@ -102,78 +102,75 @@ const Dragging = ({ type, title }: Props) => {
       if (ent.status === "TO_READ") {
         // TODO Better?
         // @ts-ignore
-        entityMapping.TO_READ[ent[entityIDMapping(type)]] = ent;
-      } 
-      else if (ent.status === "READING") {
-        entityMapping.READING[ent[entityIDMapping(type)]] = ent;
-      }
-      else if (ent.status === "READ") {
+        entityMapping.TO_READ[ent[entityIDMapping(type)]] = ent
+      } else if (ent.status === "READING") {
+        entityMapping.READING[ent[entityIDMapping(type)]] = ent
+      } else if (ent.status === "READ") {
         // @ts-ignore
-        entityMapping.READ[ent[entityIDMapping(type)]] = ent;
+        entityMapping.READ[ent[entityIDMapping(type)]] = ent
       }
-    });
-  };
+    })
+  }
 
-  chooseEntity(type);
-  distributeEntity(entities);
+  chooseEntity(type)
+  distributeEntity(entities)
 
-  console.log("mapping: ", entityMapping);
-  console.log("mapping entities: ", entities);
+  console.log("mapping: ", entityMapping)
+  console.log("mapping entities: ", entities)
 
   // Move to utils
 
   /**
    * Calls the update function for redux, API and FAPIwith given entity obj
    */
-  async function mappingUpdate(entityName: LM_EntityName, entityObject: LM_Entity) {
+  async function mappingUpdate(
+    entityName: LM_EntityName,
+    entityObject: LM_Entity
+  ) {
     console.log("mappingUpdate called with: ", entityName, entityObject)
     switch (entityName) {
-      case "BOOK": 
+      case "BOOK":
         dispatch(updateBook(entityObject))
         await FAPI.updateBook(entityObject)
         await API.updateBook(entityObject)
-        break;
+        break
       default:
-        break;
+        break
     }
   }
 
   function sourceMapping(source: string) {
-    switch(source) {
+    switch (source) {
       case "entities":
         return "TO_READ"
-      break;
+        break
       case "entities_doing":
-        return "READING" 
-      break;
+        return "READING"
+        break
       case "entities_done":
         return "READ"
-      break;
+        break
       default:
-        break;
-
+        break
     }
   }
 
+  function onDragStart(event: DragStart) {}
 
-  function onDragStart(event: DragStart) {
-
-  }
-
-  function onDragUpdate(event: DragUpdate) {
-    
-  }
+  function onDragUpdate(event: DragUpdate) {}
 
   function onDragEnd(result: DropResult, provided: ResponderProvided) {
-    const {source, destination, draggableId } = result;
+    const { source, destination, draggableId } = result
     console.log("onDragEnd start")
 
     // Do not do anything if it was the same droppable
-    if (destination && destination.droppableId === source.droppableId) return;
+    if (destination && destination.droppableId === source.droppableId) return
 
     // If dragged to entities_doing
     if (destination && destination.droppableId === "entities_doing") {
-      const draggedEntity = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId)
+      const draggedEntity = entities.find(
+        (entity) => entity[entityIDMapping(entity)] === draggableId
+      )
 
       entityMapping.READING[draggableId] = draggedEntity
       // @ts-ignore
@@ -183,15 +180,14 @@ const Dragging = ({ type, title }: Props) => {
       console.log("entities: ", entities)
       const entityCopy = JSON.parse(JSON.stringify(draggedEntity))
       entityCopy.status = "READING"
-      mappingUpdate(type, entityCopy);
+      mappingUpdate(type, entityCopy)
     }
 
     // If dragged to entities_done
-  else if (destination && destination.droppableId === "entities_done") {
-
-
-      const draggedEntity = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId)
-
+    else if (destination && destination.droppableId === "entities_done") {
+      const draggedEntity = entities.find(
+        (entity) => entity[entityIDMapping(entity)] === draggableId
+      )
 
       const entityCopy = JSON.parse(JSON.stringify(draggedEntity))
       entityCopy.status = "READ"
@@ -202,13 +198,14 @@ const Dragging = ({ type, title }: Props) => {
       console.log("entities: ", entities)
       // @ts-ignore
       delete entityMapping[sourceMapping(source.droppableId)][draggableId]
-      mappingUpdate(type, entityCopy);
-  }
+      mappingUpdate(type, entityCopy)
+    }
 
     // If dragged to entities
-    else if (destination && destination.droppableId === 'entities') {
-
-      const draggedEntity = entities.find((entity) => entity[entityIDMapping(entity)] === draggableId)
+    else if (destination && destination.droppableId === "entities") {
+      const draggedEntity = entities.find(
+        (entity) => entity[entityIDMapping(entity)] === draggableId
+      )
 
       const entityCopy = JSON.parse(JSON.stringify(draggedEntity))
       entityCopy.status = "TO_READ"
@@ -218,14 +215,13 @@ const Dragging = ({ type, title }: Props) => {
       console.log("entities: ", entities)
       // @ts-ignore
       delete entityMapping[sourceMapping(source.droppableId)][draggableId]
-      mappingUpdate(type, entityCopy);
+      mappingUpdate(type, entityCopy)
     }
-
-    }
+  }
   useEffect(() => {
-    console.log("entityMapping: " ,entityMapping)
+    console.log("entityMapping: ", entityMapping)
     console.log("entites: ", entities)
-  }, [entities, entityMapping]);
+  }, [entities, entityMapping])
 
   return (
     <div className="lm-gc-dragging">
@@ -234,140 +230,134 @@ const Dragging = ({ type, title }: Props) => {
       >
         <div className="entities_container">
           <h3>{title}</h3>
-        <Droppable droppableId="entities">
-          {(droppable, snapshot) => {
-            return (
-              <div style={{
-                backgroundColor: snapshot.isDraggingOver ? "green" : 'lightgray'
-                }}>
-                <ul
-                  {...droppable.droppableProps}
-                  ref={droppable.innerRef}
+          <Droppable droppableId="entities">
+            {(droppable, snapshot) => {
+              return (
+                <div
+                  style={{
+                    backgroundColor: snapshot.isDraggingOver ? "green" : "",
+                  }}
                 >
-                  {Object.values(entityMapping.TO_READ).map(
-                    (entity: any, index) => {
-                      return (
-                        <Draggable
-                          key={entity[entityIDMapping(type)]}
-                          draggableId={entity[entityIDMapping(type)]}
-                          index={index}
-                        >
-
-                          {(draggable) => {
-                            return (
-                              <li
-                                {...draggable.draggableProps}
-                                {...draggable.dragHandleProps}
-                                ref={draggable.innerRef}
-                                className="draggable-item"
-                              >
-                                <BookContainer
-                                  book={entity}
-                                />
-                              </li>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    }
-                  )}
-                </ul>
-                            {droppable.placeholder}
-              </div>
-            );
-          }}
-        </Droppable>
+                  <ul {...droppable.droppableProps} ref={droppable.innerRef}>
+                    {Object.values(entityMapping.TO_READ).map(
+                      (entity: any, index) => {
+                        return (
+                          <Draggable
+                            key={entity[entityIDMapping(type)]}
+                            draggableId={entity[entityIDMapping(type)]}
+                            index={index}
+                          >
+                            {(draggable) => {
+                              return (
+                                <li
+                                  {...draggable.draggableProps}
+                                  {...draggable.dragHandleProps}
+                                  ref={draggable.innerRef}
+                                  className="draggable-item"
+                                >
+                                  <BookContainer book={entity} />
+                                </li>
+                              )
+                            }}
+                          </Draggable>
+                        )
+                      }
+                    )}
+                  </ul>
+                  {droppable.placeholder}
+                </div>
+              )
+            }}
+          </Droppable>
         </div>
         <div className="entities_container">
-                <h3>Reading</h3>
-        <Droppable droppableId="entities_doing">
-          {(droppable,snapshot) => {
-            return (
-              <div style={{
-                backgroundColor: snapshot.isDraggingOver ? "green" : 'lightgray'
-                }}>
-                <ul
-                  {...droppable.droppableProps}
-                  ref={droppable.innerRef}
+          <h3>Reading</h3>
+          <Droppable droppableId="entities_doing">
+            {(droppable, snapshot) => {
+              return (
+                <div
+                  style={{
+                    backgroundColor: snapshot.isDraggingOver ? "green" : "",
+                  }}
                 >
-                  {Object.values(entityMapping.READING).map(
-                    (entity: any, index) => {
-                      return (
-                        <Draggable
-                          key={entity[entityIDMapping(type)]}
-                          draggableId={entity[entityIDMapping(type)]}
-                          index={index}
-                        >
-                          {(draggable) => {
-                            return (
-                              <li
-                                {...draggable.dragHandleProps}
-                                {...draggable.draggableProps}
-                                ref={draggable.innerRef}
-                                className="draggable-item"
-                              >
-                                <BookContainer book={entity} />
-                              </li>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    }
-                  )}
-                </ul>
-              {droppable.placeholder}
-              </div>
-            );
-          }}
-        </Droppable>
+                  <ul {...droppable.droppableProps} ref={droppable.innerRef}>
+                    {Object.values(entityMapping.READING).map(
+                      (entity: any, index) => {
+                        return (
+                          <Draggable
+                            key={entity[entityIDMapping(type)]}
+                            draggableId={entity[entityIDMapping(type)]}
+                            index={index}
+                          >
+                            {(draggable) => {
+                              return (
+                                <li
+                                  {...draggable.dragHandleProps}
+                                  {...draggable.draggableProps}
+                                  ref={draggable.innerRef}
+                                  className="draggable-item"
+                                >
+                                  <BookContainer book={entity} />
+                                </li>
+                              )
+                            }}
+                          </Draggable>
+                        )
+                      }
+                    )}
+                  </ul>
+                  {droppable.placeholder}
+                </div>
+              )
+            }}
+          </Droppable>
         </div>
         <div className="entities_container">
-                <h3>Read</h3>
-        <Droppable droppableId="entities_done">
-          {(droppable, snapshot) => {
-            return (
-              <div style={{
-                backgroundColor: snapshot.isDraggingOver ? "green" : 'lightgray'
-                }}>
-                <ul
-                  {...droppable.droppableProps}
-                  ref={droppable.innerRef}
+          <h3>Read</h3>
+          <Droppable droppableId="entities_done">
+            {(droppable, snapshot) => {
+              return (
+                <div
+                  style={{
+                    backgroundColor: snapshot.isDraggingOver ? "green" : "",
+                  }}
                 >
-                  {Object.values(entityMapping.READ).map(
-                    (entity: any, index) => {
-                      return (
-                        <Draggable
-                          key={entity[entityIDMapping(type)]}
-                          draggableId={entity[entityIDMapping(type)]}
-                          index={index}
-                        >
-                          {(draggable) => {
-                            return (
-                              <li
-                                {...draggable.dragHandleProps}
-                                {...draggable.draggableProps}
-                                ref={draggable.innerRef}
-                                className="draggable-item"
-                              >
-                              <BookContainer book={entity} />
-              {droppable.placeholder}
-                              </li>
-                            );
-                          }}
-                        </Draggable>
-                      );
-                    }
-                  )}
-                </ul>
-              {droppable.placeholder}
-              </div>
-            );
-          }}
-        </Droppable>
+                  <ul {...droppable.droppableProps} ref={droppable.innerRef}>
+                    {Object.values(entityMapping.READ).map(
+                      (entity: any, index) => {
+                        return (
+                          <Draggable
+                            key={entity[entityIDMapping(type)]}
+                            draggableId={entity[entityIDMapping(type)]}
+                            index={index}
+                          >
+                            {(draggable) => {
+                              return (
+                                <li
+                                  {...draggable.dragHandleProps}
+                                  {...draggable.draggableProps}
+                                  ref={draggable.innerRef}
+                                  className="draggable-item"
+                                >
+                                  <BookContainer book={entity} />
+                                  {droppable.placeholder}
+                                </li>
+                              )
+                            }}
+                          </Draggable>
+                        )
+                      }
+                    )}
+                  </ul>
+                  {droppable.placeholder}
+                </div>
+              )
+            }}
+          </Droppable>
         </div>
       </DragDropContext>
     </div>
-  );
-};
+  )
+}
 
-export default Dragging;
+export default Dragging

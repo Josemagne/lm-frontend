@@ -1,16 +1,16 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { LM_Book } from "../../../../../types/Book/book";
-import { Button, Modal } from "rsuite";
-import { useNavigate } from "react-router";
+import React, { Fragment, useState, useEffect } from "react"
+import { LM_Book } from "../../../../../types/Book/book"
+import { Button, Modal } from "rsuite"
+import { useNavigate } from "react-router"
 import {
   changeSelectedBook,
   removeSelectedBook,
-} from "../../../../../state/redux/features/bookSlice";
-import useAppDispatch from "../../../../../hooks/useAppDispatch";
-import useAppSelector from "../../../../../hooks/useAppSelector";
-import FlashcardAdder from "../../../../../components/FlashcardAdder/FlashcardAdder";
+} from "../../../../../state/redux/features/bookSlice"
+import useAppDispatch from "../../../../../hooks/useAppDispatch"
+import useAppSelector from "../../../../../hooks/useAppSelector"
+import FlashcardAdder from "../../../../../components/FlashcardAdder/FlashcardAdder"
 
-type Props = {};
+type Props = {}
 
 /**
  * Shows Modal for the book
@@ -18,19 +18,19 @@ type Props = {};
  * @returns
  */
 const BookModal = ({}: Props) => {
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook);
+  const selectedBook = useAppSelector((state) => state.books.selectedBook)
 
   const handleClose = () => {
-    dispatch(changeSelectedBook(null));
-  };
+    dispatch(changeSelectedBook(null))
+  }
 
   useEffect(() => {
     console.log("selected: ", selectedBook)
-  }, [selectedBook]);
+  }, [selectedBook])
 
   return (
     <Modal
@@ -44,33 +44,25 @@ const BookModal = ({}: Props) => {
         <Fragment>
           <Modal.Header>
             <h3 className="lm-bookmodal-title">
-              <span>
-
-            {selectedBook.author_prename} 
-              </span>
-              <span>
-  {selectedBook.author_name }
-              </span>
+              <span>{selectedBook.author_prename}</span>
+              <span>{selectedBook.author_name}</span>
               <span> - </span>
-              <span>
-            {selectedBook.book_title}
-              </span>
+              <span>{selectedBook.book_title}</span>
             </h3>
           </Modal.Header>
           <Modal.Body className="lm-bookmodal__body">
-            {
-              selectedBook.pages > 0 && <p>pages: {selectedBook.pages}</p>
-            }
+            {selectedBook.pages > 0 && <p>pages: {selectedBook.pages}</p>}
 
             {/* NOTE The links lead to other parts of the website */}
             <div className="lm-bookmodal__links">
               <div
                 onClick={() => {
-                  if (!selectedBook) return;
-                  handleClose();
+                  if (!selectedBook) return
+                  dispatch(changeSelectedBook(selectedBook))
+                  handleClose()
                   navigate(`/flashcards`, {
                     replace: true,
-                  });
+                  })
                 }}
               >
                 <Button>Go to flashcards</Button>
@@ -78,11 +70,12 @@ const BookModal = ({}: Props) => {
               <div
                 className="lm-bookmodal__btn"
                 onClick={() => {
-                  if (!selectedBook.book_id) return;
-                  handleClose();
+                  if (!selectedBook.book_id) return
+                  handleClose()
+                  dispatch(changeSelectedBook(selectedBook))
                   navigate(`/chaptersviewer/${selectedBook.book_title}`, {
                     replace: true,
-                  });
+                  })
                 }}
               >
                 <Button>Go to chapters</Button>
@@ -100,7 +93,7 @@ const BookModal = ({}: Props) => {
         </Fragment>
       ) : null}
     </Modal>
-  );
-};
+  )
+}
 
-export default BookModal;
+export default BookModal
