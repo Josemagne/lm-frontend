@@ -3,6 +3,7 @@
 .lm-gc-dragging {
   height: 100%;
   user-select: none;
+  overflow: auto;
 
   display: grid;
   grid-template-areas: "entities entities_doing entities_done";

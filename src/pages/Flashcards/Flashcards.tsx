@@ -6,6 +6,7 @@ import Flashcardsviewer from "./SubComponents/Flashcardsviewer/Flashcardsviewer"
 import { fetchBooksBackend } from "../../state/redux/features/bookSlice"
 import FlashcardAdder from "../../components/FlashcardAdder/FlashcardAdder"
 import { LM_EntityName } from "../../types/Entity/entity"
+import FlashcardsPagination from "./SubComponents/FlashcardsPagination/FlashcardsPagination"
 
 type Props = {}
 
@@ -25,7 +26,7 @@ const Flashcards = (props: Props) => {
         {selectedBook ? <FlashcardAdder type="BOOK" /> : null}
       </div>
       <div className="lm-flashcards__viewer">
-        <Flashcardsviewer />
+        <FlashcardsPagination />
       </div>
     </div>
   )

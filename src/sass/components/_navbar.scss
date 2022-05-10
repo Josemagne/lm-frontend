@@ -1,5 +1,34 @@
 @use "sass:map";
 @import "../abstracts/colors";
+
+// ANCHOR OFFCANVAS
+.offcanvas-body {
+  .lm-navbar__linkscontainer {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    .lm-navbar__link {
+      padding: 2rem !important;
+      margin: 0.5rem !important;
+      text-decoration: none !important;
+      color: map.get($colors, "secondary");
+      background: #ededed;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      cursor: pointer;
+
+      &:active {
+        background: #e5e5e5;
+        -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+        -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+        box-shadow: inset 0px 0px 5px #c1c1c1;
+        outline: none;
+      }
+    }
+  }
+}
+
+// ANCHOR NAVBAR
 .lm-navbar {
   background-color: #2ea0ce;
   width: 100vw;
@@ -28,20 +57,6 @@
     }
   }
 
-  .offcanvas-body {
-    .lm-navbar__linkscontainer {
-      display: flex;
-      flex-direction: column;
-      width: 100% !important;
-      .lm-navbar__link {
-        padding: 2rem !important;
-        margin: 2rem !important;
-        text-decoration: none !important;
-        color: map.get($colors, "secondary");
-      }
-    }
-  }
-
   .lm-navbar__brand {
     border-radius: 5px;
     padding: 1rem;
@@ -53,7 +68,8 @@
     .lm-navbar__link {
       padding: 0.5rem !important;
       text-decoration: none !important;
-
+      margin: auto;
+      color: rgb(14, 18, 255);
       color: map.get($colors, "secondary");
       .nav-item {
       }
@@ -63,4 +79,8 @@
       justify-self: end;
     }
   }
+}
+
+// Mimikes a button being pressed
+@keyframes pressLink {
 }

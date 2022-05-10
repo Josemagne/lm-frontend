@@ -17,11 +17,14 @@ import LM_Icon from "../../assets/images/favicon.svg"
 import authorize from "../../services/authorize"
 import { Dropdown, IconButton } from "rsuite"
 import Logout from "../Logout/Logout"
+import resetter from "../../utils/resetter"
+import useAppDispatch from "../../hooks/useAppDispatch"
 
 type Props = {}
 
 const Navbar = (props: Props) => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [width, setWidth] = useState<number>(0)
   const [show, setShow] = useState<boolean>(false)
@@ -32,6 +35,18 @@ const Navbar = (props: Props) => {
 
   const requestAuthorization = async () => {
     setIsAuthorized(await authorize())
+  }
+
+  /**
+   * Handles the click event on a link
+   */
+  const clickHandler = (where: string, inOffcanvas: boolean = false) => {
+    console.log("called")
+    resetter(dispatch, where)
+    if (inOffcanvas) setShow(false)
+    navigate(where, {
+      replace: true,
+    })
   }
 
   useEffect(() => {}, [width, show])
@@ -78,45 +93,27 @@ const Navbar = (props: Props) => {
                   <div className=" lm-navbar__linkscontainer ">
                     {isAuthorized && (
                       <>
-                        <div className="lm-navbar__link">
-                          <Nav.Item
-                            as={Link}
-                            to="/booksviewer"
-                            onClick={() => {
-                              navigate("/booksviewer", {
-                                replace: true,
-                              })
-                              setShow(false)
-                            }}
-                          >
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/booksviewer", true)}
+                        >
+                          <Nav.Item as={Link} to="/booksviewer">
                             Books
                           </Nav.Item>
                         </div>
-                        <div className="lm-navbar__link">
-                          <Nav.Item
-                            to="/flashcards"
-                            as={Link}
-                            onClick={() => {
-                              navigate("/flashcards", {
-                                replace: true,
-                              })
-                              setShow(false)
-                            }}
-                          >
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/flashcards", true)}
+                        >
+                          <Nav.Item to="/flashcards" as={Link}>
                             Flashcards
                           </Nav.Item>
                         </div>
-                        <div className="lm-navbar__link">
-                          <Nav.Item
-                            to="/chaptersviewer"
-                            as={Link}
-                            onClick={() => {
-                              navigate("/chaptersviewer", {
-                                replace: true,
-                              })
-                              setShow(false)
-                            }}
-                          >
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/chaptersviewer", true)}
+                        >
+                          <Nav.Item to="/chaptersviewer" as={Link}>
                             Chapters
                           </Nav.Item>
                         </div>
@@ -164,11 +161,7 @@ const Navbar = (props: Props) => {
                   as={Link}
                   to="/booksviewer"
                   className="lm-navbar__link"
-                  onClick={() => {
-                    navigate("/booksviewer", {
-                      replace: true,
-                    })
-                  }}
+                  onClick={() => clickHandler("/chaptersviewer")}
                 >
                   Books
                 </Nav.Item>
@@ -188,11 +181,7 @@ const Navbar = (props: Props) => {
                   as={Link}
                   to="/chaptersviewer"
                   className="lm-navbar__link"
-                  onClick={() => {
-                    navigate("/chaptersviewer", {
-                      replace: true,
-                    })
-                  }}
+                  onClick={() => clickHandler("/chaptersviewer")}
                 >
                   Chapters
                 </Nav.Item>
@@ -202,11 +191,7 @@ const Navbar = (props: Props) => {
               as={Link}
               to={"/authenticate"}
               className="lm-navbar__link "
-              onClick={() => {
-                navigate("/Login", {
-                  replace: true,
-                })
-              }}
+              onClick={() => clickHandler("/chaptersviewer")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
