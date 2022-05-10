@@ -179,6 +179,14 @@ const Navbar = (props: Props) => {
             )}
             <Nav.Item
               as={Link}
+              to="/about"
+              className="lm-navbar__link"
+              onClick={() => clickHandler("/about")}
+            >
+              About
+            </Nav.Item>
+            <Nav.Item
+              as={Link}
               to={"/authenticate"}
               className="lm-navbar__link "
               onClick={() => clickHandler("/user")}

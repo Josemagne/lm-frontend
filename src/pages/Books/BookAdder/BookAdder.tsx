@@ -1,25 +1,26 @@
-import { useEffect } from "react";
-import BookTitle from "./SubComponents/BookTitle/BookTitle";
-import BookPages from "./SubComponents/BookPages/BookPages";
-import Adder from "../../../components/helpers/Adder/Adder";
-import { useFormik } from "formik";
-import BookAuthor from "./SubComponents/BookAuthor/BookAuthor";
-import useAppDispatch from "../../../hooks/useAppDispatch";
-import { nanoid } from "nanoid";
+import { useEffect } from "react"
+import BookTitle from "./SubComponents/BookTitle/BookTitle"
+import BookPages from "./SubComponents/BookPages/BookPages"
+import Adder from "../../../components/helpers/Adder/Adder"
+import { useFormik } from "formik"
+import BookAuthor from "./SubComponents/BookAuthor/BookAuthor"
+import useAppDispatch from "../../../hooks/useAppDispatch"
+import { nanoid } from "nanoid"
 import {
   addBook,
+  changeSelectedBook,
   toggleAddingNewBook,
-} from "../../../state/redux/features/bookSlice";
-import { LM_Book } from "../../../types/Book/book";
-import * as yup from "yup";
-import Book from "../../../classes/Book";
-import FAPI from "../../../storage/indexedDB/FAPI";
-import API from "../../../api/API";
-import { Modal } from "rsuite";
-import useAppSelector from "../../../hooks/useAppSelector";
+} from "../../../state/redux/features/bookSlice"
+import { LM_Book } from "../../../types/Book/book"
+import * as yup from "yup"
+import Book from "../../../classes/Book"
+import FAPI from "../../../storage/indexedDB/FAPI"
+import API from "../../../api/API"
+import { Modal } from "rsuite"
+import useAppSelector from "../../../hooks/useAppSelector"
 import Author from "../../../classes/Author"
 
-type Props = {};
+type Props = {}
 
 /**
  * Modal where we can add a book
@@ -28,10 +29,10 @@ const BookAdder = (props: Props) => {
   /* STORAGE */
 
   /* STATE */
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   function getInitialValues(): LM_Book {
-    return new Book(nanoid(),"", "", "", 0, 0, "");
+    return new Book(nanoid(), "", "", "", 0, 0, "")
   }
 
   const bookSchema = yup.object().shape({
@@ -42,7 +43,7 @@ const BookAdder = (props: Props) => {
       .max(40, "Too long"),
     author_name: yup.string().min(2, "Too short").max(40, "Too long"),
     book_title: yup.string().required().min(2, "Too short").max(40, "Too long"),
-  });
+  })
 
   const formik = useFormik({
     initialValues: getInitialValues(),
@@ -50,43 +51,47 @@ const BookAdder = (props: Props) => {
     validateOnChange: true,
     validationSchema: bookSchema,
     validate: async (values) => {
-      const errors: any = {};
+      const errors: any = {}
 
       if (!values.book_title) {
-        errors.book_title = "Book title is required";
+        errors.book_title = "Book title is required"
       }
 
       if (!values.author_prename) {
-        errors.author = "A author prename must be given";
+        errors.author = "A author prename must be given"
       }
 
-      return errors;
+      return errors
     },
     onSubmit: async (values, { resetForm }) => {
-      dispatch(addBook(values));
+      dispatch(addBook(values))
 
       //await FAPI.addBook(values);
       console.log("new booookkkkkkkkk:", values)
 
-      await API.addBook(values);
+      await API.addBook(values)
 
-      const newAuthor = new Author(nanoid(), values.author_prename, values.author_name);
-       //await FAPI.addAuthor(newAuthor);
+      const newAuthor = new Author(
+        nanoid(),
+        values.author_prename,
+        values.author_name
+      )
+      //await FAPI.addAuthor(newAuthor);
 
-       await API.addAuthor(newAuthor)
+      await API.addAuthor(newAuthor)
 
       // NOTE Resets the values of the form
       resetForm({
         values: getInitialValues(),
-      });
+      })
     },
-  });
+  })
 
-  const addingNewBook = useAppSelector((state) => state.books.addingNewBook);
+  const addingNewBook = useAppSelector((state) => state.books.addingNewBook)
 
   function handleClose() {
-    formik.resetForm();
-    dispatch(toggleAddingNewBook(""));
+    formik.resetForm()
+    dispatch(toggleAddingNewBook(""))
   }
 
   /* METHODS */
@@ -94,10 +99,10 @@ const BookAdder = (props: Props) => {
   /* EVENTS */
 
   useEffect(() => {
-    console.log(formik.errors);
-  }, [formik.values]);
+    console.log(formik.errors)
+  }, [formik.values])
 
-  useEffect(() => {}, [addingNewBook]);
+  useEffect(() => {}, [addingNewBook])
 
   return (
     <Modal open={addingNewBook} onClose={handleClose}>
@@ -145,7 +150,7 @@ const BookAdder = (props: Props) => {
         </form>
       </div>
     </Modal>
-  );
-};
+  )
+}
 
-export default BookAdder;
+export default BookAdder

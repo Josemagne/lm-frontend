@@ -1,18 +1,19 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
-import BooksViewer from "./pages/Books/BooksViewer/BooksViewer";
-import Navbar from "./components/Navbar/Navbar";
-import BookModifier from "./pages/Books/BookAdder/BookAdder";
-import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer";
-import ChapterModifier from "./pages/Chapters/ChapterModal/ChapterModal";
-import ErrorPage from "./pages/ErrorPage";
-import Flashcards from "./pages/Flashcards/Flashcards";
-import Register from "./pages/Authenticate/Register/Register";
-import Authenticate from "./pages/Authenticate/Authenticate";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Authenticate/Login/Login";
-import UserPage from "./pages/UserPage/UserPage";
+import { HashRouter, Route, Routes } from "react-router-dom"
+import BooksViewer from "./pages/Books/BooksViewer/BooksViewer"
+import Navbar from "./components/Navbar/Navbar"
+import BookModifier from "./pages/Books/BookAdder/BookAdder"
+import ChaptersViewer from "./pages/Chapters/ChaptersViewer/ChaptersViewer"
+import ChapterModifier from "./pages/Chapters/ChapterModal/ChapterModal"
+import ErrorPage from "./pages/ErrorPage"
+import Flashcards from "./pages/Flashcards/Flashcards"
+import Register from "./pages/Authenticate/Register/Register"
+import Authenticate from "./pages/Authenticate/Authenticate"
+import Home from "./pages/Home/Home"
+import Login from "./pages/Authenticate/Login/Login"
+import UserPage from "./pages/UserPage/UserPage"
+import AboutPage from "./pages/About/AboutPage"
 
-type Props = {};
+type Props = {}
 
 const App = (props: Props) => {
   return (
@@ -35,6 +36,7 @@ const App = (props: Props) => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserPage />} />
+          <Route path="/about" element={<AboutPage />} />
 
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
@@ -46,7 +48,7 @@ const App = (props: Props) => {
         <footer>{/* <Navigation /> */}</footer>
       </HashRouter>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

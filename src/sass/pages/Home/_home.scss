@@ -2,18 +2,49 @@
   margin-bottom: 20vh;
   font-size: 16px;
   font-weight: 500;
+  @media screen and (min-width: 576px) {
+    margin-bottom: unset;
+  }
   .lm-home__features {
-  }
+    .lm-home__section {
+      display: grid;
+      grid-template-columns: 30% 70%;
+      grid-template-areas:
+        "image title title"
+        "image text text";
+      padding: 1rem 0;
 
-  .section-divider {
-    height: 3rem;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: solid rgba(0, 0, 0, 0.15);
-    border-width: 1px 0;
-    box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%),
-      inset 0 0.125em 0.5em rgb(0 0 0 / 15%);
-  }
+      .image {
+        width: 100%;
+        height: 100%;
+        grid-area: image;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
 
+      .title {
+        grid-area: "title";
+      }
+
+      .text {
+        grid-area: text;
+      }
+    }
+
+    .section-divider {
+      height: 3rem;
+      background-color: rgba(0, 0, 0, 0.1);
+      border: solid rgba(0, 0, 0, 0.15);
+      border-width: 1px 0;
+      box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%),
+        inset 0 0.125em 0.5em rgb(0 0 0 / 15%);
+      &:last-of-type {
+        display: none;
+      }
+    }
+  }
   .lm-cta-authenticate {
     width: 100%;
     height: 10vh;

@@ -16,7 +16,11 @@ interface InitialFlashcardState {
     error: string | null
   },
   newFlashcard: LM_Flashcard,
-  selectedFlashcard: null | LM_Flashcard
+  selectedFlashcard: null | LM_Flashcard,
+  /**
+   * Decides if the user is training with the flashcards
+   */
+  isTraining: boolean
 }
 
 const initialFlashcardState: InitialFlashcardState = {
@@ -26,7 +30,8 @@ const initialFlashcardState: InitialFlashcardState = {
     error: null
   },
   newFlashcard: new Flashcard(nanoid(), "BOOK", "", ""),
-  selectedFlashcard: null
+  selectedFlashcard: null,
+  isTraining: false
 }
 
 export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", async (bookId: string): Promise<LM_Flashcard[] | any> => {
@@ -39,9 +44,9 @@ export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", asyn
 
 //export const fetchFlashcardsFrontend = createAsyncThunk("flashcardsFrontend/", async (): Promise<LM_Flashcard[]> => {
 
-    //const flashcards = await FAPI.getFlashcards("ANY");
+//const flashcards = await FAPI.getFlashcards("ANY");
 
-    //return flashcards;
+//return flashcards;
 //})
 
 
@@ -78,6 +83,9 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
       const newFlashcard = action.payload;
 
       state.newFlashcard = newFlashcard
+    },
+    switchTrainingStatus: (state, action) => {
+      state.isTraining = !state.isTraining;
     }
   },
   extraReducers: (builder) => {
@@ -86,37 +94,37 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
     }),
       builder.addCase(fetchFlashcardsBackend.fulfilled, (state, action) => {
         const flashcards = action.payload;
-             state.flashcards.flashcards = {};
+        state.flashcards.flashcards = {};
 
-              flashcards.forEach((flashcard: LM_Flashcard) => {
-                // @ts-ignore
-                  state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
-              })
+        flashcards.forEach((flashcard: LM_Flashcard) => {
+          // @ts-ignore
+          state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
+        })
 
-            }),
-            builder.addCase(fetchFlashcardsBackend.rejected, (state, action) => {
-                state.flashcards.loading = false;
-                state.flashcards.error = action.payload as string;
-            })
-        //builder.addCase(fetchFlashcardsFrontend.pending, (state, action) => {
-          //state.flashcards.loading = true;
-        //}),
-        //builder.addCase(fetchFlashcardsFrontend.fulfilled, (state, action) => {
-          //if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
-          //const flashcards: LM_Flashcard[] = action.payload;
+      }),
+      builder.addCase(fetchFlashcardsBackend.rejected, (state, action) => {
+        state.flashcards.loading = false;
+        state.flashcards.error = action.payload as string;
+      })
+    //builder.addCase(fetchFlashcardsFrontend.pending, (state, action) => {
+    //state.flashcards.loading = true;
+    //}),
+    //builder.addCase(fetchFlashcardsFrontend.fulfilled, (state, action) => {
+    //if (!state.flashcards.flashcards) state.flashcards.flashcards = {};
+    //const flashcards: LM_Flashcard[] = action.payload;
 
-          //flashcards.forEach((flashcard) => {
-             // @ts-ignore
-            //if (state.flashcards.flashcards[flashcard.flashcard_id]) {
-               //  @ts-ignore
-                  //state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
-            //}
-          //})
-        //}),
-        //builder.addCase(fetchFlashcardsFrontend.rejected, (state, action) => {
-          //state.flashcards.error = action.payload as string;
-          //state.flashcards.loading = false;
-        //})
+    //flashcards.forEach((flashcard) => {
+    // @ts-ignore
+    //if (state.flashcards.flashcards[flashcard.flashcard_id]) {
+    //  @ts-ignore
+    //state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
+    //}
+    //})
+    //}),
+    //builder.addCase(fetchFlashcardsFrontend.rejected, (state, action) => {
+    //state.flashcards.error = action.payload as string;
+    //state.flashcards.loading = false;
+    //})
 
   }
 })
