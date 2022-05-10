@@ -3,6 +3,11 @@ import useAppSelector from "../../../../hooks/useAppSelector"
 
 type Props = {}
 
+/**
+ * Modal where we train for the flashcards
+ * @param props
+ * @returns
+ */
 const FlashcardsTrainer = (props: Props) => {
   const flashcards = useAppSelector(
     (state) => state.flashcards.flashcards.flashcards
