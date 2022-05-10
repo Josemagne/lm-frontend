@@ -72,14 +72,17 @@ const ChaptersViewer = () => {
       </div>
       <BookSelector />
 
-      {selectedBook ? <ChapterAdder /> : null}
-      <button className="btn btn-primary" onClick={openChapterAdder}>
-        Add Chapter
-      </button>
+      {selectedBook && <ChapterAdder />}
+
+      {selectedBook && (
+        <button className="btn btn-primary" onClick={openChapterAdder}>
+          Add Chapter
+        </button>
+      )}
 
       <div className="lm-chapters"></div>
-      <ChapterModal />
-      <ChapterPagination />
+      {selectedChapter && <ChapterModal />}
+      {selectedBook && <ChapterPagination />}
     </div>
   )
 }

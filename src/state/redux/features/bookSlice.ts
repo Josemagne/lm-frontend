@@ -93,7 +93,9 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         },
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<LM_Book | null>) => {
+            const updatedBook = action.payload;
             state.selectedBook = action.payload;
+            if (updatedBook) state.books.books[updatedBook.book_id] = updatedBook;
         },
         removeSelectedBook: (state, action) => {
             state.selectedBook = null;
@@ -106,8 +108,8 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         }),
             builder.addCase(fetchBooksBackend.fulfilled, (state, action: PayloadAction<LM_Book[]>) => {
 
-              const books = action.payload;
-              console.log("books in redux: ", books)
+                const books = action.payload;
+                console.log("books in redux: ", books)
                 action.payload.forEach((book) => {
                     if (!state.books.books[book.book_id]) {
                         state.books.books[book.book_id] = book;
@@ -134,9 +136,9 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
                     }
                 })
                 state.books.loading = false;
-              if (state.books.amountOfBooks > action.payload.length) {
-                state.books.amountOfBooks = action.payload.length;
-              }
+                if (state.books.amountOfBooks > action.payload.length) {
+                    state.books.amountOfBooks = action.payload.length;
+                }
             }),
             builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
                 state.books.loading = false;

@@ -1,10 +1,10 @@
 .lm-chaptersviewer {
+  position: relative !important;
+  overflow-y: hidden !important;
+  height: fit-content !important;
   grid-template-areas:
     "lm-chapteradder"
     "lm-chapters";
-
-  background-color: rgb(246, 240, 240);
-
   .lm-chapters {
     grid-area: lm-chapters;
     display: flex;

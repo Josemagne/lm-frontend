@@ -41,7 +41,6 @@ const Navbar = (props: Props) => {
    * Handles the click event on a link
    */
   const clickHandler = (where: string, inOffcanvas: boolean = false) => {
-    console.log("called")
     resetter(dispatch, where)
     if (inOffcanvas) setShow(false)
     navigate(where, {
@@ -123,12 +122,7 @@ const Navbar = (props: Props) => {
                       <Nav.Item
                         as={Link}
                         to={"authenticate"}
-                        onClick={() => {
-                          navigate("/login", {
-                            replace: true,
-                          })
-                          setShow(false)
-                        }}
+                        onClick={() => clickHandler("/chaptersviewer", true)}
                       >
                         {localStorage.getItem("token") ? null : "Login"}
                       </Nav.Item>
@@ -169,11 +163,7 @@ const Navbar = (props: Props) => {
                   as={Link}
                   to="/flashcards"
                   className="lm-navbar__link"
-                  onClick={() => {
-                    navigate("/flashcards", {
-                      replace: true,
-                    })
-                  }}
+                  onClick={() => clickHandler("/flashcards")}
                 >
                   FlashCards
                 </Nav.Item>
@@ -191,7 +181,7 @@ const Navbar = (props: Props) => {
               as={Link}
               to={"/authenticate"}
               className="lm-navbar__link "
-              onClick={() => clickHandler("/chaptersviewer")}
+              onClick={() => clickHandler("/user")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

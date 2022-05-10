@@ -1,54 +1,52 @@
-import React, { useState, useEffect } from "react";
-import { Pagination } from "rsuite";
-import useAppSelector from "../../../../../hooks/useAppSelector";
-import LM_Chapter from "../../../../../types/Book/chapter";
-import ChapterContainer from "../ChapterContainer/ChapterContainer";
-import {LM_Book} from "../../../../../types/Book/book"
-import {fetchChaptersBackend} from "../../../../../state/redux/features/chapterSlice"
-import useAppDispatch from "../../../../../hooks/useAppDispatch";
+import React, { useState, useEffect } from "react"
+import { Pagination } from "rsuite"
+import useAppSelector from "../../../../../hooks/useAppSelector"
+import LM_Chapter from "../../../../../types/Book/chapter"
+import ChapterContainer from "../ChapterContainer/ChapterContainer"
+import { LM_Book } from "../../../../../types/Book/book"
+import { fetchChaptersBackend } from "../../../../../state/redux/features/chapterSlice"
+import useAppDispatch from "../../../../../hooks/useAppDispatch"
 
-type Props = {};
+type Props = {}
 
 const ChaptersPagination = (props: Props) => {
-  const dispatch = useAppDispatch();
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [currentChapter, setCurrentChapter] = useState(1);
+  const dispatch = useAppDispatch()
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [currentChapter, setCurrentChapter] = useState(1)
 
-  const [chaptersPerPage, setChaptersPerPage] = useState(10);
+  const [chaptersPerPage, setChaptersPerPage] = useState(10)
 
-  let chapters: LM_Chapter[] | null  = 
-    useAppSelector((state) => state.chapters.chapters.chapters);
+  let chapters: LM_Chapter[] | null = useAppSelector(
+    (state) => state.chapters.chapters.chapters
+  )
 
-  if (chapters) chapters = Object.values(chapters);
+  if (chapters) chapters = Object.values(chapters)
 
-  const selectedBook: LM_Book | null = useAppSelector((state) => state.books.selectedBook);
+  const selectedBook: LM_Book | null = useAppSelector(
+    (state) => state.books.selectedBook
+  )
 
-  const amountOfChapters = useAppSelector(
-    (state) => state.chapters.chapters.amountOfChapters
-  ) ?? 10;
+  const amountOfChapters =
+    useAppSelector((state) => state.chapters.chapters.amountOfChapters) ?? 10
 
   window.addEventListener("resize", () => {
-    setWindowWidth(window.innerWidth);
-  });
+    setWindowWidth(window.innerWidth)
+  })
 
-  let indexOfLastChapter = 0;
-  let indexOfFirstChapter = 0;
+  let indexOfLastChapter = 0
+  let indexOfFirstChapter = 0
   if (chapters && chapters.length < 10) {
-    indexOfLastChapter = chapters.length - 1;
-    indexOfFirstChapter = 0;
+    indexOfLastChapter = chapters.length - 1
+    indexOfFirstChapter = 0
   } else {
-    indexOfFirstChapter = indexOfLastChapter - chaptersPerPage;
-    indexOfLastChapter = currentChapter * chaptersPerPage;
+    indexOfFirstChapter = indexOfLastChapter - chaptersPerPage
+    indexOfLastChapter = currentChapter * chaptersPerPage
   }
 
-  useEffect(() => {
-    console.log("selectedBook in chapters: ", selectedBook)
-    console.log("chapters:: in pagination", chapters)
-  }, [chapters])
+  useEffect(() => {}, [chapters])
 
   useEffect(() => {
-    console.log("selectedBook:: in chapterspagination", selectedBook)
-    if (!selectedBook) return;
+    if (!selectedBook) return
     // @ts-ignore
     dispatch(fetchChaptersBackend(selectedBook.book_id))
   }, [selectedBook])
@@ -58,7 +56,9 @@ const ChaptersPagination = (props: Props) => {
       <div className="chapterspagination__chapters">
         {chapters && chapters.length > 0 ? (
           chapters.map((chapter) => {
-            return <ChapterContainer key={chapter.chapter_id} chapter={chapter} />;
+            return (
+              <ChapterContainer key={chapter.chapter_id} chapter={chapter} />
+            )
           })
         ) : (
           <p>No chapters</p>
@@ -88,7 +88,7 @@ const ChaptersPagination = (props: Props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ChaptersPagination;
+export default ChaptersPagination

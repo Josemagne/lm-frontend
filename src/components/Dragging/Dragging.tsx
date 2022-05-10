@@ -233,11 +233,7 @@ const Dragging = ({ type, title }: Props) => {
           <Droppable droppableId="entities">
             {(droppable, snapshot) => {
               return (
-                <div
-                  style={{
-                    backgroundColor: snapshot.isDraggingOver ? "green" : "",
-                  }}
-                >
+                <div>
                   <ul {...droppable.droppableProps} ref={droppable.innerRef}>
                     {Object.values(entityMapping.TO_READ).map(
                       (entity: any, index) => {
@@ -275,11 +271,7 @@ const Dragging = ({ type, title }: Props) => {
           <Droppable droppableId="entities_doing">
             {(droppable, snapshot) => {
               return (
-                <div
-                  style={{
-                    backgroundColor: snapshot.isDraggingOver ? "green" : "",
-                  }}
-                >
+                <div>
                   <ul {...droppable.droppableProps} ref={droppable.innerRef}>
                     {Object.values(entityMapping.READING).map(
                       (entity: any, index) => {
@@ -317,11 +309,7 @@ const Dragging = ({ type, title }: Props) => {
           <Droppable droppableId="entities_done">
             {(droppable, snapshot) => {
               return (
-                <div
-                  style={{
-                    backgroundColor: snapshot.isDraggingOver ? "green" : "",
-                  }}
-                >
+                <div>
                   <ul {...droppable.droppableProps} ref={droppable.innerRef}>
                     {Object.values(entityMapping.READ).map(
                       (entity: any, index) => {

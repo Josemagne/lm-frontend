@@ -6,17 +6,15 @@
   grid-template-areas:
     "adding"
     "lm-lc-booksviewer__bookspagination";
-    @media screen and (min-width: 768px) {
-      grid-template-areas:
-        "adding"
-        "lm-lc-booksviewer__bookspagination";
+  @media screen and (min-width: 768px) {
+    grid-template-areas:
+      "adding"
+      "lm-lc-booksviewer__bookspagination";
+  }
 
-    }
-
-    .lm-boosviewer__adding {
-      grid-area: adding;
-      display: flex;
-      justify-content: center;
-
-    }
+  .lm-boosviewer__adding {
+    grid-area: adding;
+    display: flex;
+    justify-content: center;
+  }
 }

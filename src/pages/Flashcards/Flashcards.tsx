@@ -2,7 +2,6 @@ import React, { useEffect } from "react"
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useAppSelector from "../../hooks/useAppSelector"
 import BookSelector from "../../components/BookSelector/BookSelector"
-import Flashcardsviewer from "./SubComponents/Flashcardsviewer/Flashcardsviewer"
 import { fetchBooksBackend } from "../../state/redux/features/bookSlice"
 import FlashcardAdder from "../../components/FlashcardAdder/FlashcardAdder"
 import { LM_EntityName } from "../../types/Entity/entity"
@@ -26,7 +25,7 @@ const Flashcards = (props: Props) => {
         {selectedBook ? <FlashcardAdder type="BOOK" /> : null}
       </div>
       <div className="lm-flashcards__viewer">
-        <FlashcardsPagination />
+        {selectedBook && <FlashcardsPagination />}
       </div>
     </div>
   )

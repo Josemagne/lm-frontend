@@ -1,9 +1,16 @@
+@import "../../../helpers/center-modal.scss";
+
+@include center-modal-rsuite;
+
 .lm-chapteradder {
   grid-area: lm-chapteradder;
+  width: 100% !important;
+  height: 100% !important;
   display: flex;
   flex-direction: column;
-
   justify-content: center;
+  align-items: center;
+
   @media screen and (min-width: 576px) {
     flex-direction: row;
   }

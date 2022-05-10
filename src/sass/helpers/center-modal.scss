@@ -1,0 +1,23 @@
+@mixin center-modal-rsuite {
+  .rs-modal-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .rs-modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .rs-modal-sm {
+        .rs-modal-dialog {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .rs-modal-content {
+          }
+        }
+      }
+    }
+  }
+}
