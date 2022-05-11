@@ -8,10 +8,25 @@ type Props = {}
  * @returns
  */
 const AboutPage = (props: Props) => {
+  const sections = [
+    {
+      title: "So Much Information",
+      text: "In todays world we are bombarded with a lot of information.",
+    },
+  ]
   return (
-    <div>
+    <div className="lm-about lm-page">
       {/* TODO Contact */}
       {/* HOW */}
+      <div className="about__section">
+        <div className="about__section__title">
+          <h3>So Much Information</h3>
+        </div>
+        <div className="about__section__text">
+          <p>In todays world we are bombarded with a lot of information.</p>
+        </div>
+      </div>
+      {}
       {/* -->  */}
       {/* WHY */}
       {/* WHAT does it give */}

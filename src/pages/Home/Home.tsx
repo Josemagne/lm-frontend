@@ -1,9 +1,10 @@
-import React, { useEffect } from "react"
+import React, { LegacyRef, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 // @ts-ignore
 import summaryImage from "../../assets/images/summary.png"
 import flashcardImage from "../../assets/images/flashcard.svg"
 import bookImage from "../../assets/images/book.svg"
+import { gsap } from "gsap"
 
 type Props = {}
 
@@ -58,6 +59,10 @@ const Home = (props: Props) => {
     // },
   ]
 
+  const authenticateRef = useRef(null)
+
+  useEffect(() => {}, [])
+
   return (
     <div className="lm-home lm-page">
       <div className="lm-home__intro">
@@ -92,7 +97,7 @@ const Home = (props: Props) => {
 
       {/* ANCHOR Action to login */}
       {!localStorage.getItem("token") ? (
-        <div className="lm-cta-authenticate">
+        <div className="lm-cta-authenticate" ref={authenticateRef}>
           <div
             className="lm-cta-register"
             onClick={() => navigate("/register", { replace: true })}

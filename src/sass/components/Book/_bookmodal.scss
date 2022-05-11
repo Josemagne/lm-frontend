@@ -21,8 +21,12 @@
 }
 
 .lm-bookmodal {
-  height: 100vh;
   width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0;
+  display: grid;
+  overflow: hidden;
   .lm-bookmodal__header {
   }
   .lm-bookmodal__body {

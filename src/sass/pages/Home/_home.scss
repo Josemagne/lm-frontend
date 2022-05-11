@@ -1,11 +1,15 @@
 .lm-home {
-  margin-bottom: 20vh;
+  position: relative !important;
   font-size: 16px;
   font-weight: 500;
+
+  // NOTE For lm-cta-authenticate
+
   @media screen and (min-width: 576px) {
-    margin-bottom: unset;
+    margin-bottom: 35vh;
   }
   .lm-home__features {
+    width: 100%;
     .lm-home__section {
       display: grid;
       grid-template-columns: 30% 70%;
@@ -46,11 +50,12 @@
     }
   }
   .lm-cta-authenticate {
-    width: 100%;
+    width: 100vw;
     height: 10vh;
     min-height: 10vh;
     position: fixed;
-    bottom: 2rem;
+    right: 15px;
+    bottom: 0;
 
     display: flex;
     justify-content: center;

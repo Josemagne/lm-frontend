@@ -65,7 +65,7 @@ const Register = (props: Props) => {
 
   return (
     <div className="lm-register">
-      <div className="lm-register__container">
+      <div className="register__container">
         <h4>Register</h4>
         <Form>
           <Form.Group>
@@ -104,7 +104,7 @@ const Register = (props: Props) => {
                 Register
               </button>
             ) : (
-              <button type="button" className="btn btn-secondary " disabled>
+              <button type="button" className="btn btn-primary" disabled>
                 Register
               </button>
             )}
@@ -113,10 +113,10 @@ const Register = (props: Props) => {
             <p>{error ? error : null}</p>
           </div>
         </Form>
-        <div className="login-redirec">
+        <div className="login-redirect">
           <p>Already registered?</p>
           <button
-            className="login-redirect__btn"
+            className="btn btn-primary"
             onClick={() => navigate("/login", { replace: true })}
           >
             Login

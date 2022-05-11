@@ -42,60 +42,66 @@ const Login = (props: Props) => {
   useEffect(() => {}, [errors])
   return (
     <div className="lm-login">
-      <h4>Login</h4>
-      {/* E-Mail */}
-      <div className="lm-login__email">
-        <FloatingLabel controlId="email" label="E-Mail">
-          <Form.Control
-            type="text"
-            placeholder="E-Mail"
-            {...formik.getFieldProps("email")}
-          ></Form.Control>
-        </FloatingLabel>
-      </div>
-      {/* Password */}
-      <div className="lm-login__password">
-        <FloatingLabel controlId="password" label="Pasword">
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            {...formik.getFieldProps("password")}
-          ></Form.Control>
-        </FloatingLabel>
-      </div>
-      <div className="lm-login__errors">{errors ? <p>{errors}</p> : null}</div>
-      <div className="lm-login__button">
-        {formik.dirty && formik.isValid ? (
+      <div className="login-container">
+        <h4>Login</h4>
+        {/* E-Mail */}
+        <form>
+          <div className="lm-login__email">
+            <FloatingLabel controlId="email" label="E-Mail">
+              <Form.Control
+                type="text"
+                placeholder="E-Mail"
+                {...formik.getFieldProps("email")}
+              ></Form.Control>
+            </FloatingLabel>
+          </div>
+          {/* Password */}
+          <div className="lm-login__password">
+            <FloatingLabel controlId="password" label="Pasword">
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                {...formik.getFieldProps("password")}
+              ></Form.Control>
+            </FloatingLabel>
+          </div>
+        </form>
+        <div className="lm-login__errors">
+          {errors ? <p>{errors}</p> : null}
+        </div>
+        <div className="lm-login__button">
+          {formik.dirty && formik.isValid ? (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                formik.handleSubmit()
+              }}
+            >
+              Login
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                formik.handleSubmit()
+              }}
+              disabled
+            >
+              Login
+            </button>
+          )}
+        </div>
+        <div className="register-redirect">
+          <p>Don't have an account?</p>
           <button
-            type="button"
             className="btn btn-primary"
-            onClick={() => {
-              formik.handleSubmit()
-            }}
+            onClick={() => navigate("/register", { replace: true })}
           >
-            Login
+            Register
           </button>
-        ) : (
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() => {
-              formik.handleSubmit()
-            }}
-            disabled
-          >
-            Login
-          </button>
-        )}
-      </div>
-      <div className="register-redirect">
-        <p>Don't have an account?</p>
-        <button
-          className="login-redirect__btn"
-          onClick={() => navigate("/register", { replace: true })}
-        >
-          Register
-        </button>
+        </div>
       </div>
     </div>
   )

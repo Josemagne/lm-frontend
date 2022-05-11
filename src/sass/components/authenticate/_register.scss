@@ -1,11 +1,15 @@
 .lm-register {
-  width: 66px;
-  min-width: 414px;
+  width: 100%;
+  height: fit-content;
   max-width: 1200px;
+  position: relative !important;
 
   display: flex;
   justify-content: center;
-  .lm-register__container {
+  @media screen and (min-width: 786px) {
+    margin-top: 2rem;
+  }
+  .register__container {
     form {
       div {
         .form-control {
@@ -17,6 +21,19 @@
       margin: 1rem;
       display: flex;
       justify-content: center;
+    }
+  }
+
+  .login-redirect {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p {
+    }
+    button {
+      width: fit-content;
     }
   }
 }
