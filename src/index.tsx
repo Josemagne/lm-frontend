@@ -1,6 +1,7 @@
 import React from "react"
 // rsuite
-import "rsuite/styles/index.less"
+// import "rsuite/styles/index.less"
+import "rsuite/dist/rsuite.min.css"
 // bootstrap
 import "bootstrap/dist/css/bootstrap.min.css"
 import "react-quill/dist/quill.snow.css"

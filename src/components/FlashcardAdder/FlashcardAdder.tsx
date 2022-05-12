@@ -55,6 +55,11 @@ const FlashcardAdder = ({ type }: Props) => {
 
   async function handleClose() {
     dispatch(switchAddingNewFlashcardStatus(""))
+    dispatch(
+      changeNewFlashcard(
+        new Flashcard(nanoid(), "BOOK", "", "", selectedBook.book_id)
+      )
+    )
   }
 
   useEffect(() => {}, [addingNewFlashcard])
@@ -65,6 +70,13 @@ const FlashcardAdder = ({ type }: Props) => {
       onClose={handleClose}
       className="lm-gc-flashcardadder"
     >
+      <div className="flashcard__header">
+        <div className="flashcardadder__exit">
+          <button className="btn btn-danger" onClick={handleClose}>
+            x
+          </button>
+        </div>
+      </div>
       <div className="container">
         <div className="lm-gc-flashcardadder__question">
           <Question isNew={true} />

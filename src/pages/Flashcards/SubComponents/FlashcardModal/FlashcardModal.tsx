@@ -33,20 +33,8 @@ const FlashcardModal = (props: Props) => {
     await API.updateFlashcard(selectedFlashcardCopyLocal)
   }
 
-  const updateSelectedFlashcard = async ({
-    prop,
-    value,
-  }: {
-    prop: keyof Flashcard
-    value: any
-  }) => {
-    const selectedFlashcardCopy: LM_Flashcard = JSON.parse(
-      JSON.stringify(selectedFlashcard)
-    )
-    selectedFlashcardCopy[prop] = value
-    dispatch(changeSelectedFlashcard(selectedFlashcardCopy))
-    // NOTE Persist the flashcard copy
-    setSelectedFlashcardCopyLocal(selectedFlashcardCopy)
+  function closeModal() {
+    dispatch(changeSelectedFlashcard(null))
   }
 
   useEffect(() => {
@@ -58,14 +46,21 @@ const FlashcardModal = (props: Props) => {
       overflow={true}
       open={selectedFlashcard ? true : false}
       onClose={handleClose}
-      className="lm-flashcardmodal"
-      full={true}
+      className="lm-gc-flashcardmodal"
+      size="full"
     >
-      <div className="flashcardmodal__question">
-        <Question isNew={false} />
+      <div className="flashcardmodal__exit">
+        <button className="btn btn-danger" onClick={closeModal}>
+          x
+        </button>
       </div>
-      <div className="flashcardmodal__answer">
-        <Answer isNew={false} />
+      <div className="flashcardmodal__flashcard">
+        <div className="flashcardmodal__question">
+          <Question isNew={false} />
+        </div>
+        <div className="flashcardmodal__answer">
+          <Answer isNew={false} />
+        </div>
       </div>
     </Modal>
   )

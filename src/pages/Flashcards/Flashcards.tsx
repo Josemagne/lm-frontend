@@ -30,6 +30,7 @@ const Flashcards = (props: Props) => {
         <BookSelector />
         {selectedBook ? <FlashcardAdder type="BOOK" /> : null}
       </div>
+      <hr />
       {selectedBook && (
         <>
           <div className="flashcards__add">
@@ -40,10 +41,12 @@ const Flashcards = (props: Props) => {
               Add flashcard
             </button>
           </div>
+          <hr />
           <div className="flashcards__filter">
             <FlashcardsFilter />
           </div>
-          <div className="lm-flashcards__viewer">
+          <hr />
+          <div className="flashcards__viewer">
             {selectedBook && <FlashcardsPagination />}
           </div>
         </>

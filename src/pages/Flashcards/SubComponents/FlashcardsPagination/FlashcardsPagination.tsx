@@ -12,6 +12,7 @@ import {
 import { Table } from "rsuite"
 import FlashcardModal from "../FlashcardModal/FlashcardModal"
 import API from "../../../../api/API"
+import { RootState } from "../../../../state/redux/store"
 
 const { HeaderCell, Cell } = Table
 
@@ -19,12 +20,20 @@ const FlashcardsPagination = () => {
   /**
    * Amount of characters that we want to preview
    */
-  const textLength = 30
+  const textLength = 100
   const dispatch = useAppDispatch()
   const selectedBook = useAppSelector((state) => state.books.selectedBook)
   const selectedFlashcard = useAppSelector(
     (state) => state.flashcards.selectedFlashcard
   )
+  const filteredFlashcards: LM_Flashcard[] = Object.values(
+    useAppSelector((state: RootState) => state.flashcards.flashcards.flashcards)
+  )
+
+  const isFiltering: boolean = useAppSelector(
+    (state: RootState) => state.flashcards.isFiltering
+  )
+
   let flashcards: LM_Flashcard[] = Object.values(
     useAppSelector((state) => state.flashcards.flashcards.flashcards)
   )
@@ -66,16 +75,20 @@ const FlashcardsPagination = () => {
 
   useEffect(() => {
     if (!flashcards) return
-    console.log("rowdata: ", flashcards)
   }, [flashcards])
+
+  useEffect(() => {
+    console.log("filteredFlashcards: ", filteredFlashcards)
+  }, [filteredFlashcards, isFiltering])
 
   return (
     <div className="lm-lc-flashcardspagination">
-      {flashcards.length > 0 && (
+      {flashcards.length > 0 && !isFiltering && (
         <Table
           data={flashcards}
           bordered={true}
-          loading={flashcards ? false : true}
+          cellBordered={true}
+          height={window.innerHeight * 0.5}
           onRowClick={(rowData: any) => onRowClick(rowData as LM_Flashcard)}
         >
           <Table.Column flexGrow={1}>
@@ -124,7 +137,7 @@ const FlashcardsPagination = () => {
           </Table.Column>
         </Table>
       )}
-      {/* {flashcards.length === 0 && (
+      {flashcards.length === 0 && (
         <Table
           data={[]}
           bordered={true}
@@ -144,7 +157,61 @@ const FlashcardsPagination = () => {
             <Cell></Cell>
           </Table.Column>
         </Table>
-      )} */}
+      )}
+      {/* ANCHOR filteredFlashcards */}
+      {isFiltering && (
+        <Table
+          data={filteredFlashcards}
+          bordered={true}
+          cellBordered={true}
+          onRowClick={(rowData: any) => onRowClick(rowData as LM_Flashcard)}
+        >
+          <Table.Column flexGrow={1}>
+            <HeaderCell>Question</HeaderCell>
+            <Cell>
+              {(rowData) => {
+                return (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: shortenText(rowData.question, textLength),
+                    }}
+                  />
+                )
+              }}
+            </Cell>
+          </Table.Column>
+          <Table.Column flexGrow={1}>
+            <HeaderCell>Answer</HeaderCell>
+            <Cell>
+              {(rowData) => {
+                return (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: shortenText(rowData.answer, textLength),
+                    }}
+                  />
+                )
+              }}
+            </Cell>
+          </Table.Column>
+          <Table.Column fixed="right" align="center">
+            <HeaderCell>Delete</HeaderCell>
+            <Cell>
+              {(rowData) => {
+                return (
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={(e) => removeFlashcard(e, rowData.flashcard_id)}
+                  >
+                    x
+                  </button>
+                )
+              }}
+            </Cell>
+          </Table.Column>
+        </Table>
+      )}
       {selectedFlashcard && <FlashcardModal />}
     </div>
   )

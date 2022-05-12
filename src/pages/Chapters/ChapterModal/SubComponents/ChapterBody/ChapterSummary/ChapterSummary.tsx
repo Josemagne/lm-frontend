@@ -78,7 +78,7 @@ const ChapterSummary = ({}: Props) => {
               <ReactQuill
                 ref={editorRef}
                 value={value}
-                onChange={(v) => handleChange(v)}
+                onChange={(v: string) => handleChange(v)}
               />
             </div>
           </Card>

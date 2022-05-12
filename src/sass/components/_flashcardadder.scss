@@ -8,28 +8,40 @@
   max-width: unset;
 }
 .rs-modal-wrapper {
-  overflow: initial;
   height: 100%;
   .rs-modal-dialog {
     height: 100%;
+    max-height: 100vh;
+    overflow-y: auto;
     .rs-modal-content {
       height: 100%;
     }
   }
 }
-
 .lm-gc-flashcardadder {
   max-width: 768px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
   }
 
+  .flashcard__header {
+    // position: fixed;
+    display: flex;
+    justify-content: end;
+    .flashcardadder__exit {
+      button {
+      }
+    }
+  }
+
   // The container contains the form to add the flashcard
   .container {
+    margin-top: 10vh;
     .lm-gc-flashcardadder__question {
       margin: 0.5rem;
     }

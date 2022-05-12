@@ -4,46 +4,31 @@ import { RootState } from "../../../../../../state/redux/store"
 import { LM_Flashcard } from "../../../../../../types/Flashcard/flashcard"
 import { Subject, throttle } from "rxjs"
 import useAppDispatch from "../../../../../../hooks/useAppDispatch"
-import { updateFilteredFlashcards } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  toggleFilteringState,
+  updateFilteredFlashcards,
+} from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {}
 
 const FlashcardsSearch = (props: Props) => {
   const dispatch = useAppDispatch()
-  const [text, setText] = useState<Identificator[]>([])
-  const flashcards: LM_Flashcard[] = useAppSelector(
-    (state: RootState) => state.flashcards.flashcards.flaschards
+  const [isFiltering, setIsFiltering] = useState<boolean>()
+  const flashcards: LM_Flashcard[] = Object.values(
+    useAppSelector((state: RootState) => state.flashcards.flashcards.flashcards)
   )
-
-  interface Identificator {
-    id: string
-    text: string
-  }
-
-  /**
-   * Search for all the text that is searchable
-   */
-  function updateText() {
-    const questions = flashcards.map((flashcard): Identificator => {
-      return { id: flashcard.flashcard_id, text: flashcard.question }
-    })
-
-    const answers = flashcards.map((flashcard) => {
-      return { id: flashcard.flashcard_id, text: flashcard.answer }
-    })
-
-    setText((prev) => {
-      return [...prev, ...questions, ...answers]
-    })
-  }
 
   /**
    * Updates the filteredFlashcards
    * @param searchString
    */
   function searchFlashcards(searchString: string) {
-    const filteredFlashcards = text.filter((flashcard) => {
-      if (flashcard.text.includes(searchString)) return flashcard
+    if (!isFiltering) dispatch(toggleFilteringState(true))
+
+    const filteredFlashcards = flashcards.filter((flashcard) => {
+      if (flashcard.answer.includes(searchString)) return flashcard
+      if (flashcard.question.includes(searchString)) return flashcard
+      return
     })
 
     dispatch(updateFilteredFlashcards(filteredFlashcards))
@@ -51,7 +36,6 @@ const FlashcardsSearch = (props: Props) => {
 
   useEffect(() => {
     if (!flashcards) return
-    updateText()
   }, [flashcards])
 
   return (

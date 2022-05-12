@@ -17,7 +17,17 @@
     }
   }
 
-  .lm-flashcards__viewer {
+  .flashcards__filter {
+    width: 100%;
+    margin: 2rem 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .flashcards__viewer {
+    width: 100%;
     .lm-lc-flashcardspagination {
       width: 100%;
     }

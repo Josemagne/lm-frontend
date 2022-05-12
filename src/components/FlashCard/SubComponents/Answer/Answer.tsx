@@ -8,6 +8,7 @@ import {
 } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import ReactQuill from "react-quill"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
+import { Container } from "rsuite"
 
 type Props = {
   /**
@@ -71,13 +72,20 @@ const Answer = ({ isNew }: Props) => {
       <div className="answer__title">
         <h4>Answer</h4>
       </div>
-      <ReactQuill
-        modules={{ toolbar: false }}
-        ref={editorRef}
-        // defaultValue={""}
-        value={value}
-        onChange={(v) => handleChange(v)}
-      />
+      <Container
+        onClick={() => {
+          // @ts-ignore
+          editorRef.current.focus()
+        }}
+      >
+        <ReactQuill
+          modules={{ toolbar: false }}
+          ref={editorRef}
+          // defaultValue={""}
+          value={value}
+          onChange={(v: string) => handleChange(v)}
+        />
+      </Container>
     </div>
   )
 }

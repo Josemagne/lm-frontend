@@ -19,7 +19,8 @@ interface InitialFlashcardState {
    */
   filteredFlashcards: {
     [flashcard_id: string]: LM_Flashcard;
-  } | null,
+  },
+  isFiltering: boolean,
   newFlashcard: LM_Flashcard,
   addingNewFlashcard: boolean,
 
@@ -36,7 +37,8 @@ const initialFlashcardState: InitialFlashcardState = {
     loading: false,
     error: null
   },
-  filteredFlashcards: null,
+  filteredFlashcards: {},
+  isFiltering: false,
   newFlashcard: new Flashcard(nanoid(), "BOOK", "", ""),
   addingNewFlashcard: false,
   selectedFlashcard: null,
@@ -98,26 +100,20 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
      * @param state 
      * @param action 
      */
-    updateFilteredFlashcards: (state: InitialFlashcardState, action: PayloadAction<string[]>) => {
-      /**
-       * The IDs of the selected flashcards
-       */
-      const flashcardIDs = action.payload;
-      const flashcards = Object.values(state.flashcards.flashcards);
-      const filteredFlashcards = flashcards.filter((flashcard) => {
-        return flashcardIDs.includes(flashcard.flashcard_id);
-      })
+    updateFilteredFlashcards: (state: InitialFlashcardState, action: PayloadAction<LM_Flashcard[]>) => {
 
-      let mappedFilteredFlashcards: { [id: string]: LM_Flashcard } = {}
+      const filteredFlashcards = action.payload;
 
       filteredFlashcards.forEach((flashcard) => {
-        mappedFilteredFlashcards[flashcard.flashcard_id] = flashcard;
+        state.filteredFlashcards[flashcard.flashcard_id] = flashcard;
       })
-
-      state.filteredFlashcards = mappedFilteredFlashcards;
     },
     deleteFilteredFlashcards: (state: InitialFlashcardState, action: PayloadAction<any>) => {
-      state.filteredFlashcards = null;
+      state.filteredFlashcards = {};
+    },
+    toggleFilteringState: (state: InitialFlashcardState, action: PayloadAction<boolean>) => {
+      const newState = action.payload;
+      state.isFiltering = newState ?? !state.isFiltering;
     },
     changeNewFlashcard: (state: InitialFlashcardState, action: PayloadAction<LM_Flashcard>) => {
       const newFlashcard = action.payload;
@@ -172,6 +168,6 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
   }
 })
 
-export const { changeNewFlashcard, addFlashcard, updateFlashcard, deleteFlashcard, changeSelectedFlashcard, switchAddingNewFlashcardStatus, updateFilteredFlashcards, deleteFilteredFlashcards } = flashcardSlice.actions;
+export const { changeNewFlashcard, addFlashcard, updateFlashcard, deleteFlashcard, changeSelectedFlashcard, switchAddingNewFlashcardStatus, updateFilteredFlashcards, deleteFilteredFlashcards, toggleFilteringState } = flashcardSlice.actions;
 
 export default flashcardSlice.reducer

@@ -1,0 +1,35 @@
+/* NOTE Overwrite the properties of rsuite.js */
+// Wraps the modal
+.rs-modal {
+  margin: 0;
+}
+.rs-modal-sm,
+.rs-modal-full {
+  max-width: unset;
+}
+.rs-modal-wrapper {
+  overflow: initial;
+  height: 100%;
+  .rs-modal-dialog {
+    height: 100%;
+    .rs-modal-content {
+      height: 100%;
+    }
+  }
+}
+
+.lm-gc-flashcardmodal {
+  width: 100%;
+  height: 100vh;
+  .flashcardmodal__exit {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    button {
+    }
+  }
+
+  .flashcardmodal__flashcard {
+    margin-top: 2rem;
+  }
+}
