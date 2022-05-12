@@ -4,8 +4,12 @@ import useAppSelector from "../../../../hooks/useAppSelector"
 import useAppDispatch from "../../../../hooks/useAppDispatch"
 import LM_Chapter from "../../../../types/Book/chapter"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
-import { fetchFlashcardsBackend } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  changeSelectedFlashcard,
+  fetchFlashcardsBackend,
+} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import { Table } from "rsuite"
+import FlashcardModal from "../FlashcardModal/FlashcardModal"
 
 const { HeaderCell, Cell } = Table
 
@@ -16,6 +20,9 @@ const FlashcardsPagination = () => {
   const textLength = 30
   const dispatch = useAppDispatch()
   const selectedBook = useAppSelector((state) => state.books.selectedBook)
+  const selectedFlashcard = useAppSelector(
+    (state) => state.flashcards.selectedFlashcard
+  )
   let flashcards: LM_Flashcard[] | null = useAppSelector(
     (state) => state.flashcards.flashcards.flashcards
   )
@@ -34,11 +41,18 @@ const FlashcardsPagination = () => {
     return subString
   }
 
+  function onRowClick(selectedFlashcard: LM_Flashcard) {
+    console.log("selected", selectedBook)
+    dispatch(changeSelectedFlashcard(selectedFlashcard))
+  }
+
   useEffect(() => {
     if (!selectedBook) return
     // @ts-ignore
     dispatch(fetchFlashcardsBackend(selectedBook.book_id))
   }, [selectedBook])
+
+  useEffect(() => {}, [selectedFlashcard])
 
   useEffect(() => {
     if (!flashcards) return
@@ -72,6 +86,7 @@ const FlashcardsPagination = () => {
           data={Object.values(flashcards)}
           bordered={true}
           loading={flashcards ? false : true}
+          onRowClick={(rowData) => onRowClick(rowData as LM_Flashcard)}
         >
           <Table.Column flexGrow={1}>
             <HeaderCell>Question</HeaderCell>
@@ -115,6 +130,7 @@ const FlashcardsPagination = () => {
           </Table.Column>
         </Table>
       )}
+      {selectedFlashcard && <FlashcardModal />}
     </div>
   )
 }

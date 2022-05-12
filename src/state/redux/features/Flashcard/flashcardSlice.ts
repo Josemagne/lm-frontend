@@ -11,7 +11,7 @@ interface InitialFlashcardState {
   flashcards: {
     flashcards: {
       [flashcard_id: string]: LM_Flashcard;
-    } | null,
+    },
     loading: boolean,
     error: string | null
   },
@@ -25,7 +25,7 @@ interface InitialFlashcardState {
 
 const initialFlashcardState: InitialFlashcardState = {
   flashcards: {
-    flashcards: null,
+    flashcards: {},
     loading: false,
     error: null
   },
@@ -76,8 +76,13 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
       delete state.flashcards.flashcards[flashcardID];
     },
     changeSelectedFlashcard: (state, action) => {
-      const newSelectedFlashcard = action.payload;
+      const newSelectedFlashcard: LM_Flashcard = action.payload;
       state.selectedFlashcard = newSelectedFlashcard;
+
+      // If it is a new flashcard
+      if (newSelectedFlashcard) {
+        state.flashcards.flashcards[newSelectedFlashcard.flashcard_id] = newSelectedFlashcard;
+      }
     },
     changeNewFlashcard: (state, action) => {
       const newFlashcard = action.payload;
