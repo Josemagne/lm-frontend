@@ -2,6 +2,9 @@
   "chromeWebSecurity": false,
   "video": false,
   "baseUrl": "http://localhost:8067",
+  "env": {
+    "apiUrl": "https://librimem.com/api/v1"
+  },
   "pageLoadTimeout": 60000,
   "defaultCommandTimeout": 60000
 }

@@ -27,14 +27,10 @@ const FlashcardModal = (props: Props) => {
   )
   const editorRef = useRef(null)
 
-  const handleClose = async () => {
+  const handleClose = () => {
     dispatch(changeSelectedFlashcard(null))
     if (!selectedFlashcardCopyLocal) return
-    await API.updateFlashcard(selectedFlashcardCopyLocal)
-  }
-
-  function closeModal() {
-    dispatch(changeSelectedFlashcard(null))
+    API.updateFlashcard(selectedFlashcardCopyLocal)
   }
 
   useEffect(() => {
@@ -50,7 +46,7 @@ const FlashcardModal = (props: Props) => {
       size="full"
     >
       <div className="flashcardmodal__exit">
-        <button className="btn btn-danger" onClick={closeModal}>
+        <button className="btn btn-danger" onClick={handleClose}>
           x
         </button>
       </div>

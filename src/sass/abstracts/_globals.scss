@@ -62,3 +62,13 @@ body {
   min-width: 100vw;
   border-radius: 0;
 }
+
+// NOTE Add some padding to the top for mobile devices
+.rs-modal-content {
+  & > * {
+    padding-top: 1rem;
+    @media screen and (min-width: 768px) {
+      padding-top: unset;
+    }
+  }
+}

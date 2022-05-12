@@ -1,1 +1,3 @@
-declare module 'react-quill'; 
+declare module 'react-quill';
+
+export { };

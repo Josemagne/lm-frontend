@@ -79,7 +79,7 @@ const Answer = ({ isNew }: Props) => {
         }}
       >
         <ReactQuill
-          modules={{ toolbar: false }}
+          modules={{ toolbar: !isNew }}
           ref={editorRef}
           // defaultValue={""}
           value={value}

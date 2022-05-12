@@ -69,11 +69,11 @@ const Question = ({ isNew }: Props) => {
         <h4>Question</h4>
       </div>
       <ReactQuill
-        modules={{ toolbar: false }}
+        modules={{ toolbar: !isNew }}
         ref={editorRef}
         // defaultValue={""}
         value={value}
-        onChange={(v) => handleChange(v)}
+        onChange={(v: string) => handleChange(v)}
       />
     </div>
   )

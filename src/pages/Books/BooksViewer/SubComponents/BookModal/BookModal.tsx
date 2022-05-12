@@ -67,8 +67,8 @@ const BookModal = ({}: Props) => {
               <div
                 onClick={() => {
                   if (!selectedBook) return
-                  dispatch(changeSelectedBook(selectedBook))
                   handleClose()
+                  dispatch(changeSelectedBook(selectedBook))
                   navigate(`/flashcards`, {
                     replace: true,
                   })
