@@ -97,7 +97,13 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
             state.selectedBook = action.payload;
             if (updatedBook) state.books.books[updatedBook.book_id] = updatedBook;
         },
-        removeSelectedBook: (state, action) => {
+        deleteSelectedBook: (state: InitialBookState, action: PayloadAction<any>) => {
+            if (!state.selectedBook) return;
+
+            const selectedBookID = state.selectedBook.book_id;
+
+            delete state.books.books[selectedBookID];
+
             state.selectedBook = null;
         },
     },
@@ -149,6 +155,6 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
     }
 })
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, removeSelectedBook, toggleAddingNewBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, deleteSelectedBook, toggleAddingNewBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

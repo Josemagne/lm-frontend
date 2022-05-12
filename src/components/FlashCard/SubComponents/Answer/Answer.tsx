@@ -1,67 +1,70 @@
-import React, { useRef, useMemo, useEffect, useState } from "react";
-import useAppDispatch from "../../../../hooks/useAppDispatch";
-import useAppSelector from "../../../../hooks/useAppSelector";
+import React, { useRef, useMemo, useEffect, useState } from "react"
+import useAppDispatch from "../../../../hooks/useAppDispatch"
+import useAppSelector from "../../../../hooks/useAppSelector"
+import { changeSelectedBook } from "../../../../state/redux/features/bookSlice"
 import {
-  changeSelectedBook,
-} from "../../../../state/redux/features/bookSlice";
-import {changeNewFlashcard, changeSelectedFlashcard} from "../../../../state/redux/features/Flashcard/flashcardSlice"
-import ReactQuill from "react-quill";
+  changeNewFlashcard,
+  changeSelectedFlashcard,
+} from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import ReactQuill from "react-quill"
+import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
 
 type Props = {
   /**
    * Decides if the question is from selectedFlashcard or newFlashcard
    */
-  isNew: boolean;
-};
+  isNew: boolean
+}
 
 const Answer = ({ isNew }: Props) => {
-  const [value, setValue] = useState<string>("");
-  const editorRef = useRef(null);
-  const dispatch = useAppDispatch();
+  const [value, setValue] = useState<string>("")
+  const editorRef = useRef(null)
+  const dispatch = useAppDispatch()
 
-  const book = useAppSelector((state) => state.books.selectedBook);
-  const chapter = useAppSelector(
-    (state) => state.chapters.selectedChapter
-  );
+  const book = useAppSelector((state) => state.books.selectedBook)
+  const chapter = useAppSelector((state) => state.chapters.selectedChapter)
 
   /* We use the component Question to change either selectedFlashcard or newFlashcard */
 
-  const newFlashcard = useAppSelector(
-    (state) => state.flashcards.newFlashcard
-  );
+  let newFlashcard: LM_Flashcard | null = null
+  let selectedFlashcard: LM_Flashcard | null = null
 
-  const selectedFlashcard = useAppSelector(
-    (state) => state.flashcards.selectedFlashcard
-  );
+  if (isNew) {
+    newFlashcard = useAppSelector((state) => state.flashcards.newFlashcard)
+  } else {
+    selectedFlashcard = useAppSelector(
+      (state) => state.flashcards.selectedFlashcard
+    )
+  }
 
-  const actualFlashcard = isNew ? newFlashcard : selectedFlashcard;
+  let actualFlashcard!: LM_Flashcard
+
+  if (newFlashcard) actualFlashcard = newFlashcard
+  else if (selectedFlashcard) actualFlashcard = selectedFlashcard
 
   /**
    * Either changes newFlashcard or selectedFlashcard
    * @param v
    */
   const handleChange = (v: string) => {
-    setValue(v);
+    setValue(v)
+
+    const actualFlashcardCopy = JSON.parse(JSON.stringify(actualFlashcard))
+    actualFlashcardCopy.answer = v
 
     if (!isNew) {
-      const selectedFlashcardCopy = JSON.parse(
-        JSON.stringify(selectedFlashcard)
-      );
-      selectedFlashcard.answer = v;
-      dispatch(changeSelectedFlashcard(selectedFlashcardCopy));
+      dispatch(changeSelectedFlashcard(actualFlashcardCopy))
     } else {
-      const newFlashcardCopy = JSON.parse(JSON.stringify(newFlashcard));
-      newFlashcardCopy.answer = v;
-      dispatch(changeNewFlashcard(newFlashcardCopy));
+      dispatch(changeNewFlashcard(actualFlashcardCopy))
     }
-  };
+  }
 
   useEffect(() => {
     // When a new flashcard was added
     if (actualFlashcard.answer === "" && value.length > 1)
-      setValue(actualFlashcard.answer as string);
-    if (actualFlashcard.answer) setValue(actualFlashcard.answer);
-  }, [actualFlashcard]);
+      setValue(actualFlashcard.answer as string)
+    if (actualFlashcard.answer) setValue(actualFlashcard.answer)
+  }, [actualFlashcard])
 
   return (
     <div className="lm-gc-flashcard__question">
@@ -76,7 +79,7 @@ const Answer = ({ isNew }: Props) => {
         onChange={(v) => handleChange(v)}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Answer;
+export default Answer

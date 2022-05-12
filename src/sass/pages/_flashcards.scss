@@ -2,35 +2,27 @@
   position: relative !important;
   overflow-y: hidden !important;
   height: fit-content !important;
-  .lm-questionside {
-    max-width: 50vw;
-    min-width: 50vw;
-  }
-  .lm-answerside {
-    max-width: 50vw;
-    min-width: 50vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .lm-flashcards__selector {
+    max-width: 576px;
   }
 
-  .flashcard__entity {
+  .flashcards__add {
+    button {
+    }
   }
+
+  .lm-flashcards__viewer {
+    .lm-lc-flashcardspagination {
+      width: 100%;
+    }
+  }
+
   @media screen and (min-width: 768px) {
-    display: grid;
-    grid-template-areas: "lm-questionside lm-answerside";
-    .lm-questionside {
-      grid-area: lm-questionside;
-      max-width: 50vw;
-    }
-
-    .lm-answerside {
-      grid-area: lm-answerside;
-      max-width: 50vw;
-    }
-
-    //   NOTE question or answer
-    .flashcard__entity {
-      padding: 1rem;
-      margin: 1rem;
-      border: 1px solid black;
-    }
   }
 }

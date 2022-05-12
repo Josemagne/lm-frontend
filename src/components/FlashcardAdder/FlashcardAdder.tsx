@@ -14,22 +14,32 @@ import API from "../../api/API"
 import {
   changeNewFlashcard,
   addFlashcard,
+  switchAddingNewFlashcardStatus,
 } from "../../state/redux/features/Flashcard/flashcardSlice"
+import { Modal } from "rsuite"
+import { RootState } from "../../state/redux/store"
 
 type Props = {
   type: LM_EntityName
 }
 
 /**
- * Adds a flashcard to a chapter or to a book
+ * Modal that adds a flashcard to a chapter or to a book
  * @param props
  * @returns
  */
 const FlashcardAdder = ({ type }: Props) => {
   const dispatch = useAppDispatch()
-  const newFlashcard = useAppSelector((state) => state.flashcards.newFlashcard)
+  const newFlashcard = useAppSelector(
+    (state: RootState) => state.flashcards.newFlashcard
+  )
+  const addingNewFlashcard = useAppSelector(
+    (state: RootState) => state.flashcards.addingNewFlashcard
+  )
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook)
+  const selectedBook = useAppSelector(
+    (state: RootState) => state.books.selectedBook
+  )
 
   /**
    * Changes the book with the new flashcard
@@ -43,12 +53,18 @@ const FlashcardAdder = ({ type }: Props) => {
     dispatch(changeNewFlashcard(new Flashcard(nanoid(), "BOOK", "", "")))
   }
 
-  useEffect(() => {
-    console.log("newFlashcard: ", newFlashcard)
-  }, [newFlashcard])
+  async function handleClose() {
+    dispatch(switchAddingNewFlashcardStatus(""))
+  }
+
+  useEffect(() => {}, [addingNewFlashcard])
 
   return (
-    <div className="lm-gc-flashcardadder">
+    <Modal
+      open={addingNewFlashcard ? true : false}
+      onClose={handleClose}
+      className="lm-gc-flashcardadder"
+    >
       <div className="container">
         <div className="lm-gc-flashcardadder__question">
           <Question isNew={true} />
@@ -64,7 +80,7 @@ const FlashcardAdder = ({ type }: Props) => {
       </div>
       {/*Shows the last 3 flashcards that were added from lg and onward */}
       <div className="lm-gc-flashcardadder__preview"></div>
-    </div>
+    </Modal>
   )
 }
 

@@ -19,6 +19,7 @@ import {
   deleteSelectedChapter,
 } from "../../../state/redux/features/chapterSlice"
 import { Accordion } from "react-bootstrap"
+import { switchAddingNewFlashcardStatus } from "../../../state/redux/features/Flashcard/flashcardSlice"
 
 /**
  * Modal where we can edit information about a chapter
@@ -101,7 +102,10 @@ const ChapterModal = () => {
               </Accordion.Item>
             </Accordion>
             <hr className="lm-seperator2" />
-            <ChapterFlashcards />
+            <div className="chaptermodal__flashcards">
+              <ChapterFlashcards />
+            </div>
+
             {/* TODO Citation */}
             {/* <ChapterKeywords /> */}
             {/* <AddPictures /> */}

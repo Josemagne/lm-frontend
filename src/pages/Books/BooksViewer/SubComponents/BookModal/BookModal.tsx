@@ -4,11 +4,12 @@ import { Button, Modal } from "rsuite"
 import { useNavigate } from "react-router"
 import {
   changeSelectedBook,
-  removeSelectedBook,
+  deleteSelectedBook,
 } from "../../../../../state/redux/features/bookSlice"
 import useAppDispatch from "../../../../../hooks/useAppDispatch"
 import useAppSelector from "../../../../../hooks/useAppSelector"
 import FlashcardAdder from "../../../../../components/FlashcardAdder/FlashcardAdder"
+import API from "../../../../../api/API"
 
 type Props = {}
 
@@ -26,6 +27,14 @@ const BookModal = ({}: Props) => {
 
   const handleClose = () => {
     dispatch(changeSelectedBook(null))
+  }
+
+  /**
+   * Remove book
+   */
+  function removeBook() {
+    API.deleteBook(selectedBook.book_id)
+    dispatch(deleteSelectedBook(""))
   }
 
   useEffect(() => {
@@ -81,6 +90,9 @@ const BookModal = ({}: Props) => {
                 <Button>Go to chapters</Button>
               </div>
             </div>
+            <button className="btn btn-danger" onClick={removeBook}>
+              Delete the book
+            </button>
             <hr className="my-3" />
             {/* TODO FlashcardAdder */}
             <FlashcardAdder type="BOOK" />

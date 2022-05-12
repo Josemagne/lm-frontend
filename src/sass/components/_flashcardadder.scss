@@ -1,32 +1,50 @@
+/* NOTE Overwrite the properties of rsuite.js */
+// Wraps the modal
+.rs-modal {
+  margin: 0;
+}
+.rs-modal-sm,
+.rs-modal-full {
+  max-width: unset;
+}
+.rs-modal-wrapper {
+  overflow: initial;
+  height: 100%;
+  .rs-modal-dialog {
+    height: 100%;
+    .rs-modal-content {
+      height: 100%;
+    }
+  }
+}
+
 .lm-gc-flashcardadder {
   max-width: 768px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
   }
-  
+
   // The container contains the form to add the flashcard
   .container {
+    .lm-gc-flashcardadder__question {
+      margin: 0.5rem;
+    }
 
-  .lm-gc-flashcardadder__question {
-    margin: 0.5rem;
-  }
+    .lm-gc-flashcardadder__answer {
+      margin: 0.5rem;
+    }
 
-  .lm-gc-flashcardadder__answer {
-    margin: 0.5rem;
-  }
-
-  .lm-gc-flashcardadder__button {
-    display: flex;
-    justify-content: center;
-    margin: 0.5rem;
-    color: white;
-    font-weight: bolder;
-  }
+    .lm-gc-flashcardadder__button {
+      display: flex;
+      justify-content: center;
+      margin: 0.5rem;
+      color: white;
+      font-weight: bolder;
+    }
   }
 
   .lm-gc-flashcardadder__preview {
@@ -35,7 +53,6 @@
     }
     @media screen and (min-width: 768px) {
       display: block;
-
     }
   }
 }

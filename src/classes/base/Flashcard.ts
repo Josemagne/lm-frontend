@@ -1,4 +1,4 @@
-import { LM_Flashcard } from '../../types/Flashcard/flashcard';
+import { FlashcardStatus, LM_Flashcard } from '../../types/Flashcard/flashcard';
 import { LM_EntityName } from "../../types/Entity/entity";
 import { nanoid } from 'nanoid';
 
@@ -11,6 +11,7 @@ class Flashcard implements LM_Flashcard {
     chapter_id: string | undefined;
     articlecollection_id: string | undefined;
     article_id: string | undefined;
+    flashcardStatus: FlashcardStatus = "NEW";
     question = "";
     answer = "";
 

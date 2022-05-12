@@ -6,10 +6,12 @@ import LM_Chapter from "../../../../types/Book/chapter"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
 import {
   changeSelectedFlashcard,
+  deleteFlashcard,
   fetchFlashcardsBackend,
 } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import { Table } from "rsuite"
 import FlashcardModal from "../FlashcardModal/FlashcardModal"
+import API from "../../../../api/API"
 
 const { HeaderCell, Cell } = Table
 
@@ -23,10 +25,9 @@ const FlashcardsPagination = () => {
   const selectedFlashcard = useAppSelector(
     (state) => state.flashcards.selectedFlashcard
   )
-  let flashcards: LM_Flashcard[] | null = useAppSelector(
-    (state) => state.flashcards.flashcards.flashcards
+  let flashcards: LM_Flashcard[] = Object.values(
+    useAppSelector((state) => state.flashcards.flashcards.flashcards)
   )
-  if (flashcards) flashcards = Object.values(flashcards)
 
   // TODO Move to utils
   /**
@@ -42,8 +43,17 @@ const FlashcardsPagination = () => {
   }
 
   function onRowClick(selectedFlashcard: LM_Flashcard) {
-    console.log("selected", selectedBook)
     dispatch(changeSelectedFlashcard(selectedFlashcard))
+  }
+
+  function removeFlashcard(
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    flashcardID: string
+  ) {
+    e.preventDefault()
+    e.stopPropagation()
+    dispatch(deleteFlashcard(flashcardID))
+    API.deleteFlashcard(flashcardID)
   }
 
   useEffect(() => {
@@ -60,33 +70,13 @@ const FlashcardsPagination = () => {
   }, [flashcards])
 
   return (
-    <div className="lm-lc-flashcardsviewer">
-      {/* <Accordion className="lm-lc-flashcardsviewer__container">
-        {flashcards && Object.values(flashcards).length > 0 ? (
-          Object.values(flashcards).map((f, index) => {
-            return (
-              <Accordion.Item eventKey={index.toString()} className="flashcard">
-                <div className="lm-lc-flashcardsviewer__flashcard">
-                  <Accordion.Header className="question">
-                    <div dangerouslySetInnerHTML={{ __html: f.question }}></div>
-                  </Accordion.Header>
-                  <Accordion.Body className="answer ">
-                    <div dangerouslySetInnerHTML={{ __html: f.answer }}></div>
-                  </Accordion.Body>
-                </div>
-              </Accordion.Item>
-            )
-          })
-        ) : (
-          <p>No flashcards yet.</p>
-        )}
-      </Accordion> */}
-      {flashcards && Object.values(flashcards).length > 0 && (
+    <div className="lm-lc-flashcardspagination">
+      {flashcards.length > 0 && (
         <Table
-          data={Object.values(flashcards)}
+          data={flashcards}
           bordered={true}
           loading={flashcards ? false : true}
-          onRowClick={(rowData) => onRowClick(rowData as LM_Flashcard)}
+          onRowClick={(rowData: any) => onRowClick(rowData as LM_Flashcard)}
         >
           <Table.Column flexGrow={1}>
             <HeaderCell>Question</HeaderCell>
@@ -119,9 +109,13 @@ const FlashcardsPagination = () => {
           <Table.Column fixed="right" align="center">
             <HeaderCell>Delete</HeaderCell>
             <Cell>
-              {() => {
+              {(rowData) => {
                 return (
-                  <button type="button" className="btn btn-danger">
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={(e) => removeFlashcard(e, rowData.flashcard_id)}
+                  >
                     x
                   </button>
                 )
@@ -130,6 +124,27 @@ const FlashcardsPagination = () => {
           </Table.Column>
         </Table>
       )}
+      {/* {flashcards.length === 0 && (
+        <Table
+          data={[]}
+          bordered={true}
+          loading={flashcards ? false : true}
+          onRowClick={(rowData: any) => onRowClick(rowData as LM_Flashcard)}
+        >
+          <Table.Column flexGrow={1}>
+            <HeaderCell>Question</HeaderCell>
+            <Cell></Cell>
+          </Table.Column>
+          <Table.Column flexGrow={1}>
+            <HeaderCell>Answer</HeaderCell>
+            <Cell></Cell>
+          </Table.Column>
+          <Table.Column fixed="right" align="center">
+            <HeaderCell>Delete</HeaderCell>
+            <Cell></Cell>
+          </Table.Column>
+        </Table>
+      )} */}
       {selectedFlashcard && <FlashcardModal />}
     </div>
   )

@@ -1,37 +1,37 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { FloatingLabel, Form } from "react-bootstrap";
-import { LM_Book } from "../../../../../types/Book/book";
-import LM_Chapter from "../../../../../types/Book/chapter";
-import { useFormik } from "formik";
-import { nanoid } from "nanoid";
-import useAppSelector from "../../../../../hooks/useAppSelector";
-import Server from "../../../../../services/Server";
-import useAppDispatch from "../../../../../hooks/useAppDispatch";
+import React, { useState, useEffect, useMemo } from "react"
+import { FloatingLabel, Form } from "react-bootstrap"
+import { LM_Book } from "../../../../../types/Book/book"
+import LM_Chapter from "../../../../../types/Book/chapter"
+import { useFormik } from "formik"
+import { nanoid } from "nanoid"
+import useAppSelector from "../../../../../hooks/useAppSelector"
+import Server from "../../../../../services/Server"
+import useAppDispatch from "../../../../../hooks/useAppDispatch"
 import {
   changeSelectedBook,
   updateBook,
-} from "../../../../../state/redux/features/bookSlice";
-import Chapter from "../../../../../classes/Chapter";
-import Flashcard from "../../../../../classes/base/Flashcard";
-import * as yup from "yup";
-import FAPI from "../../../../../storage/indexedDB/FAPI";
-import { Modal } from "rsuite";
-import { toggleAddingNewChapter } from "../../../../../state/redux/features/chapterSlice";
-import API from "../../../../../api/API";
-import {addChapter} from "../../../../../state/redux/features/chapterSlice"
+} from "../../../../../state/redux/features/bookSlice"
+import Chapter from "../../../../../classes/Chapter"
+import Flashcard from "../../../../../classes/base/Flashcard"
+import * as yup from "yup"
+import FAPI from "../../../../../storage/indexedDB/FAPI"
+import { Modal } from "rsuite"
+import { toggleAddingNewChapter } from "../../../../../state/redux/features/chapterSlice"
+import API from "../../../../../api/API"
+import { addChapter } from "../../../../../state/redux/features/chapterSlice"
 
 //type Props = {};
 
 const ChapterAdder = () => {
-  const [currentID, setCurrentID] = useState(nanoid());
-  
-  const dispatch = useAppDispatch();
+  const [currentID, setCurrentID] = useState(nanoid())
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook);
+  const dispatch = useAppDispatch()
+
+  const selectedBook = useAppSelector((state) => state.books.selectedBook)
 
   const chapterSchema = yup.object().shape({
     title: yup.string().required().min(2, "Too short").max(40, "Too long"),
-  });
+  })
 
   const formik = useFormik({
     validateOnBlur: true,
@@ -49,28 +49,28 @@ const ChapterAdder = () => {
       interface IValidateErrors {
         title?: string
       }
-      let errors: IValidateErrors = {};
+      let errors: IValidateErrors = {}
 
-      if (!values.title){
+      if (!values.title) {
         errors.title = "Please write a title"
       }
 
-      return errors;
+      return errors
     },
     onSubmit: async (values, { resetForm, setValues }) => {
-      values.book_id = selectedBook.book_id;
-      values.chapter_id = nanoid();
-      console.log("v: ", values);
+      values.book_id = selectedBook.book_id
+      values.chapter_id = nanoid()
+      console.log("v: ", values)
 
-     dispatch(addChapter(values)) 
+      dispatch(addChapter(values))
 
       //await FAPI.addChapter(values);
 
-      await API.addChapter(values);
-      
-      resetForm();
+      await API.addChapter(values)
+
+      resetForm()
       setValues(() => {
-        setCurrentID(nanoid());
+        setCurrentID(nanoid())
         const newChapter = new Chapter(
           currentID,
           selectedBook.book_id,
@@ -79,32 +79,33 @@ const ChapterAdder = () => {
           0,
           "",
           ""
-        );
-        newChapter.chapter_id = currentID;
-        return newChapter;
-      });
+        )
+        newChapter.chapter_id = currentID
+        return newChapter
+      })
     },
-  });
+  })
 
   /**
    * Decides if the ChapterAdder Modal will be open
-  */
+   */
   const addingNewChapter = useAppSelector(
     (state) => state.chapters.addingNewChapter
-  );
+  )
 
   function handleClose() {
-    dispatch(toggleAddingNewChapter(""));
+    dispatch(toggleAddingNewChapter(""))
   }
 
   useEffect(() => {
-    console.log("addingNwcha", addingNewChapter)
-    setCurrentID(nanoid());
-  }, [formik.values, addingNewChapter]);
+    setCurrentID(nanoid())
+  }, [formik.values, addingNewChapter])
 
-  
   return (
-    <Modal open={addingNewChapter && selectedBook ? true : false} onClose={handleClose}>
+    <Modal
+      open={addingNewChapter && selectedBook ? true : false}
+      onClose={handleClose}
+    >
       <div className="lm-chapteradder">
         <div className="lm-chapteradder__index">
           <FloatingLabel controlId="index" label="Index">
@@ -132,7 +133,7 @@ const ChapterAdder = () => {
         <div
           className="lm-chapteradder__button"
           onClick={() => {
-            formik.handleSubmit();
+            formik.handleSubmit()
           }}
         >
           <div>+</div>
@@ -141,7 +142,7 @@ const ChapterAdder = () => {
         {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}
       </div>
     </Modal>
-  );
-};
+  )
+}
 
-export default ChapterAdder;
+export default ChapterAdder

@@ -7,6 +7,8 @@ import { changeSelectedFlashcard } from "../../../../state/redux/features/Flashc
 import API from "../../../../api/API"
 import Flashcard from "../../../../classes/base/Flashcard"
 import { Container, Modal } from "rsuite"
+import Question from "../../../../components/FlashCard/SubComponents/Question/Question"
+import Answer from "../../../../components/FlashCard/SubComponents/Answer/Answer"
 
 type Props = {}
 
@@ -43,6 +45,7 @@ const FlashcardModal = (props: Props) => {
     )
     selectedFlashcardCopy[prop] = value
     dispatch(changeSelectedFlashcard(selectedFlashcardCopy))
+    // NOTE Persist the flashcard copy
     setSelectedFlashcardCopyLocal(selectedFlashcardCopy)
   }
 
@@ -58,24 +61,12 @@ const FlashcardModal = (props: Props) => {
       className="lm-flashcardmodal"
       full={true}
     >
-      {/* question */}
-      <Container
-        onClick={() => {
-          //@ts-ignore
-          editorRef.current.focus()
-        }}
-      >
-        <div className="lm-textcontainer">
-          <ReactQuill
-            ref={editorRef}
-            value={selectedFlashcard.question}
-            onChange={(v) =>
-              updateSelectedFlashcard({ prop: "question", value: v })
-            }
-          />
-        </div>
-      </Container>
-      {/* answer */}
+      <div className="flashcardmodal__question">
+        <Question isNew={false} />
+      </div>
+      <div className="flashcardmodal__answer">
+        <Answer isNew={false} />
+      </div>
     </Modal>
   )
 }

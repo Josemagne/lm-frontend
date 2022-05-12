@@ -6,6 +6,8 @@ import { fetchBooksBackend } from "../../state/redux/features/bookSlice"
 import FlashcardAdder from "../../components/FlashcardAdder/FlashcardAdder"
 import { LM_EntityName } from "../../types/Entity/entity"
 import FlashcardsPagination from "./SubComponents/FlashcardsPagination/FlashcardsPagination"
+import { switchAddingNewFlashcardStatus } from "../../state/redux/features/Flashcard/flashcardSlice"
+import FlashcardsFilter from "./SubComponents/FlashcardsFilter/FlashcardsFilter"
 
 type Props = {}
 
@@ -13,6 +15,10 @@ const Flashcards = (props: Props) => {
   const dispatch = useAppDispatch()
 
   const selectedBook = useAppSelector((state) => state.books.selectedBook)
+
+  function toggleAddingNewFlashcard() {
+    dispatch(switchAddingNewFlashcardStatus(""))
+  }
 
   useEffect(() => {}, [])
 
@@ -24,9 +30,24 @@ const Flashcards = (props: Props) => {
         <BookSelector />
         {selectedBook ? <FlashcardAdder type="BOOK" /> : null}
       </div>
-      <div className="lm-flashcards__viewer">
-        {selectedBook && <FlashcardsPagination />}
-      </div>
+      {selectedBook && (
+        <>
+          <div className="flashcards__add">
+            <button
+              className="btn btn-primary"
+              onClick={toggleAddingNewFlashcard}
+            >
+              Add flashcard
+            </button>
+          </div>
+          <div className="flashcards__filter">
+            <FlashcardsFilter />
+          </div>
+          <div className="lm-flashcards__viewer">
+            {selectedBook && <FlashcardsPagination />}
+          </div>
+        </>
+      )}
     </div>
   )
 }

@@ -1,0 +1,25 @@
+.lm-gc-bookselector {
+  margin-bottom: 2rem;
+  .bookselector__title {
+  }
+
+  .bookselector__placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    user-select: none;
+
+    @media screen and (min-width: 768px) {
+    }
+    .bookselector__placeholder__delete {
+      margin-left: 0.5rem;
+      button {
+        color: white;
+        background-color: red;
+      }
+    }
+  }
+}
