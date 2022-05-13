@@ -29,10 +29,6 @@ export declare interface LM_Book {
      */
     progress: number;
     /**
-     * IDs of the chapters that belong to the book
-     */
-    chapters: string[];
-    /**
      * The summary for the entire book
      */
     summary: string;
@@ -40,17 +36,4 @@ export declare interface LM_Book {
      * Number between 1 and 5 for stars.
      */
     rate: number;
-    /**
-     * Array of flashcard IDs that belong to the book specifically
-     */
-    flashcards: string[];
-    /**
-     * The collections IDs the book belongs to
-     */
-    bookCollection: string[];
-    notes: string[];
-    commentary: string;
-    keyWords: string[];
-    glossaryWords: string[];
-    loanWords: string[];
 }

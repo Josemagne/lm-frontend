@@ -4,6 +4,10 @@ import { nanoid } from 'nanoid';
 
 class Flashcard implements LM_Flashcard {
     flashcard_id: string = nanoid();
+    flashcardStatus: FlashcardStatus = "NEW";
+    question = "";
+    answer = "";
+    timesRepeated: number = 0;
     flashcardType: LM_EntityName;
     bookcollection_id: string | undefined;
     book_id: string | undefined;
@@ -11,9 +15,6 @@ class Flashcard implements LM_Flashcard {
     chapter_id: string | undefined;
     articlecollection_id: string | undefined;
     article_id: string | undefined;
-    flashcardStatus: FlashcardStatus = "NEW";
-    question = "";
-    answer = "";
 
     constructor(flashcard_id: string, flashcardType: LM_EntityName, question: string, answer: string, book_id?: string, chapter_id?: string, article_id?: string) {
         this.flashcard_id = flashcard_id;

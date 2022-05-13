@@ -15,18 +15,7 @@ export default class Book implements LM_Book {
     summary = "";
     genre = ""
     rate = 1;
-    chapters: string[] = []
-    flashcards: string[] = []
-    bookCollection: string[] = [];
     commentary = "";
-    keyWords = [];
-    glossaryWords = [];
-    loanWords: string[] = [];
-    chapterCollection: string[] = []
-    collections: string[] = []
-    notes: string[] = [];
-    commentaries: string[] = []
-
 
     constructor(
         book_id: string,
@@ -46,21 +35,11 @@ export default class Book implements LM_Book {
         this.book_title = book_title
         this.pages = pages
         this.progress = progress
-    this.status = "TO_READ"
-    this.summary= "";
-    this.genre = ""
-    this.rate= 1;
-    this.chapters= []
-    this.flashcards = []
-    this.bookCollection = [];
-    this.commentary = "";
-    this.keyWords = [];
-    this.glossaryWords = [];
-    this.loanWords = [];
-    this.chapterCollection = []
-    this.collections = []
-    this.notes= [];
-    this.commentaries = []
+        this.status = "TO_READ"
+        this.summary = "";
+        this.genre = ""
+        this.rate = 1;
+        this.commentary = "";
     }
 
 

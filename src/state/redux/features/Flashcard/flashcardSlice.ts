@@ -14,21 +14,42 @@ interface InitialFlashcardState {
     loading: boolean,
     error: string | null
   },
+  // ---
   /**
-   * The flashcards that fit in FlashcardsFilter
+   * Contains everything related to the training session
    */
-  filteredFlashcards: {
-    [flashcard_id: string]: LM_Flashcard;
-  },
+  flashcardTraining: {
+    /**
+     * The flashcards that have stat
+     */
+    flashcardsForTraining: string[];
+    /**
+     * The flashcard that is shown at the momemt
+     */
+    currentFlashcard: LM_Flashcard | null;
+  }
+  // ---
+  /**
+   * The flashcards id that fit in FlashcardsFilter
+   */
+  filteredFlashcards: string[],
   isFiltering: boolean,
+  // ---
   newFlashcard: LM_Flashcard,
   addingNewFlashcard: boolean,
-
+  // ---
   selectedFlashcard: null | LM_Flashcard,
   /**
    * Decides if the user is training with the flashcards
    */
-  isTraining: boolean
+  isTraining: boolean,
+  /**
+   * The flashcards that are being revised
+   */
+  flashcardsForTraining: {
+    [id: string]: LM_Flashcard
+  }
+
 }
 
 const initialFlashcardState: InitialFlashcardState = {
@@ -37,12 +58,17 @@ const initialFlashcardState: InitialFlashcardState = {
     loading: false,
     error: null
   },
-  filteredFlashcards: {},
+  filteredFlashcards: [],
+  flashcardTraining: {
+    flashcardsForTraining: [],
+    currentFlashcard: null
+  },
   isFiltering: false,
   newFlashcard: new Flashcard(nanoid(), "BOOK", "", ""),
   addingNewFlashcard: false,
   selectedFlashcard: null,
-  isTraining: false
+  isTraining: false,
+  flashcardsForTraining: {}
 }
 
 export const fetchFlashcardsBackend = createAsyncThunk("flashcardsBackend", async (bookId: string): Promise<LM_Flashcard[] | any> => {
@@ -101,15 +127,12 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
      * @param action 
      */
     updateFilteredFlashcards: (state: InitialFlashcardState, action: PayloadAction<LM_Flashcard[]>) => {
+      const updatedFilteredFlashcards = action.payload;
 
-      const filteredFlashcards = action.payload;
-
-      filteredFlashcards.forEach((flashcard) => {
-        state.filteredFlashcards[flashcard.flashcard_id] = flashcard;
-      })
+      state.filteredFlashcards = updatedFilteredFlashcards.map((f) => f.flashcard_id);
     },
     deleteFilteredFlashcards: (state: InitialFlashcardState, action: PayloadAction<any>) => {
-      state.filteredFlashcards = {};
+      state.filteredFlashcards = []
     },
     toggleFilteringState: (state: InitialFlashcardState, action: PayloadAction<boolean>) => {
       const newState = action.payload;
@@ -123,7 +146,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
     switchAddingNewFlashcardStatus: (state: InitialFlashcardState, action: PayloadAction<any>) => {
       state.addingNewFlashcard = !state.addingNewFlashcard;
     },
-    switchTrainingStatus: (state: InitialFlashcardState, action: PayloadAction<any>) => {
+    toggleIsTraining: (state: InitialFlashcardState, action: PayloadAction<any>) => {
       state.isTraining = !state.isTraining;
     }
   },
@@ -168,6 +191,6 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
   }
 })
 
-export const { changeNewFlashcard, addFlashcard, updateFlashcard, deleteFlashcard, changeSelectedFlashcard, switchAddingNewFlashcardStatus, updateFilteredFlashcards, deleteFilteredFlashcards, toggleFilteringState } = flashcardSlice.actions;
+export const { changeNewFlashcard, addFlashcard, updateFlashcard, deleteFlashcard, changeSelectedFlashcard, switchAddingNewFlashcardStatus, updateFilteredFlashcards, deleteFilteredFlashcards, toggleFilteringState, toggleIsTraining } = flashcardSlice.actions;
 
 export default flashcardSlice.reducer

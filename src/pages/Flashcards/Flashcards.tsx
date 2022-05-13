@@ -6,8 +6,12 @@ import { fetchBooksBackend } from "../../state/redux/features/bookSlice"
 import FlashcardAdder from "../../components/FlashcardAdder/FlashcardAdder"
 import { LM_EntityName } from "../../types/Entity/entity"
 import FlashcardsPagination from "./SubComponents/FlashcardsPagination/FlashcardsPagination"
-import { switchAddingNewFlashcardStatus } from "../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  switchAddingNewFlashcardStatus,
+  toggleIsTraining,
+} from "../../state/redux/features/Flashcard/flashcardSlice"
 import FlashcardsFilter from "./SubComponents/FlashcardsFilter/FlashcardsFilter"
+import FlashcardTrainer from "../../components/local/FlashcardPage/FlashcardTrainer/FlashcardTrainer"
 
 type Props = {}
 
@@ -18,6 +22,10 @@ const Flashcards = (props: Props) => {
 
   function toggleAddingNewFlashcard() {
     dispatch(switchAddingNewFlashcardStatus(""))
+  }
+
+  function startTraining() {
+    dispatch(toggleIsTraining(""))
   }
 
   useEffect(() => {}, [])
@@ -42,6 +50,13 @@ const Flashcards = (props: Props) => {
             </button>
           </div>
           <hr />
+          <div className="flashcards__training">
+            <button className="btn btn-secondary" onClick={startTraining}>
+              Start Revision
+            </button>
+            <FlashcardTrainer />
+          </div>{" "}
+          <hr />{" "}
           <div className="flashcards__filter">
             <FlashcardsFilter />
           </div>

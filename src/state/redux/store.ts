@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reduxThunk from "redux-thunk";
 import bookReducer from "./features/bookSlice";
 import { Store } from 'redux';
 import chapterReducer from "./features/chapterSlice"
 import summaryReducer from "./features/summarySlice/summarySlice"
 import flashcardReducer from "./features/Flashcard/flashcardSlice"
+import noteReducer from "./features/noteSlice";
+import { noteAPI } from './queries/noteQueries';
+import reduxThunk from 'redux-thunk';
 
 // @ts-ignore
 export const store: Store = configureStore({
@@ -12,9 +14,15 @@ export const store: Store = configureStore({
         books: bookReducer,
         chapters: chapterReducer,
         summaries: summaryReducer,
-        flashcards: flashcardReducer
+        flashcards: flashcardReducer,
+        [noteAPI.reducerPath]: noteAPI.reducer,
+        notes: noteReducer
     },
-    middleware: [reduxThunk],
+    // NOTE gDM: getDefaultMiddleware
+    middleware: (gDM) => gDM({
+        thunk: true,
+        serializableCheck: false
+    }).concat(noteAPI.middleware)
 })
 
 

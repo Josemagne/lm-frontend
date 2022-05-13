@@ -110,6 +110,14 @@ const Navbar = (props: Props) => {
                         </div>
                         <div
                           className="lm-navbar__link"
+                          onClick={() => clickHandler("/notes", true)}
+                        >
+                          <Nav.Item to="/notes" as={Link}>
+                            notess
+                          </Nav.Item>
+                        </div>
+                        <div
+                          className="lm-navbar__link"
                           onClick={() => clickHandler("/chaptersviewer", true)}
                         >
                           <Nav.Item to="/chaptersviewer" as={Link}>
@@ -166,6 +174,14 @@ const Navbar = (props: Props) => {
                   onClick={() => clickHandler("/flashcards")}
                 >
                   FlashCards
+                </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to="/notes"
+                  className="lm-navbar__link"
+                  onClick={() => clickHandler("/notes")}
+                >
+                  notess
                 </Nav.Item>
                 <Nav.Item
                   as={Link}

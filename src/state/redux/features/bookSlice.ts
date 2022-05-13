@@ -94,7 +94,7 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<LM_Book | null>) => {
             const updatedBook = action.payload;
-            state.selectedBook = action.payload;
+            state.selectedBook = updatedBook;
             if (updatedBook) state.books.books[updatedBook.book_id] = updatedBook;
         },
         deleteSelectedBook: (state: InitialBookState, action: PayloadAction<any>) => {
