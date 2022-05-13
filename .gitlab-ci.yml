@@ -20,7 +20,7 @@ build-web:
   artifacts:
     paths:
       # /builds/gitlab-org/gitlab-foss/artifacts
-      - $ARTIFACTS_DIR/
+      - $ARTIFACTS_DIR/dist
   cache:
     paths:
       - node_modules/
