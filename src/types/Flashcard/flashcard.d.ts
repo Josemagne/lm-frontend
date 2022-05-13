@@ -11,7 +11,7 @@ declare type FlashcardStatus = "NEW" | "LEARNING" | "LEARNT";
 
 export declare interface LM_Flashcard {
     flashcard_id: string;
-    flashcardStatus: FlashcardStatus;
+    status: FlashcardStatus;
     flashcardType: LM_EntityName;
     /**
      * HTML string with question
@@ -25,10 +25,14 @@ export declare interface LM_Flashcard {
      */
     timesRepeated: number;
     answer: string;
-    bookcollection_id: string | undefined;
-    book_id: string | undefined;
-    subchapter_id: string | undefined;
-    chapter_id: string | undefined;
-    articlecollection_id: string | undefined;
-    article_id: string | undefined;
+    // bookcollection_id: string | undefined;
+    // book_id: string | undefined;
+    // subchapter_id: string | undefined;
+    // chapter_id: string | undefined;
+    // articlecollection_id: string | undefined;
+    // article_id: string | undefined;
+    entity: {
+        entityKind: LM_EntityName;
+        entityID: string;
+    }
 }
