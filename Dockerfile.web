@@ -8,6 +8,8 @@ RUN npm install yarn
 
 RUN yarn
 
+RUN yarn add webpack-cli
+
 RUN yarn build
 
 FROM nginx:stable-alpine

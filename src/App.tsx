@@ -12,6 +12,8 @@ import Home from "./pages/Home/Home"
 import Login from "./pages/Authenticate/Login/Login"
 import UserPage from "./pages/UserPage/UserPage"
 import AboutPage from "./pages/About/AboutPage"
+import Summaries from "./pages/summaries"
+import Notes from "./pages/notes"
 
 type Props = {}
 
@@ -37,8 +39,8 @@ const App = (props: Props) => {
           <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/summaries" element={} />
-          <Route path="/notes" element={} />
+          <Route path="/summaries" element={<Summaries />} />
+          <Route path="/notes" element={<Notes />} />
 
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
