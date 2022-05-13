@@ -1,53 +1,47 @@
 stages:
-  # - build
-  - test
-  - deploy_netlify
-  - deploy_production
+  - build-web
+  - test-node
+  - e2e-test
 
 variables:
-  name: Barakat
+  ARTIFACTS_DIR: $CI_PROJECT_DIR/artifacts
 
-# build:
-#   stage: build
-#   image: node:17
-#   variables:
-#     name: Orlando
-#     NODE_ENV: production
-#   script:
-#     - echo "Building librimem"
-#     - npm install yarn
-#     - yarn
-#     - yarn add typescript
-#     - npm run build-ts
-#   artifacts:
-#     paths:
-#       - build
-#   cache:
-#     key: $CI_COMMIT_REF_SLUG
-#     paths:
-#       - node_modules
-#     policy: pull-push
+services:
+  - docker:dind
 
-test:
-  stage: test
+build-web:
+  stage: build-web
   image: node:17
+  variables:
+    NODE_ENV: production
   script:
-    - echo "Testing librimem"
-    # Run react-scripts tests
-    # - npm run test-react
-    - echo "*****CYPRESS******"
-    # - npm run test-cypress
-    # Run unit tests with jest
-    # - npm run test
-  # dependencies:
-  #   - build
+    - npm install yarn
+    - yarn
+  artifacts:
+    paths:
+      # /builds/gitlab-org/gitlab-foss/artifacts
+      - $ARTIFACTS_DIR/
+  cache:
+    paths:
+      - node_modules/
+    policy: pull-push
 
-deploy_netlify:
-  stage: deploy_netlify
-  image: node:17
+e2e-test:
+  stage: e2e-test
+  image:
+    name: docker/compose:1.24.0
+    # needed in order to be able to run custom scripts
+    entrypoint: [""]
+  cache:
+    paths:
+      - node_modules/
+  artifacts:
+    paths:
+      - $ARTIFACTS_DIR
+  dependencies:
+    - build-web
   script:
-    - echo "Deploying to netlify"
-    - npm install netlify-cli
-    - npm run build
-    - npm run deploy-netlify
-    - echo "Deployed to netlify"
+    - echo "Testing librimem e2e"
+    - cp -r $ARTIFACTS_DIR/dist ./dist
+    - docker-compose build
+    - docker-compose up --abort-on-container-exit --exit-code-from cypress

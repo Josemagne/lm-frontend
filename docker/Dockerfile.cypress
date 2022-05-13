@@ -1,0 +1,20 @@
+FROM cypress/base:10
+
+WORKDIR /app
+
+# This allows for creating a package.json within the Dockerfile itself
+RUN npm init --yes
+
+RUN npm i yarn
+
+RUN yarn add cypress
+
+# Copying both the test files and the config for cypress
+COPY cypress cypress
+
+COPY cypress.json .
+
+# I had a local copy of this script, but it is easily findable online
+COPY wait-for-it.sh .
+
+RUN chmod +x wait-for-it.sh
