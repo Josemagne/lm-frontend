@@ -37,12 +37,13 @@ const App = (props: Props) => {
           <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/summaries" element={} />
+          <Route path="/notes" element={} />
 
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}
           {/* TODO Add Settings */}
-          {/* TODO Add About */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <footer>{/* <Navigation /> */}</footer>

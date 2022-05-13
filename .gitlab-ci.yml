@@ -17,6 +17,7 @@ build-web:
   script:
     - npm install yarn
     - yarn
+    - yarn add webpack-cli
     - yarn build
   artifacts:
     paths:
