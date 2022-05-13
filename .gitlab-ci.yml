@@ -17,6 +17,7 @@ build-web:
   script:
     - npm install yarn
     - yarn
+    - yarn build
   artifacts:
     paths:
       # /builds/gitlab-org/gitlab-foss/artifacts
