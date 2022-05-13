@@ -34,6 +34,10 @@
     display: flex;
     justify-content: end;
     .flashcardadder__exit {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 2000;
       button {
       }
     }
@@ -41,9 +45,8 @@
 
   // The container contains the form to add the flashcard
   .container {
-    margin-top: 10vh;
+    margin-top: 2rem;
     .lm-gc-flashcardadder__question {
-      margin: 0.5rem;
     }
 
     .lm-gc-flashcardadder__answer {
@@ -51,11 +54,15 @@
     }
 
     .lm-gc-flashcardadder__button {
+      position: fixed;
+      bottom: 5px;
+      left: 46%;
       display: flex;
       justify-content: center;
       margin: 0.5rem;
       color: white;
       font-weight: bolder;
+      z-index: 2000;
     }
   }
 
