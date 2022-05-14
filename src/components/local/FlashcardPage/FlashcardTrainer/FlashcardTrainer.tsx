@@ -9,6 +9,12 @@ import {
 import { RootState } from "../../../../state/redux/store"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
 import flashcardTrainerFilter from "./utils/flashcardTrainerFilter"
+import generateQueue from "./utils/generateQueue"
+import { flashcardsForTrainingSelector } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  isTrainingSelector,
+  flashcardsSelector,
+} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {}
 
@@ -20,29 +26,27 @@ type Props = {}
 const FlashcardTrainer = (props: Props) => {
   const dispatch = useAppDispatch()
 
-  const isTraining: boolean = useAppSelector(
-    (state: RootState) => state.flashcards.isTraining
-  )
+  const isTraining: boolean = useAppSelector(isTrainingSelector)
 
-  const flashcards: LM_Flashcard[] = Object.values(
-    useAppSelector((state: RootState) => state.flashcards.flashcards.flashcards)
-  )
+  const flashcards: LM_Flashcard[] = useAppSelector(
+    flashcardsSelector
+  ) as LM_Flashcard[]
+
   const flashcardsForTraining: string[] = useAppSelector(
-    (state: RootState) =>
-      state.flashcards.flashcardTraining.flashcardsForTraining
+    flashcardsForTrainingSelector
   )
 
   function handleClose() {
     dispatch(toggleIsTraining(""))
   }
 
-  function exitTrainingSession() {
-    dispatch(toggleIsTraining(""))
-  }
-
   useEffect(() => {
     if (flashcards.length < 1) return
-    flashcardTrainerFilter(flashcards, flashcardsForTraining)
+    const filteredFlashcards = flashcardTrainerFilter(
+      flashcards,
+      flashcardsForTraining
+    )
+    generateQueue(filteredFlashcards)
   }, [flashcards])
 
   useEffect(() => {
@@ -51,14 +55,18 @@ const FlashcardTrainer = (props: Props) => {
   }, [])
 
   return (
-    <Modal open={isTraining} className="lm-lc-flashcardtrainer">
+    <Modal
+      open={isTraining}
+      onClose={handleClose}
+      className="lm-lc-flashcardtrainer"
+    >
       <div className="flashcardtrainer__header">
         <div className="flashcardtrainer__exit">
           <div className="flashcardtrainer__metadata">
             <div className="subject"></div>
             <div className="title"></div>
           </div>
-          <button className="btn btn-danger" onClick={exitTrainingSession}>
+          <button className="btn btn-danger" onClick={handleClose}>
             x
           </button>
         </div>

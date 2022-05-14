@@ -5,11 +5,13 @@ import { useNavigate } from "react-router"
 import {
   changeSelectedBook,
   deleteSelectedBook,
+  isSelectingBookSelector,
 } from "../../../../../state/redux/features/bookSlice"
 import useAppDispatch from "../../../../../hooks/useAppDispatch"
 import useAppSelector from "../../../../../hooks/useAppSelector"
 import FlashcardAdder from "../../../../../components/FlashcardAdder/FlashcardAdder"
 import API from "../../../../../api/API"
+import { selectedBookSelector } from "../../../../../state/redux/features/bookSlice"
 
 type Props = {}
 
@@ -23,7 +25,8 @@ const BookModal = ({}: Props) => {
 
   const navigate = useNavigate()
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook)
+  const isSelectingBook: boolean = useAppSelector(isSelectingBookSelector)
+  const selectedBook: LM_Book = useAppSelector(selectedBookSelector)
 
   const handleClose = () => {
     dispatch(changeSelectedBook(null))
@@ -47,9 +50,8 @@ const BookModal = ({}: Props) => {
       overflow={true}
       open={selectedBook ? true : false}
       onClose={handleClose}
-      full={true}
     >
-      {selectedBook ? (
+      {isSelectingBook && selectedBook ? (
         <Fragment>
           <Modal.Header>
             <h3 className="lm-bookmodal-title">
@@ -60,7 +62,7 @@ const BookModal = ({}: Props) => {
             </h3>
           </Modal.Header>
           <Modal.Body className="lm-bookmodal__body">
-            {selectedBook.pages > 0 && <p>pages: {selectedBook.pages}</p>}
+            {selectedBook && <p>pages: {selectedBook.pages}</p>}
 
             {/* NOTE The links lead to other parts of the website */}
             <div className="lm-bookmodal__links">

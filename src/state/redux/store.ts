@@ -6,7 +6,7 @@ import summaryReducer from "./features/summarySlice/summarySlice"
 import flashcardReducer from "./features/Flashcard/flashcardSlice"
 import noteReducer from "./features/noteSlice";
 import { noteAPI } from './queries/noteQueries';
-import reduxThunk from 'redux-thunk';
+
 
 // @ts-ignore
 export const store: Store = configureStore({
@@ -28,4 +28,3 @@ export const store: Store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const createStore = () => store;

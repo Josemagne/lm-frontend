@@ -15,9 +15,7 @@ import Library from "./assets/icons/library.svg"
 import { nanoid } from "nanoid"
 import LM_Icon from "../../assets/images/favicon.svg"
 import authorize from "../../services/authorize"
-import { Dropdown, IconButton } from "rsuite"
 import Logout from "../Logout/Logout"
-import resetter from "../../utils/resetter"
 import useAppDispatch from "../../hooks/useAppDispatch"
 
 type Props = {}
@@ -41,7 +39,6 @@ const Navbar = (props: Props) => {
    * Handles the click event on a link
    */
   const clickHandler = (where: string, inOffcanvas: boolean = false) => {
-    resetter(dispatch, where)
     if (inOffcanvas) setShow(false)
     navigate(where, {
       replace: true,
@@ -62,6 +59,15 @@ const Navbar = (props: Props) => {
     const width = window.innerWidth
     setWidth(width)
   }, [])
+
+  // TODO Put that in own component
+  const NavbarLink = (route: string, name: string) => (
+    <div className="lm-navbar__link" onClick={() => clickHandler(route, true)}>
+      <Nav.Item as={Link} to={route}>
+        {name}
+      </Nav.Item>
+    </div>
+  )
 
   return (
     <div className="lm-navbar">

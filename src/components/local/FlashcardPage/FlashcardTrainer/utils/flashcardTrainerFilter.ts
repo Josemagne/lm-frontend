@@ -6,12 +6,19 @@ import { LM_Flashcard } from "../../../../../types/Flashcard/flashcard";
  * Filteres the flashcards for the training
  */
 function flashcardTrainerFilter(flashcards: LM_Flashcard[], flashcardsForTraining: string[]): LM_Flashcard[] {
-    const flashcards$ = from(flashcards);
-    flashcards$.pipe(
+    /**
+     * Array with the filtered flashcarads
+     */
+    let filteredFlashcards: LM_Flashcard[] = [];
+
+    const flashcard$ = from(flashcards);
+    flashcard$.pipe(
         // Get the right flashcards
         map(f => f.flashcardStatus === "LEARNING" || f.flashcardStatus === "NEW")
     )
-    flashcards$.subscribe(console.log)
+    flashcard$.subscribe(console.log)
+
+    return filteredFlashcards;
 }
 
 export default flashcardTrainerFilter;

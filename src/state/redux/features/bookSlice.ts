@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction, Slice, createSelector } from '@reduxjs/toolkit';
 import { LM_Book } from "../../../types/Book/book"
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
@@ -10,6 +10,7 @@ import FAPI from "../../../storage/indexedDB/FAPI";
 import Book from '../../../classes/Book';
 import API from "../../../api/API"
 //import useAppDispatch from "../../../hooks/useAppDispatch"
+import { RootState } from '../store';
 
 //const dispatch = useAppDispatch()
 
@@ -26,11 +27,17 @@ interface InitialBookState {
         error: any;
         amountOfBooks: number;
     },
-    /**
-     * Id of the particular book that is being focused upon
-     */
-    selectedBook: LM_Book | null;
-
+    filter: {
+        filteredBooks: string[];
+        isFiltering: boolean;
+    }
+    selection: {
+        /**
+         * Id of the particular book that is being focused upon
+         */
+        selectedBook: LM_Book | null;
+        isSelectingBook: boolean;
+    }
     newBook: LM_Book;
     /**
      * Decides if we show the BookModifier Modal
@@ -47,7 +54,14 @@ const initialState: InitialBookState = {
         error: null,
         amountOfBooks: 0
     },
-    selectedBook: null,
+    selection: {
+        selectedBook: null,
+        isSelectingBook: false
+    },
+    filter: {
+        isFiltering: false,
+        filteredBooks: []
+    },
     newBook: new Book(nanoid(), "", "", "", 0, 0, ""),
     addingNewBook: false,
 }
@@ -98,13 +112,13 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
             if (updatedBook) state.books.books[updatedBook.book_id] = updatedBook;
         },
         deleteSelectedBook: (state: InitialBookState, action: PayloadAction<any>) => {
-            if (!state.selectedBook) return;
+            if (!state.selection.selectedBook) return;
 
-            const selectedBookID = state.selectedBook.book_id;
+            const selectedBookID = state.selection.selectedBook.book_id;
 
             delete state.books.books[selectedBookID];
 
-            state.selectedBook = null;
+            state.selection.selectedBook = null;
         },
     },
     extraReducers: (builder) => {
@@ -154,6 +168,19 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
 
     }
 })
+
+const selectBooks = (state: RootState) => state.books.books.books
+
+export const booksSelector = createSelector(selectBooks, (books) => Object.values(books))
+
+const selectSelectedBook = (state: RootState) => state.books.selection.selectedBook;
+
+export const selectedBookSelector = createSelector(selectSelectedBook, (selectedBook) => selectedBook)
+
+const selectIsSelectingBook = (state: RootState) => state.books.selection.isSelecting;
+
+export const isSelectingBookSelector = createSelector(selectIsSelectingBook, (isSelectingBook) => isSelectingBook)
+
 
 export const { addBook, removeBook, updateBook, changeSelectedBook, deleteSelectedBook, toggleAddingNewBook } = bookSlice.actions;
 

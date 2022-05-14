@@ -13,6 +13,8 @@ import { Table } from "rsuite"
 import FlashcardModal from "../FlashcardModal/FlashcardModal"
 import API from "../../../../api/API"
 import { RootState } from "../../../../state/redux/store"
+import { selectedBookSelector } from "../../../../state/redux/features/bookSlice"
+import { selectedFlashcardSelector } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
 const { HeaderCell, Cell } = Table
 
@@ -22,10 +24,10 @@ const FlashcardsPagination = () => {
    */
   const textLength = 100
   const dispatch = useAppDispatch()
-  const selectedBook = useAppSelector((state) => state.books.selectedBook)
-  const selectedFlashcard = useAppSelector(
-    (state) => state.flashcards.selectedFlashcard
-  )
+
+  const selectedBook = useAppSelector(selectedBookSelector)
+  const selectedFlashcard = useAppSelector(selectedFlashcardSelector)
+
   const filteredFlashcards: LM_Flashcard[] = Object.values(
     useAppSelector((state: RootState) => state.flashcards.flashcards.flashcards)
   )

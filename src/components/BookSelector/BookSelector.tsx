@@ -10,6 +10,10 @@ import {
 import Flashcard from "../../classes/base/Flashcard"
 import { changeNewFlashcard } from "../../state/redux/features/Flashcard/flashcardSlice"
 import { nanoid } from "nanoid"
+import {
+  selectedBookSelector,
+  booksSelector,
+} from "../../state/redux/features/bookSlice"
 
 /**
  * Lets us select the book for the flashcards.
@@ -20,9 +24,9 @@ const BookSelector = () => {
   const [titles, setTitles] = useState<string[]>([])
   const dispatch = useAppDispatch()
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook)
+  const selectedBook: LM_Book = useAppSelector(selectedBookSelector)
 
-  const books = useAppSelector((state) => state.books.books.books)
+  const books: LM_Book[] = useAppSelector(booksSelector) as LM_Book[]
 
   if (!books)
     return (
@@ -75,8 +79,7 @@ const BookSelector = () => {
   }
 
   const selectionHandler = (v: string) => {
-    const bookArray: LM_Book[] = Object.values(books)
-    const _selectedBook = bookArray.find((b) => {
+    const _selectedBook = books.find((b) => {
       if (b.book_title === getTitle(v)) return b
     })
 
@@ -89,7 +92,9 @@ const BookSelector = () => {
     dispatch(changeSelectedBook(null))
   }
 
-  useEffect(() => {}, [books])
+  useEffect(() => {
+    console.log("selectedBook", selectedBook)
+  }, [selectedBook])
 
   useEffect(() => {
     // @ts-ignore
@@ -121,11 +126,7 @@ const BookSelector = () => {
       {!selectedBook && (
         <>
           <div className="bookselector__title">
-            {selectedBook ? (
-              <h3>{selectedBook.book_title}</h3>
-            ) : (
-              <h3>Select a book</h3>
-            )}
+            <h3>Select a book</h3>
           </div>
           {titles ? (
             //   @ts-ignore
