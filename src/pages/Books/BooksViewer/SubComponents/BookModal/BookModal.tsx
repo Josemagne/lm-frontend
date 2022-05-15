@@ -6,6 +6,7 @@ import {
   changeSelectedBook,
   deleteSelectedBook,
   isSelectingBookSelector,
+  toggleIsSelectingBook,
 } from "../../../../../state/redux/features/bookSlice"
 import useAppDispatch from "../../../../../hooks/useAppDispatch"
 import useAppSelector from "../../../../../hooks/useAppSelector"
@@ -30,6 +31,7 @@ const BookModal = ({}: Props) => {
 
   const handleClose = () => {
     dispatch(changeSelectedBook(null))
+    dispatch(toggleIsSelectingBook(""))
   }
 
   /**

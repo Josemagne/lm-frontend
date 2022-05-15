@@ -137,6 +137,7 @@ const BookSelector = () => {
               onSelect={(v) => selectionHandler(v)}
               // @ts-ignore
               data={titles}
+              data-test-id="bookselectorinput"
             />
           ) : null}
         </>

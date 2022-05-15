@@ -47,7 +47,7 @@ const initialFlashcardState: InitialFlashcardState = {
     filteredFlashcards: [],
     isFiltering: false,
   },
-  newFlashcard: new Flashcard(nanoid(), "BOOK", "", ""),
+  newFlashcard: new Flashcard(nanoid(), "", "", "BOOK", nanoid()),
   addingNewFlashcard: false,
   selection: {
     selectedFlashcard: null,
@@ -84,7 +84,7 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
       state.flashcards.flashcards[flashcard.flashcard_id] = flashcard;
 
       // NOTE Each new flashcard was a newFlashcard
-      state.newFlashcard = new Flashcard(nanoid(), "BOOK", "", "")
+      state.newFlashcard = new Flashcard(nanoid(), "", "", "BOOK", nanoid())
     },
     updateFlashcard: (state: InitialFlashcardState, action: PayloadAction<LM_Flashcard>) => {
       const flashcard = action.payload;
@@ -194,6 +194,16 @@ export const isTrainingSelector = createSelector(selectIsTraining, (isTraining) 
 const selectFlashcardsForTraining = (state: RootState) => state.flashcards.training.flashcardsForTraining;
 
 export const flashcardsForTrainingSelector = createSelector(selectFlashcardsForTraining, (flashcardsForTraining) => flashcardsForTraining)
+
+const selectIsFilteringFlashcards = (state: RootState) => state.flashcards.filter.isFiltering;
+
+export const isFilteringFlashcardsSelector = createSelector(selectIsFilteringFlashcards, isFilteringFlashcards => isFilteringFlashcards)
+
+const selectFilteredFlashcards = (state: RootState) => state.flashcards.filter.filteredFlashcards
+
+export const filteredFlashcardsSelector = createSelector(selectFilteredFlashcards, filteredFlashcards => filteredFlashcards)
+
+
 
 export const { changeNewFlashcard, addFlashcard, updateFlashcard, deleteFlashcard, changeSelectedFlashcard, switchAddingNewFlashcardStatus, updateFilteredFlashcards, deleteFilteredFlashcards, toggleFilteringState, toggleIsTraining } = flashcardSlice.actions;
 

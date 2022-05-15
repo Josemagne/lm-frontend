@@ -7,8 +7,12 @@ class Flashcard implements LM_Flashcard {
     flashcardStatus: FlashcardStatus = "NEW";
     question = "";
     answer = "";
+    status: FlashcardStatus = "NEW";
+    entity: {
+        entityType: LM_EntityName,
+        entityID: string
+    };
     timesRepeated: number = 0;
-    flashcardType: LM_EntityName;
     bookcollection_id: string | undefined;
     book_id: string | undefined;
     subchapter_id: string | undefined;
@@ -16,12 +20,9 @@ class Flashcard implements LM_Flashcard {
     articlecollection_id: string | undefined;
     article_id: string | undefined;
 
-    constructor(flashcard_id: string, flashcardType: LM_EntityName, question: string, answer: string, book_id?: string, chapter_id?: string, article_id?: string) {
+    constructor(flashcard_id: string, question: string, answer: string, entityType: LM_EntityName, entityID: string) {
+        this.entity = { entityID, entityType }
         this.flashcard_id = flashcard_id;
-        this.flashcardType = flashcardType;
-        this.book_id = book_id;
-        this.chapter_id = chapter_id;
-        this.article_id = article_id;
         this.question = question
         this.answer = answer
     }

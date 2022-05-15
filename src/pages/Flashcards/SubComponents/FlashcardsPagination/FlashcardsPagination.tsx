@@ -14,7 +14,12 @@ import FlashcardModal from "../FlashcardModal/FlashcardModal"
 import API from "../../../../api/API"
 import { RootState } from "../../../../state/redux/store"
 import { selectedBookSelector } from "../../../../state/redux/features/bookSlice"
-import { selectedFlashcardSelector } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  selectedFlashcardSelector,
+  filteredFlashcardsSelector,
+  isFilteringFlashcardsSelector,
+  flashcardsSelector,
+} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
 const { HeaderCell, Cell } = Table
 
@@ -28,17 +33,15 @@ const FlashcardsPagination = () => {
   const selectedBook = useAppSelector(selectedBookSelector)
   const selectedFlashcard = useAppSelector(selectedFlashcardSelector)
 
-  const filteredFlashcards: LM_Flashcard[] = Object.values(
-    useAppSelector((state: RootState) => state.flashcards.flashcards.flashcards)
+  const filteredFlashcards: LM_Flashcard[] = useAppSelector(
+    filteredFlashcardsSelector
   )
 
-  const isFiltering: boolean = useAppSelector(
-    (state: RootState) => state.flashcards.isFiltering
-  )
+  const isFiltering: boolean = useAppSelector(isFilteringFlashcardsSelector)
 
-  let flashcards: LM_Flashcard[] = Object.values(
-    useAppSelector((state) => state.flashcards.flashcards.flashcards)
-  )
+  let flashcards: LM_Flashcard[] = useAppSelector(
+    flashcardsSelector
+  ) as LM_Flashcard[]
 
   // TODO Move to utils
   /**

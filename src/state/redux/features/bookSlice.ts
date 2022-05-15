@@ -108,7 +108,7 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
         /* ANCHOR selectedBook */
         changeSelectedBook: (state, action: PayloadAction<LM_Book | null>) => {
             const updatedBook = action.payload;
-            state.selectedBook = updatedBook;
+            state.selection.selectedBook = updatedBook;
             if (updatedBook) state.books.books[updatedBook.book_id] = updatedBook;
         },
         deleteSelectedBook: (state: InitialBookState, action: PayloadAction<any>) => {
@@ -120,6 +120,9 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
 
             state.selection.selectedBook = null;
         },
+        toggleIsSelectingBook: (state: InitialBookState, action: PayloadAction<void>) => {
+            state.selection.isSelectingBook = !state.selection.isSelectingBook
+        }
     },
     extraReducers: (builder) => {
         /* ANCHOR BACKEND */
@@ -182,6 +185,6 @@ const selectIsSelectingBook = (state: RootState) => state.books.selection.isSele
 export const isSelectingBookSelector = createSelector(selectIsSelectingBook, (isSelectingBook) => isSelectingBook)
 
 
-export const { addBook, removeBook, updateBook, changeSelectedBook, deleteSelectedBook, toggleAddingNewBook } = bookSlice.actions;
+export const { addBook, removeBook, updateBook, changeSelectedBook, deleteSelectedBook, toggleAddingNewBook, toggleIsSelectingBook } = bookSlice.actions;
 
 export default bookSlice.reducer; 

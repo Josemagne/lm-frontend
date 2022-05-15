@@ -18,7 +18,7 @@ import {
 } from "../../types/Entity/entity"
 import API from "../../api/API"
 import FAPI from "../../storage/indexedDB/FAPI"
-import { updateBook } from "../../state/redux/features/bookSlice"
+import { updateBook, booksSelector } from "../../state/redux/features/bookSlice"
 import useAppDispatch from "../../hooks/useAppDispatch"
 
 type Props = {
@@ -83,9 +83,7 @@ const Dragging = ({ type, title }: Props) => {
     switch (entity) {
       case "BOOK":
         {
-          entities = Object.values(
-            useAppSelector((state) => state.books.books.books)
-          )
+          entities = useAppSelector(booksSelector)
         }
         break
       default: {
@@ -123,16 +121,13 @@ const Dragging = ({ type, title }: Props) => {
   /**
    * Calls the update function for redux, API and FAPIwith given entity obj
    */
-  async function mappingUpdate(
-    entityName: LM_EntityName,
-    entityObject: LM_Entity
-  ) {
+  function mappingUpdate(entityName: LM_EntityName, entityObject: LM_Entity) {
     console.log("mappingUpdate called with: ", entityName, entityObject)
     switch (entityName) {
       case "BOOK":
         dispatch(updateBook(entityObject))
-        await FAPI.updateBook(entityObject)
-        await API.updateBook(entityObject)
+        // await FAPI.updateBook(entityObject)
+        API.updateBook(entityObject)
         break
       default:
         break

@@ -50,14 +50,18 @@ const FlashcardAdder = ({ type }: Props) => {
     flashcardCopy.book_id = selectedBook.book_id
     await API.addFlashcard(flashcardCopy)
     dispatch(addFlashcard(flashcardCopy))
-    dispatch(changeNewFlashcard(new Flashcard(nanoid(), "BOOK", "", "")))
+    dispatch(
+      changeNewFlashcard(
+        new Flashcard(nanoid(), "", "", "BOOK", selectedBook.book_id)
+      )
+    )
   }
 
   async function handleClose() {
     dispatch(switchAddingNewFlashcardStatus(""))
     dispatch(
       changeNewFlashcard(
-        new Flashcard(nanoid(), "BOOK", "", "", selectedBook.book_id)
+        new Flashcard(nanoid(), "", "", "BOOK", selectedBook.book_id)
       )
     )
   }

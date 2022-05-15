@@ -14,7 +14,7 @@ COPY cypress cypress
 
 COPY cypress.json .
 
-# I had a local copy of this script, but it is easily findable online
 COPY wait-for-it.sh .
 
+# make script executable
 RUN chmod +x wait-for-it.sh
