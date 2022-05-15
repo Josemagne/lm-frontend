@@ -38,8 +38,9 @@ const BookModal = ({}: Props) => {
    * Remove book
    */
   function removeBook() {
-    API.deleteBook(selectedBook.book_id)
     dispatch(deleteSelectedBook(""))
+    dispatch(toggleIsSelectingBook(""))
+    API.deleteBook(selectedBook.book_id)
   }
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const BookModal = ({}: Props) => {
     <Modal
       className="lm-bookmodal"
       overflow={true}
-      open={selectedBook ? true : false}
+      open={selectedBook && isSelectingBook}
       onClose={handleClose}
     >
       {isSelectingBook && selectedBook ? (

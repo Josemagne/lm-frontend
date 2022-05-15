@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice, Slice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, Slice, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import API from '../../../api/API';
 import FAPI from '../../../storage/indexedDB/FAPI';
 import LM_Chapter from '../../../types/Book/chapter';
 import { nanoid } from 'nanoid';
 import Chapter from '../../../classes/Chapter';
+import { RootState } from '../store';
 
 interface InitialChapterState {
     chapters: {
@@ -101,24 +102,28 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
         builder.addCase(fetchChaptersBackend.pending, (state, action) => {
             state.chapters.loading = true;
         }),
-        builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
-            const chapters = action.payload;
+            builder.addCase(fetchChaptersBackend.fulfilled, (state, action) => {
+                const chapters = action.payload;
 
-            state.chapters.chapters = {};
-            (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
-                state.chapters.chapters[chapter.chapter_id] = chapter;
+                state.chapters.chapters = {};
+                (chapters as LM_Chapter[]).forEach((chapter: LM_Chapter) => {
+                    state.chapters.chapters[chapter.chapter_id] = chapter;
+                })
+                state.chapters.error = null;
+                state.chapters.loading = false;
+            }),
+            builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
+                state.chapters.error = action.payload as string;
+                state.chapters.loading = false;
             })
-            state.chapters.error = null;
-            state.chapters.loading = false;
-        }),
-        builder.addCase(fetchChaptersBackend.rejected, (state, action) => {
-            state.chapters.error = action.payload as string;
-            state.chapters.loading = false;
-        })
 
     }
 
 })
+
+const selectSelectedChapter = (state: RootState) => state.chapters.selectedChapter;
+
+export const selectedChapterSelector = createSelector(selectSelectedChapter, (selectedChapter) => selectedChapter)
 
 export const { changeSelectedChapter, addChapter, updateChapter, deleteChapter, toggleAddingNewChapter, deleteSelectedChapter } = chapterSlice.actions;
 

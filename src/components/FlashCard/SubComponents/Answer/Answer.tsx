@@ -1,14 +1,20 @@
 import React, { useRef, useMemo, useEffect, useState } from "react"
 import useAppDispatch from "../../../../hooks/useAppDispatch"
 import useAppSelector from "../../../../hooks/useAppSelector"
-import { changeSelectedBook } from "../../../../state/redux/features/bookSlice"
+import {
+  changeSelectedBook,
+  selectedBookSelector,
+} from "../../../../state/redux/features/bookSlice"
 import {
   changeNewFlashcard,
   changeSelectedFlashcard,
+  newFlashcardSelector,
 } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import ReactQuill from "react-quill"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
 import { Container } from "rsuite"
+import { selectedChapterSelector } from "../../../../state/redux/features/chapterSlice"
+import { selectedFlashcardSelector } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {
   /**
@@ -22,8 +28,8 @@ const Answer = ({ isNew }: Props) => {
   const editorRef = useRef(null)
   const dispatch = useAppDispatch()
 
-  const book = useAppSelector((state) => state.books.selectedBook)
-  const chapter = useAppSelector((state) => state.chapters.selectedChapter)
+  const book = useAppSelector(selectedBookSelector)
+  const chapter = useAppSelector(selectedChapterSelector)
 
   /* We use the component Question to change either selectedFlashcard or newFlashcard */
 
@@ -31,11 +37,9 @@ const Answer = ({ isNew }: Props) => {
   let selectedFlashcard: LM_Flashcard | null = null
 
   if (isNew) {
-    newFlashcard = useAppSelector((state) => state.flashcards.newFlashcard)
+    newFlashcard = useAppSelector(newFlashcardSelector)
   } else {
-    selectedFlashcard = useAppSelector(
-      (state) => state.flashcards.selectedFlashcard
-    )
+    selectedFlashcard = useAppSelector(selectedFlashcardSelector)
   }
 
   let actualFlashcard!: LM_Flashcard

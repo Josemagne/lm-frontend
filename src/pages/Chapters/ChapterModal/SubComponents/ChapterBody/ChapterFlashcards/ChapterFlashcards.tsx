@@ -4,7 +4,7 @@ import useAppSelector from "../../../../../../hooks/useAppSelector"
 import LM_Flashcard from "../../../../../../types/Flashcard/flashcard"
 import useAppDispatch from "../../../../../../hooks/useAppDispatch"
 import FlashcardAdder from "../../../../../../components/FlashcardAdder/FlashcardAdder"
-import { switchAddingNewFlashcardStatus } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
+import { toggleIsAddingNewFlashcard } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {}
 
@@ -16,7 +16,7 @@ type Props = {}
 const ChapterFlashcards = (props: Props) => {
   const dispatch = useAppDispatch()
   function toggleAddingNewFlashcard() {
-    dispatch(switchAddingNewFlashcardStatus(""))
+    dispatch(toggleIsAddingNewFlashcard(""))
   }
   return (
     <div className="lm-chaptermodifier__flashcards mt-3">

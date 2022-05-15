@@ -1,7 +1,10 @@
 import { useEffect } from "react"
 
 import Flashcard from "../../classes/base/Flashcard"
-import { changeSelectedBook } from "../../state/redux/features/bookSlice"
+import {
+  changeSelectedBook,
+  selectedBookSelector,
+} from "../../state/redux/features/bookSlice"
 import { LM_Book } from "../../types/Book/book"
 import Answer from "../FlashCard/SubComponents/Answer/Answer"
 import Question from "../FlashCard/SubComponents/Question/Question"
@@ -14,7 +17,9 @@ import API from "../../api/API"
 import {
   changeNewFlashcard,
   addFlashcard,
-  switchAddingNewFlashcardStatus,
+  newFlashcardSelector,
+  isAddingNewFlashcardSelector,
+  toggleIsAddingNewFlashcard,
 } from "../../state/redux/features/Flashcard/flashcardSlice"
 import { Modal } from "rsuite"
 import { RootState } from "../../state/redux/store"
@@ -30,16 +35,11 @@ type Props = {
  */
 const FlashcardAdder = ({ type }: Props) => {
   const dispatch = useAppDispatch()
-  const newFlashcard = useAppSelector(
-    (state: RootState) => state.flashcards.newFlashcard
-  )
-  const addingNewFlashcard = useAppSelector(
-    (state: RootState) => state.flashcards.addingNewFlashcard
-  )
 
-  const selectedBook = useAppSelector(
-    (state: RootState) => state.books.selectedBook
-  )
+  const newFlashcard = useAppSelector(newFlashcardSelector)
+  const isAddingNewFlashcard = useAppSelector(isAddingNewFlashcardSelector)
+
+  const selectedBook = useAppSelector(selectedBookSelector)
 
   /**
    * Changes the book with the new flashcard
@@ -50,15 +50,10 @@ const FlashcardAdder = ({ type }: Props) => {
     flashcardCopy.book_id = selectedBook.book_id
     await API.addFlashcard(flashcardCopy)
     dispatch(addFlashcard(flashcardCopy))
-    dispatch(
-      changeNewFlashcard(
-        new Flashcard(nanoid(), "", "", "BOOK", selectedBook.book_id)
-      )
-    )
   }
 
   async function handleClose() {
-    dispatch(switchAddingNewFlashcardStatus(""))
+    dispatch(toggleIsAddingNewFlashcard(""))
     dispatch(
       changeNewFlashcard(
         new Flashcard(nanoid(), "", "", "BOOK", selectedBook.book_id)
@@ -66,11 +61,11 @@ const FlashcardAdder = ({ type }: Props) => {
     )
   }
 
-  useEffect(() => {}, [addingNewFlashcard])
+  useEffect(() => {}, [isAddingNewFlashcard])
 
   return (
     <Modal
-      open={addingNewFlashcard ? true : false}
+      open={isAddingNewFlashcard ? true : false}
       onClose={handleClose}
       className="lm-gc-flashcardadder"
     >

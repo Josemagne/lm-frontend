@@ -7,6 +7,12 @@ import {
 } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import ReactQuill from "react-quill"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
+import { selectedBookSelector } from "../../../../state/redux/features/bookSlice"
+import { selectedChapterSelector } from "../../../../state/redux/features/chapterSlice"
+import {
+  newFlashcardSelector,
+  selectedFlashcardSelector,
+} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {
   /**
@@ -20,8 +26,8 @@ const Question = ({ isNew }: Props) => {
   const editorRef = useRef(null)
   const dispatch = useAppDispatch()
 
-  const book = useAppSelector((state) => state.books.selectedBook)
-  const chapter = useAppSelector((state) => state.books.selectedChapter)
+  const book = useAppSelector(selectedBookSelector)
+  const chapter = useAppSelector(selectedChapterSelector)
 
   /* We use the component Question to change either selectedFlashcard or newFlashcard */
 
@@ -29,11 +35,9 @@ const Question = ({ isNew }: Props) => {
   let selectedFlashcard: null | LM_Flashcard = null
 
   if (isNew) {
-    newFlashcard = useAppSelector((state) => state.flashcards.newFlashcard)
+    newFlashcard = useAppSelector(newFlashcardSelector)
   } else {
-    selectedFlashcard = useAppSelector(
-      (state) => state.flashcards.selectedFlashcard
-    )
+    selectedFlashcard = useAppSelector(selectedFlashcardSelector)
   }
 
   let actualFlashcard!: LM_Flashcard

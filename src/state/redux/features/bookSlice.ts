@@ -180,7 +180,7 @@ const selectSelectedBook = (state: RootState) => state.books.selection.selectedB
 
 export const selectedBookSelector = createSelector(selectSelectedBook, (selectedBook) => selectedBook)
 
-const selectIsSelectingBook = (state: RootState) => state.books.selection.isSelecting;
+const selectIsSelectingBook = (state: RootState) => state.books.selection.isSelectingBook;
 
 export const isSelectingBookSelector = createSelector(selectIsSelectingBook, (isSelectingBook) => isSelectingBook)
 

@@ -14,6 +14,7 @@ import FlashcardModal from "../FlashcardModal/FlashcardModal"
 import API from "../../../../api/API"
 import { RootState } from "../../../../state/redux/store"
 import { selectedBookSelector } from "../../../../state/redux/features/bookSlice"
+import { isSelectingFlashcardSelector } from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import {
   selectedFlashcardSelector,
   filteredFlashcardsSelector,
@@ -31,6 +32,8 @@ const FlashcardsPagination = () => {
   const dispatch = useAppDispatch()
 
   const selectedBook = useAppSelector(selectedBookSelector)
+
+  const isSelectingFlashcard = useAppSelector(isSelectingFlashcardSelector)
   const selectedFlashcard = useAppSelector(selectedFlashcardSelector)
 
   const filteredFlashcards: LM_Flashcard[] = useAppSelector(
@@ -76,11 +79,9 @@ const FlashcardsPagination = () => {
     dispatch(fetchFlashcardsBackend(selectedBook.book_id))
   }, [selectedBook])
 
-  useEffect(() => {}, [selectedFlashcard])
-
   useEffect(() => {
-    if (!flashcards) return
-  }, [flashcards])
+    console.log("flashcards: ", flashcards)
+  }, [flashcards, selectedFlashcard, isSelectingFlashcard])
 
   useEffect(() => {
     console.log("filteredFlashcards: ", filteredFlashcards)

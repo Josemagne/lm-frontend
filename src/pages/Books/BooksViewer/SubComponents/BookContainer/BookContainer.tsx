@@ -22,8 +22,8 @@ const BookContainer = ({ book }: Props) => {
 
   // We lead the user to /bookmodifier/{book_id}
   const handleClick = () => {
-    dispatch(toggleIsSelectingBook(""))
     dispatch(changeSelectedBook(book))
+    dispatch(toggleIsSelectingBook(""))
   }
 
   useEffect(() => {})

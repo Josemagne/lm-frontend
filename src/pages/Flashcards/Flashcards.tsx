@@ -2,12 +2,15 @@ import React, { useEffect } from "react"
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useAppSelector from "../../hooks/useAppSelector"
 import BookSelector from "../../components/BookSelector/BookSelector"
-import { fetchBooksBackend } from "../../state/redux/features/bookSlice"
+import {
+  fetchBooksBackend,
+  selectedBookSelector,
+} from "../../state/redux/features/bookSlice"
 import FlashcardAdder from "../../components/FlashcardAdder/FlashcardAdder"
 import { LM_EntityName } from "../../types/Entity/entity"
 import FlashcardsPagination from "./SubComponents/FlashcardsPagination/FlashcardsPagination"
 import {
-  switchAddingNewFlashcardStatus,
+  toggleIsAddingNewFlashcard,
   toggleIsTraining,
 } from "../../state/redux/features/Flashcard/flashcardSlice"
 import FlashcardsFilter from "./SubComponents/FlashcardsFilter/FlashcardsFilter"
@@ -18,11 +21,7 @@ type Props = {}
 const Flashcards = (props: Props) => {
   const dispatch = useAppDispatch()
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook)
-
-  function toggleAddingNewFlashcard() {
-    dispatch(switchAddingNewFlashcardStatus(""))
-  }
+  const selectedBook = useAppSelector(selectedBookSelector)
 
   function startTraining() {
     dispatch(toggleIsTraining(""))
@@ -44,7 +43,8 @@ const Flashcards = (props: Props) => {
           <div className="flashcards__add">
             <button
               className="btn btn-primary"
-              onClick={toggleAddingNewFlashcard}
+              // @ts-ignore
+              onClick={() => dispatch(toggleIsAddingNewFlashcard(""))}
             >
               Add flashcard
             </button>
