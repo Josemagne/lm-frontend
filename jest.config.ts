@@ -12,7 +12,7 @@ const config: Config.InitialOptions = {
     "<rootDir>/src"
   ],
   transform: {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.(tsx|ts)?$": "ts-jest"
   },
   coverageReporters: ["lcov", "text"],
   coverageDirectory: "test-coverage",

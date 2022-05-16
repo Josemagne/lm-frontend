@@ -33,6 +33,7 @@ const BookContainer = ({ book }: Props) => {
         handleClick()
       }}
       className="lm-bookcontainer"
+      data-testid="bookcontainer"
     >
       <div className="lm-authorviewer">
         <span>{author_prename}</span>

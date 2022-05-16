@@ -105,7 +105,7 @@ const BookAdder = (props: Props) => {
   useEffect(() => {}, [addingNewBook])
 
   return (
-    <Modal open={addingNewBook} onClose={handleClose}>
+    <Modal open={addingNewBook} onClose={handleClose} data-testid="bookadder">
       <Modal.Header>Add A Book</Modal.Header>
       <div className="lm-lc-bookmodifier">
         <form onSubmit={formik.handleSubmit}>

@@ -13,6 +13,8 @@ import {
 } from "../../../state/redux/features/chapterSlice"
 import ChapterModal from "./../ChapterModal/ChapterModal"
 import ChapterPagination from "./SubComponents/ChaptersPagination/ChaptersPagination"
+import { selectedBookSelector } from "../../../state/redux/features/bookSlice"
+import { selectedChapterSelector } from "../../../state/redux/features/chapterSlice"
 import {
   fetchBooksBackend,
   fetchBooksFrontend,
@@ -21,32 +23,17 @@ import {
 const ChaptersViewer = () => {
   const dispatch = useAppDispatch()
 
-  const selectedBook: LM_Book | null = useAppSelector(
-    (state) => state.books.selectedBook
-  )
+  const selectedBook: LM_Book | null = useAppSelector(selectedBookSelector)
+
   let chapters: LM_Chapter[] | null = null
   let filteredChapters: LM_Chapter[] | null
   const addingNewChapter = useAppSelector(
     (state) => state.chapters.addingNewChapter
   )
 
-  try {
-    if (selectedBook) {
-      // @ts-ignore
-      filteredChapters = chapters.filter(
-        (chapter: LM_Chapter) => chapter.book_id === selectedBook.book_id
-      )
-    }
-  } catch (err) {
-    filteredChapters = null
-  }
-
-  let selectedChapter: LM_Chapter | null
-  try {
-    selectedChapter = useAppSelector((state) => state.chapters.selectedChapter)
-  } catch (err) {
-    selectedChapter = null
-  }
+  const selectedChapter: LM_Chapter | null = useAppSelector(
+    selectedChapterSelector
+  )
 
   function openChapterAdder() {
     dispatch(toggleAddingNewChapter(""))

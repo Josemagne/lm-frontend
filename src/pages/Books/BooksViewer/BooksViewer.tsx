@@ -28,8 +28,6 @@ const BooksViewer = () => {
   const dispatch = useAppDispatch()
 
   const books = useAppSelector(booksSelector)
-  const selectedBook = useAppSelector(selectedBookSelector)
-  const isSelectingBook = useAppSelector(isSelectingBookSelector)
 
   const [windowWidth, setWindowWith] = useState(window.innerWidth)
 
@@ -60,7 +58,11 @@ const BooksViewer = () => {
   return (
     <div className="lm-page lm-booksviewer">
       <div className="lm-booksviewer__adding">
-        <button className="btn btn-primary" onClick={openBookAdder}>
+        <button
+          className="btn btn-primary"
+          onClick={openBookAdder}
+          data-testid="bookadderbutton"
+        >
           Add a book
         </button>
       </div>

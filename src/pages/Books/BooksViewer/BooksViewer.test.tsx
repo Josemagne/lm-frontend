@@ -12,7 +12,6 @@ import BookModal from "./SubComponents/BookModal/BookModal"
 import userEvent from "@testing-library/user-event"
 import { screen } from "@testing-library/react"
 import BooksPagination from "./SubComponents/BooksPagination/BooksPagination"
-import { render as enzymeRender } from "enzyme"
 import { render } from "@testing-library/react"
 
 describe("BooksViewer", () => {
@@ -25,16 +24,6 @@ describe("BooksViewer", () => {
   //     </Provider>
   //   )
   // })
-
-  const renderBooksViewer = () => {
-    return enzymeRender(
-      <Provider store={store}>
-        <HashRouter>
-          <BooksViewer />
-        </HashRouter>
-      </Provider>
-    )
-  }
 
   beforeEach(() => {
     render(
@@ -49,19 +38,13 @@ describe("BooksViewer", () => {
   it("Should open BookModal if a BookContainer is clicked", () => {
     store.dispatch(addBook(new Book("a", "Tim", "Strup", "abc", 22, 33, "")))
 
-    // NOTE We use enzyme for easier querying
-    const wrapper = renderBooksViewer()
-
     console.log(store.getState())
 
     const book = screen.getByText("Strup")
 
     console.log("book: ", book)
 
-    userEvent.click(book).then(() => {
-      expect(wrapper.find(".lm-bookmodal")).toBeInTheDocument()
-      console.log(wrapper)
-    })
+    userEvent.click(book).then(() => {})
 
     // expect(screen.getByTestId("lm-bookmodal")).toBeInTheDocument()
   })

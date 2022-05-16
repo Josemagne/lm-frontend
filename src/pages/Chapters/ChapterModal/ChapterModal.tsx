@@ -19,7 +19,7 @@ import {
   deleteSelectedChapter,
 } from "../../../state/redux/features/chapterSlice"
 import { Accordion } from "react-bootstrap"
-import { switchAddingNewFlashcardStatus } from "../../../state/redux/features/Flashcard/flashcardSlice"
+import { toggleIsAddingNewFlashcard } from "../../../state/redux/features/Flashcard/flashcardSlice"
 
 /**
  * Modal where we can edit information about a chapter

@@ -14,7 +14,7 @@ function flashcardTrainerFilter(flashcards: LM_Flashcard[], flashcardsForTrainin
     const flashcard$ = from(flashcards);
     flashcard$.pipe(
         // Get the right flashcards
-        map(f => f.flashcardStatus === "LEARNING" || f.flashcardStatus === "NEW")
+        map(f => f.status === "LEARNING" || f.status === "NEW")
     )
     flashcard$.subscribe(console.log)
 

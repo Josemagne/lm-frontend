@@ -53,6 +53,7 @@ const BookModal = ({}: Props) => {
       overflow={true}
       open={selectedBook && isSelectingBook}
       onClose={handleClose}
+      data-testid="bookmodal"
     >
       {isSelectingBook && selectedBook ? (
         <Fragment>

@@ -3,7 +3,11 @@ import ReactQuill from "react-quill"
 import useAppSelector from "../../../../hooks/useAppSelector"
 import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
 import useAppDispatch from "../../../../hooks/useAppDispatch"
-import { changeSelectedFlashcard } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  changeSelectedFlashcard,
+  isSelectingFlashcardSelector,
+  selectedFlashcardSelector,
+} from "../../../../state/redux/features/Flashcard/flashcardSlice"
 import API from "../../../../api/API"
 import Flashcard from "../../../../classes/base/Flashcard"
 import { Container, Modal } from "rsuite"
@@ -21,10 +25,17 @@ const FlashcardModal = (props: Props) => {
   const [selectedFlashcardCopyLocal, setSelectedFlashcardCopyLocal] = useState<
     LM_Flashcard | undefined
   >()
+
   const dispatch = useAppDispatch()
+
   const selectedFlashcard: LM_Flashcard = useAppSelector(
-    (state) => state.flashcards.selectedFlashcard
+    selectedFlashcardSelector
   )
+
+  // const isSelectingFlashcard: boolean = useAppSelector(
+  //   isSelectingFlashcardSelector
+  // )
+
   const editorRef = useRef(null)
 
   const handleClose = () => {
@@ -43,7 +54,6 @@ const FlashcardModal = (props: Props) => {
       open={selectedFlashcard ? true : false}
       onClose={handleClose}
       className="lm-gc-flashcardmodal"
-      size="full"
     >
       <div className="flashcardmodal__exit">
         <button className="btn btn-danger" onClick={handleClose}>

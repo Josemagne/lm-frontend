@@ -225,11 +225,15 @@ const Dragging = ({ type, title }: Props) => {
       >
         <div className="entities_container">
           <h3>{title}</h3>
-          <Droppable droppableId="entities">
+          <Droppable droppableId="entities" data-testid="entitiesdroppable">
             {(droppable, snapshot) => {
               return (
                 <div>
-                  <ul {...droppable.droppableProps} ref={droppable.innerRef}>
+                  <ul
+                    {...droppable.droppableProps}
+                    ref={droppable.innerRef}
+                    data-testid="entitiesdroppablelist"
+                  >
                     {Object.values(entityMapping.TO_READ).map(
                       (entity: any, index) => {
                         return (

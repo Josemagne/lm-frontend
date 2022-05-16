@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react"
-import { render as enzymeRender } from "enzyme"
 import BookSelector from "./BookSelector"
 import { store } from "../../state/redux/store"
 import userEvent from "@testing-library/user-event"
