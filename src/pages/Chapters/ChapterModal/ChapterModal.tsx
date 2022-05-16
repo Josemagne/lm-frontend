@@ -17,9 +17,14 @@ import FAPI from "../../../storage/indexedDB/FAPI"
 import {
   changeSelectedChapter,
   deleteSelectedChapter,
+  toggleIsSelectingChapter,
 } from "../../../state/redux/features/chapterSlice"
 import { Accordion } from "react-bootstrap"
 import { toggleIsAddingNewFlashcard } from "../../../state/redux/features/Flashcard/flashcardSlice"
+import {
+  selectedChapterSelector,
+  isSelectingChapterSelector,
+} from "../../../state/redux/features/chapterSlice"
 
 /**
  * Modal where we can edit information about a chapter
@@ -31,9 +36,8 @@ const ChapterModal = () => {
    * Dispatches action creator to the store
    */
   const dispatch = useAppDispatch()
-  const selectedChapter = useAppSelector(
-    (state) => state.chapters.selectedChapter
-  )
+  const selectedChapter = useAppSelector(selectedChapterSelector)
+  const isSelectingChapter: boolean = useAppSelector(isSelectingChapterSelector)
 
   /**
    * Handles the change of the part of a book by dispatching the new state to the store
@@ -42,25 +46,24 @@ const ChapterModal = () => {
     dispatch(changeSelectedChapter(newChapter))
   }
 
-  const submitHandler = async () => {
-    await API.updateChapter(selectedChapter)
+  const submitHandler = () => {
+    API.updateChapter(selectedChapter)
   }
 
   /**
    * Closes the modal
    */
-  const handleClose = async () => {
+  const handleClose = () => {
     dispatch(changeSelectedChapter(null))
-    await API.updateChapter(selectedChapter)
+    dispatch(toggleIsSelectingChapter(""))
+    API.updateChapter(selectedChapter)
   }
 
-  useEffect(() => {
-    console.log("ChapterTitle, selectedChapter: ", selectedChapter)
-  }, [selectedChapter])
+  useEffect(() => {}, [selectedChapter])
 
   return (
     <Modal
-      open={selectedChapter ? true : false}
+      open={isSelectingChapter}
       onClose={handleClose}
       className={
         selectedChapter

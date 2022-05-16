@@ -1,0 +1,12 @@
+.lm-gc-flashcard__answer {
+  margin: none !important;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+  .flashcard__answer__title {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(245, 231, 231);
+    h4 {
+      padding: 0.5rem;
+    }
+  }
+}

@@ -54,6 +54,7 @@ const FlashcardModal = (props: Props) => {
       open={selectedFlashcard ? true : false}
       onClose={handleClose}
       className="lm-gc-flashcardmodal"
+      full={true}
     >
       <div className="flashcardmodal__exit">
         <button className="btn btn-danger" onClick={handleClose}>

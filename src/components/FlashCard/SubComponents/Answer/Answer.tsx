@@ -15,6 +15,7 @@ import { LM_Flashcard } from "../../../../types/Flashcard/flashcard"
 import { Container } from "rsuite"
 import { selectedChapterSelector } from "../../../../state/redux/features/chapterSlice"
 import { selectedFlashcardSelector } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import "./_answer.scss"
 
 type Props = {
   /**
@@ -72,24 +73,18 @@ const Answer = ({ isNew }: Props) => {
   }, [actualFlashcard])
 
   return (
-    <div className="lm-gc-flashcard__question">
-      <div className="answer__title">
+    <div className="lm-gc-flashcard__answer">
+      <div className="flashcard__answer__title">
         <h4>Answer</h4>
       </div>
-      <Container
-        onClick={() => {
-          // @ts-ignore
-          editorRef.current.focus()
-        }}
-      >
-        <ReactQuill
-          modules={{ toolbar: !isNew }}
-          ref={editorRef}
-          // defaultValue={""}
-          value={value}
-          onChange={(v: string) => handleChange(v)}
-        />
-      </Container>
+
+      <ReactQuill
+        modules={{ toolbar: !isNew }}
+        ref={editorRef}
+        // defaultValue={""}
+        value={value}
+        onChange={(v: string) => handleChange(v)}
+      />
     </div>
   )
 }

@@ -16,9 +16,14 @@ import Flashcard from "../../../../../classes/base/Flashcard"
 import * as yup from "yup"
 import FAPI from "../../../../../storage/indexedDB/FAPI"
 import { Modal } from "rsuite"
-import { toggleAddingNewChapter } from "../../../../../state/redux/features/chapterSlice"
+import {
+  toggleAddingNewChapter,
+  isAddingNewChapterSelector,
+  changeSelectedChapter,
+} from "../../../../../state/redux/features/chapterSlice"
 import API from "../../../../../api/API"
 import { addChapter } from "../../../../../state/redux/features/chapterSlice"
+import { selectedBookSelector } from "../../../../../state/redux/features/bookSlice"
 
 //type Props = {};
 
@@ -27,7 +32,8 @@ const ChapterAdder = () => {
 
   const dispatch = useAppDispatch()
 
-  const selectedBook = useAppSelector((state) => state.books.selectedBook)
+  const selectedBook = useAppSelector(selectedBookSelector)
+  const isAddingNewChapter: boolean = useAppSelector(isAddingNewChapterSelector)
 
   const chapterSchema = yup.object().shape({
     title: yup.string().required().min(2, "Too short").max(40, "Too long"),
@@ -57,18 +63,18 @@ const ChapterAdder = () => {
 
       return errors
     },
-    onSubmit: async (values, { resetForm, setValues }) => {
+    onSubmit: (values, { resetForm, setValues }) => {
       values.book_id = selectedBook.book_id
       values.chapter_id = nanoid()
-      console.log("v: ", values)
 
       dispatch(addChapter(values))
 
       //await FAPI.addChapter(values);
 
-      await API.addChapter(values)
+      API.addChapter(values)
 
       resetForm()
+
       setValues(() => {
         setCurrentID(nanoid())
         const newChapter = new Chapter(
@@ -86,24 +92,17 @@ const ChapterAdder = () => {
     },
   })
 
-  /**
-   * Decides if the ChapterAdder Modal will be open
-   */
-  const addingNewChapter = useAppSelector(
-    (state) => state.chapters.addingNewChapter
-  )
-
   function handleClose() {
     dispatch(toggleAddingNewChapter(""))
   }
 
   useEffect(() => {
     setCurrentID(nanoid())
-  }, [formik.values, addingNewChapter])
+  }, [formik.values, isAddingNewChapter])
 
   return (
     <Modal
-      open={addingNewChapter && selectedBook ? true : false}
+      open={isAddingNewChapter && selectedBook ? true : false}
       onClose={handleClose}
     >
       <div className="lm-chapteradder">

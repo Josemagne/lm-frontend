@@ -6,14 +6,13 @@ import { LM_Book } from "../../types/Book/book"
 import {
   changeSelectedBook,
   fetchBooksBackend,
+  deleteSelectedBook,
+  selectedBookSelector,
+  booksSelector,
 } from "../../state/redux/features/bookSlice"
 import Flashcard from "../../classes/base/Flashcard"
 import { changeNewFlashcard } from "../../state/redux/features/Flashcard/flashcardSlice"
 import { nanoid } from "nanoid"
-import {
-  selectedBookSelector,
-  booksSelector,
-} from "../../state/redux/features/bookSlice"
 
 /**
  * Lets us select the book for the flashcards.
@@ -113,7 +112,7 @@ const BookSelector = () => {
         <div className="bookselector__placeholder__delete">
           <button
             className="btn btn-close"
-            onClick={() => removeSelectedBook()}
+            onClick={() => dispatch(deleteSelectedBook(""))}
           ></button>
         </div>
       </div>

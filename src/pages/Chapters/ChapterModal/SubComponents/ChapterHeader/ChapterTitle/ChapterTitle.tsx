@@ -5,7 +5,10 @@ import useAppDispatch from "../../../../../../hooks/useAppDispatch"
 import { changeSelectedBook } from "../../../../../../state/redux/features/bookSlice"
 import { LM_Book } from "../../../../../../types/Book/book"
 import LM_Chapter from "../../../../../../types/Book/chapter"
-import { changeSelectedChapter } from "../../../../../../state/redux/features/chapterSlice"
+import {
+  changeSelectedChapter,
+  selectedChapterSelector,
+} from "../../../../../../state/redux/features/chapterSlice"
 
 type Props = {}
 
@@ -17,9 +20,7 @@ type Props = {}
 const ChapterTitle = ({}: Props) => {
   const dispatch = useAppDispatch()
 
-  const selectedChapter = useAppSelector(
-    (state) => state.chapters.selectedChapter
-  )
+  const selectedChapter = useAppSelector(selectedChapterSelector)
 
   const handleChange = (newTitle: string) => {
     const chapterCopy: LM_Chapter = JSON.parse(JSON.stringify(selectedChapter))
@@ -36,7 +37,7 @@ const ChapterTitle = ({}: Props) => {
           defaultValue={selectedChapter.title}
           type="text"
           placeholder="Kapitel"
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e: any) => handleChange(e.target.value)}
         />
       </FloatingLabel>
     </div>

@@ -14,7 +14,10 @@ import {
 import ChapterModal from "./../ChapterModal/ChapterModal"
 import ChapterPagination from "./SubComponents/ChaptersPagination/ChaptersPagination"
 import { selectedBookSelector } from "../../../state/redux/features/bookSlice"
-import { selectedChapterSelector } from "../../../state/redux/features/chapterSlice"
+import {
+  selectedChapterSelector,
+  isAddingNewChapterSelector,
+} from "../../../state/redux/features/chapterSlice"
 import {
   fetchBooksBackend,
   fetchBooksFrontend,
@@ -25,11 +28,7 @@ const ChaptersViewer = () => {
 
   const selectedBook: LM_Book | null = useAppSelector(selectedBookSelector)
 
-  let chapters: LM_Chapter[] | null = null
-  let filteredChapters: LM_Chapter[] | null
-  const addingNewChapter = useAppSelector(
-    (state) => state.chapters.addingNewChapter
-  )
+  const isAddingNewChapter = useAppSelector(isAddingNewChapterSelector)
 
   const selectedChapter: LM_Chapter | null = useAppSelector(
     selectedChapterSelector
@@ -40,14 +39,11 @@ const ChaptersViewer = () => {
   }
 
   useEffect(() => {
-    console.log("selectedBOok: ", selectedBook)
-    console.log("addingNewChapter: ", addingNewChapter)
     if (!selectedBook) return
     fetchChaptersBackend(selectedBook.book_id)
-    fetchChaptersFrontend(selectedBook.book_id)
   }, [selectedBook])
 
-  useEffect(() => {}, [addingNewChapter])
+  useEffect(() => {}, [isAddingNewChapter])
 
   useEffect(() => {}, [])
 

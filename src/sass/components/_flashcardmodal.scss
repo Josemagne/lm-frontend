@@ -22,6 +22,7 @@
 .lm-gc-flashcardmodal {
   width: 100%;
   .flashcardmodal__exit {
+    z-index: 3000;
     position: fixed;
     right: 10px;
     top: 10px;
@@ -33,5 +34,26 @@
     margin-top: 2rem;
     width: 100%;
     max-width: 768px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @media screen and (min-width: 768px) {
+      flex-direction: row;
+    }
+
+    .flashcardmodal__answer,
+    .flashcardmodal__question {
+      width: 100%;
+      max-width: 768px;
+      margin-bottom: 0.5rem;
+    }
+
+    .flashcardmodal__question {
+    }
+
+    .flashcardmodal__answer {
+    }
   }
 }

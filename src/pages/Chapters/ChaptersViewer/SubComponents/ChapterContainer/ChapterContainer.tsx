@@ -8,6 +8,7 @@ import API from "../../../../../api/API"
 import {
   deleteChapter,
   changeSelectedChapter,
+  toggleIsSelectingChapter,
 } from "../../../../../state/redux/features/chapterSlice"
 
 type Props = {
@@ -30,7 +31,7 @@ const ChapterContainer = ({ chapter }: Props) => {
     e.preventDefault()
     e.stopPropagation()
     dispatch(changeSelectedChapter(chapter))
-    console.log("clicked")
+    dispatch(toggleIsSelectingChapter(""))
   }
 
   const removeChapter = async (e: any) => {
@@ -47,17 +48,26 @@ const ChapterContainer = ({ chapter }: Props) => {
   useEffect(() => {}, [chapter])
 
   return (
-    <div className="lm-chaptercontainer" >
+    <div className="lm-chaptercontainer">
       <div className="lm-chaptercontainer__state">
         <ChapterState chapter={chapter} />
       </div>
-      <div className="lm-chaptercontainer__index"onClick={(e) => handleClick(e)}>
+      <div
+        className="lm-chaptercontainer__index"
+        onClick={(e) => handleClick(e)}
+      >
         <p>{chapter.index}</p>
       </div>
-      <div className="lm-chaptercontainer__seperator"onClick={(e) => handleClick(e)}>
+      <div
+        className="lm-chaptercontainer__seperator"
+        onClick={(e) => handleClick(e)}
+      >
         <p>-</p>
       </div>
-      <div className="lm-chaptercontainer__title"onClick={(e) => handleClick(e)}>
+      <div
+        className="lm-chaptercontainer__title"
+        onClick={(e) => handleClick(e)}
+      >
         <p>{chapter.title}</p>
       </div>
       {/* TODO */}
