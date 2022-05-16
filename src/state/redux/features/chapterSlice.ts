@@ -116,7 +116,7 @@ export const chapterSlice: Slice<InitialChapterState> = createSlice({
       }
     },
     deleteSelectedChapter: (state, action) => {
-      if (!state.selectedChapter) return
+      if (!state.selection.selectedChapter) return
       const chapter_id = state.selection.selectedChapter.chapter_id
       state.selection.selectedChapter = null
       delete state.chapters.chapters[chapter_id]
