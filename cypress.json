@@ -2,6 +2,8 @@
   "chromeWebSecurity": false,
   "video": false,
   "baseUrl": "http://localhost:8067",
+  "integrationFolder": ".",
+  "testFiles": ["**.spec.ts", "**.spec.tsx"],
   "env": {
     "apiUrl": "https://librimem.com/api/v1"
   },
