@@ -18,7 +18,7 @@ jobs:
       - name: Cypress tests
         uses: cypress-io/github-action@v2
         with:
-          browser: electron
+          browser: firefox
           start: npm run ci:start-server
 
       - uses: actions/upload-artifact@v1
