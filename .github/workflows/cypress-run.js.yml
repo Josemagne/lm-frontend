@@ -15,8 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: cypress-io/github-action@v2
       - name: Cypress tests
+        uses: cypress-io/github-action@v2
         with:
           browser: electron
           start: npm run ci:start-server
