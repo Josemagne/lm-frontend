@@ -19,7 +19,7 @@ jobs:
         uses: cypress-io/github-action@v3.0.0
         with:
           browser: electron
-          start: npm run ci:start-server
+          start: npm run ci:cy-run
 
       - uses: actions/upload-artifact@v1
         if: failure()
