@@ -49,6 +49,12 @@ body {
   display: none;
 }
 
+@mixin md() {
+  @media screen and (min-width: 576px) {
+    @content;
+  }
+}
+
 // NOTE makes the modal from bootstrap full width
 .modal-dialog {
   width: 100vw;

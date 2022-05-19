@@ -1,3 +1,4 @@
-declare module 'react-quill';
+declare module "react-quill"
+declare module "*.jpg"
 
-export { };
+export {}

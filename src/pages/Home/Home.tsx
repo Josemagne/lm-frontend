@@ -1,10 +1,13 @@
 import React, { LegacyRef, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 // @ts-ignore
-import summaryImage from "../../assets/images/summary.png"
-import flashcardImage from "../../assets/images/flashcard.svg"
-import bookImage from "../../assets/images/book.svg"
+import summaryImage from "../../assets/images/summaries.jpg"
+// @ts-ignore
+import flashcardImage from "../../assets/images/flashcards.jpg"
+// @ts-ignore
+import bookImage from "../../assets/images/books.jpg"
 import { gsap } from "gsap"
+import { fileURLToPath } from "url"
 
 type Props = {}
 
@@ -22,11 +25,13 @@ const Home = (props: Props) => {
       title: "Track your books",
       text: "Track the books that you are reading at the moment.",
       image: bookImage,
+      imageName: "books.jpg",
     },
     {
       title: "Add Flashcards",
       text: "You surely will have to repeat what you have learnt. With LibriMem you can create flashcards and train yourself.",
       image: flashcardImage,
+      imageName: "flashcards.jpg",
     },
     {
       title: "Write Summaries",
@@ -61,33 +66,50 @@ const Home = (props: Props) => {
 
   const authenticateRef = useRef(null)
 
-  useEffect(() => {}, [])
+  const baseURL = "../../assets/images/"
+
+  useEffect(() => {
+    gsap.from(".lm-home__section", { duration: 1, x: "-100%" })
+  }, [])
 
   return (
     <div className="lm-home lm-page">
       <div className="lm-home__intro">
         <p>
-          Reading a book can be complicated sometimes. LibriMem gives you an app
-          where you can engage in the process of learning.
+          Reading is more than just speaking out the content of a scripture such
+          in a book. Along with reading comes comprehension. Reading a book can
+          be complicated sometimes. LibriMem is an app where you can engage in
+          the process of learning.
         </p>
         <p>
-          With demanding texts such as technical books it not enough to just
+          With demanding texts such as technical books it is not enough to just
           read them. You will have to "interact" with what you have read to
           really grasp it.{" "}
         </p>
       </div>
+      <div className="section-divider"></div>
       <div className="lm-home__features">
-        {features.map((feature) => {
+        {features.map((feature, index) => {
           return (
             <>
-              <div className="lm-home__section">
-                <h3 className="title">{feature.title}</h3>
-                <div className="text">
-                  <p>{feature.text}</p>
+              <div
+                className={`lm-home__section${index} lm-home__section`}
+                style={{
+                  backgroundImage: `url(${feature.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center center",
+                  zIndex: "0",
+                }}
+              >
+                <div className="content-container">
+                  <h1 className="title">{feature.title}</h1>
+                  <div className="text">
+                    <p>{feature.text}</p>
+                  </div>
                 </div>
-                <div className="image">
+                {/* <div className="image">
                   <img src={feature.image} alt="title" />
-                </div>
+                </div> */}
               </div>
               <div className="section-divider"></div>
             </>

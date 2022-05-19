@@ -1,7 +1,8 @@
 @use "sass:map";
 @import "../abstracts/colors";
-
+@import "../abstracts/globals";
 // ANCHOR OFFCANVAS
+
 .offcanvas-body {
   .lm-navbar__linkscontainer {
     display: flex;
@@ -36,10 +37,13 @@
   position: fixed;
   overflow: hidden;
   bottom: 0 !important;
+  -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+  -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+  box-shadow: inset 0px 0px 5px #c1c1c1;
+  outline: none;
 
   @media screen and (min-width: 576px) {
     position: sticky !important;
-    bottom: auto;
   }
   .lm-navbar__inner {
     .lm-navbar__linkscontainer {
@@ -67,11 +71,16 @@
     display: flex;
     flex-direction: row;
     .lm-navbar__link {
+      font-size: 16px;
       padding: 0.5rem !important;
       text-decoration: none !important;
       margin: auto;
-      color: rgb(14, 18, 255);
+      color: rgb(84, 86, 231);
       color: map.get($colors, "secondary");
+      @include md() {
+        font-size: 20px;
+      }
+
       .nav-item {
       }
     }

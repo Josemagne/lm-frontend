@@ -16,6 +16,7 @@ import Book from "../../../classes/Book"
 import API from "../../../api/API"
 //import useAppDispatch from "../../../hooks/useAppDispatch"
 import { RootState } from "../store"
+import bookAPI from "../queries/bookQueries"
 
 //const dispatch = useAppDispatch()
 
@@ -166,31 +167,41 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
       builder.addCase(fetchBooksBackend.rejected, (state, action) => {
         state.books.loading = false
         state.books.error = action.payload
-      })
-
-    /* ANCHOR FRONTEND BOOKS */
-    // Get books from indexedDB
-    builder.addCase(fetchBooksFrontend.pending, (state, action) => {
-      state.books.loading = true
-    }),
-      builder.addCase(
-        fetchBooksFrontend.fulfilled,
-        (state, action: PayloadAction<LM_Book[]>) => {
-          action.payload.forEach((book) => {
-            if (!state.books.books[book.book_id]) {
-              state.books.books[book.book_id] = book
-            }
+      }),
+      // NOTE RTK Query
+      builder.addMatcher(
+        bookAPI.endpoints.getBooks.matchFulfilled,
+        (state: InitialBookState, action: PayloadAction<LM_Book[]>) => {
+          const books = action.payload
+          books.forEach((book) => {
+            state.books.books[book.book_id] = book
           })
-          state.books.loading = false
-          if (state.books.amountOfBooks > action.payload.length) {
-            state.books.amountOfBooks = action.payload.length
-          }
         }
-      ),
-      builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
-        state.books.loading = false
-        state.books.error = action.payload
-      })
+      )
+
+    // /* ANCHOR FRONTEND BOOKS */
+    // // Get books from indexedDB
+    // builder.addCase(fetchBooksFrontend.pending, (state, action) => {
+    //   state.books.loading = true
+    // }),
+    //   builder.addCase(
+    //     fetchBooksFrontend.fulfilled,
+    //     (state, action: PayloadAction<LM_Book[]>) => {
+    //       action.payload.forEach((book) => {
+    //         if (!state.books.books[book.book_id]) {
+    //           state.books.books[book.book_id] = book
+    //         }
+    //       })
+    //       state.books.loading = false
+    //       if (state.books.amountOfBooks > action.payload.length) {
+    //         state.books.amountOfBooks = action.payload.length
+    //       }
+    //     }
+    //   ),
+    //   builder.addCase(fetchBooksFrontend.rejected, (state, action) => {
+    //     state.books.loading = false
+    //     state.books.error = action.payload
+    //   })
   },
 })
 
