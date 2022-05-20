@@ -17,7 +17,6 @@ build-web:
   script:
     - npm install yarn
     - yarn
-    - yarn add webpack-cli
     - yarn build
   artifacts:
     paths:
@@ -39,7 +38,7 @@ e2e-test:
       - node_modules/
   artifacts:
     paths:
-      - $ARTIFACTS_DIR
+      - $ARTIFACTS_DIR/dist
   dependencies:
     - build-web
   script:

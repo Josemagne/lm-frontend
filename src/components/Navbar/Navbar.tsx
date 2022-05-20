@@ -119,7 +119,7 @@ const Navbar = (props: Props) => {
                           onClick={() => clickHandler("/notes", true)}
                         >
                           <Nav.Item to="/notes" as={Link}>
-                            notess
+                            notes
                           </Nav.Item>
                         </div>
                         <div
@@ -132,25 +132,17 @@ const Navbar = (props: Props) => {
                         </div>
                       </>
                     )}
-                    <div className="lm-navbar__link">
-                      <Nav.Item
-                        as={Link}
-                        to={"authenticate"}
-                        onClick={() => clickHandler("/chaptersviewer", true)}
-                      >
-                        {localStorage.getItem("token") ? null : "Login"}
-                      </Nav.Item>
-                    </div>
-
-                    {/* <Dropdown title="Other">
-                      <Nav.Item
-                        to="/settings"
-                        as={Link}
-                        onClick={() => setShow(false)}
-                      >
-                        Settings
-                      </Nav.Item>
-                    </Dropdown> */}
+                    {!localStorage.getItem("token") ? (
+                      <div className="lm-navbar__link">
+                        <Nav.Item
+                          as={Link}
+                          to={"authenticate"}
+                          onClick={() => clickHandler("/chaptersviewer", true)}
+                        >
+                          Login
+                        </Nav.Item>
+                      </div>
+                    ) : null}
                   </div>
                 </Offcanvas.Body>
               </BNavbar.Offcanvas>
@@ -187,7 +179,7 @@ const Navbar = (props: Props) => {
                   className="lm-navbar__link"
                   onClick={() => clickHandler("/notes")}
                 >
-                  notess
+                  notes
                 </Nav.Item>
                 <Nav.Item
                   as={Link}

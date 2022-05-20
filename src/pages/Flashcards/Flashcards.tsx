@@ -15,10 +15,9 @@ import {
 } from "../../state/redux/features/Flashcard/flashcardSlice"
 import FlashcardsFilter from "./SubComponents/FlashcardsFilter/FlashcardsFilter"
 import FlashcardTrainer from "../../components/local/FlashcardPage/FlashcardTrainer/FlashcardTrainer"
+import { LM_Book } from "../../types/Book/book"
 
-type Props = {}
-
-const Flashcards = (props: Props) => {
+const Flashcards = () => {
   const dispatch = useAppDispatch()
 
   const selectedBook = useAppSelector(selectedBookSelector)
@@ -54,7 +53,6 @@ const Flashcards = (props: Props) => {
             <button className="btn btn-secondary" onClick={startTraining}>
               Start Revision
             </button>
-            <FlashcardTrainer />
           </div>{" "}
           <hr />{" "}
           <div className="flashcards__filter">
@@ -66,6 +64,7 @@ const Flashcards = (props: Props) => {
           </div>
         </>
       )}
+      <FlashcardTrainer />
     </div>
   )
 }

@@ -14,6 +14,17 @@ type Props = {}
 const Home = (props: Props) => {
   const navigate = useNavigate()
 
+  const textIntro = (elem: any) => {
+    gsap.from(elem, {
+      xPercent: -20,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 2,
+      scale: -1,
+      ease: "back",
+    })
+  }
+
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
       navigate("/booksviewer", { replace: true })
@@ -74,6 +85,24 @@ const Home = (props: Props) => {
 
   return (
     <div className="lm-home lm-page">
+      {/* <div className="home__authenticate">
+        <div
+          className="lm-cta-register"
+          onClick={() => navigate("/register", { replace: true })}
+        >
+          <button type="button" className="btn btn-primary">
+            Register
+          </button>
+        </div>
+        <div
+          className="lm-cta-login"
+          onClick={() => navigate("/login", { replace: true })}
+        >
+          <button type="button" className="btn btn-primary">
+            Login
+          </button>
+        </div>
+      </div> */}
       <div className="lm-home__intro">
         <p>
           Reading is more than just speaking out the content of a scripture such

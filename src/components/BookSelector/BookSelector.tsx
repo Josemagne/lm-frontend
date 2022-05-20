@@ -112,7 +112,7 @@ const BookSelector = () => {
         <div className="bookselector__placeholder__delete">
           <button
             className="btn btn-close"
-            onClick={() => dispatch(deleteSelectedBook(""))}
+            onClick={() => removeSelectedBook()}
           ></button>
         </div>
       </div>

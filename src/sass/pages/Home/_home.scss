@@ -1,5 +1,9 @@
 @import "../../abstracts/globals";
 
+@mixin home-text-background {
+  background-color: rgba(73, 73, 73, 0.6);
+}
+
 .lm-home {
   position: relative !important;
   font-size: 16px;
@@ -14,6 +18,14 @@
 
   @media screen and (min-width: 576px) {
     margin-bottom: 35vh;
+  }
+
+  .home__authenticate {
+    display: flex;
+    justify-content: center;
+    div {
+      padding: 1rem;
+    }
   }
 
   .lm-home__intro {
@@ -66,11 +78,17 @@
         }
 
         .title {
+          width: fit-content;
+          height: fit-content;
           grid-area: "title";
+          font-size: 33px;
         }
 
         .text {
+          width: fit-content;
+          height: fit-content;
           grid-area: "text";
+          font-size: 22px !important;
         }
       }
     }

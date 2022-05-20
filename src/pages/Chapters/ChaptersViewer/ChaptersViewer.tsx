@@ -49,10 +49,6 @@ const ChaptersViewer = () => {
 
   return (
     <div className="lm-chaptersviewer lm-page">
-      {/* NOTE Shows the book that we are treating at the moment */}
-      <div className="lm-chaptersviewer__bookinformation">
-        <h4>{selectedBook ? selectedBook.book_title : null}</h4>
-      </div>
       <BookSelector />
 
       {selectedBook && <ChapterAdder />}
@@ -63,7 +59,6 @@ const ChaptersViewer = () => {
         </button>
       )}
 
-      <div className="lm-chapters"></div>
       {selectedChapter && <ChapterModal />}
       {selectedBook && <ChapterPagination />}
     </div>

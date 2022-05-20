@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test-react": "npx react-scripts test",
-    "ci:start-server": "npx cross-env NODE_ENV=development webpack-dev-server",
+    "ci:start-server": "http-server --path ./dist/ -p 8087",
     "cy:run": "npx cypress run --headless --browser firefox",
     "ci:cy-run": "npm run ci:start-server && npm run cy:run",
     "dev": "npx cross-env NODE_ENV=development webpack-dev-server",
@@ -62,7 +62,6 @@
     "react-router": "^6.2.2",
     "react-router-dom": "^6.2.2",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.1",
     "rsuite": "^5.5.2",
     "rxjs": "^7.5.5",
     "sass": "^1.49.7",
@@ -76,14 +75,10 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
-    "@cypress/react": "^5.12.4",
+    "@cypress/react": "^5.12.5",
     "@testing-library/cypress": "^8.0.2",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^14.1.1",
     "@types/axios": "^0.14.0",
     "@types/jest": "^27.5.0",
-    "@types/mocha": "^9.1.1",
     "@types/node": "^17.0.21",
     "@types/pino": "^7.0.5",
     "@types/pino-http": "^5.8.1",
@@ -96,6 +91,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.3",
     "babel-polyfill": "^6.26.0",
+    "browserlist": "^1.0.1",
     "cross-env": "^7.0.3",
     "css-loader": "^6.6.0",
     "dotenv-webpack": "^7.1.0",
@@ -109,17 +105,17 @@
     "eslint-plugin-standard": "^5.0.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "http-server": "^14.1.0",
     "husky": "^7.0.4",
-    "jest": "^27.5.1",
     "jest-runner": "^27.5.1",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
     "prettier": "^2.6.2",
     "react-scripts": "^5.0.0",
+    "start-server-and-test": "^1.14.0",
     "style-loader": "^3.3.1",
     "supertest": "^6.2.3",
     "terser-webpack-plugin": "^5.3.1",
-    "ts-jest": "^28.0.2",
     "ts-node": "^10.7.0",
     "typescript": "4.6.3",
     "url-loader": "^4.1.1",
@@ -136,5 +132,11 @@
       "pre-commit": "npm run build && npm run build-ts && rm -Rf build && eslint --cache --fix && prettier --write",
       "pre-push": "npm run build && npm run build-ts && rm -Rf dist"
     }
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
