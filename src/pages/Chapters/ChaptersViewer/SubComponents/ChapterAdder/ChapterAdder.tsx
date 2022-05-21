@@ -5,7 +5,6 @@ import LM_Chapter from "../../../../../types/Book/chapter"
 import { useFormik } from "formik"
 import { nanoid } from "nanoid"
 import useAppSelector from "../../../../../hooks/useAppSelector"
-import Server from "../../../../../services/Server"
 import useAppDispatch from "../../../../../hooks/useAppDispatch"
 import {
   changeSelectedBook,
@@ -14,7 +13,6 @@ import {
 import Chapter from "../../../../../classes/Chapter"
 import Flashcard from "../../../../../classes/base/Flashcard"
 import * as yup from "yup"
-import FAPI from "../../../../../storage/indexedDB/FAPI"
 import { Modal } from "rsuite"
 import {
   toggleAddingNewChapter,
@@ -55,6 +53,7 @@ const ChapterAdder = () => {
       interface IValidateErrors {
         title?: string
       }
+
       let errors: IValidateErrors = {}
 
       if (!values.title) {
@@ -68,8 +67,6 @@ const ChapterAdder = () => {
       values.chapter_id = nanoid()
 
       dispatch(addChapter(values))
-
-      //await FAPI.addChapter(values);
 
       API.addChapter(values)
 
@@ -129,14 +126,15 @@ const ChapterAdder = () => {
         {/* importance */}
         {/* read */}
         {/* Summary */}
-        <div
-          className="lm-chapteradder__button"
+        <button
+          type="button"
+          className="lm-chapteradder__button btn btn-primary"
           onClick={() => {
             formik.handleSubmit()
           }}
         >
-          <div>+</div>
-        </div>
+          +
+        </button>
 
         {/* <Adder type="button" clickHandler={formik.handleSubmit} text="+" /> */}
       </div>

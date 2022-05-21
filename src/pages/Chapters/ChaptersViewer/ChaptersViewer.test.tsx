@@ -14,4 +14,6 @@ describe("ChaptersViewer", () => {
       </Provider>
     )
   })
+
+  it("Should display the the chapters if we select a book", () => {})
 })

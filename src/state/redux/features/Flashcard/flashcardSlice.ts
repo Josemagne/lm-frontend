@@ -9,7 +9,6 @@ import {
   PayloadAction,
   createSelector,
 } from "@reduxjs/toolkit"
-import FAPI from "../../../../storage/indexedDB/FAPI"
 import API from "../../../../api/API"
 import { RootState } from "../../store"
 
@@ -50,6 +49,21 @@ interface InitialFlashcardState {
      * ID of the flashcard that is is being displayed at the moment
      */
     currentFlashcard: string | null
+    /**
+     * Decides if we open the FlashcardTrainer
+     */
+    openFlashcardTrainer: boolean
+    /**
+     * The selection of the user i.e. right or wrong
+     */
+    showAnswer: boolean
+    selection: {
+      selection: boolean | null
+      /**
+       * Decides if the user has selected right or wrong
+       */
+      hasSelected: boolean
+    }
   }
 }
 
@@ -75,6 +89,12 @@ const initialFlashcardState: InitialFlashcardState = {
     flashcardsForTraining: [],
     isTraining: false,
     currentFlashcard: null,
+    openFlashcardTrainer: false,
+    showAnswer: false,
+    selection: {
+      hasSelected: false,
+      selection: null,
+    },
   },
 }
 
@@ -180,11 +200,78 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
     ) => {
       state.new.isAddingNewFlashcard = !state.new.isAddingNewFlashcard
     },
+    // ANCHOR Training
     toggleIsTraining: (
       state: InitialFlashcardState,
       action: PayloadAction<any>
     ) => {
       state.training.isTraining = !state.training.isTraining
+    },
+    changeFlashcardsForTraining: (
+      state: InitialFlashcardState,
+      { payload: newFlashcardsForTraining }: PayloadAction<null | string[]>
+    ) => {
+      if (newFlashcardsForTraining) {
+        state.training.flashcardsForTraining = newFlashcardsForTraining
+      } else {
+        state.training.flashcardsForTraining = []
+      }
+    },
+    /**
+     * Changes the current flashcard id
+     * @param state
+     * @param action
+     */
+    changeCurrentFlashcard: (
+      state: InitialFlashcardState,
+      { payload: newCurrentFlashcard }: PayloadAction<string | null>
+    ) => {
+      if (newCurrentFlashcard === null) {
+        state.training.currentFlashcard = null
+      } else {
+        state.training.currentFlashcard = newCurrentFlashcard
+      }
+    },
+    toggleOpenFlashcardTrainer: (
+      state: InitialFlashcardState,
+      action: PayloadAction<void>
+    ) => {
+      state.training.openFlashcardTrainer = !state.training.openFlashcardTrainer
+    },
+    toggleHasSelected: (
+      state: InitialFlashcardState,
+      action: PayloadAction<void>
+    ) => {
+      state.training.selection.hasSelected =
+        !state.training.selection.hasSelected
+    },
+    changeFlashcardTrainerSelection: (
+      state: InitialFlashcardState,
+      { payload: flashcardTrainerSelection }: PayloadAction<boolean | null>
+    ) => {
+      state.training.selection.selection = flashcardTrainerSelection
+    },
+    toggleShowAnswer: (
+      state: InitialFlashcardState,
+      action: PayloadAction<void>
+    ) => {
+      state.training.showAnswer = !state.training.showAnswer
+    },
+    nextQuestion: (
+      state: InitialFlashcardState,
+      { payload: wasRight }: PayloadAction<boolean>
+    ) => {
+      // If the choice was right
+      // Then we do not want the flashcard to be in the training
+      if (wasRight) {
+        state.training.flashcardsForTraining.shift()
+      } else {
+        const wrongFlashcard = state.training.flashcardsForTraining.shift()
+
+        if (!wrongFlashcard) return
+        state.training.flashcardsForTraining.push(wrongFlashcard)
+      }
+      state.training.currentFlashcard = state.training.flashcardsForTraining[0]
     },
   },
   extraReducers: (builder) => {
@@ -304,12 +391,54 @@ export const isAddingNewFlashcardSelector = createSelector(
   (isAddingNewFlashcard) => isAddingNewFlashcard
 )
 
+// ANCHOR TRAINING-SELECTOR
+
 const selectCurrentFlashcard = (state: RootState) =>
   state.flashcards.training.currentFlashcard
 
 export const currentFlashcardSelector = createSelector(
   selectCurrentFlashcard,
   (currentFlashcard) => currentFlashcard
+)
+
+const selectHasSelected = (state: RootState) =>
+  state.flashcards.training.selection.hasSelected
+
+export const hasSelectedSelector = createSelector(
+  selectHasSelected,
+  (hasSelected) => hasSelected
+)
+
+const selectTrainingSelection = (state: RootState) =>
+  state.flashcards.training.selection.selection
+
+export const trainingSelectionSelector = createSelector(
+  selectTrainingSelection,
+  (trainingSelection) => trainingSelection
+)
+
+const selectOpenFlashcardTrainer = (state: RootState) =>
+  state.flashcards.training.openFlashcardTrainer
+
+export const openFlashcardTrainerSelector = createSelector(
+  selectOpenFlashcardTrainer,
+  (openFlashcardTrainer) => openFlashcardTrainer
+)
+
+const selectFlashcardTrainerSelection = (state: RootState) =>
+  state.flashcards.training.selection.selection
+
+export const flashcardTrainerSelectionSelector = createSelector(
+  selectFlashcardTrainerSelection,
+  (flashcardTrainerSelection) => flashcardTrainerSelection
+)
+
+const selectShowAnswer = (state: RootState) =>
+  state.flashcards.training.showAnswer
+
+export const showAnswerSelector = createSelector(
+  selectShowAnswer,
+  (showAnswer) => showAnswer
 )
 
 export const {
@@ -322,7 +451,15 @@ export const {
   updateFilteredFlashcards,
   deleteFilteredFlashcards,
   toggleFilteringState,
+  // TRAINING
   toggleIsTraining,
+  changeFlashcardsForTraining,
+  toggleOpenFlashcardTrainer,
+  toggleHasSelected,
+  changeFlashcardTrainerSelection,
+  toggleShowAnswer,
+  changeCurrentFlashcard,
+  nextQuestion,
 } = flashcardSlice.actions
 
 export default flashcardSlice.reducer

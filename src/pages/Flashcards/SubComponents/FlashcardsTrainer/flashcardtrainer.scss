@@ -1,0 +1,72 @@
+/* NOTE Overwrite the properties of rsuite.js */
+// Wraps the modal
+.rs-modal {
+  margin: 0;
+}
+.rs-modal-sm,
+.rs-modal-full {
+  max-width: unset;
+}
+.rs-modal-wrapper {
+  overflow: initial;
+  height: 100%;
+  .rs-modal-dialog {
+    height: 100%;
+    .rs-modal-content {
+      height: 100%;
+    }
+  }
+}
+.flashcardtrainer__modal {
+  width: 100%;
+  height: 100%;
+  .lm-lc-flashcardtrainer {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-areas:
+      "statistics"
+      "start";
+
+    .flashcardtrainer__statistics {
+      grid-area: "statistics";
+    }
+
+    .flashcardtrainer__start {
+      grid-area: "start";
+    }
+
+    .flashcardtrainer__question {
+      grid-area: question;
+    }
+    .flashcardtrainer__right {
+      grid-area: "right";
+    }
+    .flashcardtrainer__wrong {
+      grid-area: wrong;
+    }
+    .flashcardtrainer__show {
+      grid-area: "show";
+    }
+    .flashcardtrainer__answer {
+      grid-area: answer;
+    }
+
+    // NOTE We have another setting if we are revising
+    &.istraining {
+      // NOTE The start button is now 'x' and is no longer in the grid layout
+      grid-template-areas:
+        "question question"
+        "show show";
+    }
+
+    // NOTE The answer with the right and wrong button take up space
+    &.istraining.showanswer {
+      grid-template-areas:
+        "question question"
+        "answer answer"
+        "wrong right";
+    }
+  }
+}

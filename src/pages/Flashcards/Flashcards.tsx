@@ -11,19 +11,19 @@ import { LM_EntityName } from "../../types/Entity/entity"
 import FlashcardsPagination from "./SubComponents/FlashcardsPagination/FlashcardsPagination"
 import {
   toggleIsAddingNewFlashcard,
-  toggleIsTraining,
+  toggleOpenFlashcardTrainer,
 } from "../../state/redux/features/Flashcard/flashcardSlice"
 import FlashcardsFilter from "./SubComponents/FlashcardsFilter/FlashcardsFilter"
-import FlashcardTrainer from "../../components/local/FlashcardPage/FlashcardTrainer/FlashcardTrainer"
 import { LM_Book } from "../../types/Book/book"
+import FlashcardTrainer from "./SubComponents/FlashcardsTrainer/FlashcardTrainer"
 
 const Flashcards = () => {
   const dispatch = useAppDispatch()
 
   const selectedBook = useAppSelector(selectedBookSelector)
 
-  function startTraining() {
-    dispatch(toggleIsTraining(""))
+  function openFlashcardTrainer() {
+    dispatch(toggleOpenFlashcardTrainer(""))
   }
 
   useEffect(() => {}, [])
@@ -50,7 +50,10 @@ const Flashcards = () => {
           </div>
           <hr />
           <div className="flashcards__training">
-            <button className="btn btn-secondary" onClick={startTraining}>
+            <button
+              className="btn btn-secondary"
+              onClick={openFlashcardTrainer}
+            >
               Start Revision
             </button>
           </div>{" "}

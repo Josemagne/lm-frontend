@@ -48,8 +48,6 @@ const BookSelector = () => {
     for (let i = 0; i < _books.length; i++) {
       let title = ""
 
-      console.log("bbook: ", books[i])
-
       if (books[i].author_name) {
         title =
           books[i].author_prename +

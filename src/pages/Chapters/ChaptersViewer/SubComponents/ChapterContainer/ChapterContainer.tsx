@@ -40,34 +40,23 @@ const ChapterContainer = ({ chapter }: Props) => {
 
     dispatch(deleteChapter(chapter.chapter_id))
 
-    //await FAPI.deleteChapter(chapter.chapter_id);
-
     await API.deleteChapter(chapter.chapter_id)
   }
 
   useEffect(() => {}, [chapter])
 
   return (
-    <div className="lm-chaptercontainer">
+    <div className="lm-chaptercontainer" onClick={(e) => handleClick(e)}>
       <div className="lm-chaptercontainer__state">
         <ChapterState chapter={chapter} />
       </div>
-      <div
-        className="lm-chaptercontainer__index"
-        onClick={(e) => handleClick(e)}
-      >
+      <div className="lm-chaptercontainer__index">
         <p>{chapter.index}</p>
       </div>
-      <div
-        className="lm-chaptercontainer__seperator"
-        onClick={(e) => handleClick(e)}
-      >
+      <div className="lm-chaptercontainer__seperator">
         <p>-</p>
       </div>
-      <div
-        className="lm-chaptercontainer__title"
-        onClick={(e) => handleClick(e)}
-      >
+      <div className="lm-chaptercontainer__title">
         <p>{chapter.title}</p>
       </div>
       {/* TODO */}

@@ -1,8 +1,8 @@
 import { Provider } from "react-redux"
 import { store } from "../../../../state/redux/store"
 import { HashRouter } from "react-router-dom"
-import FlashcardTrainer from "../../../../components/local/FlashcardPage/FlashcardTrainer/FlashcardTrainer"
 import { mount } from "@cypress/react"
+import FlashcardTrainer from "./FlashcardTrainer"
 
 describe("FlashcardTrainer", () => {
   beforeEach(() => {
