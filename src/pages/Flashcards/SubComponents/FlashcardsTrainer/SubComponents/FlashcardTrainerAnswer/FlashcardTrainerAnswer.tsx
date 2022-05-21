@@ -6,6 +6,7 @@ import {
 } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
 import { LM_Flashcard } from "../../../../../../types/Flashcard/flashcard"
 import { flashcardsSelector } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
+import "./flashcardtraineranswer.scss"
 
 /**
  * Shows the current answer for the revision
@@ -26,13 +27,26 @@ const FlashcardTrainerAnswer = () => {
 
   useEffect(() => {}, [showAnswer, currentFlashcard])
 
-  return (
-    <div className="flashcardtrainer__answer">
-      {showAnswer &&
-        currentFlashcard &&
-        flashcardsObject[currentFlashcard].answer}
-    </div>
-  )
+  if (showAnswer) {
+    return (
+      <div
+        className={
+          showAnswer
+            ? "flashcardtrainer__answer showanswer"
+            : "flashcardtrainer__answer"
+        }
+      >
+        {showAnswer && currentFlashcard && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: flashcardsObject[currentFlashcard].answer,
+            }}
+          ></div>
+        )}
+        $
+      </div>
+    )
+  } else return null
 }
 
 export default FlashcardTrainerAnswer

@@ -1,0 +1,8 @@
+.flashcardtrainer__answer {
+  display: none;
+
+  &.showanswer {
+    grid-area: answer;
+    display: block;
+  }
+}

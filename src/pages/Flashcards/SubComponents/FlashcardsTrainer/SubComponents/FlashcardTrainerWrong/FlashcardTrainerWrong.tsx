@@ -4,12 +4,14 @@ import useAppSelector from "../../../../../../hooks/useAppSelector"
 import {
   isTrainingSelector,
   showAnswerSelector,
+  toggleShowAnswer,
 } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
 import {
   changeFlashcardTrainerSelection,
   toggleHasSelected,
   nextQuestion,
 } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
+import "./flashcardtrainerwrong.scss"
 
 type Props = {}
 
@@ -22,13 +24,14 @@ const FlashcardTrainerWrong = (props: Props) => {
     dispatch(toggleHasSelected(""))
     dispatch(changeFlashcardTrainerSelection(false))
     dispatch(nextQuestion(false))
+    dispatch(toggleShowAnswer(""))
   }
 
   useEffect(() => {}, [isTraining])
   if (isTraining && showAnswer) {
     return (
       <div
-        className="flashcardtrainer__wrong"
+        className="flashcardtrainer__wrong showanswer"
         data-testid="flashcardtrainer__wrong"
       >
         <button

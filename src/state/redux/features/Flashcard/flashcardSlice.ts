@@ -259,12 +259,22 @@ export const flashcardSlice: Slice<InitialFlashcardState> = createSlice({
     },
     nextQuestion: (
       state: InitialFlashcardState,
-      { payload: wasRight }: PayloadAction<boolean>
+      { payload: isRight }: PayloadAction<boolean>
     ) => {
+      const flashcards = state.flashcards.flashcards
+      const currentFlashcardID = state.training.currentFlashcard
+      if (!currentFlashcardID) return
+      const currentFlashcard = flashcards[currentFlashcardID]
+
+      if (currentFlashcard.status === "NEW") {
+        currentFlashcard.status = "LEARNING"
+      }
       // If the choice was right
       // Then we do not want the flashcard to be in the training
-      if (wasRight) {
+      if (isRight) {
         state.training.flashcardsForTraining.shift()
+
+        currentFlashcard.status = "LEARNT"
       } else {
         const wrongFlashcard = state.training.flashcardsForTraining.shift()
 

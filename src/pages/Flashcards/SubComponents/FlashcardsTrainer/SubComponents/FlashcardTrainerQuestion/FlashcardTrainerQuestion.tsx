@@ -39,19 +39,27 @@ const FlashcardTrainerQuestion = (props: Props) => {
     //   console.log("f: ", f)
     //   setCurrentQuestion(flashcardsObject[f].question)
     // })
-  }, [currentFlashcard])
+  }, [currentFlashcard, isTraining])
 
-  return (
-    <div className="flashcardtrainer__question">
-      {isTraining && currentFlashcard && (
-        <div
-          dangerouslySetInnerHTML={{
-            __html: flashcardsObject[currentFlashcard].question,
-          }}
-        ></div>
-      )}
-    </div>
-  )
+  if (isTraining) {
+    return (
+      <div
+        className={
+          isTraining
+            ? "flashcardtrainer__question istraining"
+            : "flashcardtrainer__question"
+        }
+      >
+        {isTraining && currentFlashcard && (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: flashcardsObject[currentFlashcard].question,
+            }}
+          ></div>
+        )}
+      </div>
+    )
+  } else return null
 }
 
 export default FlashcardTrainerQuestion

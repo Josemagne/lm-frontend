@@ -5,6 +5,7 @@ import {
   isTrainingSelector,
 } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
 import { LM_Flashcard } from "../../../../../../types/Flashcard/flashcard"
+import "./flashcardtrainerstatistics.scss"
 
 /**
  * Shows the current status of the flashcards that are ready for revision
@@ -17,7 +18,7 @@ const FlashcardTrainerStatistics = () => {
   if (isTraining) return null
   else {
     return (
-      <div className="flashcardtrainer_statistics">
+      <div className="flashcardtrainer__statistics">
         {/* The flashcards that are left to learn */}
         <div className="statistics__learning">
           <p>

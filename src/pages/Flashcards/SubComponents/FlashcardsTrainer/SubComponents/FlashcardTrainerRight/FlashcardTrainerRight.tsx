@@ -14,6 +14,7 @@ import {
 } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
 import flashcardService from "../../utils/flashcardController"
 import { isTrainingSelector } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
+import "./flashcardtrainerright.scss"
 
 type Props = {}
 
@@ -31,6 +32,7 @@ const FlashcardTrainerRight = (props: Props) => {
     dispatch(toggleHasSelected(""))
     dispatch(changeFlashcardTrainerSelection(true))
     dispatch(nextQuestion(true))
+    dispatch(toggleShowAnswer(""))
   }
 
   useEffect(() => {}, [showAnswer])
@@ -38,7 +40,7 @@ const FlashcardTrainerRight = (props: Props) => {
   if (isTraining && showAnswer) {
     return (
       <div
-        className="flashcardtrainer__right"
+        className="flashcardtrainer__right showanswer"
         data-testid="flashcardtrainer__right"
       >
         <button

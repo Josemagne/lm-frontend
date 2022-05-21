@@ -1,0 +1,9 @@
+.flashcardtrainer__wrong {
+  grid-area: wrong;
+
+  display: none;
+
+  &.showanswer {
+    display: block;
+  }
+}

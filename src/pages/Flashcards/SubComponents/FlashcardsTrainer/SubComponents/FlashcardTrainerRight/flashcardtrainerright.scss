@@ -1,6 +1,13 @@
 @import "../../../../../../sass/abstracts/globals";
 
 .flashcardtrainer__right {
+  display: none;
+
+  &.showanswer {
+    grid-area: right;
+    display: block;
+  }
+
   background-color: rgba(58, 217, 58, 0.585);
   color: white;
 }

@@ -71,7 +71,13 @@ const FlashcardTrainerStart = () => {
   useEffect(() => {}, [isTraining])
 
   return (
-    <div className="flashcardtrainer__start istraining">
+    <div
+      className={
+        isTraining
+          ? "flashcardtrainer__start istraining"
+          : "flashcardtrainer__start"
+      }
+    >
       {!isTraining && (
         <button
           type="button"

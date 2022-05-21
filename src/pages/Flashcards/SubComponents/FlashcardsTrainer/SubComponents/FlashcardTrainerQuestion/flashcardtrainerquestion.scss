@@ -1,2 +1,9 @@
 .flashcardtrainer__question {
+  grid-area: "question";
+
+  display: none;
+  // NOTE We show the question only if we are training
+  &.istraining {
+    display: block;
+  }
 }

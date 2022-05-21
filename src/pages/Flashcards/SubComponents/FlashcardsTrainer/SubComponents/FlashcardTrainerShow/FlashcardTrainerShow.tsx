@@ -6,6 +6,7 @@ import {
   isTrainingSelector,
   toggleShowAnswer,
 } from "../../../../../../state/redux/features/Flashcard/flashcardSlice"
+import "./flashcardtrainershow.scss"
 
 /**
  * Button that shows the answer
@@ -20,16 +21,23 @@ const FlashcardTrainerShow = () => {
     dispatch(toggleShowAnswer(""))
   }
 
-  useEffect(() => {}, [isTraining, showAnswer])
-  if (isTraining && !showAnswer) {
+  useEffect(() => {}, [isTraining])
+  if (isTraining) {
     return (
-      <div className="flashcardtrainer__show">
+      <div
+        className={
+          showAnswer
+            ? "flashcardtrainer__show showanswer "
+            : "flashcardtrainer__show"
+        }
+      >
         <button type="button" onClick={_showAnswer}>
           Show
         </button>
       </div>
     )
-  } else return null
+  } else if (isTraining && showAnswer) return null
+  else return null
 }
 
 export default FlashcardTrainerShow

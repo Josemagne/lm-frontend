@@ -1,2 +1,8 @@
 .flashcardtrainer__show {
+  grid-area: show;
+
+  &.showanswer {
+    grid-area: unset;
+    display: none;
+  }
 }

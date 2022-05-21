@@ -65,7 +65,7 @@ const FlashcardTrainer = () => {
             ? showAnswer
               ? "lm-lc-flashcardtrainer istraining showanswer"
               : "lm-lc-flashcardtrainer istraining"
-            : "lm-lc-flashcardttrainer"
+            : "lm-lc-flashcardtrainer"
         }
       >
         <FlashcardTrainerStatistics />
@@ -74,7 +74,7 @@ const FlashcardTrainer = () => {
         <FlashcardTrainerRight />
         <FlashcardTrainerWrong />
         <FlashcardTrainerShow />
-        {hasSelected && <FlashcardTrainerAnswer />}
+        <FlashcardTrainerAnswer />
       </div>
     </Modal>
   )

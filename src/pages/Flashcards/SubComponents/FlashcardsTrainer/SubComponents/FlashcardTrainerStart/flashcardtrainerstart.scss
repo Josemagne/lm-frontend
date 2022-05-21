@@ -1,6 +1,10 @@
 .flashcardtrainer__start {
   // NOTE If we are revising we want the button to be at the top right corner
+  grid-area: start;
   &.istraining {
+    // When we are revising we leave this elem from the grid
+    grid-area: unset;
+
     position: fixed;
     top: 10px;
     right: 10px;

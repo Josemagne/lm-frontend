@@ -49,8 +49,23 @@ body {
   display: none;
 }
 
-@mixin md() {
+// NOTE TABLETS
+@mixin sm() {
   @media screen and (min-width: 576px) {
+    @content;
+  }
+}
+
+// NOTE LAPTOPS
+@mixin md() {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+// NOTE DESKTOP
+@mixin lg() {
+  @media screen and (min-width: 768px) {
     @content;
   }
 }

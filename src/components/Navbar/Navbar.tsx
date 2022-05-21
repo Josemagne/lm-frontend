@@ -45,10 +45,13 @@ const Navbar = (props: Props) => {
     })
   }
 
-  useEffect(() => {}, [width, show])
-
   useEffect(() => {
     console.log("isAuthorized: ", isAuthorized)
+    if (!isAuthorized) {
+      localStorage.removeItem("token")
+      sessionStorage.removeItem("token")
+      navigate("/login", { replace: true })
+    }
   }, [isAuthorized])
 
   useEffect(() => {
@@ -69,6 +72,7 @@ const Navbar = (props: Props) => {
     </div>
   )
 
+  useEffect(() => {}, [])
   return (
     <div className="lm-navbar">
       {width < 576 ? (
