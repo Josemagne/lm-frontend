@@ -43,7 +43,6 @@ const FlashcardTrainerAnswer = () => {
             }}
           ></div>
         )}
-        $
       </div>
     )
   } else return null

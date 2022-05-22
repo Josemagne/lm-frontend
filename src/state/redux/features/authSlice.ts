@@ -1,20 +1,41 @@
-import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit"
+import {
+  createSelector,
+  createSlice,
+  PayloadAction,
+  Slice,
+} from "@reduxjs/toolkit"
 import { LM_User } from "../../../types/auth/user"
+import { RootState } from "../store"
 
-interface LM_InitialState {
+interface InitialAuthState {
   token: string | null
+  isLoggedIn: boolean
 }
 
-const initialState: LM_InitialState = {
+const initialState: InitialAuthState = {
   token: null,
+  isLoggedIn: false,
 }
 
-export const bookSlice: Slice<LM_InitialState> = createSlice({
+export const authSlice: Slice<InitialAuthState> = createSlice({
   name: "auth",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    toggleIsLoggedIn: (
+      state: InitialAuthState,
+      action: PayloadAction<void>
+    ) => {
+      state.isLoggedIn = !state.isLoggedIn
+    },
+  },
 })
 
-export const {} = bookSlice
+const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn
+export const isLoggedInSelector = createSelector(
+  selectIsLoggedIn,
+  (isLoggedIn) => isLoggedIn
+)
 
-export default bookSlice.reducer
+export const { toggleIsLoggedIn } = authSlice.actions
+
+export default authSlice.reducer

@@ -17,22 +17,24 @@ import LM_Icon from "../../assets/images/favicon.svg"
 import authorize from "../../services/authorize"
 import Logout from "../Logout/Logout"
 import useAppDispatch from "../../hooks/useAppDispatch"
+import useAppSelector from "../../hooks/useAppSelector"
+import { isLoggedInSelector } from "../../state/redux/features/authSlice"
 
-type Props = {}
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [width, setWidth] = useState<number>(0)
   const [show, setShow] = useState<boolean>(false)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
 
   window.addEventListener("resize", () => {
     setWidth(global.window.innerWidth)
   })
 
   const requestAuthorization = async () => {
-    setIsAuthorized(await authorize())
+    const authorizeResult = await authorize()
+    return authorizeResult
   }
 
   /**
@@ -46,21 +48,22 @@ const Navbar = (props: Props) => {
   }
 
   useEffect(() => {
-    console.log("isAuthorized: ", isAuthorized)
-    if (!isAuthorized) {
-      localStorage.removeItem("token")
-      sessionStorage.removeItem("token")
-      navigate("/login", { replace: true })
-    }
-  }, [isAuthorized])
-
-  useEffect(() => {
-    // If we have a token then we request authorization
-    if (localStorage.getItem("token")) {
-      requestAuthorization()
-    }
     const width = window.innerWidth
     setWidth(width)
+    console.log("token: ", localStorage.getItem("token"))
+
+    // If we have a token then we request authorization to check if it is legit
+    if (localStorage.getItem("token")) {
+      requestAuthorization().then((authorizationResult) => {
+        // If the authorization was not successful then we redirect to the login page
+        setIsAuthorized(authorizationResult)
+        if (!authorizationResult) {
+          localStorage.removeItem("token")
+          sessionStorage.removeItem("token")
+          navigate("/login", { replace: true })
+        }
+      })
+    }
   }, [])
 
   // TODO Put that in own component
@@ -72,7 +75,6 @@ const Navbar = (props: Props) => {
     </div>
   )
 
-  useEffect(() => {}, [])
   return (
     <div className="lm-navbar">
       {width < 576 ? (

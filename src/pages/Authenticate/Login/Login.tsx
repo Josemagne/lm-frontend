@@ -5,11 +5,14 @@ import { login } from "../../../services/auth"
 import * as yup from "yup"
 import { useNavigate } from "react-router-dom"
 import ErrorModal from "./SubComponents/ErrorModal/ErrorModal"
+import useAppDispatch from "../../../hooks/useAppDispatch"
+import { toggleIsLoggedIn } from "../../../state/redux/features/authSlice"
 
 type Props = {}
 
 const Login = (props: Props) => {
   const [errors, setErrors] = useState<undefined | string>()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const loginSchema = yup.object().shape({
     email: yup
@@ -31,7 +34,8 @@ const Login = (props: Props) => {
     onSubmit: async (values) => {
       const res: any = await login(values)
       if (res.result === "success") {
-        navigate("/", { replace: true })
+        dispatch(toggleIsLoggedIn(""))
+        navigate("/booksviewer", { replace: true })
         location.reload()
       } else {
         setErrors(res.reason)

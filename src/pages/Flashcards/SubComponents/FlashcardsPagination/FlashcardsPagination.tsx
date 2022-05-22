@@ -125,6 +125,20 @@ const FlashcardsPagination = () => {
               }}
             </Cell>
           </Table.Column>
+          <Table.Column flexGrow={1}>
+            <HeaderCell>Status</HeaderCell>
+            <Cell>
+              {(rowData) => {
+                return (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: rowData.status,
+                    }}
+                  />
+                )
+              }}
+            </Cell>
+          </Table.Column>
           <Table.Column fixed="right" align="center">
             <HeaderCell>Delete</HeaderCell>
             <Cell>

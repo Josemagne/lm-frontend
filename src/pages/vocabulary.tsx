@@ -3,7 +3,7 @@ import React from "react"
 type Props = {}
 
 /**
- * Page where
+ *
  * @param props
  * @returns
  */
