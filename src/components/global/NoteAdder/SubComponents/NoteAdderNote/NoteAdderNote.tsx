@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Container } from "rsuite"
 import ReactQuill from "react-quill"
 import useAppSelector from "../../../../../hooks/useAppSelector"
@@ -7,23 +7,29 @@ import { RootState } from "../../../../../state/redux/store"
 import "./noteaddernote.scss"
 import { updateNewNote } from "../../../../../state/redux/features/noteSlice"
 import { LM_Note } from "../../../../../types/Note/note"
+import { newNoteSelector } from "../../../../../state/redux/selectors/noteSelectors"
 
 type Props = {}
 
 const NoteAdderNote = (props: Props) => {
   const dispatch = useAppDispatch()
 
-  const [value, setValue] = useState()
+  const [value, setValue] = useState("")
   const editorRef = useRef(null)
 
-  const newNote = useAppSelector((state: RootState) => state.notes.newNote)
+  const newNote = useAppSelector(newNoteSelector)
 
+  // TODO Add rxjs throttle
   function handleNoteChange(note: string) {
     const newNoteCopy: LM_Note = JSON.parse(JSON.stringify(newNote))
     newNoteCopy.note = note
 
     dispatch(updateNewNote(newNoteCopy))
   }
+
+  useEffect(() => {
+    setValue(newNote.note)
+  }, [])
 
   return (
     <Container
