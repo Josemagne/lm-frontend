@@ -197,6 +197,26 @@ const Navbar = () => {
                 </Nav.Item>
               </>
             )}
+            {!isAuthorized && (
+              <>
+                <Nav.Item
+                  as={Link}
+                  to="/login"
+                  className="lm-navbar__link"
+                  onClick={() => clickHandler("/login")}
+                >
+                  Login
+                </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to="/register"
+                  className="lm-navbar__link"
+                  onClick={() => clickHandler("/register")}
+                >
+                  Register
+                </Nav.Item>
+              </>
+            )}
             <Nav.Item
               as={Link}
               to="/about"

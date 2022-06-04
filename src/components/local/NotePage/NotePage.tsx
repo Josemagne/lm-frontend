@@ -13,7 +13,7 @@ const NotePage = () => {
     dispatch(toggleIsAddingNewNote(""))
   }
   return (
-    <div>
+    <div className="lm-notes lm-page">
       <BookSelector />
       <button
         type="button"

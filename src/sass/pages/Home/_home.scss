@@ -11,8 +11,8 @@
   padding: 0 0 !important;
 
   // NOTE For lm-cta-authenticate
-
   p {
+    color: white;
     line-height: 130%;
   }
 
@@ -30,9 +30,13 @@
 
   .lm-home__intro {
     padding: 2rem;
-    font-size: 14px !important;
+    background-color: rgba(11, 11, 11, 0.8);
     letter-spacing: 0.5px;
     margin-bottom: 2rem;
+    p {
+      font-size: 20px;
+      text-shadow: 0 0 40px black;
+    }
     @include md() {
       font-size: 16px !important;
     }
@@ -40,10 +44,17 @@
 
   .lm-home__features {
     width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     .lm-home__section {
       width: 100%;
       height: 50vh;
       position: relative;
+
+      border-radius: 1rem;
+      border: 3px solid black;
 
       padding: 1rem 0;
 
@@ -60,35 +71,38 @@
       .content-container {
         width: 100%;
         height: 100%;
+        position: relative;
         padding: 1rem;
 
-        display: grid;
-        grid-template-columns: 1;
-        grid-template-rows: 30% 70%;
-        grid-template-areas:
-          "title"
-          "text";
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         .title,
         .text {
           opacity: 1 !important;
           z-index: 3;
+          border-radius: 1rem;
           color: rgb(255, 255, 255);
-          text-shadow: 0 0 5px black;
+          text-shadow: 0 0 40px black;
+          background-color: rgba(11, 11, 11, 0.8);
         }
 
         .title {
+          padding: 1rem;
           width: fit-content;
           height: fit-content;
-          grid-area: "title";
           font-size: 33px;
+          @media screen and (min-width: 576px) {
+          }
         }
 
         .text {
+          padding: 1rem;
           width: fit-content;
           height: fit-content;
-          grid-area: "text";
-          font-size: 22px !important;
+          font-size: 22px;
         }
       }
     }
@@ -122,7 +136,7 @@
 .section-divider {
   height: 3rem;
   z-index: 2;
-  background-color: rgba(0, 0, 0, 0.1);
+  visibility: hidden;
   border: solid rgba(0, 0, 0, 0.15);
   border-width: 1px 0;
   box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%),

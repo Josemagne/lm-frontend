@@ -14,12 +14,26 @@ import UserPage from "./pages/UserPage/UserPage"
 import AboutPage from "./pages/About/AboutPage"
 import Summaries from "./pages/summaries"
 import Notes from "./pages/notes"
+// @ts-ignore
+import libraryImage from "./assets/images/library.jpg"
 
 type Props = {}
 
 const App = (props: Props) => {
   return (
     <div className="app">
+      <div
+        className="wrapper"
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "fixed",
+          backgroundImage: `url(${libraryImage})`,
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+          filter: "blur(8px)",
+        }}
+      ></div>
       {/* TODO Should we use BrowserRouter? */}
       <HashRouter>
         <header>

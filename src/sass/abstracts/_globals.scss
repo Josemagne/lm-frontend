@@ -4,9 +4,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
-  // Remove all styles from links
 }
+// Remove all styles from links
 a {
   text-decoration: none !important;
 }
@@ -33,15 +32,21 @@ body {
   width: 100%;
   min-width: 300px;
   max-width: 992px !important;
+  height: 100%;
   margin-right: auto;
   margin-left: auto;
+
   margin-bottom: 5rem;
-  height: 100%;
   padding-top: 2rem;
   padding-left: 2rem;
   padding-right: 2rem;
+
+  background-color: rgb(255, 255, 255, 0.7);
+
   @media screen and (min-width: 768px) {
     padding: 3rem;
+    margin-top: 5rem;
+    margin-bottom: unset;
   }
 }
 

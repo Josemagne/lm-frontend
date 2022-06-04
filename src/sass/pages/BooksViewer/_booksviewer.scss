@@ -1,16 +1,23 @@
 @import "./SubComponents/bookspagination";
 
 .lm-booksviewer {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "adding"
-    "lm-lc-booksviewer__bookspagination";
-  @media screen and (min-width: 768px) {
-    grid-template-areas:
-      "adding"
-      "lm-lc-booksviewer__bookspagination";
-  }
+  position: relative !important;
+  overflow-y: hidden !important;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  // display: grid;
+  // grid-template-rows: auto 1fr;
+  // grid-template-areas:
+  //   "adding"
+  //   "lm-lc-booksviewer__bookspagination";
+  // @media screen and (min-width: 768px) {
+  //   grid-template-areas:
+  //     "adding"
+  //     "lm-lc-booksviewer__bookspagination";
+  // }
 
   .lm-boosviewer__adding {
     grid-area: adding;

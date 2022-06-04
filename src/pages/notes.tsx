@@ -12,7 +12,7 @@ import NotePage from "../components/local/NotePage/NotePage"
 
 const NotesPage = () => {
   return (
-    <div className="lm-notes lm-page">
+    <div className="">
       <NotePage />
     </div>
   )
