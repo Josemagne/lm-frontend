@@ -112,6 +112,7 @@ const config = {
         { from: "./src/manifest.json", to: "" },
         { from: "./src/assets/pwa/logo192.png", to: "" },
         { from: "./src/assets/pwa/logo512.png", to: "" },
+        { from: "./src/assets/.well-known", to: "" },
       ],
     }),
     new WorkboxWebpackPlugin.InjectManifest({

@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "pwa",
+      "sha256_cert_fingerprints": [
+        "21:6F:50:2F:3D:A2:CD:3E:EB:88:96:CE:84:55:30:C5:E2:8D:F4:35:7A:8D:1D:F3:6F:12:FF:A8:6F:E6:3C:64"
+      ]
+    }
+  }
+]

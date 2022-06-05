@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Logout from "../../components/Logout/Logout"
+import "./userpage.scss"
 type Props = {}
 
 const UserPage = (props: Props) => {

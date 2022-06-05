@@ -1,0 +1,38 @@
+{
+  "packageId": "com.librimem.twa",
+  "host": "librimem.com",
+  "name": "LibriMem",
+  "launcherName": "LM",
+  "display": "standalone",
+  "themeColor": "#E50914",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#221F1F",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://librimem.com/logo512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/home/jedo/Desktop/projects/LibriMem/LibriMem-backend/frontend/android.keystore",
+    "alias": "android"
+  },
+  "appVersionName": "1",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://librimem.com/manifest.json",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "orientation": "default",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "appVersion": "1"
+}

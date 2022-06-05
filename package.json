@@ -14,7 +14,8 @@
     "build-ts": "npx tsc",
     "deploy-netlify": "npx netlify deploy --auth $NETLIFY_AUTH_TOKEN --build --dir dist --prod --site librimem",
     "prepare": "husky install",
-    "serve": "npx serve dist -p 4444"
+    "serve": "npx serve dist -p 4444",
+    "build-android": "npx bubblewrap build"
   },
   "repository": {
     "type": "git",
@@ -77,6 +78,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
+    "@bubblewrap/cli": "^1.17.2",
     "@cypress/react": "^5.12.5",
     "@testing-library/cypress": "^8.0.2",
     "@types/axios": "^0.14.0",

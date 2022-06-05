@@ -4,6 +4,7 @@ dist/
 cypress/
 lm-components/
 build/
+app/
 
 # Local Netlify folder
 .netlify
