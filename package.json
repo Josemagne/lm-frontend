@@ -13,7 +13,8 @@
     "build": "rm -rf dist && npx cross-env NODE_ENV=production webpack",
     "build-ts": "npx tsc",
     "deploy-netlify": "npx netlify deploy --auth $NETLIFY_AUTH_TOKEN --build --dir dist --prod --site librimem",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve": "npx serve dist -p 4444"
   },
   "repository": {
     "type": "git",
@@ -66,6 +67,7 @@
     "rxjs": "^7.5.5",
     "sass": "^1.49.7",
     "sass-loader": "^12.4.0",
+    "serve": "^13.0.2",
     "slate-history": "^0.66.0",
     "slate-react": "^0.73.0",
     "tiny-invariant": "^1.2.0",
@@ -89,6 +91,7 @@
     "babel-loader": "^8.2.3",
     "babel-polyfill": "^6.26.0",
     "browserlist": "^1.0.1",
+    "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.6.0",
     "dotenv-webpack": "^7.1.0",
@@ -117,7 +120,15 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.7.4",
+    "workbox-cacheable-response": "^6.5.3",
+    "workbox-core": "^6.5.3",
+    "workbox-expiration": "^6.5.3",
+    "workbox-precaching": "^6.5.3",
+    "workbox-routing": "^6.5.3",
+    "workbox-strategies": "^6.5.3",
+    "workbox-webpack-plugin": "^6.5.3",
+    "workbox-window": "^6.5.3"
   },
   "resolutions": {
     "@types/react": "17.0.2",
