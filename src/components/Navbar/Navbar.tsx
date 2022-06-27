@@ -136,6 +136,14 @@ const Navbar = () => {
                             Chapters
                           </Nav.Item>
                         </div>
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/statistics", true)}
+                        >
+                          <Nav.Item as={Link} to="/statistics">
+                            Statistics
+                          </Nav.Item>
+                        </div>
                       </>
                     )}
                     {!localStorage.getItem("token") ? (
@@ -194,6 +202,14 @@ const Navbar = () => {
                   onClick={() => clickHandler("/chaptersviewer")}
                 >
                   Chapters
+                </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to="/statistics"
+                  className="lm-navbar__link"
+                  onClick={() => clickHandler("/statistics")}
+                >
+                  Statistics
                 </Nav.Item>
               </>
             )}

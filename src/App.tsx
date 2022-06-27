@@ -16,6 +16,7 @@ import Summaries from "./pages/summaries"
 import Notes from "./pages/notes"
 // @ts-ignore
 import libraryImage from "./assets/images/library.jpg"
+import StatisticsPage from "./pages/StatisticsPage/StatisticsPage"
 
 type Props = {}
 
@@ -53,6 +54,7 @@ const App = (props: Props) => {
           <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/summaries" element={<Summaries />} />
           <Route path="/notes" element={<Notes />} />
 

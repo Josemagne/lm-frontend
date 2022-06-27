@@ -106,21 +106,21 @@ const config = {
       inject: "body",
       favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
     }),
-    new CopyPlugin({
-      patterns: [
-        { from: "./src/assets/images/favicon.svg", to: "" },
-        { from: "./src/manifest.json", to: "" },
-        { from: "./src/assets/pwa/logo192.png", to: "" },
-        { from: "./src/assets/pwa/logo512.png", to: "" },
-        { from: "./src/assets/.well-known", to: "" },
-      ],
-    }),
-    new WorkboxWebpackPlugin.InjectManifest({
-      swSrc: "./src/sw.js",
-      swDest: "sw.js",
-      maximumFileSizeToCacheInBytes: 100000000,
-      mode: process.env.NODE_ENV,
-    }),
+    // new CopyPlugin({
+    //   patterns: [
+    //     { from: "./src/assets/images/favicon.svg", to: "" },
+    //     { from: "./src/manifest.json", to: "" },
+    //     { from: "./src/assets/pwa/logo192.png", to: "" },
+    //     { from: "./src/assets/pwa/logo512.png", to: "" },
+    //     { from: "./src/assets/.well-known", to: "" },
+    //   ],
+    // }),
+    // new WorkboxWebpackPlugin.InjectManifest({
+    //   swSrc: "./src/sw.js",
+    //   swDest: "sw.js",
+    //   maximumFileSizeToCacheInBytes: 100000000,
+    //   mode: process.env.NODE_ENV,
+    // }),
   ],
 }
 
