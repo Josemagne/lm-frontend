@@ -10,7 +10,7 @@
     "cy:run": "npx cypress run --headless --browser firefox",
     "ci:cy-run": "npm run ci:start-server && npm run cy:run",
     "dev": "npx cross-env NODE_ENV=development webpack-dev-server",
-    "build": "rm -rf dist && npx cross-env NODE_ENV=production webpack",
+    "build": "rm -rf dist && npx cross-env NODE_ENV=production webpack ",
     "build-ts": "npx tsc",
     "deploy-netlify": "npx netlify deploy --auth $NETLIFY_AUTH_TOKEN --build --dir dist --prod --site librimem",
     "prepare": "husky install",
