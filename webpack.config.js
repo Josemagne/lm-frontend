@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const TerserWebpackPlugin = require("terser-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const path = require("path")
-const WorkboxWebpackPlugin = require("workbox-webpack-plugin")
-const CopyPlugin = require("copy-webpack-plugin")
+// const WorkboxWebpackPlugin = require("workbox-webpack-plugin")
+// const CopyPlugin = require("copy-webpack-plugin")
 
 const isProduction = process.env.NODE_ENV === "production"
 const indexHTML =

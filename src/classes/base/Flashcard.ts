@@ -13,14 +13,16 @@ class Flashcard implements LM_Flashcard {
     entityID: string
   }
   timesRepeated: number = 0
-  repeatedDate: {}
+  repeatedDate: {} = {}
+  createdAt: Date = new Date()
+  updatedAt: Date = new Date()
 
   constructor(
     flashcard_id: string,
     question: string,
     answer: string,
     entityType: LM_EntityName,
-    entityID: string,
+    entityID: string
   ) {
     this.entity = { entityID, entityType }
     this.flashcard_id = flashcard_id

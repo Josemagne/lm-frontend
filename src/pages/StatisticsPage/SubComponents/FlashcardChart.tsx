@@ -33,6 +33,8 @@ const FlashcardChart = () => {
     // @ts-ignore
     const yScale = d3
       .scaleLinear()
+      // TODO Repair
+      // @ts-ignore
       .domain([minMax.yMin, minMax.yMax])
       .range([height, 0])
   }, [])
