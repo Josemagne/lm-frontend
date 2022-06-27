@@ -14,6 +14,7 @@ const Login = (props: Props) => {
   const [errors, setErrors] = useState<undefined | string>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
   const loginSchema = yup.object().shape({
     email: yup
       .string()

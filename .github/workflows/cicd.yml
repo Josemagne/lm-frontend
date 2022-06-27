@@ -154,8 +154,6 @@ jobs:
         uses: actions/setup-node@v2
       - name: Build
         run: |
-          npm install yarn
-          yarn
           npm run build
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
@@ -185,9 +183,9 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ls -Q /frontend/dist | grep -v dist | xargs rm -fr
-            mv /frontend/dist/dist/* /frontend/dist/
-            rm -Rf /frontend/dist/dist
+            ls -Q /frontend/dist | grep -v dist | xargs rm -fR
+            mv /frontend/dist/public/* /frontend/dist/
+            rm -Rf /frontend/dist/public
 
   # - name: Kubernetes set context
   #   uses: Azure/k8s-set-context@v1
