@@ -20,7 +20,7 @@ const config = {
   // Where the transpiled code will be
   output: {
     // The path to the transpiled code
-    path: resolve(__dirname, "dist"),
+    path: resolve(__dirname, "public"),
     // How the transpiled and bundled code will be called
     filename: "bundle.js",
     publicPath: "/",
@@ -108,12 +108,12 @@ const config = {
     }),
     // new CopyPlugin({
     //   patterns: [
-    //     { from: "./src/assets/images/favicon.svg", to: "" },
-    //     { from: "./src/manifest.json", to: "" },
-    //     { from: "./src/assets/pwa/logo192.png", to: "" },
-    //     { from: "./src/assets/pwa/logo512.png", to: "" },
-    //     { from: "./src/assets/.well-known", to: "" },
-    //   ],
+    // { from: "./src/assets/images/favicon.svg", to: "" },
+    // { from: "./src/manifest.json", to: "" },
+    // { from: "./src/assets/pwa/logo192.png", to: "" },
+    // { from: "./src/assets/pwa/logo512.png", to: "" },
+    // { from: "./src/assets/.well-known", to: "" },
+    // ],
     // }),
     // new WorkboxWebpackPlugin.InjectManifest({
     //   swSrc: "./src/sw.js",

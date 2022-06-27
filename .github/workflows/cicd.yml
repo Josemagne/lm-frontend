@@ -23,7 +23,7 @@ jobs:
           npm run build-ts
           npm run build
           # npm run test
-          npx netlify deploy --auth ${{secrets.NETLIFY}} --build --dir dist --prod --site librimem
+          npx netlify deploy --auth ${{secrets.NETLIFY}} --build --dir public --prod --site librimem
 
   # build:
   #   name: build frontend app docker
@@ -163,7 +163,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY}}
-          source: "dist/*"
+          source: "public/*"
           target: "/frontend/dist"
 
   correct:

@@ -41,6 +41,7 @@ const Navbar = () => {
    * Handles the click event on a link
    */
   const clickHandler = (where: string, inOffcanvas: boolean = false) => {
+    console.log("clicked: ", where)
     if (inOffcanvas) setShow(false)
     navigate(where, {
       replace: true,
@@ -147,12 +148,11 @@ const Navbar = () => {
                       </>
                     )}
                     {!localStorage.getItem("token") ? (
-                      <div className="lm-navbar__link">
-                        <Nav.Item
-                          as={Link}
-                          to={"authenticate"}
-                          onClick={() => clickHandler("/chaptersviewer", true)}
-                        >
+                      <div
+                        className="lm-navbar__link"
+                        onClick={() => clickHandler("/login", true)}
+                      >
+                        <Nav.Item as={Link} to={"/login"}>
                           Login
                         </Nav.Item>
                       </div>
@@ -193,7 +193,7 @@ const Navbar = () => {
                   className="lm-navbar__link"
                   onClick={() => clickHandler("/notes")}
                 >
-                  notes
+                  Notes
                 </Nav.Item>
                 <Nav.Item
                   as={Link}
