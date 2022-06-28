@@ -14,7 +14,10 @@ interface StatistiscsState {
   }
 }
 
-const initialState: StatistiscsState = {}
+const initialState: StatistiscsState = {
+  amountOfBooksRead: {},
+  amountOfFlashcardsRevised: {},
+}
 
 export const statisticsSlice: Slice<StatistiscsState> = createSlice({
   name: "statistics",

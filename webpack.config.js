@@ -105,6 +105,7 @@ const config = {
       filename: "index.html",
       inject: "body",
       favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
+      scriptLoading: "defer",
     }),
     // new CopyPlugin({
     //   patterns: [
