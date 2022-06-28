@@ -137,14 +137,14 @@ const Navbar = () => {
                             Chapters
                           </Nav.Item>
                         </div>
-                        <div
+                        {/* <div
                           className="lm-navbar__link"
                           onClick={() => clickHandler("/statistics", true)}
                         >
                           <Nav.Item as={Link} to="/statistics">
                             Statistics
                           </Nav.Item>
-                        </div>
+                        </div> */}
                       </>
                     )}
                     {!localStorage.getItem("token") ? (
@@ -203,14 +203,14 @@ const Navbar = () => {
                 >
                   Chapters
                 </Nav.Item>
-                <Nav.Item
+                {/* <Nav.Item
                   as={Link}
                   to="/statistics"
                   className="lm-navbar__link"
                   onClick={() => clickHandler("/statistics")}
                 >
                   Statistics
-                </Nav.Item>
+                </Nav.Item> */}
               </>
             )}
             {!isAuthorized && (
