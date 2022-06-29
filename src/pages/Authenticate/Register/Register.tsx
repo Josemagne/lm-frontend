@@ -18,12 +18,7 @@ const Register = (props: Props) => {
 
   const [error, setError] = useState<string | undefined>()
   const registerSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email()
-      .required()
-      .min(5, "Too short")
-      .max(40, "Too long"),
+    email: yup.string().required().min(5, "Too short").max(40, "Too long"),
     password: yup.string().required().min(7, "Too short").max(30, "Too long"),
   })
   const formik = useFormik({
@@ -70,8 +65,8 @@ const Register = (props: Props) => {
         <Form>
           <Form.Group>
             <Form.Control
-              type="email"
-              placeholder="E-Mail"
+              type="text"
+              placeholder="Username"
               {...formik.getFieldProps("email")}
             />
             <div className="lm-register__errors">

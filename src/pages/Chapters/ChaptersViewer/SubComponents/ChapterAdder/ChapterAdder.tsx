@@ -68,7 +68,9 @@ const ChapterAdder = () => {
 
       dispatch(addChapter(values))
 
-      API.addChapter(values)
+      if (!sessionStorage.getItem("isTesting")) {
+        API.addChapter(values)
+      }
 
       resetForm()
 

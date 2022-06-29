@@ -10,6 +10,7 @@ import noteImage from "../../assets/images/notes.jpg"
 import bookImage from "../../assets/images/books.jpg"
 import { gsap } from "gsap"
 import { fileURLToPath } from "url"
+import Welcome from "../../components/Welcome/Welcome"
 
 type Props = {}
 
@@ -147,6 +148,7 @@ const Home = (props: Props) => {
             </>
           )
         })}
+        <Welcome />
       </div>
 
       {/* ANCHOR Action to login */}

@@ -56,7 +56,9 @@ const ChapterModal = () => {
   const handleClose = () => {
     dispatch(changeSelectedChapter(null))
     dispatch(toggleIsSelectingChapter(""))
-    API.updateChapter(selectedChapter)
+    if (!sessionStorage.getItem("isTesting")) {
+      API.updateChapter(selectedChapter)
+    }
   }
 
   useEffect(() => {}, [selectedChapter])

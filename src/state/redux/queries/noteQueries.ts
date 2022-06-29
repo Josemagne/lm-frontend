@@ -4,7 +4,10 @@ import { LM_Note } from "../../../types/Note/note"
 
 export const noteAPI = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "/",
+    baseUrl:
+      process.env.environment === "production"
+        ? "librimem.com/api/v1/"
+        : "http://localhost:4000/api/v1/",
     prepareHeaders: (headers, { getState }) => {
       const token = localStorage.getItem("token")
 
@@ -32,16 +35,16 @@ export const noteAPI = createApi({
     >({
       query: ({ entity, entityID, noteID }) => `note/${entityID}/${noteID}`,
     }),
-    addNote: build.query<LM_Note, LM_Note>({
+    addNote: build.mutation<LM_Note, LM_Note>({
       query: (body) => ({
-        url: `note/${body.note_id}`,
+        url: `note/${body.entity}/${body.entity_id}/${body.note_id}`,
         method: "POST",
         body,
       }),
     }),
     updateNote: build.mutation<void, LM_Note>({
       query: (body) => ({
-        url: `note/${body.note_id}`,
+        url: `note/${body.entity}/${body.entity_id}/${body.note_id}`,
         method: "POST",
         body: body,
       }),
@@ -62,7 +65,7 @@ export const noteAPI = createApi({
 
 export const {
   useGetNoteQuery,
-  useAddNoteQuery,
+  useAddNoteMutation,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
   useGetNotesQuery,

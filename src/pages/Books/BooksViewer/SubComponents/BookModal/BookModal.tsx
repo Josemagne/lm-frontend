@@ -40,7 +40,9 @@ const BookModal = ({}: Props) => {
   function removeBook() {
     dispatch(deleteSelectedBook(""))
     dispatch(toggleIsSelectingBook(""))
-    API.deleteBook(selectedBook.book_id)
+    if (!sessionStorage.getItem("isTesting")) {
+      API.deleteBook(selectedBook.book_id)
+    }
   }
 
   useEffect(() => {

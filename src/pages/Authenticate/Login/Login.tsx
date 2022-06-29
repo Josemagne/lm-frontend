@@ -16,12 +16,7 @@ const Login = (props: Props) => {
   const navigate = useNavigate()
 
   const loginSchema = yup.object().shape({
-    email: yup
-      .string()
-      .required()
-      .email()
-      .min(5, "To short")
-      .max(40, "Too long"),
+    email: yup.string().required().min(5, "To short").max(40, "Too long"),
     password: yup.string().required().min(7, "Too short").max(40, "Too long"),
   })
 
@@ -52,10 +47,10 @@ const Login = (props: Props) => {
         {/* E-Mail */}
         <form>
           <div className="lm-login__email">
-            <FloatingLabel controlId="email" label="E-Mail">
+            <FloatingLabel controlId="email" label="Username">
               <Form.Control
                 type="text"
-                placeholder="E-Mail"
+                placeholder="Username"
                 {...formik.getFieldProps("email")}
               ></Form.Control>
             </FloatingLabel>

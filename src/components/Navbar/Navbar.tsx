@@ -27,6 +27,9 @@ const Navbar = () => {
   const [width, setWidth] = useState<number>(0)
   const [show, setShow] = useState<boolean>(false)
   const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const [isTesting, setIsTesting] = useState(
+    sessionStorage.getItem("isTesting") ? true : false
+  )
 
   window.addEventListener("resize", () => {
     setWidth(global.window.innerWidth)
@@ -51,20 +54,21 @@ const Navbar = () => {
   useEffect(() => {
     const width = window.innerWidth
     setWidth(width)
-    console.log("token: ", localStorage.getItem("token"))
 
-    // If we have a token then we request authorization to check if it is legit
-    if (localStorage.getItem("token")) {
-      requestAuthorization().then((authorizationResult) => {
-        // If the authorization was not successful then we redirect to the login page
-        setIsAuthorized(authorizationResult)
-        if (!authorizationResult) {
-          localStorage.removeItem("token")
-          sessionStorage.removeItem("token")
-          navigate("/login", { replace: true })
-        }
-      })
-    }
+    if (!sessionStorage.getItem("isTesting")) {
+      // If we have a token then we request authorization to check if it is legit
+      if (localStorage.getItem("token")) {
+        requestAuthorization().then((authorizationResult) => {
+          // If the authorization was not successful then we redirect to the login page
+          setIsAuthorized(authorizationResult)
+          if (!authorizationResult) {
+            localStorage.removeItem("token")
+            sessionStorage.removeItem("token")
+            navigate("/login", { replace: true })
+          }
+        })
+      }
+    } else setIsAuthorized(true)
   }, [])
 
   // TODO Put that in own component
@@ -103,7 +107,7 @@ const Navbar = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                   <div className=" lm-navbar__linkscontainer ">
-                    {isAuthorized && (
+                    {isTesting && (
                       <>
                         <div
                           className="lm-navbar__link"
@@ -147,7 +151,52 @@ const Navbar = () => {
                         </div> */}
                       </>
                     )}
-                    {!localStorage.getItem("token") ? (
+
+                    {isAuthorized && !isTesting && (
+                      <>
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/booksviewer", true)}
+                        >
+                          <Nav.Item as={Link} to="/booksviewer">
+                            Books
+                          </Nav.Item>
+                        </div>
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/flashcards", true)}
+                        >
+                          <Nav.Item to="/flashcards" as={Link}>
+                            Flashcards
+                          </Nav.Item>
+                        </div>
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/notes", true)}
+                        >
+                          <Nav.Item to="/notes" as={Link}>
+                            notes
+                          </Nav.Item>
+                        </div>
+                        <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/chaptersviewer", true)}
+                        >
+                          <Nav.Item to="/chaptersviewer" as={Link}>
+                            Chapters
+                          </Nav.Item>
+                        </div>
+                        {/* <div
+                          className="lm-navbar__link"
+                          onClick={() => clickHandler("/statistics", true)}
+                        >
+                          <Nav.Item as={Link} to="/statistics">
+                            Statistics
+                          </Nav.Item>
+                        </div> */}
+                      </>
+                    )}
+                    {!localStorage.getItem("token") && !isTesting ? (
                       <div
                         className="lm-navbar__link"
                         onClick={() => clickHandler("/login", true)}
@@ -213,7 +262,7 @@ const Navbar = () => {
                 </Nav.Item> */}
               </>
             )}
-            {!isAuthorized && (
+            {!isAuthorized && !isTesting && (
               <>
                 <Nav.Item
                   as={Link}

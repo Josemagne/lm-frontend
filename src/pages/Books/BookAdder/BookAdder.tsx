@@ -69,7 +69,9 @@ const BookAdder = (props: Props) => {
       //await FAPI.addBook(values);
       console.log("new booookkkkkkkkk:", values)
 
-      await API.addBook(values)
+      if (!sessionStorage.getItem("isTesting")) {
+        await API.addBook(values)
+      }
 
       const newAuthor = new Author(
         nanoid(),
@@ -78,7 +80,9 @@ const BookAdder = (props: Props) => {
       )
       //await FAPI.addAuthor(newAuthor);
 
-      await API.addAuthor(newAuthor)
+      if (!sessionStorage.getItem("isTesting")) {
+        await API.addAuthor(newAuthor)
+      }
 
       // NOTE Resets the values of the form
       resetForm({

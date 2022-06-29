@@ -48,7 +48,9 @@ const FlashcardAdder = ({ type }: Props) => {
     let flashcardCopy = JSON.parse(JSON.stringify(newFlashcard))
     flashcardCopy.flashcardType = type
     flashcardCopy.book_id = selectedBook.book_id
-    await API.addFlashcard(flashcardCopy)
+    if (!sessionStorage.getItem("isTesting")) {
+      await API.addFlashcard(flashcardCopy)
+    }
     dispatch(addFlashcard(flashcardCopy))
   }
 

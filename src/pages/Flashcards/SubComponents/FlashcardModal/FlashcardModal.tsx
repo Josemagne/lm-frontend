@@ -41,7 +41,9 @@ const FlashcardModal = (props: Props) => {
   const handleClose = () => {
     dispatch(changeSelectedFlashcard(null))
     if (!selectedFlashcardCopyLocal) return
-    API.updateFlashcard(selectedFlashcardCopyLocal)
+    if (!sessionStorage.getItem("isTesting")) {
+      API.updateFlashcard(selectedFlashcardCopyLocal)
+    }
   }
 
   useEffect(() => {

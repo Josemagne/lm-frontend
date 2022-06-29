@@ -17,6 +17,7 @@ import Notes from "./pages/notes"
 // @ts-ignore
 import libraryImage from "./assets/images/library.jpg"
 import StatisticsPage from "./pages/StatisticsPage/StatisticsPage"
+import TestingBanner from "./components/Welcome/SubComponents/TestingBanner/TestingBanner"
 
 type Props = {}
 
@@ -64,7 +65,12 @@ const App = (props: Props) => {
           {/* TODO Add Settings */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-        <footer>{/* <Navigation /> */}</footer>
+        <footer>
+          {
+            sessionStorage.getItem("isTesting") && 
+          <TestingBanner />
+          }
+        </footer>
       </HashRouter>
     </div>
   )

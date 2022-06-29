@@ -58,6 +58,12 @@ export const noteSlice: Slice<NoteState> = createSlice({
     addNote: (state: NoteState, { payload: note }: PayloadAction<LM_Note>) => {
       state.notes.notes[note.note_id] = note
     },
+    updateNote: (
+      state: NoteState,
+      { payload: updatedNote }: PayloadAction<LM_Note>
+    ) => {
+      state.notes.notes[updatedNote.note_id] = updatedNote
+    },
     // ANCHOR newNote
     updateNewNote: (
       state: NoteState,
@@ -65,9 +71,19 @@ export const noteSlice: Slice<NoteState> = createSlice({
     ) => {
       state.new.newNote = newNote
     },
-    // ANCHOR selectedNote
+    // ANCHOR change
+    changeSelectedNote: (
+      state: NoteState,
+      action: PayloadAction<LM_Note | null>
+    ) => {
+      state.selection.note = action.payload
+    },
+    // ANCHOR toggle
     toggleIsAddingNewNote: (state: NoteState, action: PayloadAction<any>) => {
       state.new.isAddingNewNote = !state.new.isAddingNewNote
+    },
+    toggleIsSelectingNote: (state: NoteState, action: PayloadAction<any>) => {
+      state.selection.isSelecting = !state.selection.isSelecting
     },
   },
   extraReducers: (builder) => {
@@ -84,5 +100,11 @@ export const noteSlice: Slice<NoteState> = createSlice({
 })
 
 export default noteSlice.reducer
-export const { updateNewNote, addNote, toggleIsAddingNewNote } =
-  noteSlice.actions
+export const {
+  updateNewNote,
+  addNote,
+  updateNote,
+  toggleIsAddingNewNote,
+  changeSelectedNote,
+  toggleIsSelectingNote,
+} = noteSlice.actions
