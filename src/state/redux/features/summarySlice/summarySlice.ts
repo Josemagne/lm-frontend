@@ -2,31 +2,57 @@ import { LM_Summary } from "../../../../types/summary/summary"
 import { LM_EntityName } from "../../../../types/Entity/entity"
 import Summary from "../../../../classes/base/Summary"
 import { nanoid } from "nanoid"
-import { createAsyncThunk, createSlice, Slice } from "@reduxjs/toolkit"
+import {
+  createAsyncThunk,
+  createSlice,
+  Slice,
+  PayloadAction,
+} from "@reduxjs/toolkit"
 import axios from "axios"
+import { summaryAPI } from "../../queries/summaryQueries"
 
 interface InitialSummaryState {
   summaries: {
     summaries: {
       [id: string]: LM_Summary
-    } | null
+    }
     error: string | null
     loading: boolean
     amountOfSummaries: number
   }
-  selectedSummary: LM_Summary | null
-  newSummary: LM_Summary
+  selection: {
+    selectedSummary: LM_Summary | null
+    isSelectingSummary: boolean
+  }
+  new: {
+    newSummary: LM_Summary
+    IsAddingNewSummary: boolean
+  }
+  filter: {
+    isFilteringSummaries: boolean
+    filteredSummaries: LM_Summary[]
+  }
 }
 
 const initialSummaryState: InitialSummaryState = {
   summaries: {
-    summaries: null,
+    summaries: {},
     error: null,
     loading: false,
     amountOfSummaries: 0,
   },
-  selectedSummary: null,
-  newSummary: new Summary(nanoid(), "", "BOOK"),
+  selection: {
+    selectedSummary: null,
+    isSelectingSummary: false,
+  },
+  new: {
+    newSummary: new Summary(nanoid(), "", "BOOK"),
+    IsAddingNewSummary: false,
+  },
+  filter: {
+    isFilteringSummaries: false,
+    filteredSummaries: [],
+  },
 }
 
 export const fetchSummariesBackend = createAsyncThunk(
@@ -52,11 +78,39 @@ export const summarySlice: Slice<InitialSummaryState> = createSlice({
   name: "summaries",
   initialState: initialSummaryState,
   reducers: {
-    addSummary: (state, action) => {},
-    deleteSummary: (state, action) => {},
+    addSummary: (
+      state: InitialSummaryState,
+      action: PayloadAction<LM_Summary>
+    ) => {
+      state.summaries.summaries[action.payload.summary_id] = action.payload
+    },
+    deleteSummary: (
+      state: InitialSummaryState,
+      action: PayloadAction<LM_Summary>
+    ) => {
+      state.summaries.summaries[action.payload.summary_id] = action.payload
+    },
     updateSummary: (state, action) => {},
-    changeSelectedSummary: (state, action) => {},
-    renewNewSummary: (state, action) => {},
+    updateSelectedSummary: (state, action) => {},
+    updateNewSummary: (state, action) => {},
+    toggleIsSelectingSummary: (
+      state: InitialSummaryState,
+      action: PayloadAction<void>
+    ) => {
+      state.selection.isSelectingSummary = !state.selection.isSelectingSummary
+    },
+    toggleIsAddingNewSummary: (
+      state: InitialSummaryState,
+      action: PayloadAction<void>
+    ) => {
+      state.new.IsAddingNewSummary = !state.new.IsAddingNewSummary
+    },
+    toggleIsFilteringSummaries: (
+      state: InitialSummaryState,
+      action: PayloadAction<void>
+    ) => {
+      state.filter.isFilteringSummaries = !state.filter.isFilteringSummaries
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSummariesBackend.pending, (state, action) => {
@@ -78,7 +132,16 @@ export const summarySlice: Slice<InitialSummaryState> = createSlice({
       builder.addCase(fetchSummariesBackend.rejected, (state, action) => {
         state.summaries.error = action.payload as string
         state.summaries.loading = false
-      })
+      }),
+      builder.addMatcher(
+        summaryAPI.endpoints.getSummaries.matchFulfilled,
+        (state: InitialSummaryState, action: PayloadAction<LM_Summary[]>) => {
+          const summaries = action.payload
+          summaries.forEach((s) => {
+            state.summaries.summaries[s.summary_id] = s
+          })
+        }
+      )
   },
 })
 

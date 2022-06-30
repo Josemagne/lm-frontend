@@ -13,6 +13,12 @@ import useAppSelector from "../../../../../hooks/useAppSelector"
 import FlashcardAdder from "../../../../../components/FlashcardAdder/FlashcardAdder"
 import API from "../../../../../api/API"
 import { selectedBookSelector } from "../../../../../state/redux/features/bookSlice"
+import BookOverview from "./SubComponents/BookOverview/BookOverview"
+import PdfOverview from "./SubComponents/BookOverview/SubComponents/PDFOverview/PDFOverview"
+import { summariesSelector } from "../../../../../state/redux/selectors/summarySelectors"
+import { LM_Flashcard } from "../../../../../types/Flashcard/flashcard"
+import { LM_Note } from "../../../../../types/Note/note"
+import { fetchFlashcardsBackend } from "../../../../../state/redux/features/Flashcard/flashcardSlice"
 
 type Props = {}
 
@@ -28,6 +34,14 @@ const BookModal = ({}: Props) => {
 
   const isSelectingBook: boolean = useAppSelector(isSelectingBookSelector)
   const selectedBook: LM_Book = useAppSelector(selectedBookSelector)
+
+  const summaries = useAppSelector(summariesSelector)
+  const flashcards = Object.values(
+    useAppSelector((s) => s.flashcards.flashcards.flashcards)
+  ) as LM_Flashcard[]
+  const notes = Object.values(
+    useAppSelector((s) => s.notes.notes.notes)
+  ) as LM_Note[]
 
   const handleClose = () => {
     dispatch(changeSelectedBook(null))
@@ -48,6 +62,13 @@ const BookModal = ({}: Props) => {
   useEffect(() => {
     console.log("selected: ", selectedBook)
   }, [selectedBook])
+
+  useEffect(() => {
+    if (isSelectingBook && selectedBook) {
+      // @ts-ignore
+      dispatch(fetchFlashcardsBackend(selectedBook.book_id))
+    }
+  }, [isSelectingBook, selectedBook])
 
   return (
     <Modal
@@ -104,6 +125,17 @@ const BookModal = ({}: Props) => {
             <hr className="my-3" />
             {/* TODO FlashcardAdder */}
             <FlashcardAdder type="BOOK" />
+
+            <div className="bookmodal__pdfviewer">
+              <p>You can download your flashcards. Here you go:</p>
+              <PdfOverview />
+            </div>
+            <BookOverview
+              flashcards={flashcards}
+              summaries={summaries}
+              notes={notes}
+              book={selectedBook}
+            />
             {/* TODO Summary */}
           </Modal.Body>
           <Modal.Footer></Modal.Footer>

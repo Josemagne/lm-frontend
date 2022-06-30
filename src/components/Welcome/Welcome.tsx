@@ -27,11 +27,11 @@ const Welcome = (props: Props) => {
   }
 
   useEffect(() => {
-    // NOTE After 3 seconds we set the counter to true. If the welcome: boolean is set to true then we show the Welcome Modal to the user.
+    // NOTE After 5 seconds we set the counter to true. If the welcome: boolean is set to true then we show the Welcome Modal to the user.
     if (!sessionStorage.getItem("isTesting")) {
       setTimeout(() => {
-        setShowWelcome(true)
-      }, 3000)
+        if (!localStorage.getItem("token")) setShowWelcome(true)
+      }, 5000)
     }
   }, [])
 
