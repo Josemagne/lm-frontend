@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const TerserWebpackPlugin = require("terser-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const path = require("path")
-const webpack = require("webpack")
 // const WorkboxWebpackPlugin = require("workbox-webpack-plugin")
 // const CopyPlugin = require("copy-webpack-plugin")
 
@@ -37,12 +36,6 @@ const config = {
       http: false,
       https: false,
       crypto: false,
-      process: resolve("process/browser"),
-      zlib: require.resolve("browserify-zlib"),
-      stream: require.resolve("stream-browserify"),
-      util: require.resolve("util"),
-      buffer: require.resolve("buffer"),
-      assert: require.resolve("assert"),
       "crypto-browserify": resolve("crypto-browserify"),
       os: resolve("os-browserify"),
     },
@@ -112,10 +105,6 @@ const config = {
       inject: "body",
       favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
       scriptLoading: "defer",
-    }),
-    new webpack.ProvidePlugin({
-      Buffer: ["buffer", "Buffer"],
-      process: "process/browser",
     }),
     // new CopyPlugin({
     //   patterns: [

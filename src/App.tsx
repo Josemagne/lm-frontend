@@ -18,6 +18,7 @@ import Notes from "./pages/notes"
 import libraryImage from "./assets/images/library.jpg"
 import StatisticsPage from "./pages/StatisticsPage/StatisticsPage"
 import TestingBanner from "./components/Welcome/SubComponents/TestingBanner/TestingBanner"
+import BookResourcesPage from "./pages/BookResourcesPage/BookResourcesPage"
 
 type Props = {}
 
@@ -58,7 +59,7 @@ const App = (props: Props) => {
           <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/summaries" element={<Summaries />} />
           <Route path="/notes" element={<Notes />} />
-
+          <Route path="/bookresources" element={<BookResourcesPage />} />
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}
@@ -66,10 +67,7 @@ const App = (props: Props) => {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
         <footer>
-          {
-            sessionStorage.getItem("isTesting") && 
-          <TestingBanner />
-          }
+          {sessionStorage.getItem("isTesting") && <TestingBanner />}
         </footer>
       </HashRouter>
     </div>

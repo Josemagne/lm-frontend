@@ -1,4 +1,3 @@
-import { PDFDownloadLink, BlobProvider } from "@react-pdf/renderer"
 import React from "react"
 import useAppSelector from "../../../../../../../../../hooks/useAppSelector"
 import { selectedBookSelector } from "../../../../../../../../../state/redux/features/bookSlice"
@@ -20,25 +19,7 @@ const PdfOverview = (props: Props) => {
   ) as LM_Note[]
   const selectedBook: LM_Book = useAppSelector(selectedBookSelector)
 
-  return (
-    <div>
-      <PDFDownloadLink
-        document={
-          <BookOverview
-            summaries={summaries}
-            notes={notes}
-            flashcards={flashcards}
-            book={selectedBook}
-          />
-        }
-        fileName="somename.pdf"
-      >
-        {({ blob, url, loading, error }) =>
-          loading ? "Loading document..." : "Download now!"
-        }
-      </PDFDownloadLink>
-    </div>
-  )
+  return <div></div>
 }
 
 export default PdfOverview

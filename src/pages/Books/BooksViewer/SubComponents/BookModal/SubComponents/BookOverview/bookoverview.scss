@@ -1,0 +1,22 @@
+.bookmodal__bookoverview {
+  .bookoverview__title {
+  }
+
+  .bookoverview__flashcards {
+    display: flex;
+    flex-direction: column;
+    .bookoverview__flashcards__flashcard {
+      margin-bottom: 1rem;
+      display: flex;
+
+      .bookoverview__flashcards__flashcard__question {
+        padding: 1rem;
+        border-right: 1px solid black;
+      }
+
+      .bookoverview__flashcards__flashcard__answer {
+        padding: 1rem;
+      }
+    }
+  }
+}

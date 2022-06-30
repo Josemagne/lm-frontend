@@ -19,6 +19,9 @@ import { summariesSelector } from "../../../../../state/redux/selectors/summaryS
 import { LM_Flashcard } from "../../../../../types/Flashcard/flashcard"
 import { LM_Note } from "../../../../../types/Note/note"
 import { fetchFlashcardsBackend } from "../../../../../state/redux/features/Flashcard/flashcardSlice"
+import html2canvas from "html2canvas"
+import jsPdf from "jspdf"
+import axios from "axios"
 
 type Props = {}
 
@@ -57,6 +60,34 @@ const BookModal = ({}: Props) => {
     if (!sessionStorage.getItem("isTesting")) {
       API.deleteBook(selectedBook.book_id)
     }
+  }
+
+  const savePdf = () => {
+    const domElement = document.querySelector(".bookmodal__bookoverview")
+    if (!domElement) return
+    // @ts-ignore
+    html2canvas(domElement, {
+      onclone: (document) => {},
+    }).then((canvas) => {
+      const imgWidth = (canvas.width * 60) / 240
+      const imgHeight = (canvas.height * 70) / 240
+      const img = canvas.toDataURL("image/jpeg")
+      const pdf = new jsPdf("p", "mm", "a4")
+      pdf.addImage(img, "JPEG", 15, 2, imgWidth, imgHeight)
+      pdf.save("file.pdf")
+    })
+
+    // return axios({
+    //   url: "http://localhost:4000/api/v1/pdf",
+    //   method: "GET",
+    // }).then((pdfData) => {
+    //   // @ts-ignore
+    //   const blob = new Blob([pdfData], { type: "application/pdf" })
+    //   const link = document.createElement("a")
+    //   link.href = window.URL.createObjectURL(blob)
+    //   link.download = `file-name.pdf`
+    //   link.click()
+    // })
   }
 
   useEffect(() => {
@@ -128,7 +159,9 @@ const BookModal = ({}: Props) => {
 
             <div className="bookmodal__pdfviewer">
               <p>You can download your flashcards. Here you go:</p>
-              <PdfOverview />
+              <button className="btn btn-primary" onClick={savePdf}>
+                Download
+              </button>
             </div>
             <BookOverview
               flashcards={flashcards}
