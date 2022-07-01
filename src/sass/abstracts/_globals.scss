@@ -41,7 +41,9 @@ body {
   padding-left: 2rem;
   padding-right: 2rem;
 
-  background-color: rgb(255, 255, 255, 0.7);
+  background-color: rgba(107, 107, 107, 0.342);
+  color: white;
+  text-shadow: 0 0 1px black;
 
   @media screen and (min-width: 768px) {
     padding: 3rem;

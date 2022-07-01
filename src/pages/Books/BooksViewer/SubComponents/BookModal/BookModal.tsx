@@ -69,11 +69,26 @@ const BookModal = ({}: Props) => {
     html2canvas(domElement, {
       onclone: (document) => {},
     }).then((canvas) => {
-      const imgWidth = (canvas.width * 60) / 240
-      const imgHeight = (canvas.height * 70) / 240
       const img = canvas.toDataURL("image/jpeg")
+
+      const imgWidth = 210
+      const pageHeight = 295
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      let heightLeft = imgHeight
+
       const pdf = new jsPdf("p", "mm", "a4")
+      let position = 0
+
       pdf.addImage(img, "JPEG", 15, 2, imgWidth, imgHeight)
+
+      heightLeft -= pageHeight
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight
+        pdf.addPage()
+        pdf.addImage(img, "PNG", 0, position, imgWidth, imgHeight)
+        heightLeft -= pageHeight
+      }
       pdf.save("file.pdf")
     })
 

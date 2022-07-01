@@ -41,7 +41,7 @@ const Login = (props: Props) => {
 
   useEffect(() => {}, [errors])
   return (
-    <div className="lm-login">
+    <div className="lm-login lm-page">
       <div className="login-container">
         <h4>Login</h4>
         {/* E-Mail */}

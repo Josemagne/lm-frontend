@@ -21,6 +21,7 @@ import {
   isFilteringFlashcardsSelector,
   flashcardsSelector,
 } from "../../../../state/redux/features/Flashcard/flashcardSlice"
+import "./flashcardspagination.scss"
 
 const { HeaderCell, Cell } = Table
 

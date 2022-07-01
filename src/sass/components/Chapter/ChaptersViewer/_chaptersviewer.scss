@@ -2,11 +2,14 @@
   position: relative !important;
   overflow-y: hidden !important;
   height: fit-content !important;
-  grid-template-areas:
-    "lm-chapteradder"
-    "lm-chapters";
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  flex-wrap: wrap;
+
   .lm-chapters {
-    grid-area: lm-chapters;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

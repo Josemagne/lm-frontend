@@ -106,12 +106,14 @@ const BookSelector = () => {
   const TitlePlaceHolder = () => {
     return (
       <div className="bookselector__placeholder">
-        <h3>{selectedBook.book_title}</h3>
+        <h3>
+          {selectedBook.author_prename} {selectedBook.author_name} -{" "}
+          {selectedBook.book_title}
+        </h3>
         <div className="bookselector__placeholder__delete">
-          <button
-            className="btn btn-close"
-            onClick={() => removeSelectedBook()}
-          ></button>
+          <button className="btn " onClick={() => removeSelectedBook()}>
+            x
+          </button>
         </div>
       </div>
     )

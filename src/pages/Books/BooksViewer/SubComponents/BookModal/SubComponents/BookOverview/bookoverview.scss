@@ -1,11 +1,21 @@
 .bookmodal__bookoverview {
+  width: 100%;
+  height: 100%;
+
   .bookoverview__title {
   }
 
   .bookoverview__flashcards {
+    width: 100%;
+    height: 100%;
+
     display: flex;
     flex-direction: column;
+
     .bookoverview__flashcards__flashcard {
+      width: 100%;
+      height: 100%;
+
       margin-bottom: 1rem;
       display: flex;
 
