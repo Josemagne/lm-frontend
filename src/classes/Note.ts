@@ -16,6 +16,7 @@ export default class Note implements LM_Note {
     note: string,
     entity: LM_EntityName,
     entity_id: string
+
   ) {
     this.title = title
     this.entity = entity

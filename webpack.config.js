@@ -7,10 +7,7 @@ const path = require("path")
 // const CopyPlugin = require("copy-webpack-plugin")
 
 const isProduction = process.env.NODE_ENV === "production"
-const indexHTML =
-  process.env.NODE_ENV === "production"
-    ? resolve(__dirname, "public", "index.html")
-    : resolve(__dirname, "src", "index.html")
+const indexHTML = resolve(__dirname, "src", "index.html")
 
 const config = {
   mode: isProduction ? "production" : "development",
@@ -104,7 +101,6 @@ const config = {
       filename: "index.html",
       inject: "body",
       favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
-      scriptLoading: "defer",
     }),
     // new CopyPlugin({
     //   patterns: [
