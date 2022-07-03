@@ -1,0 +1,10 @@
+.lm-welcome {
+  z-index: 100;
+  .welcome__test__link {
+    background-color: green;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

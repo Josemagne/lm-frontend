@@ -40,12 +40,12 @@ const BookSelector = () => {
    * @returns
    */
   function getTitles(books: LM_Book[]) {
-    const _books = Object.values(books)
+    const length = books.length
     const _titles: string[] = []
 
     if (books.length < 1) return
 
-    for (let i = 0; i < _books.length; i++) {
+    for (let i = 0; i < length; i++) {
       let title = ""
 
       if (books[i].author_name) {
@@ -65,7 +65,7 @@ const BookSelector = () => {
   }
 
   if (titles.length < 1) {
-    getTitles(Object.values(books))
+    getTitles(books)
   }
 
   /*
@@ -100,18 +100,20 @@ const BookSelector = () => {
 
   useEffect(() => {
     if (!books) return
-    getTitles(Object.values(books))
+    getTitles(books)
   }, [books])
 
   const TitlePlaceHolder = () => {
     return (
       <div className="bookselector__placeholder">
-        <h3>{selectedBook.book_title}</h3>
+        <h3>
+          {selectedBook.author_prename} {selectedBook.author_name} -{" "}
+          {selectedBook.book_title}
+        </h3>
         <div className="bookselector__placeholder__delete">
-          <button
-            className="btn btn-close"
-            onClick={() => removeSelectedBook()}
-          ></button>
+          <button className="btn " onClick={() => removeSelectedBook()}>
+            x
+          </button>
         </div>
       </div>
     )

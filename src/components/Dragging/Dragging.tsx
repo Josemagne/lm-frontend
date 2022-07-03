@@ -127,7 +127,9 @@ const Dragging = ({ type, title }: Props) => {
       case "BOOK":
         dispatch(updateBook(entityObject))
         // await FAPI.updateBook(entityObject)
-        API.updateBook(entityObject)
+        if (!sessionStorage.getItem("isTesting")) {
+          API.updateBook(entityObject)
+        }
         break
       default:
         break

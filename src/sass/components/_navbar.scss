@@ -31,11 +31,10 @@
 
 // ANCHOR NAVBAR
 .lm-navbar {
-  background-color: #2ea0ce;
+  background-color: rgba(171, 104, 28, 0.9);
   width: 100vw;
   z-index: 100;
   position: fixed;
-  overflow: hidden;
   bottom: 0 !important;
   -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
   -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
@@ -43,9 +42,11 @@
   outline: none;
 
   @media screen and (min-width: 576px) {
-    position: sticky !important;
+    position: sticky;
+    // width: 100%;
   }
   .lm-navbar__inner {
+    position: relative;
     .lm-navbar__linkscontainer {
       display: flex;
       flex-direction: row;
@@ -53,7 +54,7 @@
       .lm-navbar__link {
         padding: 0.5rem !important;
         text-decoration: none !important;
-        color: map.get($colors, "secondary");
+        color: white;
 
         &:last-of-type {
           margin-left: auto;
@@ -75,8 +76,6 @@
       padding: 0.5rem !important;
       text-decoration: none !important;
       margin: auto;
-      color: rgb(84, 86, 231);
-      color: map.get($colors, "secondary");
       @include md() {
         font-size: 20px;
       }

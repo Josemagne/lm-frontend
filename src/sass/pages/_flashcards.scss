@@ -1,15 +1,21 @@
 .lm-flashcards {
   position: relative !important;
   overflow-y: hidden !important;
-  height: fit-content !important;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 
   .lm-flashcards__selector {
     max-width: 576px;
+    .bookselector__placeholder {
+      background-color: black;
+      .btn {
+        background-color: red;
+        color: white;
+      }
+    }
   }
 
   .flashcards__add {

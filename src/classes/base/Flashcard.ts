@@ -13,6 +13,9 @@ class Flashcard implements LM_Flashcard {
     entityID: string
   }
   timesRepeated: number = 0
+  repeatedDate: {} = {}
+  createdAt: Date = new Date()
+  updatedAt: Date = new Date()
 
   constructor(
     flashcard_id: string,

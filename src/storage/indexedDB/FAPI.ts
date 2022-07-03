@@ -4,9 +4,7 @@ import BookAPI from './Book/BookAPI';
 import FlashcardAPI from "./Flashcard/FlaschardAPI";
 
 function FAPIMixin<TBase extends Constructor>(Base: TBase) {
-    return class extends Base {
-
-    }
+    return class extends Base { }
 }
 
 const FAPI = FAPIMixin(ChapterAPI(BookAPI(FlashcardAPI(class { }))));

@@ -5,9 +5,12 @@ import summaryImage from "../../assets/images/summaries.jpg"
 // @ts-ignore
 import flashcardImage from "../../assets/images/flashcards.jpg"
 // @ts-ignore
+import noteImage from "../../assets/images/notes.jpg"
+// @ts-ignore
 import bookImage from "../../assets/images/books.jpg"
 import { gsap } from "gsap"
 import { fileURLToPath } from "url"
+import Welcome from "../../components/Welcome/Welcome"
 
 type Props = {}
 
@@ -49,6 +52,11 @@ const Home = (props: Props) => {
       text: "You really comprehended what read? Then write a summary and bring the most important points together.",
       image: summaryImage,
     },
+    {
+      title: "Take Notes",
+      text: "We always forget something. Take a note and make your future self a favor.",
+      image: noteImage,
+    },
     // {
     //   title: "Commentaries",
     //   text: "",
@@ -77,14 +85,12 @@ const Home = (props: Props) => {
 
   const authenticateRef = useRef(null)
 
-  const baseURL = "../../assets/images/"
-
   useEffect(() => {
     gsap.from(".lm-home__section", { duration: 1, x: "-100%" })
   }, [])
 
   return (
-    <div className="lm-home lm-page">
+    <div className="lm-home ">
       {/* <div className="home__authenticate">
         <div
           className="lm-cta-register"
@@ -132,9 +138,7 @@ const Home = (props: Props) => {
               >
                 <div className="content-container">
                   <h1 className="title">{feature.title}</h1>
-                  <div className="text">
-                    <p>{feature.text}</p>
-                  </div>
+                  <p className="text">{feature.text}</p>
                 </div>
                 {/* <div className="image">
                   <img src={feature.image} alt="title" />
@@ -144,29 +148,10 @@ const Home = (props: Props) => {
             </>
           )
         })}
+        <Welcome />
       </div>
 
       {/* ANCHOR Action to login */}
-      {!localStorage.getItem("token") ? (
-        <div className="lm-cta-authenticate" ref={authenticateRef}>
-          <div
-            className="lm-cta-register"
-            onClick={() => navigate("/register", { replace: true })}
-          >
-            <button type="button" className="btn btn-primary">
-              Register
-            </button>
-          </div>
-          <div
-            className="lm-cta-login"
-            onClick={() => navigate("/login", { replace: true })}
-          >
-            <button type="button" className="btn btn-primary">
-              Login
-            </button>
-          </div>
-        </div>
-      ) : null}
     </div>
   )
 }

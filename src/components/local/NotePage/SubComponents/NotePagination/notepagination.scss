@@ -1,0 +1,8 @@
+.notes__notepagination {
+  .notepagination__note {
+    color: black;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

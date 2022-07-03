@@ -12,11 +12,15 @@ module.exports = {
     es2021: true,
     jest: false,
   },
+  globals: {
+    cy: true,
+  },
   extends: [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
+    "plugin:cypress/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {

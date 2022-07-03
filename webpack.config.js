@@ -3,12 +3,11 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const TerserWebpackPlugin = require("terser-webpack-plugin")
 const Dotenv = require("dotenv-webpack")
 const path = require("path")
+// const WorkboxWebpackPlugin = require("workbox-webpack-plugin")
+// const CopyPlugin = require("copy-webpack-plugin")
 
 const isProduction = process.env.NODE_ENV === "production"
-const indexHTML =
-  process.env.NODE_ENV === "production"
-    ? resolve(__dirname, "public", "index.html")
-    : resolve(__dirname, "src", "index.html")
+const indexHTML = resolve(__dirname, "src", "index.html")
 
 const config = {
   mode: isProduction ? "production" : "development",
@@ -18,7 +17,7 @@ const config = {
   // Where the transpiled code will be
   output: {
     // The path to the transpiled code
-    path: resolve(__dirname, "dist"),
+    path: resolve(__dirname, "public"),
     // How the transpiled and bundled code will be called
     filename: "bundle.js",
     publicPath: "/",
@@ -33,7 +32,6 @@ const config = {
       zlib: false,
       http: false,
       https: false,
-      stream: false,
       crypto: false,
       "crypto-browserify": resolve("crypto-browserify"),
       os: resolve("os-browserify"),
@@ -104,6 +102,21 @@ const config = {
       inject: "body",
       favicon: join(__dirname, "src", "assets", "images", "favicon.svg"),
     }),
+    // new CopyPlugin({
+    //   patterns: [
+    // { from: "./src/assets/images/favicon.svg", to: "" },
+    // { from: "./src/manifest.json", to: "" },
+    // { from: "./src/assets/pwa/logo192.png", to: "" },
+    // { from: "./src/assets/pwa/logo512.png", to: "" },
+    // { from: "./src/assets/.well-known", to: "" },
+    // ],
+    // }),
+    // new WorkboxWebpackPlugin.InjectManifest({
+    //   swSrc: "./src/sw.js",
+    //   swDest: "sw.js",
+    //   maximumFileSizeToCacheInBytes: 100000000,
+    //   mode: process.env.NODE_ENV,
+    // }),
   ],
 }
 

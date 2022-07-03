@@ -14,12 +14,29 @@ import UserPage from "./pages/UserPage/UserPage"
 import AboutPage from "./pages/About/AboutPage"
 import Summaries from "./pages/summaries"
 import Notes from "./pages/notes"
+// @ts-ignore
+import libraryImage from "./assets/images/library.jpg"
+import StatisticsPage from "./pages/StatisticsPage/StatisticsPage"
+import TestingBanner from "./components/Welcome/SubComponents/TestingBanner/TestingBanner"
+import BookResourcesPage from "./pages/BookResourcesPage/BookResourcesPage"
 
 type Props = {}
 
 const App = (props: Props) => {
   return (
     <div className="app">
+      <div
+        className="wrapper"
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "fixed",
+          backgroundImage: `url(${libraryImage})`,
+          backgroundPosition: "center center",
+          backgroundSize: "cover",
+          filter: "blur(8px)",
+        }}
+      ></div>
       {/* TODO Should we use BrowserRouter? */}
       <HashRouter>
         <header>
@@ -39,16 +56,19 @@ const App = (props: Props) => {
           <Route path="/login" element={<Login />} />
           <Route path="/user" element={<UserPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/summaries" element={<Summaries />} />
           <Route path="/notes" element={<Notes />} />
-
+          <Route path="/bookresources" element={<BookResourcesPage />} />
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}
           {/* TODO Add Settings */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
-        <footer>{/* <Navigation /> */}</footer>
+        <footer>
+          {sessionStorage.getItem("isTesting") && <TestingBanner />}
+        </footer>
       </HashRouter>
     </div>
   )
