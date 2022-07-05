@@ -19,6 +19,10 @@ import libraryImage from "./assets/images/library.jpg"
 import StatisticsPage from "./pages/StatisticsPage/StatisticsPage"
 import TestingBanner from "./components/Welcome/SubComponents/TestingBanner/TestingBanner"
 import BookResourcesPage from "./pages/BookResourcesPage/BookResourcesPage"
+import EditorPage from "./pages/EditorPage/EditorPage"
+import CharacterPage from "./pages/CharacterPage/CharacterPage"
+import CitationPage from "./pages/CitationPage/CitationPage"
+import VocabularyPage from "./pages/VocabularyPage/VocabularyPage"
 
 type Props = {}
 
@@ -60,6 +64,10 @@ const App = (props: Props) => {
           <Route path="/summaries" element={<Summaries />} />
           <Route path="/notes" element={<Notes />} />
           <Route path="/bookresources" element={<BookResourcesPage />} />
+          <Route path="/editor" element={<EditorPage />} />
+          <Route path="/character" element={<CharacterPage />} />
+          <Route path="/citation" element={<CitationPage />} />
+          <Route path="/vocabulary" element={<VocabularyPage />} />
           {/* TODO Add Contact */}
           {/* TODO Add Community */}
           {/* TODO Add Account */}

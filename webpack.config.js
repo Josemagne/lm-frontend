@@ -11,6 +11,7 @@ const indexHTML = resolve(__dirname, "src", "index.html")
 
 const config = {
   mode: isProduction ? "production" : "development",
+  devtool: "inline-source-map",
   entry: {
     index: "./src/index.tsx",
   },
@@ -50,6 +51,9 @@ const config = {
         use: [
           {
             loader: "style-loader",
+          },
+          {
+            loader: "css-modules-typescript-loader",
           },
           {
             loader: "css-loader",
