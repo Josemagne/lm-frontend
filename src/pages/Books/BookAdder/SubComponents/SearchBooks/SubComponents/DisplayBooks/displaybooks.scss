@@ -1,0 +1,56 @@
+.lm-displaybooks {
+  position: relative;
+
+  margin-bottom: 4rem;
+  .displaybooks__book.selected {
+    background-color: rgba(184, 85, 85, 0.678);
+  }
+
+  .displaybooks__book {
+    padding: 2rem;
+    margin-bottom: 1rem;
+    box-shadow: 1p solid black;
+
+    display: grid;
+    grid-template-areas:
+      "cover"
+      "title"
+      "pages"
+      "subtitle";
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(184, 85, 85, 0.3);
+    }
+
+    .book__cover {
+      grid-area: "cover";
+    }
+
+    .book__title {
+      grid-area: "title";
+    }
+
+    .book__pages {
+      grid-area: "pages";
+    }
+
+    .book__subtitle {
+      grid-area: "subtitle";
+    }
+  }
+
+  .displaybooks__add {
+    width: 50%;
+    margin: auto;
+
+    position: fixed;
+
+    padding: 3rem;
+    bottom: 0;
+
+    button {
+      width: 100%;
+    }
+  }
+}

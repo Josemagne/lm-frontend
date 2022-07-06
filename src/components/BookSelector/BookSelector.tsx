@@ -94,6 +94,7 @@ const BookSelector = () => {
   }, [selectedBook])
 
   useEffect(() => {
+    if (books) return
     // @ts-ignore
     dispatch(fetchBooksBackend())
   }, [])

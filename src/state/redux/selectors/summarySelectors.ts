@@ -7,3 +7,6 @@ const selectSummaries = (store: RootState) =>
 export const summariesSelector = createSelector(selectSummaries, (s) => {
   return Object.values(s)
 }) as unknown as () => LM_Summary[]
+
+const selectSelectedSummary = (store: RootState) => store.summaries.selection.selectedSummary;
+export const selectedSummarySelector = createSelector(selectSelectedSummary, (s) => s)

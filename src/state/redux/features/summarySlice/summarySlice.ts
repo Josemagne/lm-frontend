@@ -90,9 +90,11 @@ export const summarySlice: Slice<InitialSummaryState> = createSlice({
     ) => {
       state.summaries.summaries[action.payload.summary_id] = action.payload
     },
-    updateSummary: (state, action) => {},
-    updateSelectedSummary: (state, action) => {},
-    updateNewSummary: (state, action) => {},
+    updateSummary: (state, action) => { },
+    updateSelectedSummary: (state: InitialSummaryState, action: PayloadAction<LM_Summary>) => {
+      state.selection.selectedSummary = action.payload;
+    },
+    updateNewSummary: (state, action) => { },
     toggleIsSelectingSummary: (
       state: InitialSummaryState,
       action: PayloadAction<void>
@@ -151,6 +153,7 @@ export const {
   updateSummary,
   renewNewSummary,
   changeSelectedSummary,
+  updateSelectedSummary
 } = summarySlice.actions
 
 export default summarySlice.reducer

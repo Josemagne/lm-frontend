@@ -1,0 +1,87 @@
+{
+  "ISBN:0913966568": {
+    "url": "https://openlibrary.org/books/OL4402685M/The_evolution_of_civilizations",
+    "key": "/books/OL4402685M",
+    "title": "The evolution of civilizations",
+    "subtitle": "an introduction to historical analysis",
+    "authors": [
+      {
+        "url": "https://openlibrary.org/authors/OL1459468A/Carroll_Quigley",
+        "name": "Carroll Quigley"
+      }
+    ],
+    "number_of_pages": 442,
+    "pagination": "442 p. :",
+    "by_statement": "Carroll Quigley.",
+    "identifiers": {
+      "goodreads": ["991681", "991682"],
+      "librarything": ["928615"],
+      "isbn_10": ["0913966568", "0913966576"],
+      "lccn": ["79004091"],
+      "openlibrary": ["OL4402685M"]
+    },
+    "classifications": {
+      "lc_classifications": ["CB59 .Q5 1979", "CB59.Q5 1979"],
+      "dewey_decimal_class": ["909"]
+    },
+    "publishers": [{ "name": "Liberty Press" }],
+    "publish_places": [{ "name": "Indianapolis" }],
+    "publish_date": "1979",
+    "subjects": [
+      {
+        "name": "Methodology",
+        "url": "https://openlibrary.org/subjects/methodology"
+      },
+      {
+        "name": "Civilization",
+        "url": "https://openlibrary.org/subjects/civilization"
+      },
+      { "name": "History", "url": "https://openlibrary.org/subjects/history" },
+      {
+        "name": "Long Now Manual for Civilization",
+        "url": "https://openlibrary.org/subjects/long_now_manual_for_civilization"
+      },
+      {
+        "name": "Evolution",
+        "url": "https://openlibrary.org/subjects/evolution"
+      },
+      {
+        "name": "Histoire",
+        "url": "https://openlibrary.org/subjects/histoire"
+      },
+      {
+        "name": "Historiographie",
+        "url": "https://openlibrary.org/subjects/historiographie"
+      },
+      {
+        "name": "M\u00e9thodologie",
+        "url": "https://openlibrary.org/subjects/m\u00e9thodologie"
+      },
+      {
+        "name": "Civilisation",
+        "url": "https://openlibrary.org/subjects/civilisation"
+      },
+      {
+        "name": "Civilization, history",
+        "url": "https://openlibrary.org/subjects/civilization,_history"
+      },
+      {
+        "name": "History, methodology",
+        "url": "https://openlibrary.org/subjects/history,_methodology"
+      }
+    ],
+    "notes": "Bibliography: p. [423]-428.\nIncludes index.",
+    "ebooks": [
+      {
+        "preview_url": "https://archive.org/details/evolutionciviliz00quig_543",
+        "availability": "restricted",
+        "formats": {}
+      }
+    ],
+    "cover": {
+      "small": "https://covers.openlibrary.org/b/id/4394306-S.jpg",
+      "medium": "https://covers.openlibrary.org/b/id/4394306-M.jpg",
+      "large": "https://covers.openlibrary.org/b/id/4394306-L.jpg"
+    }
+  }
+}

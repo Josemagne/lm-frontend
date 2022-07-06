@@ -19,6 +19,11 @@ import API from "../../../api/API"
 import { Modal } from "rsuite"
 import useAppSelector from "../../../hooks/useAppSelector"
 import Author from "../../../classes/Author"
+import { RootState } from "../../../state/redux/store"
+import BookCover from "./SubComponents/BookCover/BookCover"
+import SearchResults from "./SubComponents/SearchResults/SearchResults"
+import SearchBooks from "./SubComponents/SearchBooks/SearchBooks"
+import AddOption from "./SubComponents/SearchBooks/SubComponents/AddOption/AddOption"
 
 type Props = {}
 
@@ -26,10 +31,18 @@ type Props = {}
  * Modal where we can add a book
  */
 const BookAdder = (props: Props) => {
-  /* STORAGE */
-
-  /* STATE */
   const dispatch = useAppDispatch()
+
+  const newBook = useAppSelector(
+    (state: RootState) => state.books.newBook
+  ) as unknown as LM_Book
+  const searchSelectedBook = useAppSelector(
+    (store: RootState) => store.books.search.selectedBook
+  )
+
+  const isSearchingBook = useAppSelector(
+    (store: RootState) => store.books.search.isSearchingBooks
+  ) as unknown as boolean
 
   function getInitialValues(): LM_Book {
     return new Book(nanoid(), "", "", "", 0, 0, "")
@@ -45,6 +58,7 @@ const BookAdder = (props: Props) => {
     book_title: yup.string().required().min(2, "Too short").max(40, "Too long"),
   })
 
+  // @ts-ignore
   const formik = useFormik({
     initialValues: getInitialValues(),
     validateOnBlur: true,
@@ -106,52 +120,56 @@ const BookAdder = (props: Props) => {
     console.log(formik.errors)
   }, [formik.values])
 
-  useEffect(() => {}, [addingNewBook])
+  useEffect(() => {}, [addingNewBook, searchSelectedBook, isSearchingBook])
 
   return (
     <Modal open={addingNewBook} onClose={handleClose} data-testid="bookadder">
       <Modal.Header>Add A Book</Modal.Header>
       <div className="lm-lc-bookmodifier">
-        <form onSubmit={formik.handleSubmit}>
-          {/* <BookImage bookImage="" /> */}
+        <AddOption />
+        {isSearchingBook && <SearchBooks />}
+        {!isSearchingBook && (
+          <form onSubmit={formik.handleSubmit}>
+            {/* <BookImage bookImage="" /> */}
 
-          <BookTitle values={formik.getFieldProps("book_title")} />
-          <div className="lm-form-error">
-            {formik.errors.book_title ? (
-              <p>{formik.errors.book_title}</p>
-            ) : null}
-          </div>
+            <BookTitle values={formik.getFieldProps("book_title")} />
+            <div className="lm-form-error">
+              {formik.errors.book_title ? (
+                <p>{formik.errors.book_title}</p>
+              ) : null}
+            </div>
 
-          {/* <BookPages values={formik.getFieldProps("pages")} /> */}
+            {/* <BookPages values={formik.getFieldProps("pages")} /> */}
 
-          {/* <BookState
+            {/* <BookState
               values={formik.getFieldProps("read")}
               setFieldValue={formik.setFieldValue}
             /> */}
 
-          {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
+            {/* <BookProgress values={formik.getFieldProps("progress")} /> */}
 
-          <BookAuthor
-            author_prename={formik.getFieldProps("author_prename")}
-            author_name={formik.getFieldProps("author_name")}
-          />
+            <BookAuthor
+              author_prename={formik.getFieldProps("author_prename")}
+              author_name={formik.getFieldProps("author_name")}
+            />
 
-          <div className="lm-adder-btn d-flex justify-content-center align-items-center m-4">
-            {formik.isValid && formik.dirty ? (
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => formik.handleSubmit()}
-              >
-                +
-              </button>
-            ) : (
-              <button type="button" className="btn btn-primary" disabled>
-                +
-              </button>
-            )}
-          </div>
-        </form>
+            <div className="lm-adder-btn d-flex justify-content-center align-items-center m-4">
+              {formik.isValid && formik.dirty ? (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => formik.handleSubmit()}
+                >
+                  +
+                </button>
+              ) : (
+                <button type="button" className="btn btn-primary" disabled>
+                  +
+                </button>
+              )}
+            </div>
+          </form>
+        )}
       </div>
     </Modal>
   )

@@ -10,6 +10,7 @@ import {
   changeSelectedChapter,
   toggleIsSelectingChapter,
 } from "../../../../../state/redux/features/chapterSlice"
+import { updateSelectedSummary } from "../../../../../state/redux/features/summarySlice/summarySlice"
 
 type Props = {
   chapter: LM_Chapter
@@ -32,6 +33,7 @@ const ChapterContainer = ({ chapter }: Props) => {
     e.stopPropagation()
     dispatch(changeSelectedChapter(chapter))
     dispatch(toggleIsSelectingChapter(""))
+    // dispatch(updateSelectedSummary())
   }
 
   const removeChapter = async (e: any) => {

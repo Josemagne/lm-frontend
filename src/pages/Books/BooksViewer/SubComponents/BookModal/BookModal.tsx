@@ -21,7 +21,11 @@ import { LM_Note } from "../../../../../types/Note/note"
 import { fetchFlashcardsBackend } from "../../../../../state/redux/features/Flashcard/flashcardSlice"
 import html2canvas from "html2canvas"
 import jsPdf from "jspdf"
-import axios from "axios"
+import {
+  chaptersSelector,
+  fetchChaptersBackend,
+} from "../../../../../state/redux/features/chapterSlice"
+import LM_Chapter from "../../../../../types/Book/chapter"
 
 type Props = {}
 
@@ -38,6 +42,7 @@ const BookModal = ({}: Props) => {
   const isSelectingBook: boolean = useAppSelector(isSelectingBookSelector)
   const selectedBook: LM_Book = useAppSelector(selectedBookSelector)
 
+  const chapters = useAppSelector(chaptersSelector) as unknown as LM_Chapter[]
   const summaries = useAppSelector(summariesSelector)
   const flashcards = Object.values(
     useAppSelector((s) => s.flashcards.flashcards.flashcards)
@@ -116,6 +121,11 @@ const BookModal = ({}: Props) => {
     }
   }, [isSelectingBook, selectedBook])
 
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(fetchChaptersBackend(selectedBook.book_id))
+  }, [])
+
   return (
     <Modal
       className="lm-bookmodal"
@@ -179,6 +189,7 @@ const BookModal = ({}: Props) => {
               </button>
             </div>
             <BookOverview
+              chapters={chapters}
               flashcards={flashcards}
               summaries={summaries}
               notes={notes}

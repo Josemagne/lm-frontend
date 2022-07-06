@@ -51,7 +51,16 @@ interface InitialBookState {
   /**
    * Decides if we show the BookModifier Modal
    */
-  addingNewBook: boolean
+  addingNewBook: boolean;
+  search: {
+    books: {
+
+      [result: string]: {}
+    }
+    isSearchingBooks: boolean;
+    selectedBook: LM_Book;
+  }
+
 }
 
 const initialState: InitialBookState = {
@@ -72,6 +81,11 @@ const initialState: InitialBookState = {
   },
   newBook: new Book(nanoid(), "", "", "", 0, 0, ""),
   addingNewBook: false,
+  search: {
+    books: {},
+    isSearchingBooks: true,
+    selectedBook: new Book(nanoid(), "", "", "", 0, 0, "")
+  },
 }
 
 /**
@@ -144,6 +158,23 @@ export const bookSlice: Slice<InitialBookState> = createSlice({
     ) => {
       state.selection.isSelectingBook = !state.selection.isSelectingBook
     },
+    changeSearchResults: (
+      state: InitialBookState,
+      action: PayloadAction<any>
+    ) => {
+      const results = action.payload;
+
+      (results as any[]).forEach((r) => {
+        state.search.books[r.key] = r;
+      })
+
+    },
+    toggleIsSearchingBooks: (state: InitialBookState, action: PayloadAction<void>) => {
+      state.search.isSearchingBooks = !state.search.isSearchingBooks;
+    },
+    changeSearchSelectedBook: (state: InitialBookState, action: PayloadAction<LM_Book>) => {
+      state.search.selectedBook = action.payload;
+    }
   },
   extraReducers: (builder) => {
     /* ANCHOR BACKEND */
@@ -235,6 +266,9 @@ export const {
   deleteSelectedBook,
   toggleAddingNewBook,
   toggleIsSelectingBook,
+  changeSearchResults,
+  toggleIsSearchingBooks,
+  changeSearchSelectedBook
 } = bookSlice.actions
 
 export default bookSlice.reducer

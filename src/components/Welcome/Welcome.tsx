@@ -31,7 +31,7 @@ const Welcome = (props: Props) => {
     if (!sessionStorage.getItem("isTesting")) {
       setTimeout(() => {
         if (!localStorage.getItem("token")) setShowWelcome(true)
-      }, 5000)
+      }, 3000)
     }
   }, [])
 

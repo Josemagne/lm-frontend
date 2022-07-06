@@ -11,6 +11,8 @@ import {
   selectedChapterSelector,
 } from "../../../../../../state/redux/features/chapterSlice"
 import { throttle, of, interval, Observable, throttleTime } from "rxjs"
+import { LM_Summary } from "../../../../../../types/summary/summary"
+import { selectedSummarySelector } from "../../../../../../state/redux/selectors/summarySelectors"
 
 type Props = {}
 
@@ -30,6 +32,7 @@ const ChapterSummary = ({}: Props) => {
   const selectedChapter = useAppSelector(
     selectedChapterSelector
   ) as unknown as LM_Chapter
+  const selectedSummary = useAppSelector(selectedSummarySelector)
 
   const handleChange = (v: string) => {
     const source = of(v)

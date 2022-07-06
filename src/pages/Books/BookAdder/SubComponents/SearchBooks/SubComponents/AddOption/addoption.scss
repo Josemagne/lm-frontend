@@ -1,0 +1,31 @@
+.lm-addoption {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  .addoption__add,
+  .addoption__search {
+    padding: 2rem;
+    width: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: gray;
+    font-size: 18px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .addoption__search.selected {
+    background-color: rgba(88, 196, 88, 0.596);
+  }
+
+  .addoption__add.selected {
+    background-color: rgba(39, 39, 214, 0.555);
+  }
+}

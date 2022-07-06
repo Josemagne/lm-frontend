@@ -28,6 +28,7 @@ const BooksViewer = () => {
   const dispatch = useAppDispatch()
 
   const books = useAppSelector(booksSelector)
+  const isSelectingBook = useAppSelector(isSelectingBookSelector)
 
   const [windowWidth, setWindowWith] = useState(window.innerWidth)
 
@@ -73,7 +74,7 @@ const BooksViewer = () => {
       ) : (
         <Dragging type="BOOK" title="Books" />
       )}
-      <BookModal />
+      {isSelectingBook && <BookModal />}
     </div>
   )
 }

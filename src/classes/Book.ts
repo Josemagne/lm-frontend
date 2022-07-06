@@ -16,6 +16,7 @@ export default class Book implements LM_Book {
     genre = ""
     rate = 1;
     commentary = "";
+    cover?: string;
 
     constructor(
         book_id: string,
@@ -26,6 +27,8 @@ export default class Book implements LM_Book {
         progress: number,
         summary: string,
         author_name?: string,
+        cover?: string
+
     ) {
         this.book_id = book_id
         this.author_id = author_id;
@@ -40,6 +43,7 @@ export default class Book implements LM_Book {
         this.genre = ""
         this.rate = 1;
         this.commentary = "";
+        this.cover = cover;
     }
 
 

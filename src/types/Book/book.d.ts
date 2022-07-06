@@ -15,6 +15,7 @@ export declare interface LM_Book {
     author_prename: string;
     author_name: string | undefined;
     book_title: string;
+    cover?: string;
     pages?: number;
     /**
      * Decides if the book is finished
